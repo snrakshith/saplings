@@ -14,7 +14,9 @@ independent. The root version tracks the SDK repository's readiness evidence.
    builds and tests the workspace, verifies the package tarballs, and publishes
    unpublished versions to npm. GitHub tags and releases record what was published.
 
-Run `pnpm run release:verify` to check the tarballs locally.
+Run **npm Release** manually with `preview` enabled (the default) to see the
+Changesets mode and verify tarballs on any branch. Preview needs no npm
+credentials. Run `pnpm run release:verify` for the same package checks locally.
 `pnpm run release:version` can prepare the version commit on a branch if the
 GitHub Actions version PR setting is disabled.
 
@@ -29,8 +31,10 @@ GitHub Actions version PR setting is disabled.
   **Bypass 2FA** for the non-interactive publish.
 - After completing the applicable release checks and confirming distribution
   rights for the Murphi-derived UI assets, set the GitHub Actions repository
-  variable `NPM_RELEASE_ENABLED` to `true`. Run **npm Release** on `main` to
-  process changesets already merged.
+  variable `NPM_RELEASE_ENABLED` to `true`. Pushes to `main` then process pending
+  changesets or publish bumped versions. To run this manually, select `main`
+  and clear `preview`. A manual release reports a configuration error when the
+  variable is unset or a different branch is selected.
 - After the packages exist, configure an [npm trusted publisher](https://docs.npmjs.com/trusted-publishers/)
   for each package. Use owner `snrakshith`, repository `saplings`, workflow
   `npm-release.yml`, and allow `npm publish`. Then remove `NPM_TOKEN` so later

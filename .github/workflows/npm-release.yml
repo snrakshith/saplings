@@ -4,15 +4,19 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+    inputs:
+      preview:
+        description: Validate packages and show the Changesets mode without releasing
+        type: boolean
+        default: true
 
 permissions: {}
 
 concurrency:
-  group: npm-release
+  group: npm-release-${{ github.ref }}
 
 jobs:
   select-mode:
-    if: github.ref == 'refs/heads/main' && vars.NPM_RELEASE_ENABLED == 'true'
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -20,6 +24,21 @@ jobs:
       mode: ${{ steps.changesets.outputs.mode }}
       publish-plan: ${{ steps.changesets.outputs.publish-plan-artifact-id }}
     steps:
+      - name: Check release configuration
+        env:
+          PREVIEW: ${{ inputs.preview }}
+          RELEASE_ENABLED: ${{ vars.NPM_RELEASE_ENABLED }}
+        run: |
+          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch && "$PREVIEW" != true ]]; then
+            if [[ "$GITHUB_REF" != refs/heads/main || "$RELEASE_ENABLED" != true ]]; then
+              echo "::error::A release requires the main branch and the repository Actions variable NPM_RELEASE_ENABLED=true. Use preview to validate any branch."
+              exit 1
+            fi
+          elif [[ "$PREVIEW" == true ]]; then
+            echo "Preview mode. This run will verify package tarballs."
+          elif [[ "$RELEASE_ENABLED" != true ]]; then
+            echo "::notice::Release automation is disabled. Set the repository Actions variable NPM_RELEASE_ENABLED=true to enable it."
+          fi
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
@@ -32,9 +51,18 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - uses: changesets/action/select-mode@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         id: changesets
+      - name: Report Changesets mode
+        env:
+          MODE: ${{ steps.changesets.outputs.mode }}
+        run: |
+          printf 'Changesets mode: `%s`\n' "$MODE" >> "$GITHUB_STEP_SUMMARY"
 
   version:
-    if: needs.select-mode.outputs.mode == 'version'
+    if: >-
+      needs.select-mode.outputs.mode == 'version' &&
+      github.ref == 'refs/heads/main' &&
+      vars.NPM_RELEASE_ENABLED == 'true' &&
+      !inputs.preview
     needs: select-mode
     runs-on: ubuntu-latest
     permissions:
@@ -56,7 +84,11 @@ jobs:
           script: pnpm run release:version
 
   pack:
-    if: needs.select-mode.outputs.mode == 'publish'
+    if: >-
+      inputs.preview ||
+      (needs.select-mode.outputs.mode == 'publish' &&
+       github.ref == 'refs/heads/main' &&
+       vars.NPM_RELEASE_ENABLED == 'true')
     needs: select-mode
     runs-on: ubuntu-latest
     permissions:
@@ -74,12 +106,18 @@ jobs:
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
       - run: pnpm run release:verify
-      - uses: changesets/action/pack@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+      - if: ${{ !inputs.preview }}
+        uses: changesets/action/pack@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         id: changesets
         with:
           publish-plan-artifact-id: ${{ needs.select-mode.outputs.publish-plan }}
 
   publish:
+    if: >-
+      github.ref == 'refs/heads/main' &&
+      vars.NPM_RELEASE_ENABLED == 'true' &&
+      !inputs.preview &&
+      needs.pack.outputs.package-artifact != ''
     needs: pack
     runs-on: ubuntu-latest
     permissions:
