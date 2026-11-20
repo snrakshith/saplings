@@ -1,26 +1,26 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface ProgressProps extends React.HTMLAttributes<HTMLDivElement> {
   value?: number;
-  variant?: "determinate" | "indeterminate";
-  color?: "primary" | "secondary" | "success" | "error";
-  size?: "small" | "medium" | "large";
+  variant?: 'determinate' | 'indeterminate';
+  color?: 'primary' | 'secondary' | 'success' | 'error';
+  size?: 'small' | 'medium' | 'large';
 }
 
-const getHeight = (size: ProgressProps["size"]): string => {
+const getHeight = (size: ProgressProps['size']): string => {
   const sizes = {
-    small: "4px",
-    medium: "6px",
-    large: "8px",
+    small: '4px',
+    medium: '6px',
+    large: '8px',
   };
-  return sizes[size || "medium"];
+  return sizes[size || 'medium'];
 };
 
 const ProgressContainer = styled.div<{ size?: string }>`
   width: 100%;
-  height: ${(props) => getHeight(props.size as ProgressProps["size"])};
+  height: ${(props) => getHeight(props.size as ProgressProps['size'])};
   background-color: ${(props) => (props.theme as XloxTheme).colors.neutral[200]};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
   overflow: hidden;
@@ -32,11 +32,11 @@ const ProgressBar = styled.div<{ value?: number; variant?: string; color?: strin
   background-color: ${(props) => {
     const theme = props.theme as XloxTheme;
     switch (props.color) {
-      case "secondary":
+      case 'secondary':
         return theme.colors.secondary[500];
-      case "success":
+      case 'success':
         return theme.colors.success[500];
-      case "error":
+      case 'error':
         return theme.colors.error[500];
       default:
         return theme.colors.primary[500];
@@ -44,9 +44,9 @@ const ProgressBar = styled.div<{ value?: number; variant?: string; color?: strin
   }};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
   transition: width 0.3s ease-in-out;
-  
+
   ${(props) => {
-    if (props.variant === "indeterminate") {
+    if (props.variant === 'indeterminate') {
       return `
         width: 30%;
         animation: indeterminate 1.5s ease-in-out infinite;
@@ -70,13 +70,13 @@ const ProgressBar = styled.div<{ value?: number; variant?: string; color?: strin
 
 export const Progress: React.FC<ProgressProps> = ({
   value = 0,
-  variant = "determinate",
-  color = "primary",
-  size = "medium",
+  variant = 'determinate',
+  color = 'primary',
+  size = 'medium',
   ...props
 }) => {
   const normalizedValue = Math.min(100, Math.max(0, value));
-  
+
   return (
     <ProgressContainer size={size} role="progressbar" aria-valuenow={normalizedValue} {...props}>
       <ProgressBar value={normalizedValue} variant={variant} color={color} />
@@ -84,4 +84,4 @@ export const Progress: React.FC<ProgressProps> = ({
   );
 };
 
-Progress.displayName = "Progress";
+Progress.displayName = 'Progress';

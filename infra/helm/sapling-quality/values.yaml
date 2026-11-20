@@ -5,9 +5,9 @@ image:
 serviceAccountName: sapling-quality-runner
 apiUrl: http://sapling-example-api:3000
 webUrl: http://sapling-example-web:8080
-schedule: "0 2 * * *"
+schedule: '0 2 * * *'
 profile: pr
 nightlyProfile: nightly
 resources:
-  requests: {cpu: "500m", memory: 1Gi}
-  limits: {cpu: "2", memory: 4Gi}
+  requests: { cpu: '500m', memory: 1Gi }
+  limits: { cpu: '2', memory: 4Gi }

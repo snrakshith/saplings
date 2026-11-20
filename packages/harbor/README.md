@@ -2,7 +2,7 @@
 
 # @saplings/harbor
 
-Kong-inspired **config-driven HTTP gateway core** for Node 22 and TypeScript, retaining the uploaded GatewayConfig JSON/YAML structure (`gateway.sapling.dev/v1alpha1`). Supports route/service/upstream definitions, scoped plugin pipeline, host/method/prefix routing, weighted selection, active healthchecks, breaker, safe retries, JWT/ACL hooks, bounded input/output and TLS listener with SNI.
+Kong-inspired **config-driven HTTP gateway core** for Node.js 26 and TypeScript, retaining the uploaded GatewayConfig JSON/YAML structure (`gateway.sapling.dev/v1alpha1`). Supports route/service/upstream definitions, scoped plugin pipeline, host/method/prefix routing, weighted selection, active healthchecks, breaker, safe retries, JWT/ACL hooks, bounded input/output and TLS listener with SNI.
 
 ```ts
 import {Gateway,loadGatewayConfig} from '@saplings/harbor';

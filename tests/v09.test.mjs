@@ -1,18 +1,294 @@
-import {test} from 'vitest';import assert from 'node:assert/strict';import {createHmac} from 'node:crypto';
-import {InMemoryStore,GovernanceService,DomainPolicyService,quotePlanChange,StripeRecurringWebhook,RecurringBilling,ProviderOperations,ProviderWorkflow,createSapling} from '@saplings/sdk';
-import {MemoryHierarchicalAdmission,AckWindow,RealtimeHub,MemoryEventJournal,RedisHierarchicalAdmission} from '@saplings/realtime';
-import {evaluateFindings,findingFingerprint} from '@saplings/security';
-const ctx={tenantId:'tenant',actorId:'a'},other={...ctx,actorId:'b'},allow=async()=>{},old=new Date(0).toISOString();
-test('governance retention is paginated and hold blocks deletion; release requires different actor',async()=>{const s=new InMemoryStore(),g=new GovernanceService(s,allow,{documents:{days:1}});for(const id of ['a','b','c'])await s.put(ctx.tenantId,'documents',{id,createdAt:old});assert.equal((await g.sweep(ctx,'documents',{limit:1})).deleted,0);const h=await g.setHold(ctx,'case');await assert.rejects(g.sweep(ctx,'documents',{confirm:true}),{code:'LEGAL_HOLD'});await assert.rejects(g.releaseHold(ctx,h.revision),{code:'CONFLICT'});await g.releaseHold(other,h.revision);const first=await g.sweep(ctx,'documents',{confirm:true,limit:1});assert.equal(first.deleted,1);assert.equal((await g.sweep(ctx,'documents',{after:first.next,confirm:true})).deleted,2);assert.equal((await s.list(ctx.tenantId,'retention-evidence')).length,3);await assert.rejects(g.sweep(ctx,'audit'),{code:'FORBIDDEN'});});
-test('legacy outbox reconciles terminal delivery without requeue and flags missing job',async()=>{const s=new InMemoryStore(),g=new GovernanceService(s,allow);await s.put(ctx.tenantId,'outbox',{id:'a',status:'pending'});await s.put(ctx.tenantId,'durable-jobs',{id:'outbox:a',outboxId:'a',type:'event.dispatch',status:'completed'});await s.put(ctx.tenantId,'outbox',{id:'b',status:'relayed'});const r=await g.reconcileOutbox(ctx);assert.equal(r.repaired,1);assert.deepEqual(r.review,['b']);assert.equal((await s.get(ctx.tenantId,'outbox','a')).status,'delivered');});
-test('domain policy blocks mass assignment, ownership transfer, and hides restricted fields',async()=>{const s=new InMemoryStore(),p=new DomainPolicyService(s,{documents:{read:['title'],write:['title','owner','private'],required:['title','owner'],authorize:(c,_a,r)=>c.actorId===r.owner}});assert.deepEqual(await p.mutate(ctx,'documents','x','create',{title:'title',owner:'a',private:'secret'}),{id:'x',title:'title'});await assert.rejects(p.mutate(ctx,'documents','x','update',{owner:'b'}),{code:'FORBIDDEN'});await assert.rejects(p.mutate(ctx,'documents','x','update',{admin:true}),{code:'FORBIDDEN'});await assert.rejects(p.get(other,'documents','x'),{code:'FORBIDDEN'});assert.deepEqual(await p.get(ctx,'documents','x'),{id:'x',title:'title'});});
-test('governed domain delete is blocked while legal hold is active',async()=>{const s=new InMemoryStore(),p=new DomainPolicyService(s,{documents:{read:[],write:[],authorize:()=>true}});await p.mutate(ctx,'documents','x','create');await new GovernanceService(s,allow).setHold(ctx,'case');await assert.rejects(p.mutate(ctx,'documents','x','delete'),{code:'LEGAL_HOLD'});});
-test('proration quote calculates charge, credit and rounded tax in minor units',()=>{assert.deepEqual(quotePlanChange({oldMinor:100,newMinor:200,periodStart:0,periodEnd:100,effectiveAt:50,taxBps:1800}),{chargeMinor:50,creditMinor:0,taxMinor:9,totalMinor:59,remainingMs:50});assert.equal(quotePlanChange({oldMinor:200,newMinor:100,periodStart:0,periodEnd:100,effectiveAt:50}).creditMinor,50);assert.throws(()=>quotePlanChange({oldMinor:0,newMinor:10,periodStart:5,periodEnd:5,effectiveAt:5}));});
-test('hierarchical admission respects global tenant and user caps',async()=>{const a=new MemoryHierarchicalAdmission({global:2,tenant:1,user:1});const p={tenantId:'a',userId:'u'},release=await a.acquire(p,1000);assert.ok(release);assert.equal(await a.acquire({...p,userId:'v'},1000),undefined);const r2=await a.acquire({tenantId:'b',userId:'u'},1000);assert.ok(r2);assert.equal(await a.acquire({tenantId:'c',userId:'u'},1000),undefined);await release();assert.ok(await a.acquire(p,1000));await r2();});
-test('redis hierarchical admission uses a single cluster slot and releases exact reservation',async()=>{const calls=[];const a=new RedisHierarchicalAdmission({eval:async(script,args)=>{calls.push(args);return 1;}},{global:3,tenant:2,user:1});const release=await a.acquire({tenantId:'a',userId:'b'},1000);await release();assert.equal(calls[0].keys.length,3);assert.ok(calls[0].keys.every(k=>k.includes('{admission}')));assert.equal(calls[0].arguments[4],calls[1].arguments[0]);});
-test('ACK window accepts only delivered cumulative cursors and enforces capacity',()=>{const a=new AckWindow(2),event={channel:'c',tenantId:'t',at:old,data:0};a.sent({...event,id:'1'});a.sent({...event,id:'2'});assert.throws(()=>a.sent({...event,id:'3'}));assert.throws(()=>a.ack('c','3'));assert.equal(a.ack('c','2'),'2');a.sent({...event,id:'3'});});
-test('hub acknowledgment window wired to actual journal delivery',async()=>{const p={tenantId:'tenant',userId:'a'},hub=new RealtimeHub({authenticate:()=>p,authorize:()=>true,journal:new MemoryEventJournal(),ackWindow:2});try{const id=await hub.publish(p,'x',1),events=[];const c=hub.connect(p,e=>events.push(e),()=>{});await c.subscribe('x','0');assert.equal(events[0].id,id);assert.equal(c.ack('x',id),id);assert.throws(()=>c.ack('x',id));await c.close();}finally{await hub.close();}});
-test('stripe signed webhook only wakes matched action, does not mark invoice paid, rejects replay and wrong tenant',async()=>{const s=new InMemoryStore(),secret='secret_for_testing_only',at=Date.now(),t=Math.floor(at/1000),id='a'.repeat(64),raw=JSON.stringify({id:'evt_123',type:'payment_intent.succeeded',data:{object:{id:'pi_123',customer:'cus_123',amount:100,currency:'usd',metadata:{sapling_attempt:id}}}}),header=`t=${t},v1=${createHmac('sha256',secret).update(`${t}.${raw}`).digest('hex')}`;await s.put('tenant','stripe-recurring-attempts',{id,invoiceId:'i',chargeKey:'key',intent:'pi_123',customer:'cus_123',amountMinor:100,currency:'usd'});await s.put('tenant','billing-attempts',{id:'i',idempotencyKey:'key',status:'requires_action'});await s.put('tenant','invoices',{id:'i',status:'open'});const w=new StripeRecurringWebhook(s,secret);await assert.rejects(w.receive('other',raw,header,at),{code:'PAYMENT_MISMATCH'});await assert.rejects(w.receive('tenant',raw,header,at+360000),{code:'UNAUTHENTICATED'});assert.equal((await w.receive('tenant',raw,header,at)).woken,true);assert.equal((await s.get('tenant','invoices','i')).status,'open');assert.equal((await w.receive('tenant',raw,header,at)).duplicate,true);});
-test('billing customer action resume retains idempotency key',async()=>{const s=new InMemoryStore(),b=new RecurringBilling(s);await s.put('tenant','billing-attempts',{id:'i',idempotencyKey:'stable',status:'requires_action'});assert.equal((await b.resume(ctx,'i')).status,'pending');assert.equal((await s.get('tenant','billing-attempts','i')).idempotencyKey,'stable');await assert.rejects(b.resume(ctx,'i'),{code:'CONFLICT'});});
-test('workflow reconciles unknown provider operation before next step and does not resubmit',async()=>{const s=new InMemoryStore();let submit=0,inspect=0;const ops=new ProviderOperations(s,{deploy:{submit:async()=>{submit++;return {state:'unknown'};},inspect:async()=>{inspect++;return {state:'succeeded'};}}});const w=new ProviderWorkflow(s,ops,{release:{revision:'1',steps:[{kind:'deploy',input:()=>({})},{kind:'deploy',input:()=>({})}]}},allow);const row=await w.start(ctx,'release','key',{});assert.equal((await w.advance(ctx,row.id)).step,0);assert.equal((await w.advance(ctx,row.id)).step,1);assert.equal((await w.advance(ctx,row.id)).step,1);assert.equal((await w.advance(ctx,row.id)).state,'succeeded');assert.equal(submit,2);assert.equal(inspect,2);await assert.rejects(w.advance(other,row.id),{code:'NOT_FOUND'});});
-test('scanner triage is expiring, source-bound and retains original finding',()=>{const f={scannerId:'SCAN-01',checkId:'X',location:'a:1',title:'x',severity:'high'},report={findings:[f],notExecutedScannerIds:['SCAN-02'],failedScannerIds:[]},source='a'.repeat(64),decision={fingerprint:findingFingerprint(f),sourceHash:source,status:'false-positive',reviewer:'reviewer',reason:'reason',expiresAt:new Date(Date.now()+10000).toISOString()};const r=evaluateFindings(report,source,[decision]);assert.equal(r.rows.length,1);assert.equal(r.openHigh,0);assert.equal(r.incomplete,true);assert.equal(evaluateFindings(report,'b'.repeat(64),[decision]).openHigh,1);assert.equal(evaluateFindings(report,source,[{...decision,status:'fixed'}]).openHigh,1);});
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import { createHmac } from 'node:crypto';
+import {
+  InMemoryStore,
+  GovernanceService,
+  DomainPolicyService,
+  quotePlanChange,
+  StripeRecurringWebhook,
+  RecurringBilling,
+  ProviderOperations,
+  ProviderWorkflow,
+  createSapling,
+} from '@saplings/sdk';
+import {
+  MemoryHierarchicalAdmission,
+  AckWindow,
+  RealtimeHub,
+  MemoryEventJournal,
+  RedisHierarchicalAdmission,
+} from '@saplings/realtime';
+import { evaluateFindings, findingFingerprint } from '@saplings/security';
+const ctx = { tenantId: 'tenant', actorId: 'a' },
+  other = { ...ctx, actorId: 'b' },
+  allow = async () => {},
+  old = new Date(0).toISOString();
+test('governance retention is paginated and hold blocks deletion; release requires different actor', async () => {
+  const s = new InMemoryStore(),
+    g = new GovernanceService(s, allow, { documents: { days: 1 } });
+  for (const id of ['a', 'b', 'c']) await s.put(ctx.tenantId, 'documents', { id, createdAt: old });
+  assert.equal((await g.sweep(ctx, 'documents', { limit: 1 })).deleted, 0);
+  const h = await g.setHold(ctx, 'case');
+  await assert.rejects(g.sweep(ctx, 'documents', { confirm: true }), { code: 'LEGAL_HOLD' });
+  await assert.rejects(g.releaseHold(ctx, h.revision), { code: 'CONFLICT' });
+  await g.releaseHold(other, h.revision);
+  const first = await g.sweep(ctx, 'documents', { confirm: true, limit: 1 });
+  assert.equal(first.deleted, 1);
+  assert.equal((await g.sweep(ctx, 'documents', { after: first.next, confirm: true })).deleted, 2);
+  assert.equal((await s.list(ctx.tenantId, 'retention-evidence')).length, 3);
+  await assert.rejects(g.sweep(ctx, 'audit'), { code: 'FORBIDDEN' });
+});
+test('legacy outbox reconciles terminal delivery without requeue and flags missing job', async () => {
+  const s = new InMemoryStore(),
+    g = new GovernanceService(s, allow);
+  await s.put(ctx.tenantId, 'outbox', { id: 'a', status: 'pending' });
+  await s.put(ctx.tenantId, 'durable-jobs', {
+    id: 'outbox:a',
+    outboxId: 'a',
+    type: 'event.dispatch',
+    status: 'completed',
+  });
+  await s.put(ctx.tenantId, 'outbox', { id: 'b', status: 'relayed' });
+  const r = await g.reconcileOutbox(ctx);
+  assert.equal(r.repaired, 1);
+  assert.deepEqual(r.review, ['b']);
+  assert.equal((await s.get(ctx.tenantId, 'outbox', 'a')).status, 'delivered');
+});
+test('domain policy blocks mass assignment, ownership transfer, and hides restricted fields', async () => {
+  const s = new InMemoryStore(),
+    p = new DomainPolicyService(s, {
+      documents: {
+        read: ['title'],
+        write: ['title', 'owner', 'private'],
+        required: ['title', 'owner'],
+        authorize: (c, _a, r) => c.actorId === r.owner,
+      },
+    });
+  assert.deepEqual(
+    await p.mutate(ctx, 'documents', 'x', 'create', {
+      title: 'title',
+      owner: 'a',
+      private: 'secret',
+    }),
+    { id: 'x', title: 'title' },
+  );
+  await assert.rejects(p.mutate(ctx, 'documents', 'x', 'update', { owner: 'b' }), {
+    code: 'FORBIDDEN',
+  });
+  await assert.rejects(p.mutate(ctx, 'documents', 'x', 'update', { admin: true }), {
+    code: 'FORBIDDEN',
+  });
+  await assert.rejects(p.get(other, 'documents', 'x'), { code: 'FORBIDDEN' });
+  assert.deepEqual(await p.get(ctx, 'documents', 'x'), { id: 'x', title: 'title' });
+});
+test('governed domain delete is blocked while legal hold is active', async () => {
+  const s = new InMemoryStore(),
+    p = new DomainPolicyService(s, { documents: { read: [], write: [], authorize: () => true } });
+  await p.mutate(ctx, 'documents', 'x', 'create');
+  await new GovernanceService(s, allow).setHold(ctx, 'case');
+  await assert.rejects(p.mutate(ctx, 'documents', 'x', 'delete'), { code: 'LEGAL_HOLD' });
+});
+test('proration quote calculates charge, credit and rounded tax in minor units', () => {
+  assert.deepEqual(
+    quotePlanChange({
+      oldMinor: 100,
+      newMinor: 200,
+      periodStart: 0,
+      periodEnd: 100,
+      effectiveAt: 50,
+      taxBps: 1800,
+    }),
+    { chargeMinor: 50, creditMinor: 0, taxMinor: 9, totalMinor: 59, remainingMs: 50 },
+  );
+  assert.equal(
+    quotePlanChange({
+      oldMinor: 200,
+      newMinor: 100,
+      periodStart: 0,
+      periodEnd: 100,
+      effectiveAt: 50,
+    }).creditMinor,
+    50,
+  );
+  assert.throws(() =>
+    quotePlanChange({ oldMinor: 0, newMinor: 10, periodStart: 5, periodEnd: 5, effectiveAt: 5 }),
+  );
+});
+test('hierarchical admission respects global tenant and user caps', async () => {
+  const a = new MemoryHierarchicalAdmission({ global: 2, tenant: 1, user: 1 });
+  const p = { tenantId: 'a', userId: 'u' },
+    release = await a.acquire(p, 1000);
+  assert.ok(release);
+  assert.equal(await a.acquire({ ...p, userId: 'v' }, 1000), undefined);
+  const r2 = await a.acquire({ tenantId: 'b', userId: 'u' }, 1000);
+  assert.ok(r2);
+  assert.equal(await a.acquire({ tenantId: 'c', userId: 'u' }, 1000), undefined);
+  await release();
+  assert.ok(await a.acquire(p, 1000));
+  await r2();
+});
+test('redis hierarchical admission uses a single cluster slot and releases exact reservation', async () => {
+  const calls = [];
+  const a = new RedisHierarchicalAdmission(
+    {
+      eval: async (script, args) => {
+        calls.push(args);
+        return 1;
+      },
+    },
+    { global: 3, tenant: 2, user: 1 },
+  );
+  const release = await a.acquire({ tenantId: 'a', userId: 'b' }, 1000);
+  await release();
+  assert.equal(calls[0].keys.length, 3);
+  assert.ok(calls[0].keys.every((k) => k.includes('{admission}')));
+  assert.equal(calls[0].arguments[4], calls[1].arguments[0]);
+});
+test('ACK window accepts only delivered cumulative cursors and enforces capacity', () => {
+  const a = new AckWindow(2),
+    event = { channel: 'c', tenantId: 't', at: old, data: 0 };
+  a.sent({ ...event, id: '1' });
+  a.sent({ ...event, id: '2' });
+  assert.throws(() => a.sent({ ...event, id: '3' }));
+  assert.throws(() => a.ack('c', '3'));
+  assert.equal(a.ack('c', '2'), '2');
+  a.sent({ ...event, id: '3' });
+});
+test('hub acknowledgment window wired to actual journal delivery', async () => {
+  const p = { tenantId: 'tenant', userId: 'a' },
+    hub = new RealtimeHub({
+      authenticate: () => p,
+      authorize: () => true,
+      journal: new MemoryEventJournal(),
+      ackWindow: 2,
+    });
+  try {
+    const id = await hub.publish(p, 'x', 1),
+      events = [];
+    const c = hub.connect(
+      p,
+      (e) => events.push(e),
+      () => {},
+    );
+    await c.subscribe('x', '0');
+    assert.equal(events[0].id, id);
+    assert.equal(c.ack('x', id), id);
+    assert.throws(() => c.ack('x', id));
+    await c.close();
+  } finally {
+    await hub.close();
+  }
+});
+test('stripe signed webhook only wakes matched action, does not mark invoice paid, rejects replay and wrong tenant', async () => {
+  const s = new InMemoryStore(),
+    secret = 'secret_for_testing_only',
+    at = Date.now(),
+    t = Math.floor(at / 1000),
+    id = 'a'.repeat(64),
+    raw = JSON.stringify({
+      id: 'evt_123',
+      type: 'payment_intent.succeeded',
+      data: {
+        object: {
+          id: 'pi_123',
+          customer: 'cus_123',
+          amount: 100,
+          currency: 'usd',
+          metadata: { sapling_attempt: id },
+        },
+      },
+    }),
+    header = `t=${t},v1=${createHmac('sha256', secret).update(`${t}.${raw}`).digest('hex')}`;
+  await s.put('tenant', 'stripe-recurring-attempts', {
+    id,
+    invoiceId: 'i',
+    chargeKey: 'key',
+    intent: 'pi_123',
+    customer: 'cus_123',
+    amountMinor: 100,
+    currency: 'usd',
+  });
+  await s.put('tenant', 'billing-attempts', {
+    id: 'i',
+    idempotencyKey: 'key',
+    status: 'requires_action',
+  });
+  await s.put('tenant', 'invoices', { id: 'i', status: 'open' });
+  const w = new StripeRecurringWebhook(s, secret);
+  await assert.rejects(w.receive('other', raw, header, at), { code: 'PAYMENT_MISMATCH' });
+  await assert.rejects(w.receive('tenant', raw, header, at + 360000), { code: 'UNAUTHENTICATED' });
+  assert.equal((await w.receive('tenant', raw, header, at)).woken, true);
+  assert.equal((await s.get('tenant', 'invoices', 'i')).status, 'open');
+  assert.equal((await w.receive('tenant', raw, header, at)).duplicate, true);
+});
+test('billing customer action resume retains idempotency key', async () => {
+  const s = new InMemoryStore(),
+    b = new RecurringBilling(s);
+  await s.put('tenant', 'billing-attempts', {
+    id: 'i',
+    idempotencyKey: 'stable',
+    status: 'requires_action',
+  });
+  assert.equal((await b.resume(ctx, 'i')).status, 'pending');
+  assert.equal((await s.get('tenant', 'billing-attempts', 'i')).idempotencyKey, 'stable');
+  await assert.rejects(b.resume(ctx, 'i'), { code: 'CONFLICT' });
+});
+test('workflow reconciles unknown provider operation before next step and does not resubmit', async () => {
+  const s = new InMemoryStore();
+  let submit = 0,
+    inspect = 0;
+  const ops = new ProviderOperations(s, {
+    deploy: {
+      submit: async () => {
+        submit++;
+        return { state: 'unknown' };
+      },
+      inspect: async () => {
+        inspect++;
+        return { state: 'succeeded' };
+      },
+    },
+  });
+  const w = new ProviderWorkflow(
+    s,
+    ops,
+    {
+      release: {
+        revision: '1',
+        steps: [
+          { kind: 'deploy', input: () => ({}) },
+          { kind: 'deploy', input: () => ({}) },
+        ],
+      },
+    },
+    allow,
+  );
+  const row = await w.start(ctx, 'release', 'key', {});
+  assert.equal((await w.advance(ctx, row.id)).step, 0);
+  assert.equal((await w.advance(ctx, row.id)).step, 1);
+  assert.equal((await w.advance(ctx, row.id)).step, 1);
+  assert.equal((await w.advance(ctx, row.id)).state, 'succeeded');
+  assert.equal(submit, 2);
+  assert.equal(inspect, 2);
+  await assert.rejects(w.advance(other, row.id), { code: 'NOT_FOUND' });
+});
+test('scanner triage is expiring, source-bound and retains original finding', () => {
+  const f = { scannerId: 'SCAN-01', checkId: 'X', location: 'a:1', title: 'x', severity: 'high' },
+    report = { findings: [f], notExecutedScannerIds: ['SCAN-02'], failedScannerIds: [] },
+    source = 'a'.repeat(64),
+    decision = {
+      fingerprint: findingFingerprint(f),
+      sourceHash: source,
+      status: 'false-positive',
+      reviewer: 'reviewer',
+      reason: 'reason',
+      expiresAt: new Date(Date.now() + 10000).toISOString(),
+    };
+  const r = evaluateFindings(report, source, [decision]);
+  assert.equal(r.rows.length, 1);
+  assert.equal(r.openHigh, 0);
+  assert.equal(r.incomplete, true);
+  assert.equal(evaluateFindings(report, 'b'.repeat(64), [decision]).openHigh, 1);
+  assert.equal(evaluateFindings(report, source, [{ ...decision, status: 'fixed' }]).openHigh, 1);
+});

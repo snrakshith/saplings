@@ -1,27 +1,9 @@
 [
   {
     "checkId": "SQL_INTERPOLATION",
-    "location": "integrations.ts:59",
-    "lineSha256": "15ae9c74c8b8f09e22b79af2990baf1c0a6633b55036bdda76f73f5624e1f21a",
+    "location": "integrations.ts:366",
+    "lineSha256": "a7692bffa26e970d8af18089b3a441f7ad4db3c062cdc7090e9a659aec48573a",
     "reason": "The interpolated string is input to an HMAC signature."
-  },
-  {
-    "checkId": "SQL_INTERPOLATION",
-    "location": "registry.ts:35",
-    "lineSha256": "c1a200fca72bb358d00a23363eb30267799cd9ecb45eee58348bbde55574b75a",
-    "reason": "The interpolation constructs a service permission and an authorization error message."
-  },
-  {
-    "checkId": "SQL_INTERPOLATION",
-    "location": "resources.ts:10",
-    "lineSha256": "e94a2c5a3b7ca767eb4e49b93449c08fcb4581834a28161ad8a92989e8115279",
-    "reason": "The interpolation constructs a service permission and an immutable-field error message."
-  },
-  {
-    "checkId": "SQL_INTERPOLATION",
-    "location": "resources.ts:30",
-    "lineSha256": "a3a7be31b52b11e521d943b21ff590945dd0c1b544b7e5d46af98e02904195a0",
-    "reason": "The interpolation constructs an immutable-field error message."
   },
   {
     "checkId": "EVAL_INPUT",
@@ -31,20 +13,20 @@
   },
   {
     "checkId": "EVAL_INPUT",
-    "location": "valkey.ts:3",
-    "lineSha256": "66907f920c8a45ec190b4f8ea3db375173541ea3d69883ff9ea72811acbe7d81",
+    "location": "valkey.ts:4",
+    "lineSha256": "a6a8b9eea78ae515d92af09531353608d0dea53ae58603ae4be06da4a37a8e86",
     "reason": "The interface declares the Redis client API."
   },
   {
     "checkId": "EVAL_INPUT",
-    "location": "valkey.ts:6",
-    "lineSha256": "ff6bacee9d1af195ac9bb2d66d1eb4e8031644bc3f6de9d79dc9263f459007cd",
+    "location": "valkey.ts:12",
+    "lineSha256": "9b5ae3e06dfac593b1d00e26bb97a1ab762ea4bef43263610d305abe73952f91",
     "reason": "The Redis call evaluates fixed Lua with separate keys and arguments."
   },
   {
     "checkId": "EVAL_INPUT",
-    "location": "valkey.ts:7",
-    "lineSha256": "c45d0220a11338f93d387c0cb7cb5df7ffab30c8975717c666de6a6a3f59d3c6",
+    "location": "valkey.ts:26",
+    "lineSha256": "9b5ae3e06dfac593b1d00e26bb97a1ab762ea4bef43263610d305abe73952f91",
     "reason": "The Redis call evaluates fixed Lua with separate keys and arguments."
   }
 ]

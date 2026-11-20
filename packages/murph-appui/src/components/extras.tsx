@@ -1,21 +1,239 @@
-import React,{useMemo,useState} from 'react';
-import {Pressable,ScrollView,View} from 'react-native';
-import {colors} from '@saplings/ui-core';
-import {useAppTheme} from '../core/theme.js';
-import {Stack,Box,Typography,Divider} from './primitives.js';
-import {Button,Alert} from './feedback.js';
-import {Input} from './forms.js';
-import {Modal,Drawer} from './disclosure.js';
-export interface BreadcrumbItem {label:string;onPress?:()=>void;}
-export function Breadcrumb({items}: {items:readonly BreadcrumbItem[]}){return <View accessibilityRole="text" style={{flexDirection:'row',flexWrap:'wrap',alignItems:'center'}}>{items.map((item,i)=><React.Fragment key={`${item.label}-${i}`}>{i>0?<Typography color="muted"> / </Typography>:null}{item.onPress?<Pressable accessibilityRole="link" accessibilityLabel={item.label} onPress={item.onPress}><Typography color="primary">{item.label}</Typography></Pressable>:<Typography>{item.label}</Typography>}</React.Fragment>)}</View>}
-export function Kbd({children}:{children:React.ReactNode}){const {theme}=useAppTheme();return <Box radius={4} padding={0.5} style={{borderWidth:1,borderColor:theme.colors.neutral[300],alignSelf:'flex-start'}}><Typography variant="caption">{children}</Typography></Box>}
-export interface CommandOption {id:string;label:string;keywords?:string;disabled?:boolean;}
-export function Command({options,onSelect,placeholder='Search commands',emptyText='No commands'}:{options:readonly CommandOption[];onSelect:(id:string)=>void;placeholder?:string;emptyText?:string}){const [query,setQuery]=useState('');const matches=useMemo(()=>options.filter(o=>(o.label+' '+(o.keywords??'')).toLowerCase().includes(query.trim().toLowerCase())),[options,query]);return <Stack gap={1}><Input value={query} onChangeText={setQuery} accessibilityLabel="Search commands" placeholder={placeholder}/><ScrollView keyboardShouldPersistTaps="handled" style={{maxHeight:300}}>{matches.length?matches.map(o=><Pressable key={o.id} accessibilityRole="button" accessibilityLabel={o.label} accessibilityState={{disabled:o.disabled}} disabled={o.disabled} onPress={()=>onSelect(o.id)} style={{padding:12,minHeight:44}}><Typography>{o.label}</Typography></Pressable>):<Typography color="muted">{emptyText}</Typography>}</ScrollView></Stack>}
-export function Separator(props:React.ComponentProps<typeof Divider>){return <Divider {...props}/>}
-export interface AlertDialogProps {visible:boolean;title:string;description?:string;confirmLabel?:string;cancelLabel?:string;onConfirm:()=>void;onCancel:()=>void;destructive?:boolean;}
-export function AlertDialog({visible,title,description,confirmLabel='Confirm',cancelLabel='Cancel',onConfirm,onCancel,destructive}:AlertDialogProps){return <Modal visible={visible} title={title} onClose={onCancel}><Stack gap={2}>{description?<Typography>{description}</Typography>:null}<Stack direction="row" justify="flex-end" gap={1}><Button variant="text" onPress={onCancel}>{cancelLabel}</Button><Button variant={destructive?'outlined':'primary'} onPress={onConfirm}>{confirmLabel}</Button></Stack></Stack></Modal>}
-export function Sidebar({visible,onClose,children,title='Navigation'}:{visible:boolean;onClose:()=>void;title?:string;children:React.ReactNode}){return <Drawer side="left" visible={visible} onClose={onClose} title={title}>{children}</Drawer>}
-export function Tooltip({children,content,label='Show help'}:{children:React.ReactNode;content:string;label?:string}){const [visible,setVisible]=useState(false);return <View><Pressable onPress={()=>setVisible(true)} accessibilityRole="button" accessibilityLabel={label}>{children}</Pressable><Modal visible={visible} onClose={()=>setVisible(false)} title="Information"><Typography>{content}</Typography></Modal></View>}
-export function Toast({visible,message,tone='info',onDismiss}:{visible:boolean;message:string;tone?:'info'|'success'|'warning'|'error';onDismiss?:()=>void}){if(!visible)return null;return <View accessibilityRole="alert"><Alert tone={tone}>{message}</Alert>{onDismiss?<Button variant="text" onPress={onDismiss}>Dismiss</Button>:null}</View>}
-export function Feedback(props:React.ComponentProps<typeof Alert>){return <Alert {...props}/>}
-export function ColorShowcase(){const {theme}=useAppTheme();return <ScrollView><Stack gap={2}>{Object.keys(colors).map(family=><View key={family}><Typography variant="subtitle1">{family}</Typography><Stack direction="row" gap={0.5} wrap>{Object.entries(colors[family as keyof typeof colors]).map(([shade,hex])=><View key={shade} accessibilityLabel={`${family} ${shade}: ${hex}`} style={{backgroundColor:hex,width:30,height:30,borderRadius:theme.shape.borderRadius/2}}/>)}</Stack></View>)}</Stack></ScrollView>}
+import React, { useMemo, useState } from 'react';
+import { Pressable, ScrollView, View } from 'react-native';
+import { colors } from '@saplings/ui-core';
+import { useAppTheme } from '../core/theme.js';
+import { Stack, Box, Typography, Divider } from './primitives.js';
+import { Button, Alert } from './feedback.js';
+import { Input } from './forms.js';
+import { Modal, Drawer } from './disclosure.js';
+export interface BreadcrumbItem {
+  label: string;
+  onPress?: () => void;
+}
+export function Breadcrumb({ items }: { items: readonly BreadcrumbItem[] }) {
+  return (
+    <View
+      accessibilityRole="text"
+      style={{ flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center' }}
+    >
+      {items.map((item, i) => (
+        <React.Fragment key={`${item.label}-${i}`}>
+          {i > 0 ? <Typography color="muted"> / </Typography> : null}
+          {item.onPress ? (
+            <Pressable
+              accessibilityRole="link"
+              accessibilityLabel={item.label}
+              onPress={item.onPress}
+            >
+              <Typography color="primary">{item.label}</Typography>
+            </Pressable>
+          ) : (
+            <Typography>{item.label}</Typography>
+          )}
+        </React.Fragment>
+      ))}
+    </View>
+  );
+}
+export function Kbd({ children }: { children: React.ReactNode }) {
+  const { theme } = useAppTheme();
+  return (
+    <Box
+      radius={4}
+      padding={0.5}
+      style={{ borderWidth: 1, borderColor: theme.colors.neutral[300], alignSelf: 'flex-start' }}
+    >
+      <Typography variant="caption">{children}</Typography>
+    </Box>
+  );
+}
+export interface CommandOption {
+  id: string;
+  label: string;
+  keywords?: string;
+  disabled?: boolean;
+}
+export function Command({
+  options,
+  onSelect,
+  placeholder = 'Search commands',
+  emptyText = 'No commands',
+}: {
+  options: readonly CommandOption[];
+  onSelect: (id: string) => void;
+  placeholder?: string;
+  emptyText?: string;
+}) {
+  const [query, setQuery] = useState('');
+  const matches = useMemo(
+    () =>
+      options.filter((o) =>
+        (o.label + ' ' + (o.keywords ?? '')).toLowerCase().includes(query.trim().toLowerCase()),
+      ),
+    [options, query],
+  );
+  return (
+    <Stack gap={1}>
+      <Input
+        value={query}
+        onChangeText={setQuery}
+        accessibilityLabel="Search commands"
+        placeholder={placeholder}
+      />
+      <ScrollView keyboardShouldPersistTaps="handled" style={{ maxHeight: 300 }}>
+        {matches.length ? (
+          matches.map((o) => (
+            <Pressable
+              key={o.id}
+              accessibilityRole="button"
+              accessibilityLabel={o.label}
+              accessibilityState={{ disabled: o.disabled }}
+              disabled={o.disabled}
+              onPress={() => onSelect(o.id)}
+              style={{ padding: 12, minHeight: 44 }}
+            >
+              <Typography>{o.label}</Typography>
+            </Pressable>
+          ))
+        ) : (
+          <Typography color="muted">{emptyText}</Typography>
+        )}
+      </ScrollView>
+    </Stack>
+  );
+}
+export function Separator(props: React.ComponentProps<typeof Divider>) {
+  return <Divider {...props} />;
+}
+export interface AlertDialogProps {
+  visible: boolean;
+  title: string;
+  description?: string;
+  confirmLabel?: string;
+  cancelLabel?: string;
+  onConfirm: () => void;
+  onCancel: () => void;
+  destructive?: boolean;
+}
+export function AlertDialog({
+  visible,
+  title,
+  description,
+  confirmLabel = 'Confirm',
+  cancelLabel = 'Cancel',
+  onConfirm,
+  onCancel,
+  destructive,
+}: AlertDialogProps) {
+  return (
+    <Modal visible={visible} title={title} onClose={onCancel}>
+      <Stack gap={2}>
+        {description ? <Typography>{description}</Typography> : null}
+        <Stack direction="row" justify="flex-end" gap={1}>
+          <Button variant="text" onPress={onCancel}>
+            {cancelLabel}
+          </Button>
+          <Button variant={destructive ? 'outlined' : 'primary'} onPress={onConfirm}>
+            {confirmLabel}
+          </Button>
+        </Stack>
+      </Stack>
+    </Modal>
+  );
+}
+export function Sidebar({
+  visible,
+  onClose,
+  children,
+  title = 'Navigation',
+}: {
+  visible: boolean;
+  onClose: () => void;
+  title?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Drawer side="left" visible={visible} onClose={onClose} title={title}>
+      {children}
+    </Drawer>
+  );
+}
+export function Tooltip({
+  children,
+  content,
+  label = 'Show help',
+}: {
+  children: React.ReactNode;
+  content: string;
+  label?: string;
+}) {
+  const [visible, setVisible] = useState(false);
+  return (
+    <View>
+      <Pressable
+        onPress={() => setVisible(true)}
+        accessibilityRole="button"
+        accessibilityLabel={label}
+      >
+        {children}
+      </Pressable>
+      <Modal visible={visible} onClose={() => setVisible(false)} title="Information">
+        <Typography>{content}</Typography>
+      </Modal>
+    </View>
+  );
+}
+export function Toast({
+  visible,
+  message,
+  tone = 'info',
+  onDismiss,
+}: {
+  visible: boolean;
+  message: string;
+  tone?: 'info' | 'success' | 'warning' | 'error';
+  onDismiss?: () => void;
+}) {
+  if (!visible) return null;
+  return (
+    <View accessibilityRole="alert">
+      <Alert tone={tone}>{message}</Alert>
+      {onDismiss ? (
+        <Button variant="text" onPress={onDismiss}>
+          Dismiss
+        </Button>
+      ) : null}
+    </View>
+  );
+}
+export function Feedback(props: React.ComponentProps<typeof Alert>) {
+  return <Alert {...props} />;
+}
+export function ColorShowcase() {
+  const { theme } = useAppTheme();
+  return (
+    <ScrollView>
+      <Stack gap={2}>
+        {Object.keys(colors).map((family) => (
+          <View key={family}>
+            <Typography variant="subtitle1">{family}</Typography>
+            <Stack direction="row" gap={0.5} wrap>
+              {Object.entries(colors[family as keyof typeof colors]).map(([shade, hex]) => (
+                <View
+                  key={shade}
+                  accessibilityLabel={`${family} ${shade}: ${hex}`}
+                  style={{
+                    backgroundColor: hex,
+                    width: 30,
+                    height: 30,
+                    borderRadius: theme.shape.borderRadius / 2,
+                  }}
+                />
+              ))}
+            </Stack>
+          </View>
+        ))}
+      </Stack>
+    </ScrollView>
+  );
+}

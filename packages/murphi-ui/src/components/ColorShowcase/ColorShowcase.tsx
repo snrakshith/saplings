@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { colors, type ColorName, type ColorShade } from "../../theme/colors.js";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { colors, type ColorName, type ColorShade } from '../../theme/colors.js';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface ColorShowcaseProps {
   colorName?: ColorName;
@@ -48,7 +48,7 @@ const ColorSwatch = styled.div<{ color: string; isLight: boolean }>`
   min-height: 80px;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
-  
+
   &:hover {
     transform: scale(1.05);
   }
@@ -57,14 +57,14 @@ const ColorSwatch = styled.div<{ color: string; isLight: boolean }>`
 const SwatchLabel = styled.span<{ isLight: boolean }>`
   font-size: ${(props) => (props.theme as XloxTheme).typography.caption.fontSize};
   font-weight: 600;
-  color: ${(props) => (props.isLight ? "#000" : "#fff")};
+  color: ${(props) => (props.isLight ? '#000' : '#fff')};
   margin-bottom: ${(props) => (props.theme as XloxTheme).spacing(0.5)};
 `;
 
 const SwatchValue = styled.span<{ isLight: boolean }>`
   font-size: ${(props) => (props.theme as XloxTheme).typography.caption.fontSize};
   font-family: monospace;
-  color: ${(props) => (props.isLight ? "#000" : "#fff")};
+  color: ${(props) => (props.isLight ? '#000' : '#fff')};
   opacity: 0.8;
 `;
 
@@ -89,10 +89,10 @@ export const ColorShowcase: React.FC<ColorShowcaseProps> = ({
   ...props
 }) => {
   const shades: ColorShade[] = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950];
-  
+
   const renderColorGroup = (name: ColorName) => {
     const colorGroup = colors[name];
-    
+
     return (
       <ColorGroup key={name}>
         <ColorName>{name}</ColorName>
@@ -100,7 +100,7 @@ export const ColorShowcase: React.FC<ColorShowcaseProps> = ({
           {shades.map((shade) => {
             const colorValue = colorGroup[shade];
             const isLight = isLightColor(colorValue);
-            
+
             return (
               <ColorSwatch
                 key={shade}
@@ -118,7 +118,7 @@ export const ColorShowcase: React.FC<ColorShowcaseProps> = ({
       </ColorGroup>
     );
   };
-  
+
   return (
     <ShowcaseContainer {...props}>
       {showAllColors ? (
@@ -132,4 +132,4 @@ export const ColorShowcase: React.FC<ColorShowcaseProps> = ({
   );
 };
 
-ColorShowcase.displayName = "ColorShowcase";
+ColorShowcase.displayName = 'ColorShowcase';

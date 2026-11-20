@@ -1,36 +1,36 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface AvatarProps {
   src?: string;
   alt?: string;
   children?: React.ReactNode;
-  size?: "small" | "medium" | "large" | number;
-  variant?: "circular" | "rounded" | "square";
+  size?: 'small' | 'medium' | 'large' | number;
+  variant?: 'circular' | 'rounded' | 'square';
   className?: string;
 }
 
-const getSize = (size: AvatarProps["size"]): string => {
-  if (typeof size === "number") return `${size}px`;
-  
+const getSize = (size: AvatarProps['size']): string => {
+  if (typeof size === 'number') return `${size}px`;
+
   const sizes = {
-    small: "32px",
-    medium: "40px",
-    large: "56px",
+    small: '32px',
+    medium: '40px',
+    large: '56px',
   };
-  
-  return sizes[size || "medium"];
+
+  return sizes[size || 'medium'];
 };
 
-const getBorderRadius = (variant: AvatarProps["variant"], theme: XloxTheme): string => {
+const getBorderRadius = (variant: AvatarProps['variant'], theme: XloxTheme): string => {
   switch (variant) {
-    case "square":
-      return "0";
-    case "rounded":
+    case 'square':
+      return '0';
+    case 'rounded':
       return `${theme.shape.borderRadius}px`;
     default:
-      return "50%";
+      return '50%';
   }
 };
 
@@ -74,36 +74,36 @@ const AvatarFallback = styled.div`
 
 export const Avatar: React.FC<AvatarProps> = ({
   src,
-  alt = "",
+  alt = '',
   children,
-  size = "medium",
-  variant = "circular",
+  size = 'medium',
+  variant = 'circular',
   ...props
 }) => {
   const [imgError, setImgError] = React.useState(false);
-  
+
   const handleImageError = () => {
     setImgError(true);
   };
-  
+
   const renderContent = () => {
     if (src && !imgError) {
       return <AvatarImage src={src} alt={alt} onError={handleImageError} />;
     }
-    
+
     if (children) {
       return children;
     }
-    
+
     return (
       <AvatarFallback>
         <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
         </svg>
       </AvatarFallback>
     );
   };
-  
+
   return (
     <StyledAvatar size={size} variant={variant} {...props}>
       {renderContent()}
@@ -111,4 +111,4 @@ export const Avatar: React.FC<AvatarProps> = ({
   );
 };
 
-Avatar.displayName = "Avatar";
+Avatar.displayName = 'Avatar';

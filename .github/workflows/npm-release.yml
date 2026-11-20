@@ -21,32 +21,34 @@ jobs:
     permissions:
       contents: read
     outputs:
+      live: ${{ steps.configuration.outputs.live }}
       mode: ${{ steps.changesets.outputs.mode }}
       publish-plan: ${{ steps.changesets.outputs.publish-plan-artifact-id }}
     steps:
       - name: Check release configuration
+        id: configuration
         env:
           PREVIEW: ${{ inputs.preview }}
           RELEASE_ENABLED: ${{ vars.NPM_RELEASE_ENABLED }}
         run: |
-          if [[ "$GITHUB_EVENT_NAME" == workflow_dispatch && "$PREVIEW" != true ]]; then
-            if [[ "$GITHUB_REF" != refs/heads/main || "$RELEASE_ENABLED" != true ]]; then
-              echo "::error::A release requires the main branch and the repository Actions variable NPM_RELEASE_ENABLED=true. Use preview to validate any branch."
-              exit 1
-            fi
-          elif [[ "$PREVIEW" == true ]]; then
-            echo "Preview mode. This run will verify package tarballs."
-          elif [[ "$RELEASE_ENABLED" != true ]]; then
-            echo "::notice::Release automation is disabled. Set the repository Actions variable NPM_RELEASE_ENABLED=true to enable it."
+          if [[ "$PREVIEW" == true ]]; then
+            echo "Preview mode. This run will simulate versioning and check the package tarballs."
+          elif [[ "$GITHUB_EVENT_NAME" == workflow_dispatch && "$GITHUB_REF" != refs/heads/main ]]; then
+            echo "::error::Run a live release from main. Use preview to validate any branch."
+            exit 1
+          elif [[ "$GITHUB_EVENT_NAME" == workflow_dispatch || "$RELEASE_ENABLED" == true ]]; then
+            echo 'live=true' >> "$GITHUB_OUTPUT"
+          else
+            echo "::notice::Automatic releases are disabled. Set NPM_RELEASE_ENABLED=true or manually start a live release on main."
           fi
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
           fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version-file: .node-version
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
       - uses: changesets/action/select-mode@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
@@ -60,23 +62,21 @@ jobs:
   version:
     if: >-
       needs.select-mode.outputs.mode == 'version' &&
-      github.ref == 'refs/heads/main' &&
-      vars.NPM_RELEASE_ENABLED == 'true' &&
-      !inputs.preview
+      needs.select-mode.outputs.live == 'true'
     needs: select-mode
     runs-on: ubuntu-latest
     permissions:
       contents: write
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
           fetch-depth: 0
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version-file: .node-version
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
       - uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
@@ -87,8 +87,7 @@ jobs:
     if: >-
       inputs.preview ||
       (needs.select-mode.outputs.mode == 'publish' &&
-       github.ref == 'refs/heads/main' &&
-       vars.NPM_RELEASE_ENABLED == 'true')
+       needs.select-mode.outputs.live == 'true')
     needs: select-mode
     runs-on: ubuntu-latest
     permissions:
@@ -96,16 +95,35 @@ jobs:
     outputs:
       package-artifact: ${{ steps.changesets.outputs.pack-dir-artifact-id }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version-file: .node-version
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile
+      - name: Apply pending Changesets in preview
+        if: inputs.preview && needs.select-mode.outputs.mode == 'version'
+        run: |
+          pnpm run release:version
+          pnpm install --frozen-lockfile
       - run: pnpm run release:verify
+      - name: Pack release candidates in preview
+        if: inputs.preview
+        run: |
+          pnpm exec changeset publish-plan --output "$RUNNER_TEMP/npm-preview-plan.json"
+          pnpm exec changeset pack --from-publish-plan "$RUNNER_TEMP/npm-preview-plan.json" --out-dir "$RUNNER_TEMP/npm-preview"
+      - name: Upload release preview
+        if: inputs.preview
+        uses: actions/upload-artifact@v7
+        with:
+          name: npm-release-preview
+          path: |
+            ${{ runner.temp }}/npm-preview/
+            ${{ runner.temp }}/npm-preview-plan.json
       - if: ${{ !inputs.preview }}
         uses: changesets/action/pack@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         id: changesets
@@ -114,23 +132,21 @@ jobs:
 
   publish:
     if: >-
-      github.ref == 'refs/heads/main' &&
-      vars.NPM_RELEASE_ENABLED == 'true' &&
-      !inputs.preview &&
+      needs.select-mode.outputs.live == 'true' &&
       needs.pack.outputs.package-artifact != ''
-    needs: pack
+    needs: [select-mode, pack]
     runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           persist-credentials: false
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v6
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
         with:
-          node-version: '24'
+          node-version-file: .node-version
           registry-url: https://registry.npmjs.org
           package-manager-cache: false
       - run: pnpm install --frozen-lockfile

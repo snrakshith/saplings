@@ -1,18 +1,151 @@
-import type {ActorContext,JsonRecord,Store} from './types.js';
-import {atomic,fail,object,scope,text} from './primitives.js';
-export interface DomainPolicy { read:readonly string[]; write:readonly string[]; required?:readonly string[]; validate?:(record:JsonRecord)=>void; authorize:(ctx:ActorContext,action:'read'|'create'|'update'|'delete',record:Readonly<JsonRecord>)=>boolean|Promise<boolean>; }
+import type { ActorContext, JsonRecord, Store } from './types.js';
+import { atomic, fail, object, scope, text } from './primitives.js';
+export interface DomainPolicy {
+  read: readonly string[];
+  write: readonly string[];
+  required?: readonly string[];
+  validate?: (record: JsonRecord) => void;
+  authorize: (
+    ctx: ActorContext,
+    action: 'read' | 'create' | 'update' | 'delete',
+    record: Readonly<JsonRecord>,
+  ) => boolean | Promise<boolean>;
+}
 /** Explicit allowlists, row policy, and validation inside the same transaction as the write. Trusted domain routes only. */
 export class DomainPolicyService {
- constructor(private store:Store,private policies:Readonly<Record<string,DomainPolicy>>){}
- hasPolicy(collection:string):boolean{return Object.hasOwn(this.policies,collection);}
- /** Return only authorized rows and explicitly whitelisted fields. Cursor still advances over source rows. */
- async list(ctx:ActorContext,collection:string,input:{limit?:number;after?:string}={}){scope(ctx);const p=this.policy(collection),limit=input.limit??50;if(!Number.isSafeInteger(limit)||limit<1||limit>500) return fail('Invalid page size');const after=input.after===undefined?undefined:text(input.after,'after',200);const source=this.store.page?await this.store.page<JsonRecord&{id:string}>(ctx.tenantId,collection,limit,after):await (async()=>{const rows=(await this.store.list<JsonRecord&{id:string}>(ctx.tenantId,collection)).sort((a,b)=>a.id.localeCompare(b.id)).filter(r=>!after||r.id>after).slice(0,limit+1);return {items:rows.slice(0,limit),next:rows.length>limit?rows[limit-1].id:undefined};})();const items:JsonRecord[]=[];for(const row of source.items)if(await p.authorize(ctx,'read',structuredClone(row))===true)items.push(this.project(row,p));return {items,next:source.next};}
+  constructor(
+    private store: Store,
+    private policies: Readonly<Record<string, DomainPolicy>>,
+  ) {}
+  hasPolicy(collection: string): boolean {
+    return Object.hasOwn(this.policies, collection);
+  }
+  /** Return only authorized rows and explicitly whitelisted fields. Cursor still advances over source rows. */
+  async list(
+    ctx: ActorContext,
+    collection: string,
+    input: { limit?: number; after?: string } = {},
+  ) {
+    scope(ctx);
+    const p = this.policy(collection),
+      limit = input.limit ?? 50;
+    if (!Number.isSafeInteger(limit) || limit < 1 || limit > 500) return fail('Invalid page size');
+    const after = input.after === undefined ? undefined : text(input.after, 'after', 200);
+    const source = this.store.page
+      ? await this.store.page<JsonRecord & { id: string }>(ctx.tenantId, collection, limit, after)
+      : await (async () => {
+          const rows = (
+            await this.store.list<JsonRecord & { id: string }>(ctx.tenantId, collection)
+          )
+            .sort((a, b) => a.id.localeCompare(b.id))
+            .filter((r) => !after || r.id > after)
+            .slice(0, limit + 1);
+          return {
+            items: rows.slice(0, limit),
+            next: rows.length > limit ? rows[limit - 1].id : undefined,
+          };
+        })();
+    const items: JsonRecord[] = [];
+    for (const row of source.items)
+      if ((await p.authorize(ctx, 'read', structuredClone(row))) === true)
+        items.push(this.project(row, p));
+    return { items, next: source.next };
+  }
 
- private policy(collection:string){if(!Object.hasOwn(this.policies,collection))return fail('Domain policy required','FORBIDDEN',403);return this.policies[collection];}
- readable(collection:string,field:string){const p=this.policy(collection);return field==='id'||p.read.includes(field);}
- async authorizeRecord(ctx:ActorContext,collection:string,action:'read'|'create'|'update'|'delete',record:JsonRecord){const p=this.policy(collection);await this.check(p,ctx,action,record);return this.project(record,p);}
- private project(row:JsonRecord,p:DomainPolicy){return Object.fromEntries(['id',...p.read].filter(k=>Object.hasOwn(row,k)).map(k=>[k,row[k]]));}
- private async check(p:DomainPolicy,ctx:ActorContext,action:Parameters<DomainPolicy['authorize']>[1],row:JsonRecord){if(await p.authorize(ctx,action,structuredClone(row))!==true)return fail('Domain policy denied','FORBIDDEN',403);}
- async get(ctx:ActorContext,collection:string,id:string){scope(ctx);const p=this.policy(collection);const row=await this.store.get<JsonRecord>(ctx.tenantId,collection,text(id,'id',200));if(!row)return undefined;await this.check(p,ctx,'read',row);return this.project(row,p);}
- async mutate(ctx:ActorContext,collection:string,id:string,action:'create'|'update'|'delete',input:JsonRecord={},providedTx?:Store){scope(ctx);text(id,'id',200);const p=this.policy(collection),data=object(input);for(const field of Object.keys(data))if(!p.write.includes(field)||['id','tenantId','createdAt','updatedAt','__proto__','constructor','prototype'].includes(field))return fail('Field not writable','FORBIDDEN',403);const work=async(tx:Store)=>{const profile=await tx.get<{status:string}>(ctx.tenantId,'tenant-profile','profile');if(profile&&profile.status!=='active')return fail('Tenant frozen','TENANT_FROZEN',403);const previous=await tx.get<JsonRecord>(ctx.tenantId,collection,id);if(action==='create'&&previous)return fail('Already exists','CONFLICT',409);if(action!=='create'&&!previous)return fail('Not found','NOT_FOUND',404);if(previous)await this.check(p,ctx,action,previous);if(action==='delete'){if((await tx.get<{active:boolean}>(ctx.tenantId,'legal-holds','current'))?.active===true)return fail('Legal hold active','LEGAL_HOLD',409);await tx.delete(ctx.tenantId,collection,id);return {id,deleted:true};}const at=new Date().toISOString(),next={...previous,...data,id,createdAt:previous?.createdAt??at,updatedAt:at};for(const key of p.required??[])if(!Object.hasOwn(next,key)||next[key as keyof typeof next]==null)return fail('Required field missing');p.validate?.(structuredClone(next));await this.check(p,ctx,action,next);await tx.put(ctx.tenantId,collection,next);return this.project(next,p);};return providedTx?work(providedTx):atomic(this.store,ctx.tenantId,work);}
+  private policy(collection: string) {
+    if (!Object.hasOwn(this.policies, collection))
+      return fail('Domain policy required', 'FORBIDDEN', 403);
+    return this.policies[collection];
+  }
+  readable(collection: string, field: string) {
+    const p = this.policy(collection);
+    return field === 'id' || p.read.includes(field);
+  }
+  async authorizeRecord(
+    ctx: ActorContext,
+    collection: string,
+    action: 'read' | 'create' | 'update' | 'delete',
+    record: JsonRecord,
+  ) {
+    const p = this.policy(collection);
+    await this.check(p, ctx, action, record);
+    return this.project(record, p);
+  }
+  private project(row: JsonRecord, p: DomainPolicy) {
+    return Object.fromEntries(
+      ['id', ...p.read].filter((k) => Object.hasOwn(row, k)).map((k) => [k, row[k]]),
+    );
+  }
+  private async check(
+    p: DomainPolicy,
+    ctx: ActorContext,
+    action: Parameters<DomainPolicy['authorize']>[1],
+    row: JsonRecord,
+  ) {
+    if ((await p.authorize(ctx, action, structuredClone(row))) !== true)
+      return fail('Domain policy denied', 'FORBIDDEN', 403);
+  }
+  async get(ctx: ActorContext, collection: string, id: string) {
+    scope(ctx);
+    const p = this.policy(collection);
+    const row = await this.store.get<JsonRecord>(ctx.tenantId, collection, text(id, 'id', 200));
+    if (!row) return undefined;
+    await this.check(p, ctx, 'read', row);
+    return this.project(row, p);
+  }
+  async mutate(
+    ctx: ActorContext,
+    collection: string,
+    id: string,
+    action: 'create' | 'update' | 'delete',
+    input: JsonRecord = {},
+    providedTx?: Store,
+  ) {
+    scope(ctx);
+    text(id, 'id', 200);
+    const p = this.policy(collection),
+      data = object(input);
+    for (const field of Object.keys(data))
+      if (
+        !p.write.includes(field) ||
+        [
+          'id',
+          'tenantId',
+          'createdAt',
+          'updatedAt',
+          '__proto__',
+          'constructor',
+          'prototype',
+        ].includes(field)
+      )
+        return fail('Field not writable', 'FORBIDDEN', 403);
+    const work = async (tx: Store) => {
+      const profile = await tx.get<{ status: string }>(ctx.tenantId, 'tenant-profile', 'profile');
+      if (profile && profile.status !== 'active')
+        return fail('Tenant frozen', 'TENANT_FROZEN', 403);
+      const previous = await tx.get<JsonRecord>(ctx.tenantId, collection, id);
+      if (action === 'create' && previous) return fail('Already exists', 'CONFLICT', 409);
+      if (action !== 'create' && !previous) return fail('Not found', 'NOT_FOUND', 404);
+      if (previous) await this.check(p, ctx, action, previous);
+      if (action === 'delete') {
+        if (
+          (await tx.get<{ active: boolean }>(ctx.tenantId, 'legal-holds', 'current'))?.active ===
+          true
+        )
+          return fail('Legal hold active', 'LEGAL_HOLD', 409);
+        await tx.delete(ctx.tenantId, collection, id);
+        return { id, deleted: true };
+      }
+      const at = new Date().toISOString(),
+        next = { ...previous, ...data, id, createdAt: previous?.createdAt ?? at, updatedAt: at };
+      for (const key of p.required ?? [])
+        if (!Object.hasOwn(next, key) || next[key as keyof typeof next] == null)
+          return fail('Required field missing');
+      p.validate?.(structuredClone(next));
+      await this.check(p, ctx, action, next);
+      await tx.put(ctx.tenantId, collection, next);
+      return this.project(next, p);
+    };
+    return providedTx ? work(providedTx) : atomic(this.store, ctx.tenantId, work);
+  }
 }

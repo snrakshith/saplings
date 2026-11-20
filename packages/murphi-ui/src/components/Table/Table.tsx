@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
   children: React.ReactNode;
@@ -19,8 +19,10 @@ const StyledTable = styled.table<{ striped?: boolean; hoverable?: boolean; borde
   border-collapse: collapse;
   font-family: ${(props) => (props.theme as XloxTheme).typography.fontFamily};
   font-size: ${(props) => (props.theme as XloxTheme).typography.body2.fontSize};
-  
-  ${(props) => props.bordered && `
+
+  ${(props) =>
+    props.bordered &&
+    `
     border: 1px solid ${(props.theme as XloxTheme).colors.neutral[200]};
   `}
 `;
@@ -31,13 +33,17 @@ const TableHead = styled.thead`
 `;
 
 const TableBody = styled.tbody<{ striped?: boolean; hoverable?: boolean }>`
-  ${(props) => props.striped && `
+  ${(props) =>
+    props.striped &&
+    `
     tr:nth-of-type(even) {
       background-color: ${(props.theme as XloxTheme).colors.neutral[50]};
     }
   `}
-  
-  ${(props) => props.hoverable && `
+
+  ${(props) =>
+    props.hoverable &&
+    `
     tr:hover {
       background-color: ${(props.theme as XloxTheme).colors.neutral[100]};
     }
@@ -87,9 +93,9 @@ Table.Row = TableRow;
 Table.Header = TableHeader;
 Table.Cell = TableCell;
 
-Table.displayName = "Table";
-TableHead.displayName = "Table.Head";
-TableBody.displayName = "Table.Body";
-TableRow.displayName = "Table.Row";
-TableHeader.displayName = "Table.Header";
-TableCell.displayName = "Table.Cell";
+Table.displayName = 'Table';
+TableHead.displayName = 'Table.Head';
+TableBody.displayName = 'Table.Body';
+TableRow.displayName = 'Table.Row';
+TableHeader.displayName = 'Table.Header';
+TableCell.displayName = 'Table.Cell';

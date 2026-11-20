@@ -1,8 +1,8 @@
-import React, { forwardRef } from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { forwardRef } from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
-export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+export interface RadioProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: string;
   error?: boolean;
 }
@@ -26,19 +26,20 @@ const StyledRadio = styled.div<{ checked?: boolean; error?: boolean; disabled?: 
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  border: 2px solid ${(props) => {
-    const theme = props.theme as XloxTheme;
-    if (props.error) return theme.colors.error[500];
-    if (props.checked) return theme.colors.primary[500];
-    return theme.colors.neutral[400];
-  }};
+  border: 2px solid
+    ${(props) => {
+      const theme = props.theme as XloxTheme;
+      if (props.error) return theme.colors.error[500];
+      if (props.checked) return theme.colors.primary[500];
+      return theme.colors.neutral[400];
+    }};
   background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in-out;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  
+
   &:hover {
     border-color: ${(props) => {
       if (props.disabled) return;
@@ -47,9 +48,9 @@ const StyledRadio = styled.div<{ checked?: boolean; error?: boolean; disabled?: 
       return theme.colors.primary[600];
     }};
   }
-  
+
   &::after {
-    content: "";
+    content: '';
     width: 10px;
     height: 10px;
     border-radius: 50%;
@@ -71,18 +72,12 @@ export const Radio = forwardRef<HTMLInputElement, RadioProps>(
   ({ label, error, checked, disabled, ...props }, ref) => {
     return (
       <RadioWrapper>
-        <HiddenRadio
-          type="radio"
-          ref={ref}
-          checked={checked}
-          disabled={disabled}
-          {...props}
-        />
+        <HiddenRadio type="radio" ref={ref} checked={checked} disabled={disabled} {...props} />
         <StyledRadio checked={checked} error={error} disabled={disabled} />
         {label && <Label disabled={disabled}>{label}</Label>}
       </RadioWrapper>
     );
-  }
+  },
 );
 
-Radio.displayName = "Radio";
+Radio.displayName = 'Radio';

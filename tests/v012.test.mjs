@@ -1,18 +1,463 @@
-import {test} from 'vitest';import assert from 'node:assert/strict';
-import {createSapling,InMemoryStore} from '@saplings/sdk';
-import {saasFeatures} from '@saplings/catalog';
-const ctx={tenantId:'tenant',actorId:'owner',permissions:['*']},other={...ctx,tenantId:'other'},app={id:'v012',environment:'test'};
-const make=(services={},store=new InMemoryStore())=>createSapling({app,services,providers:{store}});
-test('catalog contract enforces disabled, scope, authorization and unknown actions for all 182 IDs',async()=>{assert.equal(saasFeatures.length,182);const disabled=Object.fromEntries(saasFeatures.map(f=>[f.id,{enabled:false}]));const sdk=createSapling({app,features:disabled});for(const f of saasFeatures){const action=sdk.featureManifest().find(x=>x.featureId===f.id).actions[0];await assert.rejects(sdk.capabilities.invoke(ctx,f.id,action,{}),{code:'FEATURE_DISABLED'});}const fresh=make();for(const f of saasFeatures){const action=fresh.featureManifest().find(x=>x.featureId===f.id).actions[0];await assert.rejects(fresh.capabilities.invoke({tenantId:'tenant',actorId:'unprivileged',permissions:[]},f.id,action,{}),{code:'FORBIDDEN'});await assert.rejects(fresh.capabilities.invoke(ctx,f.id,'unknown-action',{}),{code:'UNKNOWN_ACTION'});} });
-test('frozen tenant prevents all non-offboarding feature invocations',async()=>{const store=new InMemoryStore(),s=make({},store);await store.put(ctx.tenantId,'tenant-profile',{id:'profile',status:'offboarding'});for(const f of s.featureManifest()){if(f.featureId==='SAAS-024')continue;await assert.rejects(s.capabilities.invoke(ctx,f.featureId,f.actions[0],{}),{code:'TENANT_FROZEN'});}});
-test('configured password policy blocks weak/breached registration and reset, preserves salted data',async()=>{const s=make({accountPasswordPolicy:{minLength:16,requireDigit:true,requireUppercase:true,breached:p=>p.includes('Leaked')}});await assert.rejects(s.accounts.register(ctx.tenantId,{email:'a@example.com',password:'weak-long-password'}),{code:'PASSWORD_POLICY'});await assert.rejects(s.accounts.register(ctx.tenantId,{email:'a@example.com',password:'LeakedPassword1234'}),{code:'PASSWORD_POLICY'});const u=await s.accounts.register(ctx.tenantId,{email:'A@EXAMPLE.COM',password:'SafePassword123456'});assert.equal(u.email,'a@example.com');assert.equal('digest'in u,false);await assert.rejects(s.accounts.register(ctx.tenantId,{email:'a@example.com',password:'SafePassword123456'}),{code:'CONFLICT'});const ch=await s.accounts.challenge(ctx.tenantId,'a@example.com','reset');await assert.rejects(s.accounts.consume(ctx.tenantId,ch.secret,'reset','bad-password'),{code:'PASSWORD_POLICY'});assert.ok((await s.accounts.consume(ctx.tenantId,ch.secret,'reset','NewSecurePassword12345')).ok);});
-test('idempotent usage increments once across concurrent duplicate events and enforces quotas',async()=>{const s=make();await s.billing.setQuota(ctx,'api',10,'2026-11');const results=await Promise.all(Array.from({length:40},()=>s.billing.meter(ctx,'api',2,'2026-11','request-1')));assert.equal(results.filter(r=>r.replayed).length,39);assert.equal((await s.billing.getUsage(ctx,'api','2026-11')).quantity,2);assert.equal((await s.store.list(ctx.tenantId,'usage-events')).length,1);await assert.rejects(s.billing.meter(ctx,'api',5,'2026-11','request-1'),{code:'CONFLICT'});await assert.rejects(s.billing.meter(ctx,'api',9,'2026-11','request-2'),{code:'QUOTA_EXCEEDED'});assert.equal((await s.billing.getUsage(ctx,'api','2026-11')).quantity,2);});
-test('concurrent subscriptions and invoice creation are idempotent with conflicting keys denied',async()=>{const s=make();await s.store.put(ctx.tenantId,'plans',{id:'plan',priceMinor:1000,currency:'INR'});const subs=await Promise.all(Array.from({length:12},()=>s.commerce.subscribe(ctx,{planId:'plan',customerId:'customer',trialDays:7,idempotencyKey:'sub1'})));assert.equal(new Set(subs.map(x=>x.id)).size,1);assert.equal((await s.store.list(ctx.tenantId,'subscriptions')).length,1);await assert.rejects(s.commerce.subscribe(ctx,{planId:'plan',customerId:'customer',trialDays:3,idempotencyKey:'sub1'}),{code:'CONFLICT'});const order={customerId:'customer',currency:'INR',lines:[{description:'plan',quantity:1,unitMinor:1000}],idempotencyKey:'inv1'};const invoices=await Promise.all(Array.from({length:12},()=>s.commerce.invoice(ctx,order)));assert.equal(new Set(invoices.map(x=>x.id)).size,1);await assert.rejects(s.commerce.invoice(ctx,{...order,lines:[{description:'plan',quantity:2,unitMinor:1000}]}),{code:'CONFLICT'});});
-test('coupon limits per customer and expiry prevent over-redemption, replay cannot switch identity',async()=>{const s=make();await s.commerce.coupon(ctx,{code:'WELCOME',discountBps:500,maxUses:3,perCustomerLimit:1,expiresAt:new Date(Date.now()+60000).toISOString()});const a=await s.commerce.redeem(ctx,{code:'welcome',customerId:'alice',redemptionId:'claim-1'});assert.equal(a.customerId,'alice');await assert.rejects(s.commerce.redeem(ctx,{code:'WELCOME',customerId:'bob',redemptionId:'claim-1'}),{code:'CONFLICT'});await assert.rejects(s.commerce.redeem(ctx,{code:'WELCOME',customerId:'alice',redemptionId:'claim-2'}),{code:'CONFLICT'});await s.commerce.coupon(ctx,{code:'EXPIRED',discountBps:500,expiresAt:new Date(Date.now()-60000).toISOString()});await assert.rejects(s.commerce.redeem(ctx,{code:'EXPIRED',redemptionId:'claim-3'}),{code:'CONFLICT'});});
-test('configured generic CRUD catalog honors field allowlist, owner-based row visibility, immutability and legal hold',async()=>{const store=new InMemoryStore(),s=make({domainPolicies:{contacts:{read:['name'],write:['name','ownerId','private'],required:['name','ownerId'],authorize:(c,_a,r)=>c.actorId===r.ownerId}}},store);const alice=await s.capabilities.invoke(ctx,'SAAS-176','create',{name:'Alice',ownerId:'owner',private:'hidden'});assert.deepEqual(Object.keys(alice).sort(),['id','name']);const bob={tenantId:'tenant',actorId:'bob',permissions:['*']};assert.equal((await s.capabilities.invoke(bob,'SAAS-176','list')).items.length,0);await assert.rejects(s.capabilities.invoke(bob,'SAAS-176','get',{id:alice.id}),{code:'FORBIDDEN'});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-176','update',{id:alice.id,changes:{tenantId:'other'}}),{code:'FORBIDDEN'});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-176','update',{id:alice.id,changes:{admin:true}}),{code:'FORBIDDEN'});await store.put(ctx.tenantId,'legal-holds',{id:'current',active:true});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-176','delete',{id:alice.id}),{code:'LEGAL_HOLD'});});
-test('resource service rejects system field mass assignment on create and update',async()=>{const s=make();await assert.rejects(s.projects.create(ctx,{name:'p',tenantId:'other'}),{code:'FORBIDDEN'});const p=await s.projects.create(ctx,{name:'p'});await assert.rejects(s.projects.update(ctx,p.id,{id:'stolen'}),{code:'FORBIDDEN'});await assert.rejects(s.projects.update(ctx,p.id,{updatedAt:'yesterday'}),{code:'FORBIDDEN'});assert.equal((await s.projects.get(ctx,p.id)).name,'p');});
-test('task transitions require verified assignee and enforce terminal and row authorization',async()=>{const s=make();const u=await s.accounts.register(ctx.tenantId,{email:'user@example.org',password:'valid test password'});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-173','create',{title:'X',assigneeId:'not-a-user'}),{code:'NOT_FOUND'});const raw=await s.store.get(ctx.tenantId,'users',u.id);await s.store.put(ctx.tenantId,'users',{...raw,verified:true});const task=await s.capabilities.invoke(ctx,'SAAS-173','create',{title:'Ship',assigneeId:u.id});const stranger={tenantId:ctx.tenantId,actorId:'stranger',permissions:['capabilities:SAAS-173:complete']};await assert.rejects(s.capabilities.invoke(stranger,'SAAS-173','complete',{id:task.id}),{code:'FORBIDDEN'});const finished=await s.capabilities.invoke({...ctx,actorId:u.id},'SAAS-173','complete',{id:task.id});assert.equal(finished.status,'completed');await assert.rejects(s.capabilities.invoke(ctx,'SAAS-173','complete',{id:task.id}),{code:'CONFLICT'});});
-test('ticket transitions and list do not expose another requester to a basic user',async()=>{const s=make();const ticket=await s.capabilities.invoke(ctx,'SAAS-178','create',{subject:'Help',body:'Message'});const bob={tenantId:ctx.tenantId,actorId:'bob',permissions:['capabilities:SAAS-178:list']};const rows=await s.capabilities.invoke(bob,'SAAS-178','list');assert.equal(rows.items.length,0);await assert.rejects(s.capabilities.invoke(bob,'SAAS-178','update',{id:ticket.id,status:'closed'}),{code:'FORBIDDEN'});await s.capabilities.invoke(ctx,'SAAS-178','update',{id:ticket.id,status:'resolved'});await s.capabilities.invoke(ctx,'SAAS-178','update',{id:ticket.id,status:'closed'});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-178','update',{id:ticket.id,status:'open'}),{code:'CONFLICT'});});
-test('ownership transfer requires a verified tenant user, source owner, membership and audit event',async()=>{const s=make(),u=await s.accounts.register(ctx.tenantId,{email:'target@example.org',password:'long secure password'});let raw=await s.store.get(ctx.tenantId,'users',u.id);await s.store.put(ctx.tenantId,'users',{...raw,verified:true});await s.store.put(ctx.tenantId,'projects',{id:'project',ownerId:'owner',organizationId:'org',name:'Project'});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-182','transfer',{collection:'projects',id:'project',ownerId:u.id,reason:'handover'}),{code:'FORBIDDEN'});await s.store.put(ctx.tenantId,'memberships',{id:'m1',userId:u.id,organizationId:'org',status:'active'});const x=await s.capabilities.invoke(ctx,'SAAS-182','transfer',{collection:'projects',id:'project',ownerId:u.id,reason:'handover',expectedOwnerId:'owner'});assert.equal(x.ownerId,u.id);assert.equal((await s.store.list(ctx.tenantId,'ownership-transfers')).length,1);await assert.rejects(s.capabilities.invoke(ctx,'SAAS-182','transfer',{collection:'projects',id:'project',ownerId:'owner',reason:'reversal',expectedOwnerId:'owner'}),{code:'CONFLICT'});await assert.rejects(s.capabilities.invoke(other,'SAAS-182','transfer',{collection:'projects',id:'project',ownerId:u.id,reason:'x'}),{code:'NOT_FOUND'});});
-test('data import/export/search/pagination honor field/row policies and rollback forbidden imports',async()=>{const s=make({dataCollections:['documents'],domainPolicies:{documents:{read:['title'],write:['title','ownerId'],required:['title','ownerId'],authorize:(c,_a,r)=>c.actorId===r.ownerId}}});await s.data.import(ctx,{collection:'documents',rows:[{title:'Public document',ownerId:'owner'}]});await assert.rejects(s.data.import(ctx,{collection:'documents',rows:[{title:'Good',ownerId:'owner'},{title:'Bad',ownerId:'owner',internalSecret:'x'}]}),{code:'FORBIDDEN'});assert.equal((await s.store.list(ctx.tenantId,'documents')).length,1);const exportA=await s.data.export(ctx,{collection:'documents'});assert.deepEqual(Object.keys(exportA.rows[0]).sort(),['id','title']);const bob={tenantId:ctx.tenantId,actorId:'bob',permissions:['*']};assert.deepEqual((await s.data.export(bob,{collection:'documents'})).rows,[]);assert.deepEqual(await s.data.search(bob,{collection:'documents',query:'Public',fields:['title']}),[]);await assert.rejects(s.data.search(ctx,{collection:'documents',query:'s',fields:['ownerId']}),{code:'FORBIDDEN'});assert.deepEqual((await s.invokeCapability(ctx,'SAAS-129','page',{collection:'documents'})).items.map(x=>Object.keys(x).sort()),[['id','title']]);await assert.rejects(s.invokeCapability(ctx,'SAAS-130','filter',{collection:'documents',filter:{ownerId:'owner'}}),{code:'FORBIDDEN'});});
-test('all capabilities support action-specific schema, sanitized input and resource policies without bypassing RBAC',async()=>{const {z}=await import('@saplings/validations/native');const inputSchema=z.object({resourceId:z.string().min(1),amount:z.number().int().min(1)}).strict(),outputSchema=z.object({accepted:z.boolean()}).strict();let sent;const s=createSapling({app,features:{'SAAS-045':{actions:{create:{inputSchema,outputSchema,authorize:(c,i)=>c.actorId==='owner'&&i.resourceId==='mine'}}}},providers:{capabilities:{'SAAS-045':{execute:async request=>{sent=request.input;return {accepted:true};}}}}});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-045','create',{resourceId:'mine',amount:'3'}),{code:'INVALID_INPUT'});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-045','create',{resourceId:'other',amount:3}),{code:'FORBIDDEN'});await assert.rejects(s.capabilities.invoke(ctx,'SAAS-045','create',{resourceId:'mine',amount:3,admin:true}),{code:'INVALID_INPUT'});const out=await s.capabilities.invoke(ctx,'SAAS-045','create',{resourceId:'mine',amount:3});assert.deepEqual(out,{accepted:true});assert.deepEqual(sent,{resourceId:'mine',amount:3});const forbidden={...ctx,permissions:[]};await assert.rejects(s.capabilities.invoke(forbidden,'SAAS-045','create',{resourceId:'mine',amount:3}),{code:'FORBIDDEN'});const broken=createSapling({app,features:{'SAAS-045':{actions:{create:{outputSchema}}}},providers:{capabilities:{'SAAS-045':{execute:async()=>({accepted:'not-a-boolean'})}}}});await assert.rejects(broken.capabilities.invoke(ctx,'SAAS-045','create',{}),{code:'INVALID_OUTPUT'});});
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import { createSapling, InMemoryStore } from '@saplings/sdk';
+import { saasFeatures } from '@saplings/catalog';
+const ctx = { tenantId: 'tenant', actorId: 'owner', permissions: ['*'] },
+  other = { ...ctx, tenantId: 'other' },
+  app = { id: 'v012', environment: 'test' };
+const make = (services = {}, store = new InMemoryStore()) =>
+  createSapling({ app, services, providers: { store } });
+test('catalog contract enforces disabled, scope, authorization and unknown actions for all 182 IDs', async () => {
+  assert.equal(saasFeatures.length, 182);
+  const disabled = Object.fromEntries(saasFeatures.map((f) => [f.id, { enabled: false }]));
+  const sdk = createSapling({ app, features: disabled });
+  for (const f of saasFeatures) {
+    const action = sdk.featureManifest().find((x) => x.featureId === f.id).actions[0];
+    await assert.rejects(sdk.capabilities.invoke(ctx, f.id, action, {}), {
+      code: 'FEATURE_DISABLED',
+    });
+  }
+  const fresh = make();
+  for (const f of saasFeatures) {
+    const action = fresh.featureManifest().find((x) => x.featureId === f.id).actions[0];
+    await assert.rejects(
+      fresh.capabilities.invoke(
+        { tenantId: 'tenant', actorId: 'unprivileged', permissions: [] },
+        f.id,
+        action,
+        {},
+      ),
+      { code: 'FORBIDDEN' },
+    );
+    await assert.rejects(fresh.capabilities.invoke(ctx, f.id, 'unknown-action', {}), {
+      code: 'UNKNOWN_ACTION',
+    });
+  }
+});
+test('frozen tenant prevents all non-offboarding feature invocations', async () => {
+  const store = new InMemoryStore(),
+    s = make({}, store);
+  await store.put(ctx.tenantId, 'tenant-profile', { id: 'profile', status: 'offboarding' });
+  for (const f of s.featureManifest()) {
+    if (f.featureId === 'SAAS-024') continue;
+    await assert.rejects(s.capabilities.invoke(ctx, f.featureId, f.actions[0], {}), {
+      code: 'TENANT_FROZEN',
+    });
+  }
+});
+test('configured password policy blocks weak/breached registration and reset, preserves salted data', async () => {
+  const s = make({
+    accountPasswordPolicy: {
+      minLength: 16,
+      requireDigit: true,
+      requireUppercase: true,
+      breached: (p) => p.includes('Leaked'),
+    },
+  });
+  await assert.rejects(
+    s.accounts.register(ctx.tenantId, { email: 'a@example.com', password: 'weak-long-password' }),
+    { code: 'PASSWORD_POLICY' },
+  );
+  await assert.rejects(
+    s.accounts.register(ctx.tenantId, { email: 'a@example.com', password: 'LeakedPassword1234' }),
+    { code: 'PASSWORD_POLICY' },
+  );
+  const u = await s.accounts.register(ctx.tenantId, {
+    email: 'A@EXAMPLE.COM',
+    password: 'SafePassword123456',
+  });
+  assert.equal(u.email, 'a@example.com');
+  assert.equal('digest' in u, false);
+  await assert.rejects(
+    s.accounts.register(ctx.tenantId, { email: 'a@example.com', password: 'SafePassword123456' }),
+    { code: 'CONFLICT' },
+  );
+  const ch = await s.accounts.challenge(ctx.tenantId, 'a@example.com', 'reset');
+  await assert.rejects(s.accounts.consume(ctx.tenantId, ch.secret, 'reset', 'bad-password'), {
+    code: 'PASSWORD_POLICY',
+  });
+  assert.ok(
+    (await s.accounts.consume(ctx.tenantId, ch.secret, 'reset', 'NewSecurePassword12345')).ok,
+  );
+});
+test('idempotent usage increments once across concurrent duplicate events and enforces quotas', async () => {
+  const s = make();
+  await s.billing.setQuota(ctx, 'api', 10, '2026-11');
+  const results = await Promise.all(
+    Array.from({ length: 40 }, () => s.billing.meter(ctx, 'api', 2, '2026-11', 'request-1')),
+  );
+  assert.equal(results.filter((r) => r.replayed).length, 39);
+  assert.equal((await s.billing.getUsage(ctx, 'api', '2026-11')).quantity, 2);
+  assert.equal((await s.store.list(ctx.tenantId, 'usage-events')).length, 1);
+  await assert.rejects(s.billing.meter(ctx, 'api', 5, '2026-11', 'request-1'), {
+    code: 'CONFLICT',
+  });
+  await assert.rejects(s.billing.meter(ctx, 'api', 9, '2026-11', 'request-2'), {
+    code: 'QUOTA_EXCEEDED',
+  });
+  assert.equal((await s.billing.getUsage(ctx, 'api', '2026-11')).quantity, 2);
+});
+test('concurrent subscriptions and invoice creation are idempotent with conflicting keys denied', async () => {
+  const s = make();
+  await s.store.put(ctx.tenantId, 'plans', { id: 'plan', priceMinor: 1000, currency: 'INR' });
+  const subs = await Promise.all(
+    Array.from({ length: 12 }, () =>
+      s.commerce.subscribe(ctx, {
+        planId: 'plan',
+        customerId: 'customer',
+        trialDays: 7,
+        idempotencyKey: 'sub1',
+      }),
+    ),
+  );
+  assert.equal(new Set(subs.map((x) => x.id)).size, 1);
+  assert.equal((await s.store.list(ctx.tenantId, 'subscriptions')).length, 1);
+  await assert.rejects(
+    s.commerce.subscribe(ctx, {
+      planId: 'plan',
+      customerId: 'customer',
+      trialDays: 3,
+      idempotencyKey: 'sub1',
+    }),
+    { code: 'CONFLICT' },
+  );
+  const order = {
+    customerId: 'customer',
+    currency: 'INR',
+    lines: [{ description: 'plan', quantity: 1, unitMinor: 1000 }],
+    idempotencyKey: 'inv1',
+  };
+  const invoices = await Promise.all(
+    Array.from({ length: 12 }, () => s.commerce.invoice(ctx, order)),
+  );
+  assert.equal(new Set(invoices.map((x) => x.id)).size, 1);
+  await assert.rejects(
+    s.commerce.invoice(ctx, {
+      ...order,
+      lines: [{ description: 'plan', quantity: 2, unitMinor: 1000 }],
+    }),
+    { code: 'CONFLICT' },
+  );
+});
+test('coupon limits per customer and expiry prevent over-redemption, replay cannot switch identity', async () => {
+  const s = make();
+  await s.commerce.coupon(ctx, {
+    code: 'WELCOME',
+    discountBps: 500,
+    maxUses: 3,
+    perCustomerLimit: 1,
+    expiresAt: new Date(Date.now() + 60000).toISOString(),
+  });
+  const a = await s.commerce.redeem(ctx, {
+    code: 'welcome',
+    customerId: 'alice',
+    redemptionId: 'claim-1',
+  });
+  assert.equal(a.customerId, 'alice');
+  await assert.rejects(
+    s.commerce.redeem(ctx, { code: 'WELCOME', customerId: 'bob', redemptionId: 'claim-1' }),
+    { code: 'CONFLICT' },
+  );
+  await assert.rejects(
+    s.commerce.redeem(ctx, { code: 'WELCOME', customerId: 'alice', redemptionId: 'claim-2' }),
+    { code: 'CONFLICT' },
+  );
+  await s.commerce.coupon(ctx, {
+    code: 'EXPIRED',
+    discountBps: 500,
+    expiresAt: new Date(Date.now() - 60000).toISOString(),
+  });
+  await assert.rejects(s.commerce.redeem(ctx, { code: 'EXPIRED', redemptionId: 'claim-3' }), {
+    code: 'CONFLICT',
+  });
+});
+test('configured generic CRUD catalog honors field allowlist, owner-based row visibility, immutability and legal hold', async () => {
+  const store = new InMemoryStore(),
+    s = make(
+      {
+        domainPolicies: {
+          contacts: {
+            read: ['name'],
+            write: ['name', 'ownerId', 'private'],
+            required: ['name', 'ownerId'],
+            authorize: (c, _a, r) => c.actorId === r.ownerId,
+          },
+        },
+      },
+      store,
+    );
+  const alice = await s.capabilities.invoke(ctx, 'SAAS-176', 'create', {
+    name: 'Alice',
+    ownerId: 'owner',
+    private: 'hidden',
+  });
+  assert.deepEqual(Object.keys(alice).sort(), ['id', 'name']);
+  const bob = { tenantId: 'tenant', actorId: 'bob', permissions: ['*'] };
+  assert.equal((await s.capabilities.invoke(bob, 'SAAS-176', 'list')).items.length, 0);
+  await assert.rejects(s.capabilities.invoke(bob, 'SAAS-176', 'get', { id: alice.id }), {
+    code: 'FORBIDDEN',
+  });
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-176', 'update', {
+      id: alice.id,
+      changes: { tenantId: 'other' },
+    }),
+    { code: 'FORBIDDEN' },
+  );
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-176', 'update', { id: alice.id, changes: { admin: true } }),
+    { code: 'FORBIDDEN' },
+  );
+  await store.put(ctx.tenantId, 'legal-holds', { id: 'current', active: true });
+  await assert.rejects(s.capabilities.invoke(ctx, 'SAAS-176', 'delete', { id: alice.id }), {
+    code: 'LEGAL_HOLD',
+  });
+});
+test('resource service rejects system field mass assignment on create and update', async () => {
+  const s = make();
+  await assert.rejects(s.projects.create(ctx, { name: 'p', tenantId: 'other' }), {
+    code: 'FORBIDDEN',
+  });
+  const p = await s.projects.create(ctx, { name: 'p' });
+  await assert.rejects(s.projects.update(ctx, p.id, { id: 'stolen' }), { code: 'FORBIDDEN' });
+  await assert.rejects(s.projects.update(ctx, p.id, { updatedAt: 'yesterday' }), {
+    code: 'FORBIDDEN',
+  });
+  assert.equal((await s.projects.get(ctx, p.id)).name, 'p');
+});
+test('task transitions require verified assignee and enforce terminal and row authorization', async () => {
+  const s = make();
+  const u = await s.accounts.register(ctx.tenantId, {
+    email: 'user@example.org',
+    password: 'valid test password',
+  });
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-173', 'create', { title: 'X', assigneeId: 'not-a-user' }),
+    { code: 'NOT_FOUND' },
+  );
+  const raw = await s.store.get(ctx.tenantId, 'users', u.id);
+  await s.store.put(ctx.tenantId, 'users', { ...raw, verified: true });
+  const task = await s.capabilities.invoke(ctx, 'SAAS-173', 'create', {
+    title: 'Ship',
+    assigneeId: u.id,
+  });
+  const stranger = {
+    tenantId: ctx.tenantId,
+    actorId: 'stranger',
+    permissions: ['capabilities:SAAS-173:complete'],
+  };
+  await assert.rejects(s.capabilities.invoke(stranger, 'SAAS-173', 'complete', { id: task.id }), {
+    code: 'FORBIDDEN',
+  });
+  const finished = await s.capabilities.invoke({ ...ctx, actorId: u.id }, 'SAAS-173', 'complete', {
+    id: task.id,
+  });
+  assert.equal(finished.status, 'completed');
+  await assert.rejects(s.capabilities.invoke(ctx, 'SAAS-173', 'complete', { id: task.id }), {
+    code: 'CONFLICT',
+  });
+});
+test('ticket transitions and list do not expose another requester to a basic user', async () => {
+  const s = make();
+  const ticket = await s.capabilities.invoke(ctx, 'SAAS-178', 'create', {
+    subject: 'Help',
+    body: 'Message',
+  });
+  const bob = {
+    tenantId: ctx.tenantId,
+    actorId: 'bob',
+    permissions: ['capabilities:SAAS-178:list'],
+  };
+  const rows = await s.capabilities.invoke(bob, 'SAAS-178', 'list');
+  assert.equal(rows.items.length, 0);
+  await assert.rejects(
+    s.capabilities.invoke(bob, 'SAAS-178', 'update', { id: ticket.id, status: 'closed' }),
+    { code: 'FORBIDDEN' },
+  );
+  await s.capabilities.invoke(ctx, 'SAAS-178', 'update', { id: ticket.id, status: 'resolved' });
+  await s.capabilities.invoke(ctx, 'SAAS-178', 'update', { id: ticket.id, status: 'closed' });
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-178', 'update', { id: ticket.id, status: 'open' }),
+    { code: 'CONFLICT' },
+  );
+});
+test('ownership transfer requires a verified tenant user, source owner, membership and audit event', async () => {
+  const s = make(),
+    u = await s.accounts.register(ctx.tenantId, {
+      email: 'target@example.org',
+      password: 'long secure password',
+    });
+  let raw = await s.store.get(ctx.tenantId, 'users', u.id);
+  await s.store.put(ctx.tenantId, 'users', { ...raw, verified: true });
+  await s.store.put(ctx.tenantId, 'projects', {
+    id: 'project',
+    ownerId: 'owner',
+    organizationId: 'org',
+    name: 'Project',
+  });
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-182', 'transfer', {
+      collection: 'projects',
+      id: 'project',
+      ownerId: u.id,
+      reason: 'handover',
+    }),
+    { code: 'FORBIDDEN' },
+  );
+  await s.store.put(ctx.tenantId, 'memberships', {
+    id: 'm1',
+    userId: u.id,
+    organizationId: 'org',
+    status: 'active',
+  });
+  const x = await s.capabilities.invoke(ctx, 'SAAS-182', 'transfer', {
+    collection: 'projects',
+    id: 'project',
+    ownerId: u.id,
+    reason: 'handover',
+    expectedOwnerId: 'owner',
+  });
+  assert.equal(x.ownerId, u.id);
+  assert.equal((await s.store.list(ctx.tenantId, 'ownership-transfers')).length, 1);
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-182', 'transfer', {
+      collection: 'projects',
+      id: 'project',
+      ownerId: 'owner',
+      reason: 'reversal',
+      expectedOwnerId: 'owner',
+    }),
+    { code: 'CONFLICT' },
+  );
+  await assert.rejects(
+    s.capabilities.invoke(other, 'SAAS-182', 'transfer', {
+      collection: 'projects',
+      id: 'project',
+      ownerId: u.id,
+      reason: 'x',
+    }),
+    { code: 'NOT_FOUND' },
+  );
+});
+test('data import/export/search/pagination honor field/row policies and rollback forbidden imports', async () => {
+  const s = make({
+    dataCollections: ['documents'],
+    domainPolicies: {
+      documents: {
+        read: ['title'],
+        write: ['title', 'ownerId'],
+        required: ['title', 'ownerId'],
+        authorize: (c, _a, r) => c.actorId === r.ownerId,
+      },
+    },
+  });
+  await s.data.import(ctx, {
+    collection: 'documents',
+    rows: [{ title: 'Public document', ownerId: 'owner' }],
+  });
+  await assert.rejects(
+    s.data.import(ctx, {
+      collection: 'documents',
+      rows: [
+        { title: 'Good', ownerId: 'owner' },
+        { title: 'Bad', ownerId: 'owner', internalSecret: 'x' },
+      ],
+    }),
+    { code: 'FORBIDDEN' },
+  );
+  assert.equal((await s.store.list(ctx.tenantId, 'documents')).length, 1);
+  const exportA = await s.data.export(ctx, { collection: 'documents' });
+  assert.deepEqual(Object.keys(exportA.rows[0]).sort(), ['id', 'title']);
+  const bob = { tenantId: ctx.tenantId, actorId: 'bob', permissions: ['*'] };
+  assert.deepEqual((await s.data.export(bob, { collection: 'documents' })).rows, []);
+  assert.deepEqual(
+    await s.data.search(bob, { collection: 'documents', query: 'Public', fields: ['title'] }),
+    [],
+  );
+  await assert.rejects(
+    s.data.search(ctx, { collection: 'documents', query: 's', fields: ['ownerId'] }),
+    { code: 'FORBIDDEN' },
+  );
+  assert.deepEqual(
+    (await s.invokeCapability(ctx, 'SAAS-129', 'page', { collection: 'documents' })).items.map(
+      (x) => Object.keys(x).sort(),
+    ),
+    [['id', 'title']],
+  );
+  await assert.rejects(
+    s.invokeCapability(ctx, 'SAAS-130', 'filter', {
+      collection: 'documents',
+      filter: { ownerId: 'owner' },
+    }),
+    { code: 'FORBIDDEN' },
+  );
+});
+test('all capabilities support action-specific schema, sanitized input and resource policies without bypassing RBAC', async () => {
+  const { z } = await import('@saplings/validations/native');
+  const inputSchema = z
+      .object({ resourceId: z.string().min(1), amount: z.number().int().min(1) })
+      .strict(),
+    outputSchema = z.object({ accepted: z.boolean() }).strict();
+  let sent;
+  const s = createSapling({
+    app,
+    features: {
+      'SAAS-045': {
+        actions: {
+          create: {
+            inputSchema,
+            outputSchema,
+            authorize: (c, i) => c.actorId === 'owner' && i.resourceId === 'mine',
+          },
+        },
+      },
+    },
+    providers: {
+      capabilities: {
+        'SAAS-045': {
+          execute: async (request) => {
+            sent = request.input;
+            return { accepted: true };
+          },
+        },
+      },
+    },
+  });
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-045', 'create', { resourceId: 'mine', amount: '3' }),
+    { code: 'INVALID_INPUT' },
+  );
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-045', 'create', { resourceId: 'other', amount: 3 }),
+    { code: 'FORBIDDEN' },
+  );
+  await assert.rejects(
+    s.capabilities.invoke(ctx, 'SAAS-045', 'create', {
+      resourceId: 'mine',
+      amount: 3,
+      admin: true,
+    }),
+    { code: 'INVALID_INPUT' },
+  );
+  const out = await s.capabilities.invoke(ctx, 'SAAS-045', 'create', {
+    resourceId: 'mine',
+    amount: 3,
+  });
+  assert.deepEqual(out, { accepted: true });
+  assert.deepEqual(sent, { resourceId: 'mine', amount: 3 });
+  const forbidden = { ...ctx, permissions: [] };
+  await assert.rejects(
+    s.capabilities.invoke(forbidden, 'SAAS-045', 'create', { resourceId: 'mine', amount: 3 }),
+    { code: 'FORBIDDEN' },
+  );
+  const broken = createSapling({
+    app,
+    features: { 'SAAS-045': { actions: { create: { outputSchema } } } },
+    providers: {
+      capabilities: { 'SAAS-045': { execute: async () => ({ accepted: 'not-a-boolean' }) } },
+    },
+  });
+  await assert.rejects(broken.capabilities.invoke(ctx, 'SAAS-045', 'create', {}), {
+    code: 'INVALID_OUTPUT',
+  });
+});

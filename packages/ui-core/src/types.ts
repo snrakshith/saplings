@@ -64,11 +64,11 @@ export type ThemeBreakpoints = {
     lg: number;
     xl: number;
   };
-  up: (key: keyof ThemeBreakpoints["values"]) => string;
-  down: (key: keyof ThemeBreakpoints["values"]) => string;
+  up: (key: keyof ThemeBreakpoints['values']) => string;
+  down: (key: keyof ThemeBreakpoints['values']) => string;
   between: (
-    start: keyof ThemeBreakpoints["values"],
-    end: keyof ThemeBreakpoints["values"]
+    start: keyof ThemeBreakpoints['values'],
+    end: keyof ThemeBreakpoints['values'],
   ) => string;
 };
 
@@ -85,6 +85,6 @@ export type XloxTheme = {
   breakpoints: ThemeBreakpoints;
   shadows: ThemeShadows;
   shape: ThemeShape;
-  direction: "ltr" | "rtl";
-  density: "comfortable" | "compact";
+  direction: 'ltr' | 'rtl';
+  density: 'comfortable' | 'compact';
 };

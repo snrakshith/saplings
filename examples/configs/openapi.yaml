@@ -9,7 +9,7 @@ paths:
     get:
       operationId: health
       responses:
-        '200': {description: Healthy}
+        '200': { description: Healthy }
   /api/items:
     get:
       operationId: listItems
@@ -21,20 +21,20 @@ paths:
               schema:
                 type: object
                 properties:
-                  items: {type: array, items: {type: object}}
+                  items: { type: array, items: { type: object } }
   /api/orders:
     post:
       operationId: createOrder
       parameters:
         - name: Idempotency-Key
           in: header
-          schema: {type: string}
+          schema: { type: string }
       requestBody:
         content:
           application/json:
             schema:
               type: object
               properties:
-                quantity: {type: integer, minimum: 1}
+                quantity: { type: integer, minimum: 1 }
       responses:
-        '201': {description: Created}
+        '201': { description: Created }

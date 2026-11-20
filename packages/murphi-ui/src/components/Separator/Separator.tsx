@@ -1,18 +1,18 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface SeparatorProps extends React.HTMLAttributes<HTMLDivElement> {
-  orientation?: "horizontal" | "vertical";
+  orientation?: 'horizontal' | 'vertical';
   decorative?: boolean;
 }
 
 const StyledSeparator = styled.div<SeparatorProps>`
   flex-shrink: 0;
   background-color: ${(props) => (props.theme as XloxTheme).colors.neutral[200]};
-  
+
   ${(props) => {
-    if (props.orientation === "vertical") {
+    if (props.orientation === 'vertical') {
       return `
         width: 1px;
         height: 100%;
@@ -27,18 +27,18 @@ const StyledSeparator = styled.div<SeparatorProps>`
 `;
 
 export const Separator: React.FC<SeparatorProps> = ({
-  orientation = "horizontal",
+  orientation = 'horizontal',
   decorative = false,
   ...props
 }) => {
   return (
     <StyledSeparator
       orientation={orientation}
-      role={decorative ? "none" : "separator"}
+      role={decorative ? 'none' : 'separator'}
       aria-orientation={orientation}
       {...props}
     />
   );
 };
 
-Separator.displayName = "Separator";
+Separator.displayName = 'Separator';

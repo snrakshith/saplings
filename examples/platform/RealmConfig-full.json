@@ -18,16 +18,11 @@
   },
   "spec": {
     "state": "active",
-    "secretStoreRefs": [
-      "env",
-      "aws"
-    ],
+    "secretStoreRefs": ["env", "aws"],
     "observabilityRef": "default",
     "frontend": {
       "issuer": "https://auth.school.com/realms/school-platform",
-      "hostnames": [
-        "auth.school.com"
-      ],
+      "hostnames": ["auth.school.com"],
       "sslRequired": "external",
       "themes": {
         "login": "school",
@@ -36,11 +31,7 @@
       },
       "localization": {
         "default": "en",
-        "supported": [
-          "en",
-          "hi",
-          "kn"
-        ]
+        "supported": ["en", "hi", "kn"]
       },
       "branding": {
         "logoUrl": "https://cdn.school.com/logo.svg",
@@ -164,9 +155,7 @@
     "registration": {
       "enabled": true,
       "mode": "open",
-      "allowedEmailDomains": [
-        "school.com"
-      ],
+      "allowedEmailDomains": ["school.com"],
       "emailAsUsername": true,
       "loginWithEmail": true,
       "duplicateEmails": false,
@@ -186,10 +175,7 @@
         {
           "name": "email",
           "required": {
-            "roles": [
-              "user",
-              "admin"
-            ]
+            "roles": ["user", "admin"]
           },
           "validations": {
             "email": {},
@@ -198,21 +184,14 @@
             }
           },
           "permissions": {
-            "view": [
-              "user",
-              "admin"
-            ],
-            "edit": [
-              "admin"
-            ]
+            "view": ["user", "admin"],
+            "edit": ["admin"]
           }
         },
         {
           "name": "firstName",
           "required": {
-            "roles": [
-              "user"
-            ]
+            "roles": ["user"]
           },
           "validations": {
             "length": {
@@ -220,14 +199,8 @@
             }
           },
           "permissions": {
-            "view": [
-              "user",
-              "admin"
-            ],
-            "edit": [
-              "user",
-              "admin"
-            ]
+            "view": ["user", "admin"],
+            "edit": ["user", "admin"]
           }
         },
         {
@@ -238,14 +211,8 @@
             }
           },
           "permissions": {
-            "view": [
-              "user",
-              "admin"
-            ],
-            "edit": [
-              "user",
-              "admin"
-            ]
+            "view": ["user", "admin"],
+            "edit": ["user", "admin"]
           }
         },
         {
@@ -258,13 +225,8 @@
             }
           },
           "permissions": {
-            "view": [
-              "user",
-              "admin"
-            ],
-            "edit": [
-              "admin"
-            ]
+            "view": ["user", "admin"],
+            "edit": ["admin"]
           }
         },
         {
@@ -277,13 +239,8 @@
             }
           },
           "permissions": {
-            "view": [
-              "admin"
-            ],
-            "edit": [
-              "user",
-              "admin"
-            ]
+            "view": ["admin"],
+            "edit": ["user", "admin"]
           }
         }
       ]
@@ -401,41 +358,29 @@
           "name": "admin",
           "description": "School administrator",
           "composites": {
-            "realm": [
-              "teacher"
-            ],
+            "realm": ["teacher"],
             "clients": {
-              "students-svc": [
-                "manage-students"
-              ]
+              "students-svc": ["manage-students"]
             }
           }
         }
       ],
-      "defaultRoles": [
-        "student"
-      ]
+      "defaultRoles": ["student"]
     },
     "groups": [
       {
         "name": "staff",
         "attributes": {
-          "department": [
-            "general"
-          ]
+          "department": ["general"]
         },
         "roles": {
-          "realm": [
-            "teacher"
-          ]
+          "realm": ["teacher"]
         },
         "children": [
           {
             "name": "admins",
             "roles": {
-              "realm": [
-                "admin"
-              ]
+              "realm": ["admin"]
             }
           }
         ]
@@ -443,15 +388,11 @@
       {
         "name": "students",
         "roles": {
-          "realm": [
-            "student"
-          ]
+          "realm": ["student"]
         }
       }
     ],
-    "defaultGroups": [
-      "/students"
-    ],
+    "defaultGroups": ["/students"],
     "clientScopes": [
       {
         "name": "profile",
@@ -464,10 +405,7 @@
             "config": {
               "attribute": "firstName",
               "claim": "given_name",
-              "addTo": [
-                "idToken",
-                "userinfo"
-              ]
+              "addTo": ["idToken", "userinfo"]
             }
           },
           {
@@ -476,10 +414,7 @@
             "config": {
               "attribute": "lastName",
               "claim": "family_name",
-              "addTo": [
-                "idToken",
-                "userinfo"
-              ]
+              "addTo": ["idToken", "userinfo"]
             }
           }
         ]
@@ -494,10 +429,7 @@
             "config": {
               "property": "email",
               "claim": "email",
-              "addTo": [
-                "idToken",
-                "userinfo"
-              ]
+              "addTo": ["idToken", "userinfo"]
             }
           }
         ]
@@ -513,9 +445,7 @@
             "config": {
               "claim": "roles",
               "multivalued": true,
-              "addTo": [
-                "accessToken"
-              ]
+              "addTo": ["accessToken"]
             }
           }
         ]
@@ -530,10 +460,7 @@
             "config": {
               "claim": "groups",
               "fullPath": true,
-              "addTo": [
-                "accessToken",
-                "idToken"
-              ]
+              "addTo": ["accessToken", "idToken"]
             }
           }
         ]
@@ -548,9 +475,7 @@
             "config": {
               "attribute": "studentId",
               "claim": "student_id",
-              "addTo": [
-                "accessToken"
-              ]
+              "addTo": ["accessToken"]
             }
           }
         ]
@@ -564,9 +489,7 @@
             "type": "audience",
             "config": {
               "audience": "school-platform",
-              "addTo": [
-                "accessToken"
-              ]
+              "addTo": ["accessToken"]
             }
           }
         ]
@@ -580,33 +503,16 @@
             "type": "organization-membership",
             "config": {
               "claim": "organization",
-              "include": [
-                "id",
-                "name",
-                "roles"
-              ],
-              "addTo": [
-                "accessToken",
-                "idToken"
-              ]
+              "include": ["id", "name", "roles"],
+              "addTo": ["accessToken", "idToken"]
             }
           }
         ]
       }
     ],
     "defaultClientScopes": {
-      "default": [
-        "profile",
-        "email",
-        "roles",
-        "organization",
-        "audience-school-platform"
-      ],
-      "optional": [
-        "groups",
-        "school",
-        "offline_access"
-      ]
+      "default": ["profile", "email", "roles", "organization", "audience-school-platform"],
+      "optional": ["groups", "school", "offline_access"]
     },
     "clients": [
       {
@@ -624,25 +530,12 @@
           "tokenExchange": false
         },
         "pkce": "S256",
-        "redirectUris": [
-          "https://app.school.com/callback"
-        ],
-        "postLogoutRedirectUris": [
-          "https://app.school.com/"
-        ],
-        "webOrigins": [
-          "https://app.school.com"
-        ],
+        "redirectUris": ["https://app.school.com/callback"],
+        "postLogoutRedirectUris": ["https://app.school.com/"],
+        "webOrigins": ["https://app.school.com"],
         "scopes": {
-          "default": [
-            "profile",
-            "email",
-            "roles"
-          ],
-          "optional": [
-            "groups",
-            "school"
-          ]
+          "default": ["profile", "email", "roles"],
+          "optional": ["groups", "school"]
         },
         "consent": {
           "required": false
@@ -680,9 +573,7 @@
           "roles": {
             "realm": [],
             "clients": {
-              "kingsman-admin": [
-                "view-users"
-              ]
+              "kingsman-admin": ["view-users"]
             }
           }
         }
@@ -696,9 +587,7 @@
         "grants": {
           "clientCredentials": true
         },
-        "policyProfiles": [
-          "strict-confidential"
-        ]
+        "policyProfiles": ["strict-confidential"]
       }
     ],
     "clientPolicies": {
@@ -727,10 +616,7 @@
             {
               "type": "client-authenticator",
               "config": {
-                "allowed": [
-                  "private-key-jwt",
-                  "tls-client-auth"
-                ]
+                "allowed": ["private-key-jwt", "tls-client-auth"]
               }
             },
             {
@@ -749,15 +635,11 @@
             {
               "type": "client-access-type",
               "config": {
-                "types": [
-                  "public"
-                ]
+                "types": ["public"]
               }
             }
           ],
-          "profiles": [
-            "strict-public"
-          ]
+          "profiles": ["strict-public"]
         }
       ]
     },
@@ -881,10 +763,7 @@
           "config": {
             "url": "https://hr.school.com/hooks/kingsman",
             "signingSecret": "{vault://aws/kingsman/webhook-secret}",
-            "events": [
-              "REGISTER",
-              "DELETE_ACCOUNT"
-            ],
+            "events": ["REGISTER", "DELETE_ACCOUNT"],
             "retry": {
               "max": 5,
               "backoff": "exponential"
@@ -893,12 +772,7 @@
         }
       ],
       "redaction": {
-        "fields": [
-          "password",
-          "otp",
-          "refresh_token",
-          "client_secret"
-        ],
+        "fields": ["password", "otp", "refresh_token", "client_secret"],
         "replacement": "[REDACTED]"
       }
     },
@@ -918,13 +792,8 @@
           "username": "admin@school.com",
           "email": "admin@school.com",
           "emailVerified": true,
-          "groups": [
-            "/staff/admins"
-          ],
-          "requiredActions": [
-            "UPDATE_PASSWORD",
-            "CONFIGURE_TOTP"
-          ],
+          "groups": ["/staff/admins"],
+          "requiredActions": ["UPDATE_PASSWORD", "CONFIGURE_TOTP"],
           "credentials": [
             {
               "type": "password",

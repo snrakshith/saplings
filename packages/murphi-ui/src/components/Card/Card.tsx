@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   elevation?: 0 | 1 | 2 | 3 | 4 | 5 | 6;
-  variant?: "outlined" | "elevated";
+  variant?: 'outlined' | 'elevated';
   padding?: number;
 }
 
@@ -16,10 +16,10 @@ const StyledCard = styled.div<CardProps>`
     props.padding !== undefined
       ? (props.theme as XloxTheme).spacing(props.padding)
       : (props.theme as XloxTheme).spacing(2)};
-  
+
   ${(props) => {
     const theme = props.theme as XloxTheme;
-    if (props.variant === "outlined") {
+    if (props.variant === 'outlined') {
       return `
         border: 1px solid ${theme.colors.neutral[200]};
       `;
@@ -34,7 +34,7 @@ const StyledCard = styled.div<CardProps>`
 export const Card: React.FC<CardProps> = ({
   children,
   elevation = 1,
-  variant = "elevated",
+  variant = 'elevated',
   padding,
   ...props
 }) => {
@@ -45,4 +45,4 @@ export const Card: React.FC<CardProps> = ({
   );
 };
 
-Card.displayName = "Card";
+Card.displayName = 'Card';

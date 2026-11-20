@@ -1,10 +1,13 @@
+FROM node:26.13.1-bookworm-slim AS node-runtime
 # Browser-capable quality runner. Install pinned external engines and use isolated approved targets.
 FROM mcr.microsoft.com/playwright:v1.56.1-noble
+COPY --from=node-runtime /usr/local/ /opt/node/
+ENV PATH=/opt/node/bin:${PATH}
 WORKDIR /repo
-RUN corepack enable && corepack prepare pnpm@10.11.0 --activate
+RUN npm install --global --prefix /opt/node pnpm@10.11.0
 COPY . .
 RUN pnpm install --frozen-lockfile && pnpm run build && pnpm run build:quality && pnpm run build:hooks
 RUN mkdir -p /repo/quality-results && chown -R pwuser:pwuser /repo
 USER pwuser
-ENTRYPOINT ["node","--experimental-strip-types","packages/quality-cli/dist/cli.js"]
+ENTRYPOINT ["node","packages/quality-cli/dist/cli.js"]
 CMD ["help"]

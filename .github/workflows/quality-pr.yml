@@ -8,10 +8,11 @@ jobs:
     runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
-        with: {node-version: 22}
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
       - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
       - run: pnpm run build
       - run: pnpm run build:quality
@@ -25,6 +26,6 @@ jobs:
           cat /tmp/api.log /tmp/web.log
           exit 1
       - run: pnpm run quality run --profile pr
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
-        with: {name: sapling-quality-pr, path: quality-results/, if-no-files-found: warn}
+        with: { name: sapling-quality-pr, path: quality-results/, if-no-files-found: warn }

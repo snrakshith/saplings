@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { useState, useEffect, useRef } from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface CommandItem {
   id: string;
@@ -39,7 +39,7 @@ const SearchInput = styled.input`
   border: none;
   border-bottom: 1px solid ${(props) => (props.theme as XloxTheme).colors.neutral[200]};
   outline: none;
-  
+
   &::placeholder {
     color: ${(props) => (props.theme as XloxTheme).colors.text.disabled};
   }
@@ -63,10 +63,10 @@ const CommandItemStyled = styled.div<{ selected?: boolean }>`
     if (props.selected) {
       return (props.theme as XloxTheme).colors.primary[50];
     }
-    return "transparent";
+    return 'transparent';
   }};
   transition: background-color 0.2s ease-in-out;
-  
+
   &:hover {
     background-color: ${(props) => (props.theme as XloxTheme).colors.neutral[50]};
   }
@@ -81,47 +81,47 @@ const EmptyMessage = styled.div`
 
 export const Command: React.FC<CommandProps> = ({
   items,
-  placeholder = "Type a command or search...",
-  emptyMessage = "No results found.",
+  placeholder = 'Type a command or search...',
+  emptyMessage = 'No results found.',
   ...props
 }) => {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState('');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
-  
+
   const filteredItems = items.filter((item) => {
     const searchLower = search.toLowerCase();
     const labelMatch = item.label.toLowerCase().includes(searchLower);
     const keywordMatch = item.keywords?.some((keyword) =>
-      keyword.toLowerCase().includes(searchLower)
+      keyword.toLowerCase().includes(searchLower),
     );
     return labelMatch || keywordMatch;
   });
-  
+
   useEffect(() => {
     setSelectedIndex(0);
   }, [search]);
-  
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowDown") {
+      if (e.key === 'ArrowDown') {
         e.preventDefault();
         setSelectedIndex((prev) => Math.min(prev + 1, filteredItems.length - 1));
-      } else if (e.key === "ArrowUp") {
+      } else if (e.key === 'ArrowUp') {
         e.preventDefault();
         setSelectedIndex((prev) => Math.max(prev - 1, 0));
-      } else if (e.key === "Enter") {
+      } else if (e.key === 'Enter') {
         e.preventDefault();
         if (filteredItems[selectedIndex]) {
           filteredItems[selectedIndex].onSelect();
         }
       }
     };
-    
-    document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
+
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
   }, [filteredItems, selectedIndex]);
-  
+
   return (
     <CommandContainer {...props}>
       <SearchInput
@@ -153,4 +153,4 @@ export const Command: React.FC<CommandProps> = ({
   );
 };
 
-Command.displayName = "Command";
+Command.displayName = 'Command';

@@ -1,7 +1,7 @@
-FROM node:22-bookworm-slim
+FROM node:26.13.1-bookworm-slim
 WORKDIR /app
 COPY . .
-RUN corepack enable && corepack prepare pnpm@10.11.0 --activate
+RUN npm install --global pnpm@10.11.0
 RUN pnpm install --frozen-lockfile && pnpm run verify:build
 RUN mkdir -p /app/quality-results && chown node:node /app/quality-results
 USER node

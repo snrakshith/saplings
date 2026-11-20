@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
-import { Radio, RadioProps } from "../Radio/index.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
+import { Radio, RadioProps } from '../Radio/index.js';
 
 export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onChange'> {
   name: string;
@@ -11,7 +11,7 @@ export interface RadioGroupProps extends Omit<React.HTMLAttributes<HTMLDivElemen
   label?: string;
   error?: string;
   helperText?: string;
-  direction?: "row" | "column";
+  direction?: 'row' | 'column';
 }
 
 const RadioGroupWrapper = styled.div`
@@ -29,7 +29,7 @@ const Label = styled.label`
 
 const RadioContainer = styled.div<{ direction?: string }>`
   display: flex;
-  flex-direction: ${(props) => props.direction || "column"};
+  flex-direction: ${(props) => props.direction || 'column'};
   gap: ${(props) => (props.theme as XloxTheme).spacing(1.5)};
 `;
 
@@ -50,7 +50,7 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
   label,
   error,
   helperText,
-  direction = "column",
+  direction = 'column',
   ...props
 }) => {
   const handleChange = (optionValue: string) => {
@@ -74,11 +74,9 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
           />
         ))}
       </RadioContainer>
-      {(error || helperText) && (
-        <HelperText isError={!!error}>{error || helperText}</HelperText>
-      )}
+      {(error || helperText) && <HelperText isError={!!error}>{error || helperText}</HelperText>}
     </RadioGroupWrapper>
   );
 };
 
-RadioGroup.displayName = "RadioGroup";
+RadioGroup.displayName = 'RadioGroup';

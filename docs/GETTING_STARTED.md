@@ -12,7 +12,7 @@
 
 # Getting started — v0.3
 
-1. Extract archive. `pnpm install` with Node 22, then `pnpm run build`. `pnpm run build:adapters` after optional dependencies are installed. `pnpm run check:catalog` lists feature IDs.
+1. Extract archive. `pnpm install` with Node.js 26, then `pnpm run build`. `pnpm run build:adapters` after optional dependencies are installed. `pnpm run check:catalog` lists feature IDs.
 2. Choose infrastructure: local memory for learning; PostgreSQL/Drizzle, object storage, and authentication provider for production-oriented integration. `docker compose up -d postgres` starts only local DB. Apply both SQL migrations under `packages/adapter-drizzle/migrations/` with a controlled migration role.
 3. Create `sapling.config.ts`; import `defineSaplingConfig` and select capabilities, providers and security policy. See `examples/express-app/sapling.production.config.ts.example` for wiring. Never place credentials in source; environment/secret manager only.
 4. `const sdk=createSapling(config)`; attach `sdk.defender.preflight()` before bounded parsing and runtime middleware after parsing (raw webhook routes must preserve bytes and verify signatures). Define explicit, validated routes. Use the verified `req.sapling` context, never `x-tenant-id` alone.

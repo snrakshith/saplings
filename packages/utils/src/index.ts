@@ -8,4 +8,4 @@ export * as hooks from './hooks.js';
 export * as i18n from './i18n.js';
 export * as permissions from './permissions.js';
 export type * from './types.js';
-export {nanoid} from './id.js';
+export { nanoid } from './id.js';

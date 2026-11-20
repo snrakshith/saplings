@@ -1,9 +1,201 @@
-import {test} from 'vitest';import assert from 'node:assert/strict';import {InMemoryStore,transactionalHttpOperation,TransactionalEventConsumer,TenantOffboarding,offboardingSteps} from '@saplings/sdk';import {MemoryEventJournal,RealtimeHub} from '@saplings/realtime';
-const ctx={tenantId:'tenant-a',actorId:'actor-a'},approver={...ctx,actorId:'actor-b'},p={tenantId:ctx.tenantId,userId:ctx.actorId},request={operation:'invoices:create',method:'POST',key:'stable',input:{amount:5,metadata:{b:2,a:1}}};
-test('transactional HTTP executes business effect once under concurrency and replays canonical request',async()=>{const store=new InMemoryStore();let calls=0;const handler=async tx=>{calls++;await tx.put(ctx.tenantId,'invoices',{id:'i',amount:5});return {status:201,body:{id:'i'}};};const results=await Promise.all(Array.from({length:10},()=>transactionalHttpOperation(store,ctx,request,handler)));assert.equal(calls,1);assert.equal(results.filter(x=>x.replayed===false).length,1);assert.equal((await transactionalHttpOperation(store,ctx,{...request,input:{metadata:{a:1,b:2},amount:5}},handler)).replayed,true);await assert.rejects(transactionalHttpOperation(store,ctx,{...request,input:{amount:6}},handler),{code:'CONFLICT'});});
-test('transactional HTTP rolls back business effect and record; frozen tenant is denied',async()=>{const store=new InMemoryStore();await assert.rejects(transactionalHttpOperation(store,ctx,request,async tx=>{await tx.put(ctx.tenantId,'invoices',{id:'i'});throw Error('rollback');}));assert.equal(await store.get(ctx.tenantId,'invoices','i'),undefined);assert.equal((await store.list(ctx.tenantId,'transactional-http')).length,0);await store.put(ctx.tenantId,'tenant-profile',{id:'profile',status:'offboarding'});await assert.rejects(transactionalHttpOperation(store,ctx,request,async()=>({status:200,body:{}})),{code:'TENANT_FROZEN'});});
-test('transactional HTTP input rejects non-JSON values and accessors without invoking them',async()=>{const store=new InMemoryStore();let called=false;const f=()=>{called=true;return 1;};await assert.rejects(transactionalHttpOperation(store,ctx,{...request,input:{get x(){return f();}}},async()=>({status:200,body:{}})));assert.equal(called,false);await assert.rejects(transactionalHttpOperation(store,ctx,{...request,input:{x:Infinity}},async()=>({status:200,body:{}})));});
-test('durable consumer transaction atomically stores effects and cursor; competing consumers never apply batch twice',async()=>{const store=new InMemoryStore(),journal=new MemoryEventJournal(),hub=new RealtimeHub({authenticate:()=>p,authorize:()=>true,journal});try{await hub.publish(p,'updates',1);await hub.publish(p,'updates',2);const consumer=new TransactionalEventConsumer(store,journal);let calls=0;const handle=async(tx,e)=>{calls++;await tx.put(ctx.tenantId,'effects',{id:e.id,data:e.data});};const results=await Promise.all([consumer.process(ctx,'updates','worker',handle),consumer.process(ctx,'updates','worker',handle)]);assert.equal(results.reduce((n,r)=>n+r.processed,0),2);assert.equal(calls,2);assert.equal((await consumer.process(ctx,'updates','worker',handle)).processed,0);assert.equal((await store.list(ctx.tenantId,'effects')).length,2);}finally{await hub.close();}});
-test('consumer handler failure rolls back cursor and effects; expired cursor fails closed',async()=>{const store=new InMemoryStore(),journal=new MemoryEventJournal(1),hub=new RealtimeHub({authenticate:()=>p,authorize:()=>true,journal});try{await hub.publish(p,'updates',1);const c=new TransactionalEventConsumer(store,journal);await assert.rejects(c.process(ctx,'updates','worker',async(tx,e)=>{await tx.put(ctx.tenantId,'effects',{id:e.id});throw Error('rollback');}));assert.equal((await store.list(ctx.tenantId,'effects')).length,0);assert.equal((await store.list(ctx.tenantId,'realtime-consumer-cursors')).length,0);assert.equal((await c.process(ctx,'updates','worker',async()=>{})).processed,1);await hub.publish(p,'updates',2);await assert.rejects(c.process(ctx,'updates','worker',async()=>{}),{code:'REPLAY_GAP'});}finally{await hub.close();}});
-test('offboarding legal hold prevents purge and does not advance evidence checkpoint',async()=>{const store=new InMemoryStore();await store.put(ctx.tenantId,'tenant-profile',{id:'profile',status:'active'});const called=[];const off=new TenantOffboarding(store,{legalHold:async()=>true,handlers:Object.fromEntries(offboardingSteps.map(s=>[s,async()=>{called.push(s);return {evidenceId:s};}]))});await off.request(ctx,{confirm:ctx.tenantId,reason:'close'});await off.approve(approver);for(let i=0;i<3;i++)await off.advance(approver);await assert.rejects(off.advance(approver),{code:'LEGAL_HOLD'});assert.deepEqual(called,['freeze','revoke','export']);assert.equal((await off.status(approver)).step,3);});
-test('offboarding deadline aborts cooperative handler without committing evidence',async()=>{const store=new InMemoryStore();await store.put(ctx.tenantId,'tenant-profile',{id:'profile',status:'active'});let aborted=false;const off=new TenantOffboarding(store,{deadlineMs:20,handlers:Object.fromEntries(offboardingSteps.map(s=>[s,async(_ctx,{signal})=>{await new Promise(resolve=>signal.addEventListener('abort',()=>{aborted=true;resolve();},{once:true}));return {evidenceId:s};}]))});await off.request(ctx,{confirm:ctx.tenantId,reason:'close'});await off.approve(approver);await assert.rejects(off.advance(approver),{code:'TIMEOUT'});assert.ok(aborted);assert.equal((await off.status(approver)).step,0);});
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import {
+  InMemoryStore,
+  transactionalHttpOperation,
+  TransactionalEventConsumer,
+  TenantOffboarding,
+  offboardingSteps,
+} from '@saplings/sdk';
+import { MemoryEventJournal, RealtimeHub } from '@saplings/realtime';
+const ctx = { tenantId: 'tenant-a', actorId: 'actor-a' },
+  approver = { ...ctx, actorId: 'actor-b' },
+  p = { tenantId: ctx.tenantId, userId: ctx.actorId },
+  request = {
+    operation: 'invoices:create',
+    method: 'POST',
+    key: 'stable',
+    input: { amount: 5, metadata: { b: 2, a: 1 } },
+  };
+test('transactional HTTP executes business effect once under concurrency and replays canonical request', async () => {
+  const store = new InMemoryStore();
+  let calls = 0;
+  const handler = async (tx) => {
+    calls++;
+    await tx.put(ctx.tenantId, 'invoices', { id: 'i', amount: 5 });
+    return { status: 201, body: { id: 'i' } };
+  };
+  const results = await Promise.all(
+    Array.from({ length: 10 }, () => transactionalHttpOperation(store, ctx, request, handler)),
+  );
+  assert.equal(calls, 1);
+  assert.equal(results.filter((x) => x.replayed === false).length, 1);
+  assert.equal(
+    (
+      await transactionalHttpOperation(
+        store,
+        ctx,
+        { ...request, input: { metadata: { a: 1, b: 2 }, amount: 5 } },
+        handler,
+      )
+    ).replayed,
+    true,
+  );
+  await assert.rejects(
+    transactionalHttpOperation(store, ctx, { ...request, input: { amount: 6 } }, handler),
+    { code: 'CONFLICT' },
+  );
+});
+test('transactional HTTP rolls back business effect and record; frozen tenant is denied', async () => {
+  const store = new InMemoryStore();
+  await assert.rejects(
+    transactionalHttpOperation(store, ctx, request, async (tx) => {
+      await tx.put(ctx.tenantId, 'invoices', { id: 'i' });
+      throw Error('rollback');
+    }),
+  );
+  assert.equal(await store.get(ctx.tenantId, 'invoices', 'i'), undefined);
+  assert.equal((await store.list(ctx.tenantId, 'transactional-http')).length, 0);
+  await store.put(ctx.tenantId, 'tenant-profile', { id: 'profile', status: 'offboarding' });
+  await assert.rejects(
+    transactionalHttpOperation(store, ctx, request, async () => ({ status: 200, body: {} })),
+    { code: 'TENANT_FROZEN' },
+  );
+});
+test('transactional HTTP input rejects non-JSON values and accessors without invoking them', async () => {
+  const store = new InMemoryStore();
+  let called = false;
+  const f = () => {
+    called = true;
+    return 1;
+  };
+  await assert.rejects(
+    transactionalHttpOperation(
+      store,
+      ctx,
+      {
+        ...request,
+        input: {
+          get x() {
+            return f();
+          },
+        },
+      },
+      async () => ({ status: 200, body: {} }),
+    ),
+  );
+  assert.equal(called, false);
+  await assert.rejects(
+    transactionalHttpOperation(store, ctx, { ...request, input: { x: Infinity } }, async () => ({
+      status: 200,
+      body: {},
+    })),
+  );
+});
+test('durable consumer transaction atomically stores effects and cursor; competing consumers never apply batch twice', async () => {
+  const store = new InMemoryStore(),
+    journal = new MemoryEventJournal(),
+    hub = new RealtimeHub({ authenticate: () => p, authorize: () => true, journal });
+  try {
+    await hub.publish(p, 'updates', 1);
+    await hub.publish(p, 'updates', 2);
+    const consumer = new TransactionalEventConsumer(store, journal);
+    let calls = 0;
+    const handle = async (tx, e) => {
+      calls++;
+      await tx.put(ctx.tenantId, 'effects', { id: e.id, data: e.data });
+    };
+    const results = await Promise.all([
+      consumer.process(ctx, 'updates', 'worker', handle),
+      consumer.process(ctx, 'updates', 'worker', handle),
+    ]);
+    assert.equal(
+      results.reduce((n, r) => n + r.processed, 0),
+      2,
+    );
+    assert.equal(calls, 2);
+    assert.equal((await consumer.process(ctx, 'updates', 'worker', handle)).processed, 0);
+    assert.equal((await store.list(ctx.tenantId, 'effects')).length, 2);
+  } finally {
+    await hub.close();
+  }
+});
+test('consumer handler failure rolls back cursor and effects; expired cursor fails closed', async () => {
+  const store = new InMemoryStore(),
+    journal = new MemoryEventJournal(1),
+    hub = new RealtimeHub({ authenticate: () => p, authorize: () => true, journal });
+  try {
+    await hub.publish(p, 'updates', 1);
+    const c = new TransactionalEventConsumer(store, journal);
+    await assert.rejects(
+      c.process(ctx, 'updates', 'worker', async (tx, e) => {
+        await tx.put(ctx.tenantId, 'effects', { id: e.id });
+        throw Error('rollback');
+      }),
+    );
+    assert.equal((await store.list(ctx.tenantId, 'effects')).length, 0);
+    assert.equal((await store.list(ctx.tenantId, 'realtime-consumer-cursors')).length, 0);
+    assert.equal((await c.process(ctx, 'updates', 'worker', async () => {})).processed, 1);
+    await hub.publish(p, 'updates', 2);
+    await assert.rejects(
+      c.process(ctx, 'updates', 'worker', async () => {}),
+      { code: 'REPLAY_GAP' },
+    );
+  } finally {
+    await hub.close();
+  }
+});
+test('offboarding legal hold prevents purge and does not advance evidence checkpoint', async () => {
+  const store = new InMemoryStore();
+  await store.put(ctx.tenantId, 'tenant-profile', { id: 'profile', status: 'active' });
+  const called = [];
+  const off = new TenantOffboarding(store, {
+    legalHold: async () => true,
+    handlers: Object.fromEntries(
+      offboardingSteps.map((s) => [
+        s,
+        async () => {
+          called.push(s);
+          return { evidenceId: s };
+        },
+      ]),
+    ),
+  });
+  await off.request(ctx, { confirm: ctx.tenantId, reason: 'close' });
+  await off.approve(approver);
+  for (let i = 0; i < 3; i++) await off.advance(approver);
+  await assert.rejects(off.advance(approver), { code: 'LEGAL_HOLD' });
+  assert.deepEqual(called, ['freeze', 'revoke', 'export']);
+  assert.equal((await off.status(approver)).step, 3);
+});
+test('offboarding deadline aborts cooperative handler without committing evidence', async () => {
+  const store = new InMemoryStore();
+  await store.put(ctx.tenantId, 'tenant-profile', { id: 'profile', status: 'active' });
+  let aborted = false;
+  const off = new TenantOffboarding(store, {
+    deadlineMs: 20,
+    handlers: Object.fromEntries(
+      offboardingSteps.map((s) => [
+        s,
+        async (_ctx, { signal }) => {
+          await new Promise((resolve) =>
+            signal.addEventListener(
+              'abort',
+              () => {
+                aborted = true;
+                resolve();
+              },
+              { once: true },
+            ),
+          );
+          return { evidenceId: s };
+        },
+      ]),
+    ),
+  });
+  await off.request(ctx, { confirm: ctx.tenantId, reason: 'close' });
+  await off.approve(approver);
+  await assert.rejects(off.advance(approver), { code: 'TIMEOUT' });
+  assert.ok(aborted);
+  assert.equal((await off.status(approver)).step, 0);
+});

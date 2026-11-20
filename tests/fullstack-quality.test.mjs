@@ -1,18 +1,165 @@
-import {test} from 'vitest';
+import { test } from 'vitest';
 import assert from 'node:assert/strict';
-import {mkdtemp,writeFile,readFile,rm} from 'node:fs/promises';
-import {tmpdir} from 'node:os';import {join} from 'node:path';import {createServer} from 'node:http';
-import {QualityOrchestrator,BACKEND_SUITES,FRONTEND_SUITES,validateConfig,loadQualityConfig,assertSafeRun,execFileSafe} from '@saplings/quality-core';
-import {registerBackend,createNodeDiagnostics} from '@saplings/backend-quality';
-import {registerFrontend} from '@saplings/frontend-quality/register';
-import {defineSaplingConfig} from '@saplings/sdk';
-const registry=()=>{const o=new QualityOrchestrator();registerBackend(o);registerFrontend(o);return o;};
-const config=(dir,url='http://127.0.0.1:3000')=>({name:'quality-test',environment:'local',outputDir:dir,backend:{baseUrl:url,endpoints:[{path:'/health'}]},frontend:{baseUrl:url,routes:['/'],bundle:{directory:dir,maxTotalGzipKb:1}}});
-const temporary=async fn=>{const dir=await mkdtemp(join(tmpdir(),'sapling-fullstack-'));try{return await fn(dir);}finally{await rm(dir,{recursive:true,force:true});}};
-test('exact 16+16 original suite IDs are registered, dry-run is not evidence',()=>temporary(async dir=>{const o=registry();assert.equal(BACKEND_SUITES.length,16);assert.equal(FRONTEND_SUITES.length,16);assert.equal(new Set(o.list()).size,32);assert.ok(o.list().includes('backend:profiling'));const r=await o.run(config(dir),{profile:'all',dryRun:true});assert.deepEqual(r.summary,{passed:0,failed:0,skipped:32});assert.equal(r.artifacts.length,3);assert.match(await readFile(r.artifacts[1],'utf8'),/Quality Report/);assert.match(await readFile(r.artifacts[2],'utf8'),/skipped="32"/);}));
-test('unified JSON config unwrap, standalone frontend config and SDK type-compatible object',()=>temporary(async dir=>{const c=config(dir);const wrapped=defineSaplingConfig({app:{id:'test',environment:'test'},quality:c});assert.equal(wrapped.quality,c);const f=join(dir,'config.json');await writeFile(f,JSON.stringify(wrapped));assert.deepEqual(await loadQualityConfig(f),c);await writeFile(f,JSON.stringify({name:'front',environment:'local',frontend:c.frontend}));assert.ok((await loadQualityConfig(f)).frontend);}));
-test('guard rejects unsafe route and remote host, staging confirmation, production destructive run',()=>temporary(async dir=>{const c=config(dir);assert.throws(()=>validateConfig({...c,backend:{...c.backend,endpoints:[{path:'//example.org'}]}}));assert.throws(()=>validateConfig({...c,frontend:{...c.frontend,routes:['https://example.org']}}));const ctx={config:{...c,backend:{...c.backend,baseUrl:'https://example.org'}},outputDir:dir,updateBaselines:false,allowDestructive:false,dryRun:false,verbose:false};assert.throws(()=>assertSafeRun(ctx,'backend:load'));assert.throws(()=>assertSafeRun({...ctx,config:{...c,environment:'production',safety:{allowProductionTarget:true,allowDestructive:true}},allowDestructive:true},'backend:chaos',true));const res=await registry().run(c,{suites:['backend:chaos']});assert.equal(res.summary.failed,1);}));
-test('frontend bundle actual gzip budget passes and fails',()=>temporary(async dir=>{await writeFile(join(dir,'app.js'),'console.log("hello");');const c=config(dir);const report=await registry().run(c,{suites:['frontend:bundle']});assert.equal(report.summary.passed,1);assert.equal(report.results[0].metrics['bundle.fileCount'].value,1);c.frontend.bundle.maxTotalGzipKb=0;const failed=await registry().run(c,{suites:['frontend:bundle']});assert.equal(failed.summary.failed,1);}));
-test('backend observability and concurrent idempotency checks execute real local HTTP',()=>temporary(async dir=>{const server=createServer((req,res)=>{if(req.url==='/metrics'){res.end('requests_total 10\n');return;}if(req.url==='/orders'){req.resume();res.setHeader('Content-Type','application/json');res.end(JSON.stringify({id:req.headers['idempotency-key']}));return;}res.end('ok');});await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));try{const c=config(dir,'http://127.0.0.1:'+server.address().port);c.backend.concurrency={path:'/orders',method:'POST',requests:8,idempotencyHeader:'Idempotency-Key',responseIdField:'id',expectedStatuses:[200]};const r=await registry().run(c,{suites:['backend:concurrency','backend:observability']});assert.deepEqual(r.summary,{passed:2,failed:0,skipped:0});}finally{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));}}));
-test('optional node runtime diagnostics yields finite process metrics and closes',()=>{const d=createNodeDiagnostics();try{const m=d.snapshot();assert.ok(Number.isFinite(m.heapUsedMb));assert.ok(m.rssMb>0);}finally{d.close();}});
-test('external command timeouts cannot report success',async()=>{const result=await execFileSafe(process.execPath,['-e','setInterval(()=>{},1000)'],{timeoutMs:30});assert.equal(result.timedOut,true);assert.notEqual(result.code,0);});
+import { mkdtemp, writeFile, readFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { createServer } from 'node:http';
+import {
+  QualityOrchestrator,
+  BACKEND_SUITES,
+  FRONTEND_SUITES,
+  validateConfig,
+  loadQualityConfig,
+  assertSafeRun,
+  execFileSafe,
+} from '@saplings/quality-core';
+import { registerBackend, createNodeDiagnostics } from '@saplings/backend-quality';
+import { registerFrontend } from '@saplings/frontend-quality/register';
+import { defineSaplingConfig } from '@saplings/sdk';
+const registry = () => {
+  const o = new QualityOrchestrator();
+  registerBackend(o);
+  registerFrontend(o);
+  return o;
+};
+const config = (dir, url = 'http://127.0.0.1:3000') => ({
+  name: 'quality-test',
+  environment: 'local',
+  outputDir: dir,
+  backend: { baseUrl: url, endpoints: [{ path: '/health' }] },
+  frontend: { baseUrl: url, routes: ['/'], bundle: { directory: dir, maxTotalGzipKb: 1 } },
+});
+const temporary = async (fn) => {
+  const dir = await mkdtemp(join(tmpdir(), 'sapling-fullstack-'));
+  try {
+    return await fn(dir);
+  } finally {
+    await rm(dir, { recursive: true, force: true });
+  }
+};
+test('exact 16+16 original suite IDs are registered, dry-run is not evidence', () =>
+  temporary(async (dir) => {
+    const o = registry();
+    assert.equal(BACKEND_SUITES.length, 16);
+    assert.equal(FRONTEND_SUITES.length, 16);
+    assert.equal(new Set(o.list()).size, 32);
+    assert.ok(o.list().includes('backend:profiling'));
+    const r = await o.run(config(dir), { profile: 'all', dryRun: true });
+    assert.deepEqual(r.summary, { passed: 0, failed: 0, skipped: 32 });
+    assert.equal(r.artifacts.length, 3);
+    assert.match(await readFile(r.artifacts[1], 'utf8'), /Quality Report/);
+    assert.match(await readFile(r.artifacts[2], 'utf8'), /skipped="32"/);
+  }));
+test('unified JSON config unwrap, standalone frontend config and SDK type-compatible object', () =>
+  temporary(async (dir) => {
+    const c = config(dir);
+    const wrapped = defineSaplingConfig({ app: { id: 'test', environment: 'test' }, quality: c });
+    assert.equal(wrapped.quality, c);
+    const f = join(dir, 'config.json');
+    await writeFile(f, JSON.stringify(wrapped));
+    assert.deepEqual(await loadQualityConfig(f), c);
+    await writeFile(
+      f,
+      JSON.stringify({ name: 'front', environment: 'local', frontend: c.frontend }),
+    );
+    assert.ok((await loadQualityConfig(f)).frontend);
+  }));
+test('guard rejects unsafe route and remote host, staging confirmation, production destructive run', () =>
+  temporary(async (dir) => {
+    const c = config(dir);
+    assert.throws(() =>
+      validateConfig({ ...c, backend: { ...c.backend, endpoints: [{ path: '//example.org' }] } }),
+    );
+    assert.throws(() =>
+      validateConfig({ ...c, frontend: { ...c.frontend, routes: ['https://example.org'] } }),
+    );
+    const ctx = {
+      config: { ...c, backend: { ...c.backend, baseUrl: 'https://example.org' } },
+      outputDir: dir,
+      updateBaselines: false,
+      allowDestructive: false,
+      dryRun: false,
+      verbose: false,
+    };
+    assert.throws(() => assertSafeRun(ctx, 'backend:load'));
+    assert.throws(() =>
+      assertSafeRun(
+        {
+          ...ctx,
+          config: {
+            ...c,
+            environment: 'production',
+            safety: { allowProductionTarget: true, allowDestructive: true },
+          },
+          allowDestructive: true,
+        },
+        'backend:chaos',
+        true,
+      ),
+    );
+    const res = await registry().run(c, { suites: ['backend:chaos'] });
+    assert.equal(res.summary.failed, 1);
+  }));
+test('frontend bundle actual gzip budget passes and fails', () =>
+  temporary(async (dir) => {
+    await writeFile(join(dir, 'app.js'), 'console.log("hello");');
+    const c = config(dir);
+    const report = await registry().run(c, { suites: ['frontend:bundle'] });
+    assert.equal(report.summary.passed, 1);
+    assert.equal(report.results[0].metrics['bundle.fileCount'].value, 1);
+    c.frontend.bundle.maxTotalGzipKb = 0;
+    const failed = await registry().run(c, { suites: ['frontend:bundle'] });
+    assert.equal(failed.summary.failed, 1);
+  }));
+test('backend observability and concurrent idempotency checks execute real local HTTP', () =>
+  temporary(async (dir) => {
+    const server = createServer((req, res) => {
+      if (req.url === '/metrics') {
+        res.end('requests_total 10\n');
+        return;
+      }
+      if (req.url === '/orders') {
+        req.resume();
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify({ id: req.headers['idempotency-key'] }));
+        return;
+      }
+      res.end('ok');
+    });
+    await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+    try {
+      const c = config(dir, 'http://127.0.0.1:' + server.address().port);
+      c.backend.concurrency = {
+        path: '/orders',
+        method: 'POST',
+        requests: 8,
+        idempotencyHeader: 'Idempotency-Key',
+        responseIdField: 'id',
+        expectedStatuses: [200],
+      };
+      const r = await registry().run(c, {
+        suites: ['backend:concurrency', 'backend:observability'],
+      });
+      assert.deepEqual(r.summary, { passed: 2, failed: 0, skipped: 0 });
+    } finally {
+      server.closeAllConnections();
+      await new Promise((resolve) => server.close(resolve));
+    }
+  }));
+test('optional node runtime diagnostics yields finite process metrics and closes', () => {
+  const d = createNodeDiagnostics();
+  try {
+    const m = d.snapshot();
+    assert.ok(Number.isFinite(m.heapUsedMb));
+    assert.ok(m.rssMb > 0);
+  } finally {
+    d.close();
+  }
+});
+test('external command timeouts cannot report success', async () => {
+  const result = await execFileSafe(process.execPath, ['-e', 'setInterval(()=>{},1000)'], {
+    timeoutMs: 30,
+  });
+  assert.equal(result.timedOut, true);
+  assert.notEqual(result.code, 0);
+});

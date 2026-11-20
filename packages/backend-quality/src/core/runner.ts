@@ -1,4 +1,48 @@
-import {validate,assertRunAllowed,type BackendQualityConfig,type QualityCategory} from './config.js';
-import type {QualityReport,SuiteResult} from './results.js';
-import {native} from '../engines/native.js';import {external} from '../engines/external.js';
-export async function runQuality(c:BackendQualityConfig,selection?:string):Promise<QualityReport>{validate(c);const selected=c.suites.filter(s=>!selection||s.id===selection||s.category===selection);if(!selected.length)throw Error('No matching suites');const results:SuiteResult[]=[];for(const s of selected){const start=performance.now();const row:SuiteResult={id:s.id,category:s.category,engine:s.engine,status:'blocked',durationMs:0};try{assertRunAllowed(c,s);const result=s.engine==='native'?await native(c,s):await external(c,s);row.metrics=result.metrics;row.status=result.failures.length?'failed':'passed';if(result.failures.length)row.reason=result.failures.join('; ');}catch(e){row.reason=e instanceof Error?e.message:'Unknown engine error';}row.durationMs=performance.now()-start;results.push(row);}return {version:'0.6.0',environment:c.environment,at:new Date().toISOString(),results,passed:results.length>0&&results.every(s=>s.status==='passed')};}
+import {
+  validate,
+  assertRunAllowed,
+  type BackendQualityConfig,
+  type QualityCategory,
+} from './config.js';
+import type { QualityReport, SuiteResult } from './results.js';
+import { native } from '../engines/native.js';
+import { external } from '../engines/external.js';
+export async function runQuality(
+  c: BackendQualityConfig,
+  selection?: string,
+): Promise<QualityReport> {
+  validate(c);
+  const selected = c.suites.filter(
+    (s) => !selection || s.id === selection || s.category === selection,
+  );
+  if (!selected.length) throw Error('No matching suites');
+  const results: SuiteResult[] = [];
+  for (const s of selected) {
+    const start = performance.now();
+    const row: SuiteResult = {
+      id: s.id,
+      category: s.category,
+      engine: s.engine,
+      status: 'blocked',
+      durationMs: 0,
+    };
+    try {
+      assertRunAllowed(c, s);
+      const result = s.engine === 'native' ? await native(c, s) : await external(c, s);
+      row.metrics = result.metrics;
+      row.status = result.failures.length ? 'failed' : 'passed';
+      if (result.failures.length) row.reason = result.failures.join('; ');
+    } catch (e) {
+      row.reason = e instanceof Error ? e.message : 'Unknown engine error';
+    }
+    row.durationMs = performance.now() - start;
+    results.push(row);
+  }
+  return {
+    version: '0.6.0',
+    environment: c.environment,
+    at: new Date().toISOString(),
+    results,
+    passed: results.length > 0 && results.every((s) => s.status === 'passed'),
+  };
+}

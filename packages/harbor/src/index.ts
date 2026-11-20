@@ -1,128 +1,1047 @@
 export * from './state.js';
-import {createServer, type IncomingMessage,type ServerResponse,type Server} from 'node:http';
-import {createServer as createHttpsServer,type Server as HttpsServer} from 'node:https';
-import {createSecureContext} from 'node:tls';
-import {randomUUID,createHash,timingSafeEqual} from 'node:crypto';
-import {BlockList,isIP} from 'node:net';
-import type {AddressInfo} from 'node:net';
-import {bytes,duration,GatewayError,loadGatewayConfig,validateGatewayConfig} from './config.js';
-import type {GatewayConfig,GatewayContext,GatewayDependencies,GatewayPrincipal,GatewayRoute,GatewayServiceConfig,PluginConfig,Upstream,Target,RateLimitStore,GatewayConsumer} from './types.js';
-export type * from './types.js';export {GatewayError,loadGatewayConfig,validateGatewayConfig,duration,bytes};
-const safe=(s:string)=>s.toLowerCase();
-const hash=(s:string)=>createHash('sha256').update(s).digest('hex');
-const equal=(a:string,b:string)=>{const x=Buffer.from(hash(a),'hex'),y=Buffer.from(hash(b),'hex');return timingSafeEqual(x,y);};
-const conf=(p:PluginConfig)=>p.config??{};
-const list=(x:unknown)=>Array.isArray(x)?x.map(String):[];
-const methodSafe=(m:string)=>['GET','HEAD','OPTIONS'].includes(m);
-const hop=new Set(['connection','transfer-encoding','keep-alive','proxy-authenticate','proxy-authorization','te','trailer','upgrade','host','content-length']);
-const ipAllowed=(ip:string,network:string)=>{const address=ip.replace(/^::ffff:/,'');const [host,mask]=network.split('/');const version=isIP(host),range=Number(mask);if(!version||!isIP(address)||!Number.isInteger(range)&&mask!==undefined)return false;const block=new BlockList();try{if(mask===undefined)block.addAddress(host);else block.addSubnet(host,range,version===4?'ipv4':'ipv6');return block.check(address,version===4?'ipv4':'ipv6');}catch{return false;}};
-export class MemoryRateLimitStore implements RateLimitStore {private buckets=new Map<string,{count:number,resetAt:number}>();constructor(private maxKeys=50000){}async check(key:string,max:number,windowMs:number){const now=Date.now();let b=this.buckets.get(key);if(!b||b.resetAt<=now){if(this.buckets.size>=this.maxKeys){for(const [k,v] of this.buckets)if(v.resetAt<=now)this.buckets.delete(k);if(this.buckets.size>=this.maxKeys)throw new GatewayError('RATE_STORE_FULL','Rate limit capacity exceeded',503);}b={count:0,resetAt:now+windowMs};this.buckets.set(key,b);}b.count++;return {allowed:b.count<=max,remaining:Math.max(0,max-b.count),resetAt:b.resetAt};}}
-export class Gateway {
- private readonly routes:{service:GatewayServiceConfig;route:GatewayRoute;prefix:string;host?:string}[]=[];
- private counters=new Map<string,number>();private active=new Map<string,number>();private health=new Map<string,{healthy:boolean;good:number;bad:number}>();private breakers=new Map<string,{requests:number;failed:number;openUntil:number;probing:boolean}>();private rate:RateLimitStore;private cache=new Map<string,{until:number,status:number,headers:Record<string,string>,body:Buffer}>();private server?:Server|HttpsServer;private timers:NodeJS.Timeout[]=[];private readonly httpFetch:typeof fetch;
- constructor(readonly config:GatewayConfig,readonly deps:GatewayDependencies={}){
-  validateGatewayConfig(config);this.httpFetch=deps.fetch??fetch;this.rate=deps.rateLimit??new MemoryRateLimitStore();
-  if(config.metadata.environment==='production'&&[...config.spec.plugins??[],...config.spec.services.flatMap(s=>[...s.plugins??[],...s.routes.flatMap(r=>r.plugins??[])])].some(p=>['rate-limiting','ddos-protection'].includes(p.name))&&(!deps.rateLimit||deps.rateLimit instanceof MemoryRateLimitStore))throw new GatewayError('CONFIG_INVALID','Production rate/ddos limits require distributed RateLimitStore');
-  const enabledPlugins=[...config.spec.plugins??[],...config.spec.services.flatMap(s=>[...s.plugins??[],...s.routes.flatMap(r=>r.plugins??[])])].filter(p=>p.enabled!==false);if(config.metadata.environment==='production'&&!deps.botChallenge&&enabledPlugins.some(p=>p.name==='bot-detection'&&p.config?.action==='challenge'))throw new GatewayError('UNSUPPORTED_SECURITY_PLUGIN','Bot challenge flow must be implemented before production',503);if(config.metadata.environment==='production'&&!deps.ddosBans&&enabledPlugins.some(p=>p.name==='ddos-protection'&&p.config?.action==='ban'))throw new GatewayError('UNSUPPORTED_SECURITY_PLUGIN','DDoS ban action must be implemented before production',503);if(config.metadata.environment==='production'&&enabledPlugins.some(p=>p.name==='ip-restriction'&&Array.isArray(p.config?.threatFeeds)&&p.config.threatFeeds.length>0)&&!deps.threatIp)throw new GatewayError('FEED_UNAVAILABLE','Configured threat feed must be implemented before production',503);
-  for(const s of config.spec.services)for(const r of s.routes)for(const prefix of r.paths)for(const host of r.hosts?.length?r.hosts:[undefined])this.routes.push({service:s,route:r,prefix,host});
-  this.routes.sort((a,b)=>b.prefix.length-a.prefix.length||Number(!!b.host)-Number(!!a.host)||a.route.name.localeCompare(b.route.name));
- }
- /** Explicit active probing. Timers are optional and must be started by the host process. */
- startHealthChecks(){for(const u of this.config.spec.upstreams){const c=u.healthchecks?.active as Record<string,unknown>|undefined;if(!c)continue;const interval=duration(c.interval,10000);const timer=setInterval(()=>{void this.probe(u).catch(err=>void this.deps.onEvent?.({type:'gateway.health-probe-error',upstream:u.name,reason:String(err)}));},interval);timer.unref();this.timers.push(timer);}}
- async probe(u:Upstream){const a=(u.healthchecks?.active??{}) as Record<string,unknown>,path=String(a.path??'/health'),timeout=duration(a.timeout,2000);for(const t of u.targets){const id=u.name+':'+t.target;const previous=this.health.get(id)??{healthy:true,good:0,bad:0};try{const r=await this.httpFetch('http://'+t.target+path,{method:'GET',signal:AbortSignal.timeout(timeout),redirect:'manual'});if(!r.ok)throw new Error('HTTP '+r.status);previous.good++;previous.bad=0;if(previous.good>=Number((a.healthy as Record<string,unknown>|undefined)?.successes??2))previous.healthy=true;}catch{previous.bad++;previous.good=0;if(previous.bad>=Number((a.unhealthy as Record<string,unknown>|undefined)?.failures??3))previous.healthy=false;}this.health.set(id,previous);}}
- private plugins(s:GatewayServiceConfig,r:GatewayRoute,consumer?:GatewayConsumer){const selected=new Map<string,PluginConfig>();const groupPlugins=(consumer?.groups??[]).flatMap(g=>this.config.spec.consumerGroups?.find(x=>x.name===g)?.plugins??[]);for(const p of [...this.config.spec.plugins??[],...groupPlugins,...consumer?.plugins??[],...s.plugins??[],...r.plugins??[]])selected.set(p.name,p);return [...selected.values()].filter(p=>p.enabled!==false);}
- private upstream(name:string){const u=this.config.spec.upstreams.find(x=>x.name===name);if(!u)throw new GatewayError('CONFIG_INVALID','Upstream missing',503);return u;}
- private choose(u:Upstream){const eligible=u.targets.filter(t=>(t.weight??100)>0&&this.health.get(u.name+':'+t.target)?.healthy!==false);if(!eligible.length)throw new GatewayError('UPSTREAM_UNHEALTHY','No healthy upstream',503);const id=(t:Target)=>u.name+':'+t.target;if(u.algorithm==='least-connections'){return [...eligible].sort((a,b)=>(this.active.get(id(a))??0)/(a.weight??100)-(this.active.get(id(b))??0)/(b.weight??100))[0];}const total=eligible.reduce((n,t)=>n+(t.weight??100),0);let cursor=this.counters.get(u.name)??0;this.counters.set(u.name,(cursor+1)%total);for(const t of eligible){cursor-=(t.weight??100);if(cursor<0)return t;}return eligible.at(-1)!;}
- private breaker(u:Upstream){const state=this.breakers.get(u.name)??{requests:0,failed:0,openUntil:0,probing:false};this.breakers.set(u.name,state);if(state.openUntil>Date.now())throw new GatewayError('CIRCUIT_OPEN','Upstream circuit open',503);if(state.openUntil&&state.openUntil<=Date.now()){if(state.probing)throw new GatewayError('CIRCUIT_OPEN','Breaker half-open',503);state.probing=true;}return state;}
- private record(u:Upstream,failed:boolean){const s=this.breakers.get(u.name);if(!s)return;s.requests++;if(failed)s.failed++;const c=u.circuitBreaker;if(s.probing){s.probing=false;if(failed){s.openUntil=Date.now()+duration(c?.openFor,30000);s.failed=0;s.requests=0;}else{s.openUntil=0;s.failed=0;s.requests=0;}return;}if(c&&s.requests>=Math.max(1,c.minRequests??20)&&s.failed/s.requests*100>=(c.errorThresholdPercent??50)){s.openUntil=Date.now()+duration(c.openFor,30000);s.failed=0;s.requests=0;}else if(s.requests>1000){s.requests=Math.max(1,Math.floor(s.requests/2));s.failed=Math.floor(s.failed/2);}}
- private async secret(ref:string){if(!/^(?:\$?\{vault:\/\/[^}]+\})$/.test(ref))return ref;if(!this.deps.resolveSecret)throw new GatewayError('SECRETS_REQUIRED','Consumer secret resolver required',503);const v=await this.deps.resolveSecret(ref);if(!v)throw new GatewayError('SECRETS_REQUIRED','Unresolved consumer secret',503);return v;}
- private async identify(req:IncomingMessage){const key=req.headers['x-api-key'];const token=typeof key==='string'?key:'';if(!token)return undefined;for(const c of this.config.spec.consumers??[]){for(const k of c.credentials?.keyAuth??[]){if(k.expiresAt&&Date.parse(k.expiresAt)<Date.now())continue;if(equal(token,await this.secret(k.key)))return c;}}return undefined;}
- private find(req:IncomingMessage){const host=String(req.headers.host??'').split(':')[0].toLowerCase();const rawPath=(req.url??'/').split('?')[0];
-  // Reject ambiguous encodings before URL normalizes dot segments or decodes separators.
-  if(!rawPath.startsWith('/')||rawPath.length>8192||/[\\\x00]/.test(rawPath)||/%(?:2f|5c|00|2e|25)/i.test(rawPath)||rawPath.split('/').includes('..')||rawPath.split('/').includes('.'))throw new GatewayError('BAD_PATH','Unsafe or ambiguous path',400);
-  let url:URL,path:string;try{url=new URL(req.url??'/',`http://${host||'localhost'}`);path=decodeURIComponent(url.pathname);}catch{throw new GatewayError('BAD_PATH','Malformed URL',400);}
-  if(path.includes('\0')||path.includes('\\')||path.includes('/../'))throw new GatewayError('BAD_PATH','Invalid path');return {url,path,entry:this.routes.find(x=>(!x.host||x.host.toLowerCase()===host)&&(!x.route.methods?.length||x.route.methods.includes(req.method==='OPTIONS'&&typeof req.headers['access-control-request-method']==='string'?req.headers['access-control-request-method']:req.method??''))&&(x.route.pathMatch==='prefix'?path===x.prefix||path.startsWith(x.prefix.endsWith('/')?x.prefix:x.prefix+'/'):path===x.prefix))};}
- private ip(req:IncomingMessage){const direct=req.socket.remoteAddress??'unknown';if(this.deps.trustProxy&&this.deps.trustedProxyCidrs?.some(range=>ipAllowed(direct,range))){const f=req.headers['x-forwarded-for'];const first=typeof f==='string'?f.split(',')[0].trim():'';if(isIP(first))return first;}return direct.replace(/^::ffff:/,'');}
- private async readBody(req:IncomingMessage,max:number){const declared=Number(req.headers['content-length']??0);if(Number.isFinite(declared)&&declared>max)throw new GatewayError('REQUEST_TOO_LARGE','Request too large',413);const chunks:Buffer[]=[];let n=0;for await(const piece of req){const b=Buffer.isBuffer(piece)?piece:Buffer.from(piece);n+=b.length;if(n>max)throw new GatewayError('REQUEST_TOO_LARGE','Request too large',413);chunks.push(b);}return Buffer.concat(chunks);}
- private response(res:ServerResponse,status:number,body:unknown,headers:Record<string,string>={}){if(res.headersSent)return;res.statusCode=status;for(const [k,v] of Object.entries(headers))if(!hop.has(k.toLowerCase()))res.setHeader(k,v);if(typeof body==='string'||Buffer.isBuffer(body)){res.end(body);return;}res.setHeader('content-type','application/json');res.end(JSON.stringify(body));}
- async handle(req:IncomingMessage,res:ServerResponse):Promise<void>{const started=Date.now();let ctx:GatewayContext|undefined;try{
-  // TLS ingress assertions must apply to every connection, not merely listener setup.
-  const tlsSocket=Boolean((req.socket as typeof req.socket & {encrypted?:boolean}).encrypted);
-  if(this.config.metadata.environment==='production'&&!tlsSocket){
-   const direct=req.socket.remoteAddress??'';
-   if(!this.deps.tlsTerminatedByTrustedProxy||!this.deps.trustProxy||!this.deps.trustedProxyCidrs?.some(range=>ipAllowed(direct,range))||req.headers['x-forwarded-proto']!=='https')throw new GatewayError('TLS_REQUIRED','Verified HTTPS ingress required',403);
+import { createServer, type IncomingMessage, type ServerResponse, type Server } from 'node:http';
+import { createServer as createHttpsServer, type Server as HttpsServer } from 'node:https';
+import { createSecureContext } from 'node:tls';
+import { randomUUID, createHash, timingSafeEqual } from 'node:crypto';
+import { BlockList, isIP } from 'node:net';
+import type { AddressInfo } from 'node:net';
+import {
+  bytes,
+  duration,
+  GatewayError,
+  loadGatewayConfig,
+  validateGatewayConfig,
+} from './config.js';
+import type {
+  GatewayConfig,
+  GatewayContext,
+  GatewayDependencies,
+  GatewayPrincipal,
+  GatewayRoute,
+  GatewayServiceConfig,
+  PluginConfig,
+  Upstream,
+  Target,
+  RateLimitStore,
+  GatewayConsumer,
+} from './types.js';
+export type * from './types.js';
+export { GatewayError, loadGatewayConfig, validateGatewayConfig, duration, bytes };
+const safe = (s: string) => s.toLowerCase();
+const hash = (s: string) => createHash('sha256').update(s).digest('hex');
+const equal = (a: string, b: string) => {
+  const x = Buffer.from(hash(a), 'hex'),
+    y = Buffer.from(hash(b), 'hex');
+  return timingSafeEqual(x, y);
+};
+const conf = (p: PluginConfig) => p.config ?? {};
+const list = (x: unknown) => (Array.isArray(x) ? x.map(String) : []);
+const methodSafe = (m: string) => ['GET', 'HEAD', 'OPTIONS'].includes(m);
+const hop = new Set([
+  'connection',
+  'transfer-encoding',
+  'keep-alive',
+  'proxy-authenticate',
+  'proxy-authorization',
+  'te',
+  'trailer',
+  'upgrade',
+  'host',
+  'content-length',
+]);
+const ipAllowed = (ip: string, network: string) => {
+  const address = ip.replace(/^::ffff:/, '');
+  const [host, mask] = network.split('/');
+  const version = isIP(host),
+    range = Number(mask);
+  if (!version || !isIP(address) || (!Number.isInteger(range) && mask !== undefined)) return false;
+  const block = new BlockList();
+  try {
+    if (mask === undefined) block.addAddress(host);
+    else block.addSubnet(host, range, version === 4 ? 'ipv4' : 'ipv6');
+    return block.check(address, version === 4 ? 'ipv4' : 'ipv6');
+  } catch {
+    return false;
   }
-
-  const {url,path,entry}=this.find(req);if(!entry)throw new GatewayError('NO_ROUTE','Route not found',404);
-  const {service,route,prefix}=entry,ip=this.ip(req),id=typeof req.headers['x-correlation-id']==='string'&&/^[a-zA-Z0-9._-]{1,100}$/.test(req.headers['x-correlation-id'])?req.headers['x-correlation-id']:randomUUID();ctx={request:req,response:res,route,service,correlationId:id,clientIp:ip};res.setHeader('X-Correlation-ID',id);
-  const rawHeaderBytes=req.rawHeaders.reduce((n,s)=>n+Buffer.byteLength(s),0);
-  if(rawHeaderBytes>1024*1024)throw new GatewayError('HEADERS_TOO_LARGE','Header budget exceeded',431);
-  const consumer=await this.identify(req);ctx.consumer=consumer;let plugins=this.plugins(service,route,consumer);const run=async(p:PluginConfig)=>{const c=conf(p);switch(p.name){
-   case 'correlation-id':return;
-   case 'jwt':{const raw=req.headers.authorization;if(typeof raw!=='string'||!/^Bearer \S+$/.test(raw))throw new GatewayError('UNAUTHENTICATED','Bearer token required',401);if(!this.deps.verifyJwt)throw new GatewayError('JWT_VERIFIER_REQUIRED','JWT verifier not installed',503);try{ctx!.principal=await this.deps.verifyJwt(raw.slice(7),{realmRef:String(c.realmRef??''),audiences:list(c.audiences),algorithms:list(c.algorithms),clockSkewMs:duration(c.clockSkew,30000)});}catch{throw new GatewayError('UNAUTHENTICATED','JWT validation failed',401);}if(!ctx!.principal?.sub)throw new GatewayError('UNAUTHENTICATED','Invalid subject',401);return;}
-   case 'key-auth':{
-    if(!ctx!.consumer&&this.deps.verifyApiKey){
-     const raw=req.headers['x-api-key'];
-     if(typeof raw!=='string'||raw.length>2048)throw new GatewayError('UNAUTHENTICATED','API key required',401);
-     let verified:Awaited<ReturnType<NonNullable<typeof this.deps.verifyApiKey>>>;
-     try{verified=await this.deps.verifyApiKey(raw,ctx!);}catch{throw new GatewayError('UNAUTHENTICATED','API key rejected',401);}
-     if(!verified?.sub||!verified.tenantId||!Array.isArray(verified.scopes))throw new GatewayError('UNAUTHENTICATED','API key rejected',401);
-     ctx!.principal={sub:verified.sub,tenantId:verified.tenantId,scopes:verified.scopes};
-     ctx!.consumer={username:verified.sub,groups:[]};
+};
+export class MemoryRateLimitStore implements RateLimitStore {
+  private buckets = new Map<string, { count: number; resetAt: number }>();
+  constructor(private maxKeys = 50000) {}
+  async check(key: string, max: number, windowMs: number) {
+    const now = Date.now();
+    let b = this.buckets.get(key);
+    if (!b || b.resetAt <= now) {
+      if (this.buckets.size >= this.maxKeys) {
+        for (const [k, v] of this.buckets) if (v.resetAt <= now) this.buckets.delete(k);
+        if (this.buckets.size >= this.maxKeys)
+          throw new GatewayError('RATE_STORE_FULL', 'Rate limit capacity exceeded', 503);
+      }
+      b = { count: 0, resetAt: now + windowMs };
+      this.buckets.set(key, b);
     }
-    if(!ctx!.consumer)throw new GatewayError('UNAUTHENTICATED','Approved API key required',401);
-    const permitted=list(c.groups);if(permitted.length&&!ctx!.consumer.groups?.some(group=>permitted.includes(group)))throw new GatewayError('FORBIDDEN','Consumer group denied',403);
-    const requiredScopes=list(c.requiredScopes);if(requiredScopes.length){const granted=ctx!.principal?.scopes;if(!Array.isArray(granted)||!requiredScopes.every(scope=>granted.includes(scope)))throw new GatewayError('FORBIDDEN','API key scope denied',403);}
-    return;
-   }
-   case 'acl':{const principal=ctx!.principal;const claim=String(c.claim??'roles');const roles=principal?.[claim];const values=Array.isArray(roles)?roles.map(String):typeof roles==='string'?[roles]:[];if(!values.length||!list(c.allow).length||!(c.match==='all'?list(c.allow).every(x=>values.includes(x)):list(c.allow).some(x=>values.includes(x))))throw new GatewayError('FORBIDDEN','Access denied',403);return;}
-   case 'rate-limiting':{const windows=Array.isArray(c.limits)?c.limits as {max:number,window:string}[]:[];for(const w of windows){const identity=c.limitBy==='consumer'?consumer?.username??ctx!.principal?.sub:c.limitBy==='tenant'?ctx!.principal?.tenantId:ip;if(!identity)throw new GatewayError('UNAUTHENTICATED','Rate identity required',401);const outcome=await this.rate.check(`${service.name}:${route.name}:${p.name}:${identity}:${w.window}`,w.max,duration(w.window,60000,7*86400000));res.setHeader('RateLimit-Remaining',String(outcome.remaining));if(!outcome.allowed){res.setHeader('Retry-After',String(Math.max(1,Math.ceil((outcome.resetAt-Date.now())/1000))));throw new GatewayError('RATE_LIMIT','Rate limit exceeded',429);}}return;}
-   case 'ddos-protection':{if(c.action==='ban'&&this.config.metadata.environment==='production'&&!this.deps.ddosBans)throw new GatewayError('BAN_STORE_REQUIRED','DDoS ban store required',503);if(this.deps.ddosBans&&await this.deps.ddosBans.isBanned(ip))throw new GatewayError('DDOS_BANNED','Client temporarily banned',403);const per=c.perIp as {maxRps?:number}|undefined,global=c.global as {maxRps?:number}|undefined;for(const [key,cap] of [['global',global?.maxRps],['ip:'+ip,per?.maxRps]] as const)if(cap){const r=await this.rate.check('ddos:'+key,cap,1000);if(!r.allowed){if(c.action==='ban'&&this.deps.ddosBans){await this.deps.ddosBans.ban(ip,duration(c.banDuration,600000,7*86400000));}throw new GatewayError('DDOS_LIMIT','Traffic limit exceeded',429);}}return;}
-   case 'bot-detection':{const ua=String(req.headers['user-agent']??'');if(list(c.denyUserAgents).some(pattern=>{const source=pattern.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replaceAll('\\*','.*');return new RegExp('^'+source+'$','i').test(ua);}))throw new GatewayError('BOT_DENIED','Client denied by user-agent policy',403);if(c.action==='challenge'&&(this.deps.botChallenge||this.config.metadata.environment==='production')){
-    if(!this.deps.botChallenge)throw new GatewayError('BOT_DRIVER_REQUIRED','Bot challenge adapter required',503);
-    const verdict=await this.deps.botChallenge(req,ctx!);
-    if(!verdict||!['allow','block','challenge'].includes(verdict.verdict))throw new GatewayError('BOT_DRIVER_INVALID','Bot challenge adapter produced invalid decision',503);
-    if(verdict.verdict==='block')throw new GatewayError('BOT_DENIED','Client denied by bot policy',403);
-    if(verdict.verdict==='challenge'){res.setHeader('content-type',verdict.contentType??'text/plain; charset=utf-8');res.setHeader('cache-control','no-store');this.response(res,verdict.status??403,verdict.body);return 'done';}
-   }
-   return;}
-   case 'ip-restriction':{const allow=list(c.allow),deny=list(c.deny);if(deny.some(x=>ipAllowed(ip,x))||allow.length&&!allow.some(x=>ipAllowed(ip,x)))throw new GatewayError('IP_DENIED','Client address denied',403);if(Array.isArray(c.threatFeeds)&&c.threatFeeds.length){if(!this.deps.threatIp)throw new GatewayError('FEED_UNAVAILABLE','Threat feed enforcement requires configured adapter',503);if(await this.deps.threatIp(ip,c.threatFeeds))throw new GatewayError('IP_DENIED','Client denied by threat feed',403);}return;}
-   case 'geo-restriction':{const countries=list(c.countries);if(!countries.length)return;if(!this.deps.countryForIp)throw new GatewayError('GEO_UNAVAILABLE','Country lookup required',503);const country=await this.deps.countryForIp(ip);if(!country)throw new GatewayError('GEO_UNAVAILABLE','Country unavailable',503);if((c.mode==='allow'&&!countries.includes(country))||(c.mode!=='allow'&&countries.includes(country)))throw new GatewayError('GEO_DENIED','Geography restricted',403);return;}
-   case 'cors':{const origin=req.headers.origin;if(typeof origin==='string'&&list(c.origins).includes(origin)){res.setHeader('Access-Control-Allow-Origin',origin);res.setHeader('Vary','Origin');if(req.method==='OPTIONS'){res.setHeader('Access-Control-Allow-Methods',list(c.methods).join(', '));res.setHeader('Access-Control-Allow-Headers',list(c.headers).join(', '));this.response(res,204,'');return 'done';}}else if(typeof origin==='string')throw new GatewayError('CORS','Origin denied',403);return;}
-   case 'request-size-limiting':return;
-   case 'request-validator':{if(!this.deps.validateBody)throw new GatewayError('SCHEMA_UNAVAILABLE','Request validator not installed',503);const ref=String(c.bodySchemaRef??'');if(!/^[\w/.-]+\.json$/.test(ref)||ref.split('/').includes('..'))throw new GatewayError('INVALID_SCHEMA','Invalid schema reference');let body:unknown;try{body=ctx!.body?JSON.parse(Buffer.from(ctx!.body).toString('utf8')):undefined;}catch{throw new GatewayError('INVALID_JSON','Malformed JSON body',400);}if(!await this.deps.validateBody(ref,body))throw new GatewayError('VALIDATION','Request schema rejected',422);return;}
-   case 'response-transformer':case 'proxy-cache':case 'logging-override':return;
-   default:throw new GatewayError('UNSUPPORTED_PLUGIN','Unsupported plugin '+p.name,503);
-  }};
-  // auth and routing checks run before consuming an unbounded body.
-  const order=['correlation-id','cors','ip-restriction','geo-restriction','bot-detection','ddos-protection','jwt','key-auth','acl','rate-limiting','request-size-limiting','request-validator','proxy-cache','response-transformer','logging-override'];plugins=plugins.sort((a,b)=>order.indexOf(a.name)-order.indexOf(b.name));
-  const early=plugins.filter(p=>!['request-validator','response-transformer','proxy-cache'].includes(p.name));for(const p of early)if(await run(p)==='done')return;
-  const headersBytes=rawHeaderBytes;const limitHeaders=plugins.filter(p=>p.name==='request-size-limiting').reduce((n,p)=>Math.min(n,bytes(conf(p).maxHeaderSize,n,1024*1024)),16384);if(headersBytes>limitHeaders)throw new GatewayError('HEADERS_TOO_LARGE','Header budget exceeded',431);
-  const max=plugins.filter(p=>p.name==='request-size-limiting').reduce((n,p)=>Math.min(n,bytes(conf(p).maxBodySize,n)),1024*1024);const requestBody=await this.readBody(req,max);ctx.body=requestBody;for(const p of plugins.filter(p=>p.name==='request-validator'))await run(p);
-  const cachePlugin=plugins.find(p=>p.name==='proxy-cache');const cacheConfig=cachePlugin?conf(cachePlugin):{},canCache=req.method==='GET'&&!!cachePlugin&&!!req.headers.authorization&&list(cacheConfig.varyHeaders).includes('Authorization');const cacheKey=hash(JSON.stringify([service.name,route.name,url.href,req.headers.authorization]));const cached=canCache?this.cache.get(cacheKey):undefined;
-  if(cached&&cached.until>Date.now()){this.response(res,cached.status,cached.body,cached.headers);return;}
-  const u=this.upstream(service.upstream),breaker=this.breaker(u);let response:Response|undefined;const retries=methodSafe(req.method??'')?Math.min(5,service.retries??0):0;let lastError:unknown;
-  for(let attempt=0;attempt<=retries;attempt++){response=undefined;const target=this.choose(u),key=u.name+':'+target.target;ctx.target=target.target;this.active.set(key,(this.active.get(key)??0)+1);try{if(this.deps.allowedUpstreamHosts?.length&&!this.deps.allowedUpstreamHosts.includes(target.target))throw new GatewayError('UPSTREAM_FORBIDDEN','Upstream target not approved',503);const forward=(route.stripPath?path.slice(prefix.length)||'/':path),pathname=(service.path&&service.path!=='/'?service.path.replace(/\/$/,''):'')+(forward.startsWith('/')?forward:'/'+forward);const urlTarget='http://'+target.target+pathname+url.search;const headers=new Headers();for(const [k,v] of Object.entries(req.headers))if(!hop.has(k.toLowerCase())&&!k.toLowerCase().startsWith('x-sapling-')&&!['authorization','x-api-key','cookie','x-forwarded-for','x-forwarded-proto','x-forwarded-host'].includes(k.toLowerCase())&&typeof v==='string')headers.set(k,v);if(ctx.principal?.sub)headers.set('x-sapling-principal',ctx.principal.sub);if(ctx.principal?.tenantId)headers.set('x-sapling-tenant',ctx.principal.tenantId);headers.set('x-correlation-id',id);response=await this.httpFetch(urlTarget,{method:req.method,headers,body:methodSafe(req.method??'')?undefined:requestBody,redirect:'manual',signal:AbortSignal.timeout(duration(service.timeouts?.read,10000))});if(response.status>=500&&attempt<retries){this.record(u,true);continue;}this.record(u,response.status>=500);lastError=undefined;break;}catch(err){lastError=err;this.record(u,true);if(attempt===retries||err instanceof GatewayError)break;}finally{this.active.set(key,Math.max(0,(this.active.get(key)??1)-1));}}
-  if(!response)throw lastError instanceof GatewayError?lastError:new GatewayError('UPSTREAM_ERROR','Upstream unavailable',502);
-  const rheaders:Record<string,string>={};for(const [k,v] of response.headers)if(!hop.has(k.toLowerCase())&&!['set-cookie','content-security-policy-report-only','content-encoding','content-length'].includes(k.toLowerCase()))rheaders[k]=v;
-  const chunks:Uint8Array[]=[];let size=0;const reader=response.body?.getReader();if(reader){try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>4*1024*1024){await reader.cancel();throw new GatewayError('UPSTREAM_TOO_LARGE','Upstream response exceeds buffered limit',502);}chunks.push(value);}}finally{reader.releaseLock();}}let body=Buffer.concat(chunks);
-  for(const p of plugins.filter(p=>p.name==='response-transformer')){const c=conf(p),remove=(c.remove??{}) as Record<string,unknown>,add=(c.add??{}) as Record<string,unknown>;for(const name of list(remove.headers))delete rheaders[name.toLowerCase()];for(const [k,v] of Object.entries((add.headers??{}) as Record<string,string>))if(!hop.has(k.toLowerCase())&&k.toLowerCase()!=='set-cookie')rheaders[k]=String(v);if(list(remove.json).length||list((c.mask as Record<string,unknown>|undefined)?.json).length){if(rheaders['content-type']?.includes('application/json')){const value=JSON.parse(body.toString('utf8'));if(value&&typeof value==='object'&&!Array.isArray(value)){for(const name of list(remove.json))delete value[name];for(const name of list((c.mask as Record<string,unknown>|undefined)?.json))if(name in value)value[name]='[REDACTED]';body=Buffer.from(JSON.stringify(value));} }else throw new GatewayError('TRANSFORM_UNSUPPORTED','JSON transformer requires JSON response',502);}}
-  if(route.version?.deprecation?.deprecated){rheaders.deprecation='true';if(route.version.deprecation.sunset)rheaders.sunset=route.version.deprecation.sunset;if(route.version.deprecation.link)rheaders.link=`<${route.version.deprecation.link}>; rel="deprecation"`;}
-  if(canCache&&response.ok&&body.length<=262144&&!response.headers.has('set-cookie')){if(this.cache.size>=500)this.cache.delete(this.cache.keys().next().value!);this.cache.set(cacheKey,{until:Date.now()+duration(cacheConfig.ttl===undefined?undefined:/^\d+$/.test(String(cacheConfig.ttl))?String(cacheConfig.ttl)+'s':String(cacheConfig.ttl),30000),status:response.status,headers:rheaders,body});}
-  this.response(res,response.status,body,rheaders);
- }catch(err){const e=err instanceof GatewayError?err:new GatewayError('INTERNAL_GATEWAY_ERROR','Gateway request failed',500);this.response(res,e.status,{error:e.code,correlationId:ctx?.correlationId});try{await this.deps.onEvent?.({type:'gateway.error',status:e.status,code:e.code,route:ctx?.route.name,correlationId:ctx?.correlationId});}catch{/* metrics/logging must not crash request */}}finally{if(ctx)try{await this.deps.onEvent?.({type:'gateway.request',route:ctx.route.name,service:ctx.service.name,latencyMs:Date.now()-started,status:res.statusCode,correlationId:ctx.correlationId});}catch{/* isolate observability failures */}}}
- /** Bind a real listener explicitly; no network port is opened by creating the SDK. */
- async listen(port=0,host='127.0.0.1'){if(this.config.metadata.environment==='production'&&(!this.deps.tlsTerminatedByTrustedProxy||!this.deps.trustProxy||!this.deps.trustedProxyCidrs?.length))throw new GatewayError('TLS_REQUIRED','Production plaintext listener requires verified ingress and trusted proxy CIDRs',503);if(this.server)throw new GatewayError('ALREADY_LISTENING','Already listening');const server=createServer((req,res)=>{void this.handle(req,res);});this.server=server;await new Promise<void>((resolve,reject)=>{server.once('error',reject);server.listen(port,host,()=>{server.off('error',reject);resolve();});});return (server.address() as AddressInfo).port;}
- /** TLS listener resolves configured PEM key/cert references; support strict SNI names. */
- async listenTls(port=0,host='127.0.0.1'){
-  if(this.server)throw new GatewayError('ALREADY_LISTENING','Already listening');const certificates=this.config.spec.certificates??[];if(!certificates.length||!this.deps.resolveSecret)throw new GatewayError('TLS_REQUIRED','TLS certificates and secret resolver required',503);
-  const contexts=new Map<string,ReturnType<typeof createSecureContext>>();const pem=async(value:string)=>value.includes('-----BEGIN ')?value:this.deps.resolveSecret!(value);
-  for(const item of certificates){const key=await pem(item.key),cert=await pem(item.cert);if(!key||!cert)throw new GatewayError('TLS_REQUIRED','TLS secret missing',503);const ctx=createSecureContext({key,cert,minVersion:'TLSv1.2'});for(const sni of item.snis??[])contexts.set(sni.toLowerCase(),ctx);}
-  const first=certificates[0],key=await pem(first.key),cert=await pem(first.cert);const server=createHttpsServer({key,cert,minVersion:'TLSv1.2',SNICallback:(hostname,cb)=>{const matching=contexts.get(hostname.toLowerCase());if(!matching){cb(new Error('Unknown SNI'));return;}cb(null,matching);}},(req,res)=>{void this.handle(req,res);});this.server=server;
-  await new Promise<void>((resolve,reject)=>{server.once('error',reject);server.listen(port,host,()=>{server.off('error',reject);resolve();});});return (server.address() as AddressInfo).port;
- }
- async close(){for(const t of this.timers)clearInterval(t);this.timers=[];if(this.server){const s=this.server;this.server=undefined;await new Promise<void>((resolve,reject)=>s.close(e=>e?reject(e):resolve()));}}
+    b.count++;
+    return { allowed: b.count <= max, remaining: Math.max(0, max - b.count), resetAt: b.resetAt };
+  }
+}
+export class Gateway {
+  private readonly routes: {
+    service: GatewayServiceConfig;
+    route: GatewayRoute;
+    prefix: string;
+    host?: string;
+  }[] = [];
+  private counters = new Map<string, number>();
+  private active = new Map<string, number>();
+  private health = new Map<string, { healthy: boolean; good: number; bad: number }>();
+  private breakers = new Map<
+    string,
+    { requests: number; failed: number; openUntil: number; probing: boolean }
+  >();
+  private rate: RateLimitStore;
+  private cache = new Map<
+    string,
+    { until: number; status: number; headers: Record<string, string>; body: Buffer }
+  >();
+  private server?: Server | HttpsServer;
+  private timers: NodeJS.Timeout[] = [];
+  private readonly httpFetch: typeof fetch;
+  constructor(
+    readonly config: GatewayConfig,
+    readonly deps: GatewayDependencies = {},
+  ) {
+    validateGatewayConfig(config);
+    this.httpFetch = deps.fetch ?? fetch;
+    this.rate = deps.rateLimit ?? new MemoryRateLimitStore();
+    if (
+      config.metadata.environment === 'production' &&
+      [
+        ...(config.spec.plugins ?? []),
+        ...config.spec.services.flatMap((s) => [
+          ...(s.plugins ?? []),
+          ...s.routes.flatMap((r) => r.plugins ?? []),
+        ]),
+      ].some((p) => ['rate-limiting', 'ddos-protection'].includes(p.name)) &&
+      (!deps.rateLimit || deps.rateLimit instanceof MemoryRateLimitStore)
+    )
+      throw new GatewayError(
+        'CONFIG_INVALID',
+        'Production rate/ddos limits require distributed RateLimitStore',
+      );
+    const enabledPlugins = [
+      ...(config.spec.plugins ?? []),
+      ...config.spec.services.flatMap((s) => [
+        ...(s.plugins ?? []),
+        ...s.routes.flatMap((r) => r.plugins ?? []),
+      ]),
+    ].filter((p) => p.enabled !== false);
+    if (
+      config.metadata.environment === 'production' &&
+      !deps.botChallenge &&
+      enabledPlugins.some((p) => p.name === 'bot-detection' && p.config?.action === 'challenge')
+    )
+      throw new GatewayError(
+        'UNSUPPORTED_SECURITY_PLUGIN',
+        'Bot challenge flow must be implemented before production',
+        503,
+      );
+    if (
+      config.metadata.environment === 'production' &&
+      !deps.ddosBans &&
+      enabledPlugins.some((p) => p.name === 'ddos-protection' && p.config?.action === 'ban')
+    )
+      throw new GatewayError(
+        'UNSUPPORTED_SECURITY_PLUGIN',
+        'DDoS ban action must be implemented before production',
+        503,
+      );
+    if (
+      config.metadata.environment === 'production' &&
+      enabledPlugins.some(
+        (p) =>
+          p.name === 'ip-restriction' &&
+          Array.isArray(p.config?.threatFeeds) &&
+          p.config.threatFeeds.length > 0,
+      ) &&
+      !deps.threatIp
+    )
+      throw new GatewayError(
+        'FEED_UNAVAILABLE',
+        'Configured threat feed must be implemented before production',
+        503,
+      );
+    for (const s of config.spec.services)
+      for (const r of s.routes)
+        for (const prefix of r.paths)
+          for (const host of r.hosts?.length ? r.hosts : [undefined])
+            this.routes.push({ service: s, route: r, prefix, host });
+    this.routes.sort(
+      (a, b) =>
+        b.prefix.length - a.prefix.length ||
+        Number(!!b.host) - Number(!!a.host) ||
+        a.route.name.localeCompare(b.route.name),
+    );
+  }
+  /** Explicit active probing. Timers are optional and must be started by the host process. */
+  startHealthChecks() {
+    for (const u of this.config.spec.upstreams) {
+      const c = u.healthchecks?.active as Record<string, unknown> | undefined;
+      if (!c) continue;
+      const interval = duration(c.interval, 10000);
+      const timer = setInterval(() => {
+        void this.probe(u).catch(
+          (err) =>
+            void this.deps.onEvent?.({
+              type: 'gateway.health-probe-error',
+              upstream: u.name,
+              reason: String(err),
+            }),
+        );
+      }, interval);
+      timer.unref();
+      this.timers.push(timer);
+    }
+  }
+  async probe(u: Upstream) {
+    const a = (u.healthchecks?.active ?? {}) as Record<string, unknown>,
+      path = String(a.path ?? '/health'),
+      timeout = duration(a.timeout, 2000);
+    for (const t of u.targets) {
+      const id = u.name + ':' + t.target;
+      const previous = this.health.get(id) ?? { healthy: true, good: 0, bad: 0 };
+      try {
+        const r = await this.httpFetch('http://' + t.target + path, {
+          method: 'GET',
+          signal: AbortSignal.timeout(timeout),
+          redirect: 'manual',
+        });
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        previous.good++;
+        previous.bad = 0;
+        if (
+          previous.good >=
+          Number((a.healthy as Record<string, unknown> | undefined)?.successes ?? 2)
+        )
+          previous.healthy = true;
+      } catch {
+        previous.bad++;
+        previous.good = 0;
+        if (
+          previous.bad >=
+          Number((a.unhealthy as Record<string, unknown> | undefined)?.failures ?? 3)
+        )
+          previous.healthy = false;
+      }
+      this.health.set(id, previous);
+    }
+  }
+  private plugins(s: GatewayServiceConfig, r: GatewayRoute, consumer?: GatewayConsumer) {
+    const selected = new Map<string, PluginConfig>();
+    const groupPlugins = (consumer?.groups ?? []).flatMap(
+      (g) => this.config.spec.consumerGroups?.find((x) => x.name === g)?.plugins ?? [],
+    );
+    for (const p of [
+      ...(this.config.spec.plugins ?? []),
+      ...groupPlugins,
+      ...(consumer?.plugins ?? []),
+      ...(s.plugins ?? []),
+      ...(r.plugins ?? []),
+    ])
+      selected.set(p.name, p);
+    return [...selected.values()].filter((p) => p.enabled !== false);
+  }
+  private upstream(name: string) {
+    const u = this.config.spec.upstreams.find((x) => x.name === name);
+    if (!u) throw new GatewayError('CONFIG_INVALID', 'Upstream missing', 503);
+    return u;
+  }
+  private choose(u: Upstream) {
+    const eligible = u.targets.filter(
+      (t) => (t.weight ?? 100) > 0 && this.health.get(u.name + ':' + t.target)?.healthy !== false,
+    );
+    if (!eligible.length) throw new GatewayError('UPSTREAM_UNHEALTHY', 'No healthy upstream', 503);
+    const id = (t: Target) => u.name + ':' + t.target;
+    if (u.algorithm === 'least-connections') {
+      return [...eligible].sort(
+        (a, b) =>
+          (this.active.get(id(a)) ?? 0) / (a.weight ?? 100) -
+          (this.active.get(id(b)) ?? 0) / (b.weight ?? 100),
+      )[0];
+    }
+    const total = eligible.reduce((n, t) => n + (t.weight ?? 100), 0);
+    let cursor = this.counters.get(u.name) ?? 0;
+    this.counters.set(u.name, (cursor + 1) % total);
+    for (const t of eligible) {
+      cursor -= t.weight ?? 100;
+      if (cursor < 0) return t;
+    }
+    return eligible.at(-1)!;
+  }
+  private breaker(u: Upstream) {
+    const state = this.breakers.get(u.name) ?? {
+      requests: 0,
+      failed: 0,
+      openUntil: 0,
+      probing: false,
+    };
+    this.breakers.set(u.name, state);
+    if (state.openUntil > Date.now())
+      throw new GatewayError('CIRCUIT_OPEN', 'Upstream circuit open', 503);
+    if (state.openUntil && state.openUntil <= Date.now()) {
+      if (state.probing) throw new GatewayError('CIRCUIT_OPEN', 'Breaker half-open', 503);
+      state.probing = true;
+    }
+    return state;
+  }
+  private record(u: Upstream, failed: boolean) {
+    const s = this.breakers.get(u.name);
+    if (!s) return;
+    s.requests++;
+    if (failed) s.failed++;
+    const c = u.circuitBreaker;
+    if (s.probing) {
+      s.probing = false;
+      if (failed) {
+        s.openUntil = Date.now() + duration(c?.openFor, 30000);
+        s.failed = 0;
+        s.requests = 0;
+      } else {
+        s.openUntil = 0;
+        s.failed = 0;
+        s.requests = 0;
+      }
+      return;
+    }
+    if (
+      c &&
+      s.requests >= Math.max(1, c.minRequests ?? 20) &&
+      (s.failed / s.requests) * 100 >= (c.errorThresholdPercent ?? 50)
+    ) {
+      s.openUntil = Date.now() + duration(c.openFor, 30000);
+      s.failed = 0;
+      s.requests = 0;
+    } else if (s.requests > 1000) {
+      s.requests = Math.max(1, Math.floor(s.requests / 2));
+      s.failed = Math.floor(s.failed / 2);
+    }
+  }
+  private async secret(ref: string) {
+    if (!/^(?:\$?\{vault:\/\/[^}]+\})$/.test(ref)) return ref;
+    if (!this.deps.resolveSecret)
+      throw new GatewayError('SECRETS_REQUIRED', 'Consumer secret resolver required', 503);
+    const v = await this.deps.resolveSecret(ref);
+    if (!v) throw new GatewayError('SECRETS_REQUIRED', 'Unresolved consumer secret', 503);
+    return v;
+  }
+  private async identify(req: IncomingMessage) {
+    const key = req.headers['x-api-key'];
+    const token = typeof key === 'string' ? key : '';
+    if (!token) return undefined;
+    for (const c of this.config.spec.consumers ?? []) {
+      for (const k of c.credentials?.keyAuth ?? []) {
+        if (k.expiresAt && Date.parse(k.expiresAt) < Date.now()) continue;
+        if (equal(token, await this.secret(k.key))) return c;
+      }
+    }
+    return undefined;
+  }
+  private find(req: IncomingMessage) {
+    const host = String(req.headers.host ?? '')
+      .split(':')[0]
+      .toLowerCase();
+    const rawPath = (req.url ?? '/').split('?')[0];
+    // Reject ambiguous encodings before URL normalizes dot segments or decodes separators.
+    if (
+      !rawPath.startsWith('/') ||
+      rawPath.length > 8192 ||
+      /[\\\x00]/.test(rawPath) ||
+      /%(?:2f|5c|00|2e|25)/i.test(rawPath) ||
+      rawPath.split('/').includes('..') ||
+      rawPath.split('/').includes('.')
+    )
+      throw new GatewayError('BAD_PATH', 'Unsafe or ambiguous path', 400);
+    let url: URL, path: string;
+    try {
+      url = new URL(req.url ?? '/', `http://${host || 'localhost'}`);
+      path = decodeURIComponent(url.pathname);
+    } catch {
+      throw new GatewayError('BAD_PATH', 'Malformed URL', 400);
+    }
+    if (path.includes('\0') || path.includes('\\') || path.includes('/../'))
+      throw new GatewayError('BAD_PATH', 'Invalid path');
+    return {
+      url,
+      path,
+      entry: this.routes.find(
+        (x) =>
+          (!x.host || x.host.toLowerCase() === host) &&
+          (!x.route.methods?.length ||
+            x.route.methods.includes(
+              req.method === 'OPTIONS' &&
+                typeof req.headers['access-control-request-method'] === 'string'
+                ? req.headers['access-control-request-method']
+                : (req.method ?? ''),
+            )) &&
+          (x.route.pathMatch === 'prefix'
+            ? path === x.prefix ||
+              path.startsWith(x.prefix.endsWith('/') ? x.prefix : x.prefix + '/')
+            : path === x.prefix),
+      ),
+    };
+  }
+  private ip(req: IncomingMessage) {
+    const direct = req.socket.remoteAddress ?? 'unknown';
+    if (
+      this.deps.trustProxy &&
+      this.deps.trustedProxyCidrs?.some((range) => ipAllowed(direct, range))
+    ) {
+      const f = req.headers['x-forwarded-for'];
+      const first = typeof f === 'string' ? f.split(',')[0].trim() : '';
+      if (isIP(first)) return first;
+    }
+    return direct.replace(/^::ffff:/, '');
+  }
+  private async readBody(req: IncomingMessage, max: number) {
+    const declared = Number(req.headers['content-length'] ?? 0);
+    if (Number.isFinite(declared) && declared > max)
+      throw new GatewayError('REQUEST_TOO_LARGE', 'Request too large', 413);
+    const chunks: Buffer[] = [];
+    let n = 0;
+    for await (const piece of req) {
+      const b = Buffer.isBuffer(piece) ? piece : Buffer.from(piece);
+      n += b.length;
+      if (n > max) throw new GatewayError('REQUEST_TOO_LARGE', 'Request too large', 413);
+      chunks.push(b);
+    }
+    return Buffer.concat(chunks);
+  }
+  private response(
+    res: ServerResponse,
+    status: number,
+    body: unknown,
+    headers: Record<string, string> = {},
+  ) {
+    if (res.headersSent) return;
+    res.statusCode = status;
+    for (const [k, v] of Object.entries(headers))
+      if (!hop.has(k.toLowerCase())) res.setHeader(k, v);
+    if (typeof body === 'string' || Buffer.isBuffer(body)) {
+      res.end(body);
+      return;
+    }
+    res.setHeader('content-type', 'application/json');
+    res.end(JSON.stringify(body));
+  }
+  async handle(req: IncomingMessage, res: ServerResponse): Promise<void> {
+    const started = Date.now();
+    let ctx: GatewayContext | undefined;
+    try {
+      // TLS ingress assertions must apply to every connection, not merely listener setup.
+      const tlsSocket = Boolean(
+        (req.socket as typeof req.socket & { encrypted?: boolean }).encrypted,
+      );
+      if (this.config.metadata.environment === 'production' && !tlsSocket) {
+        const direct = req.socket.remoteAddress ?? '';
+        if (
+          !this.deps.tlsTerminatedByTrustedProxy ||
+          !this.deps.trustProxy ||
+          !this.deps.trustedProxyCidrs?.some((range) => ipAllowed(direct, range)) ||
+          req.headers['x-forwarded-proto'] !== 'https'
+        )
+          throw new GatewayError('TLS_REQUIRED', 'Verified HTTPS ingress required', 403);
+      }
+
+      const { url, path, entry } = this.find(req);
+      if (!entry) throw new GatewayError('NO_ROUTE', 'Route not found', 404);
+      const { service, route, prefix } = entry,
+        ip = this.ip(req),
+        id =
+          typeof req.headers['x-correlation-id'] === 'string' &&
+          /^[a-zA-Z0-9._-]{1,100}$/.test(req.headers['x-correlation-id'])
+            ? req.headers['x-correlation-id']
+            : randomUUID();
+      ctx = { request: req, response: res, route, service, correlationId: id, clientIp: ip };
+      res.setHeader('X-Correlation-ID', id);
+      const rawHeaderBytes = req.rawHeaders.reduce((n, s) => n + Buffer.byteLength(s), 0);
+      if (rawHeaderBytes > 1024 * 1024)
+        throw new GatewayError('HEADERS_TOO_LARGE', 'Header budget exceeded', 431);
+      const consumer = await this.identify(req);
+      ctx.consumer = consumer;
+      let plugins = this.plugins(service, route, consumer);
+      const run = async (p: PluginConfig) => {
+        const c = conf(p);
+        switch (p.name) {
+          case 'correlation-id':
+            return;
+          case 'jwt': {
+            const raw = req.headers.authorization;
+            if (typeof raw !== 'string' || !/^Bearer \S+$/.test(raw))
+              throw new GatewayError('UNAUTHENTICATED', 'Bearer token required', 401);
+            if (!this.deps.verifyJwt)
+              throw new GatewayError('JWT_VERIFIER_REQUIRED', 'JWT verifier not installed', 503);
+            try {
+              ctx!.principal = await this.deps.verifyJwt(raw.slice(7), {
+                realmRef: String(c.realmRef ?? ''),
+                audiences: list(c.audiences),
+                algorithms: list(c.algorithms),
+                clockSkewMs: duration(c.clockSkew, 30000),
+              });
+            } catch {
+              throw new GatewayError('UNAUTHENTICATED', 'JWT validation failed', 401);
+            }
+            if (!ctx!.principal?.sub)
+              throw new GatewayError('UNAUTHENTICATED', 'Invalid subject', 401);
+            return;
+          }
+          case 'key-auth': {
+            if (!ctx!.consumer && this.deps.verifyApiKey) {
+              const raw = req.headers['x-api-key'];
+              if (typeof raw !== 'string' || raw.length > 2048)
+                throw new GatewayError('UNAUTHENTICATED', 'API key required', 401);
+              let verified: Awaited<ReturnType<NonNullable<typeof this.deps.verifyApiKey>>>;
+              try {
+                verified = await this.deps.verifyApiKey(raw, ctx!);
+              } catch {
+                throw new GatewayError('UNAUTHENTICATED', 'API key rejected', 401);
+              }
+              if (!verified?.sub || !verified.tenantId || !Array.isArray(verified.scopes))
+                throw new GatewayError('UNAUTHENTICATED', 'API key rejected', 401);
+              ctx!.principal = {
+                sub: verified.sub,
+                tenantId: verified.tenantId,
+                scopes: verified.scopes,
+              };
+              ctx!.consumer = { username: verified.sub, groups: [] };
+            }
+            if (!ctx!.consumer)
+              throw new GatewayError('UNAUTHENTICATED', 'Approved API key required', 401);
+            const permitted = list(c.groups);
+            if (
+              permitted.length &&
+              !ctx!.consumer.groups?.some((group) => permitted.includes(group))
+            )
+              throw new GatewayError('FORBIDDEN', 'Consumer group denied', 403);
+            const requiredScopes = list(c.requiredScopes);
+            if (requiredScopes.length) {
+              const granted = ctx!.principal?.scopes;
+              if (
+                !Array.isArray(granted) ||
+                !requiredScopes.every((scope) => granted.includes(scope))
+              )
+                throw new GatewayError('FORBIDDEN', 'API key scope denied', 403);
+            }
+            return;
+          }
+          case 'acl': {
+            const principal = ctx!.principal;
+            const claim = String(c.claim ?? 'roles');
+            const roles = principal?.[claim];
+            const values = Array.isArray(roles)
+              ? roles.map(String)
+              : typeof roles === 'string'
+                ? [roles]
+                : [];
+            if (
+              !values.length ||
+              !list(c.allow).length ||
+              !(c.match === 'all'
+                ? list(c.allow).every((x) => values.includes(x))
+                : list(c.allow).some((x) => values.includes(x)))
+            )
+              throw new GatewayError('FORBIDDEN', 'Access denied', 403);
+            return;
+          }
+          case 'rate-limiting': {
+            const windows = Array.isArray(c.limits)
+              ? (c.limits as { max: number; window: string }[])
+              : [];
+            for (const w of windows) {
+              const identity =
+                c.limitBy === 'consumer'
+                  ? (consumer?.username ?? ctx!.principal?.sub)
+                  : c.limitBy === 'tenant'
+                    ? ctx!.principal?.tenantId
+                    : ip;
+              if (!identity)
+                throw new GatewayError('UNAUTHENTICATED', 'Rate identity required', 401);
+              const outcome = await this.rate.check(
+                `${service.name}:${route.name}:${p.name}:${identity}:${w.window}`,
+                w.max,
+                duration(w.window, 60000, 7 * 86400000),
+              );
+              res.setHeader('RateLimit-Remaining', String(outcome.remaining));
+              if (!outcome.allowed) {
+                res.setHeader(
+                  'Retry-After',
+                  String(Math.max(1, Math.ceil((outcome.resetAt - Date.now()) / 1000))),
+                );
+                throw new GatewayError('RATE_LIMIT', 'Rate limit exceeded', 429);
+              }
+            }
+            return;
+          }
+          case 'ddos-protection': {
+            if (
+              c.action === 'ban' &&
+              this.config.metadata.environment === 'production' &&
+              !this.deps.ddosBans
+            )
+              throw new GatewayError('BAN_STORE_REQUIRED', 'DDoS ban store required', 503);
+            if (this.deps.ddosBans && (await this.deps.ddosBans.isBanned(ip)))
+              throw new GatewayError('DDOS_BANNED', 'Client temporarily banned', 403);
+            const per = c.perIp as { maxRps?: number } | undefined,
+              global = c.global as { maxRps?: number } | undefined;
+            for (const [key, cap] of [
+              ['global', global?.maxRps],
+              ['ip:' + ip, per?.maxRps],
+            ] as const)
+              if (cap) {
+                const r = await this.rate.check('ddos:' + key, cap, 1000);
+                if (!r.allowed) {
+                  if (c.action === 'ban' && this.deps.ddosBans) {
+                    await this.deps.ddosBans.ban(ip, duration(c.banDuration, 600000, 7 * 86400000));
+                  }
+                  throw new GatewayError('DDOS_LIMIT', 'Traffic limit exceeded', 429);
+                }
+              }
+            return;
+          }
+          case 'bot-detection': {
+            const ua = String(req.headers['user-agent'] ?? '');
+            if (
+              list(c.denyUserAgents).some((pattern) => {
+                const source = pattern
+                  .replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+                  .replaceAll('\\*', '.*');
+                return new RegExp('^' + source + '$', 'i').test(ua);
+              })
+            )
+              throw new GatewayError('BOT_DENIED', 'Client denied by user-agent policy', 403);
+            if (
+              c.action === 'challenge' &&
+              (this.deps.botChallenge || this.config.metadata.environment === 'production')
+            ) {
+              if (!this.deps.botChallenge)
+                throw new GatewayError(
+                  'BOT_DRIVER_REQUIRED',
+                  'Bot challenge adapter required',
+                  503,
+                );
+              const verdict = await this.deps.botChallenge(req, ctx!);
+              if (!verdict || !['allow', 'block', 'challenge'].includes(verdict.verdict))
+                throw new GatewayError(
+                  'BOT_DRIVER_INVALID',
+                  'Bot challenge adapter produced invalid decision',
+                  503,
+                );
+              if (verdict.verdict === 'block')
+                throw new GatewayError('BOT_DENIED', 'Client denied by bot policy', 403);
+              if (verdict.verdict === 'challenge') {
+                res.setHeader('content-type', verdict.contentType ?? 'text/plain; charset=utf-8');
+                res.setHeader('cache-control', 'no-store');
+                this.response(res, verdict.status ?? 403, verdict.body);
+                return 'done';
+              }
+            }
+            return;
+          }
+          case 'ip-restriction': {
+            const allow = list(c.allow),
+              deny = list(c.deny);
+            if (
+              deny.some((x) => ipAllowed(ip, x)) ||
+              (allow.length && !allow.some((x) => ipAllowed(ip, x)))
+            )
+              throw new GatewayError('IP_DENIED', 'Client address denied', 403);
+            if (Array.isArray(c.threatFeeds) && c.threatFeeds.length) {
+              if (!this.deps.threatIp)
+                throw new GatewayError(
+                  'FEED_UNAVAILABLE',
+                  'Threat feed enforcement requires configured adapter',
+                  503,
+                );
+              if (await this.deps.threatIp(ip, c.threatFeeds))
+                throw new GatewayError('IP_DENIED', 'Client denied by threat feed', 403);
+            }
+            return;
+          }
+          case 'geo-restriction': {
+            const countries = list(c.countries);
+            if (!countries.length) return;
+            if (!this.deps.countryForIp)
+              throw new GatewayError('GEO_UNAVAILABLE', 'Country lookup required', 503);
+            const country = await this.deps.countryForIp(ip);
+            if (!country) throw new GatewayError('GEO_UNAVAILABLE', 'Country unavailable', 503);
+            if (
+              (c.mode === 'allow' && !countries.includes(country)) ||
+              (c.mode !== 'allow' && countries.includes(country))
+            )
+              throw new GatewayError('GEO_DENIED', 'Geography restricted', 403);
+            return;
+          }
+          case 'cors': {
+            const origin = req.headers.origin;
+            if (typeof origin === 'string' && list(c.origins).includes(origin)) {
+              res.setHeader('Access-Control-Allow-Origin', origin);
+              res.setHeader('Vary', 'Origin');
+              if (req.method === 'OPTIONS') {
+                res.setHeader('Access-Control-Allow-Methods', list(c.methods).join(', '));
+                res.setHeader('Access-Control-Allow-Headers', list(c.headers).join(', '));
+                this.response(res, 204, '');
+                return 'done';
+              }
+            } else if (typeof origin === 'string')
+              throw new GatewayError('CORS', 'Origin denied', 403);
+            return;
+          }
+          case 'request-size-limiting':
+            return;
+          case 'request-validator': {
+            if (!this.deps.validateBody)
+              throw new GatewayError('SCHEMA_UNAVAILABLE', 'Request validator not installed', 503);
+            const ref = String(c.bodySchemaRef ?? '');
+            if (!/^[\w/.-]+\.json$/.test(ref) || ref.split('/').includes('..'))
+              throw new GatewayError('INVALID_SCHEMA', 'Invalid schema reference');
+            let body: unknown;
+            try {
+              body = ctx!.body ? JSON.parse(Buffer.from(ctx!.body).toString('utf8')) : undefined;
+            } catch {
+              throw new GatewayError('INVALID_JSON', 'Malformed JSON body', 400);
+            }
+            if (!(await this.deps.validateBody(ref, body)))
+              throw new GatewayError('VALIDATION', 'Request schema rejected', 422);
+            return;
+          }
+          case 'response-transformer':
+          case 'proxy-cache':
+          case 'logging-override':
+            return;
+          default:
+            throw new GatewayError('UNSUPPORTED_PLUGIN', 'Unsupported plugin ' + p.name, 503);
+        }
+      };
+      // auth and routing checks run before consuming an unbounded body.
+      const order = [
+        'correlation-id',
+        'cors',
+        'ip-restriction',
+        'geo-restriction',
+        'bot-detection',
+        'ddos-protection',
+        'jwt',
+        'key-auth',
+        'acl',
+        'rate-limiting',
+        'request-size-limiting',
+        'request-validator',
+        'proxy-cache',
+        'response-transformer',
+        'logging-override',
+      ];
+      plugins = plugins.sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name));
+      const early = plugins.filter(
+        (p) => !['request-validator', 'response-transformer', 'proxy-cache'].includes(p.name),
+      );
+      for (const p of early) if ((await run(p)) === 'done') return;
+      const headersBytes = rawHeaderBytes;
+      const limitHeaders = plugins
+        .filter((p) => p.name === 'request-size-limiting')
+        .reduce((n, p) => Math.min(n, bytes(conf(p).maxHeaderSize, n, 1024 * 1024)), 16384);
+      if (headersBytes > limitHeaders)
+        throw new GatewayError('HEADERS_TOO_LARGE', 'Header budget exceeded', 431);
+      const max = plugins
+        .filter((p) => p.name === 'request-size-limiting')
+        .reduce((n, p) => Math.min(n, bytes(conf(p).maxBodySize, n)), 1024 * 1024);
+      const requestBody = await this.readBody(req, max);
+      ctx.body = requestBody;
+      for (const p of plugins.filter((p) => p.name === 'request-validator')) await run(p);
+      const cachePlugin = plugins.find((p) => p.name === 'proxy-cache');
+      const cacheConfig = cachePlugin ? conf(cachePlugin) : {},
+        canCache =
+          req.method === 'GET' &&
+          !!cachePlugin &&
+          !!req.headers.authorization &&
+          list(cacheConfig.varyHeaders).includes('Authorization');
+      const cacheKey = hash(
+        JSON.stringify([service.name, route.name, url.href, req.headers.authorization]),
+      );
+      const cached = canCache ? this.cache.get(cacheKey) : undefined;
+      if (cached && cached.until > Date.now()) {
+        this.response(res, cached.status, cached.body, cached.headers);
+        return;
+      }
+      const u = this.upstream(service.upstream),
+        breaker = this.breaker(u);
+      let response: Response | undefined;
+      const retries = methodSafe(req.method ?? '') ? Math.min(5, service.retries ?? 0) : 0;
+      let lastError: unknown;
+      for (let attempt = 0; attempt <= retries; attempt++) {
+        response = undefined;
+        const target = this.choose(u),
+          key = u.name + ':' + target.target;
+        ctx.target = target.target;
+        this.active.set(key, (this.active.get(key) ?? 0) + 1);
+        try {
+          if (
+            this.deps.allowedUpstreamHosts?.length &&
+            !this.deps.allowedUpstreamHosts.includes(target.target)
+          )
+            throw new GatewayError('UPSTREAM_FORBIDDEN', 'Upstream target not approved', 503);
+          const forward = route.stripPath ? path.slice(prefix.length) || '/' : path,
+            pathname =
+              (service.path && service.path !== '/' ? service.path.replace(/\/$/, '') : '') +
+              (forward.startsWith('/') ? forward : '/' + forward);
+          const urlTarget = 'http://' + target.target + pathname + url.search;
+          const headers = new Headers();
+          for (const [k, v] of Object.entries(req.headers))
+            if (
+              !hop.has(k.toLowerCase()) &&
+              !k.toLowerCase().startsWith('x-sapling-') &&
+              ![
+                'authorization',
+                'x-api-key',
+                'cookie',
+                'x-forwarded-for',
+                'x-forwarded-proto',
+                'x-forwarded-host',
+              ].includes(k.toLowerCase()) &&
+              typeof v === 'string'
+            )
+              headers.set(k, v);
+          if (ctx.principal?.sub) headers.set('x-sapling-principal', ctx.principal.sub);
+          if (ctx.principal?.tenantId) headers.set('x-sapling-tenant', ctx.principal.tenantId);
+          headers.set('x-correlation-id', id);
+          response = await this.httpFetch(urlTarget, {
+            method: req.method,
+            headers,
+            body: methodSafe(req.method ?? '') ? undefined : requestBody,
+            redirect: 'manual',
+            signal: AbortSignal.timeout(duration(service.timeouts?.read, 10000)),
+          });
+          if (response.status >= 500 && attempt < retries) {
+            this.record(u, true);
+            continue;
+          }
+          this.record(u, response.status >= 500);
+          lastError = undefined;
+          break;
+        } catch (err) {
+          lastError = err;
+          this.record(u, true);
+          if (attempt === retries || err instanceof GatewayError) break;
+        } finally {
+          this.active.set(key, Math.max(0, (this.active.get(key) ?? 1) - 1));
+        }
+      }
+      if (!response)
+        throw lastError instanceof GatewayError
+          ? lastError
+          : new GatewayError('UPSTREAM_ERROR', 'Upstream unavailable', 502);
+      const rheaders: Record<string, string> = {};
+      for (const [k, v] of response.headers)
+        if (
+          !hop.has(k.toLowerCase()) &&
+          ![
+            'set-cookie',
+            'content-security-policy-report-only',
+            'content-encoding',
+            'content-length',
+          ].includes(k.toLowerCase())
+        )
+          rheaders[k] = v;
+      const chunks: Uint8Array[] = [];
+      let size = 0;
+      const reader = response.body?.getReader();
+      if (reader) {
+        try {
+          for (;;) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            size += value.byteLength;
+            if (size > 4 * 1024 * 1024) {
+              await reader.cancel();
+              throw new GatewayError(
+                'UPSTREAM_TOO_LARGE',
+                'Upstream response exceeds buffered limit',
+                502,
+              );
+            }
+            chunks.push(value);
+          }
+        } finally {
+          reader.releaseLock();
+        }
+      }
+      let body = Buffer.concat(chunks);
+      for (const p of plugins.filter((p) => p.name === 'response-transformer')) {
+        const c = conf(p),
+          remove = (c.remove ?? {}) as Record<string, unknown>,
+          add = (c.add ?? {}) as Record<string, unknown>;
+        for (const name of list(remove.headers)) delete rheaders[name.toLowerCase()];
+        for (const [k, v] of Object.entries((add.headers ?? {}) as Record<string, string>))
+          if (!hop.has(k.toLowerCase()) && k.toLowerCase() !== 'set-cookie')
+            rheaders[k] = String(v);
+        if (
+          list(remove.json).length ||
+          list((c.mask as Record<string, unknown> | undefined)?.json).length
+        ) {
+          if (rheaders['content-type']?.includes('application/json')) {
+            const value = JSON.parse(body.toString('utf8'));
+            if (value && typeof value === 'object' && !Array.isArray(value)) {
+              for (const name of list(remove.json)) delete value[name];
+              for (const name of list((c.mask as Record<string, unknown> | undefined)?.json))
+                if (name in value) value[name] = '[REDACTED]';
+              body = Buffer.from(JSON.stringify(value));
+            }
+          } else
+            throw new GatewayError(
+              'TRANSFORM_UNSUPPORTED',
+              'JSON transformer requires JSON response',
+              502,
+            );
+        }
+      }
+      if (route.version?.deprecation?.deprecated) {
+        rheaders.deprecation = 'true';
+        if (route.version.deprecation.sunset) rheaders.sunset = route.version.deprecation.sunset;
+        if (route.version.deprecation.link)
+          rheaders.link = `<${route.version.deprecation.link}>; rel="deprecation"`;
+      }
+      if (canCache && response.ok && body.length <= 262144 && !response.headers.has('set-cookie')) {
+        if (this.cache.size >= 500) this.cache.delete(this.cache.keys().next().value!);
+        this.cache.set(cacheKey, {
+          until:
+            Date.now() +
+            duration(
+              cacheConfig.ttl === undefined
+                ? undefined
+                : /^\d+$/.test(String(cacheConfig.ttl))
+                  ? String(cacheConfig.ttl) + 's'
+                  : String(cacheConfig.ttl),
+              30000,
+            ),
+          status: response.status,
+          headers: rheaders,
+          body,
+        });
+      }
+      this.response(res, response.status, body, rheaders);
+    } catch (err) {
+      const e =
+        err instanceof GatewayError
+          ? err
+          : new GatewayError('INTERNAL_GATEWAY_ERROR', 'Gateway request failed', 500);
+      this.response(res, e.status, { error: e.code, correlationId: ctx?.correlationId });
+      try {
+        await this.deps.onEvent?.({
+          type: 'gateway.error',
+          status: e.status,
+          code: e.code,
+          route: ctx?.route.name,
+          correlationId: ctx?.correlationId,
+        });
+      } catch {
+        /* metrics/logging must not crash request */
+      }
+    } finally {
+      if (ctx)
+        try {
+          await this.deps.onEvent?.({
+            type: 'gateway.request',
+            route: ctx.route.name,
+            service: ctx.service.name,
+            latencyMs: Date.now() - started,
+            status: res.statusCode,
+            correlationId: ctx.correlationId,
+          });
+        } catch {
+          /* isolate observability failures */
+        }
+    }
+  }
+  /** Bind a real listener explicitly; no network port is opened by creating the SDK. */
+  async listen(port = 0, host = '127.0.0.1') {
+    if (
+      this.config.metadata.environment === 'production' &&
+      (!this.deps.tlsTerminatedByTrustedProxy ||
+        !this.deps.trustProxy ||
+        !this.deps.trustedProxyCidrs?.length)
+    )
+      throw new GatewayError(
+        'TLS_REQUIRED',
+        'Production plaintext listener requires verified ingress and trusted proxy CIDRs',
+        503,
+      );
+    if (this.server) throw new GatewayError('ALREADY_LISTENING', 'Already listening');
+    const server = createServer((req, res) => {
+      void this.handle(req, res);
+    });
+    this.server = server;
+    await new Promise<void>((resolve, reject) => {
+      server.once('error', reject);
+      server.listen(port, host, () => {
+        server.off('error', reject);
+        resolve();
+      });
+    });
+    return (server.address() as AddressInfo).port;
+  }
+  /** TLS listener resolves configured PEM key/cert references; support strict SNI names. */
+  async listenTls(port = 0, host = '127.0.0.1') {
+    if (this.server) throw new GatewayError('ALREADY_LISTENING', 'Already listening');
+    const certificates = this.config.spec.certificates ?? [];
+    if (!certificates.length || !this.deps.resolveSecret)
+      throw new GatewayError('TLS_REQUIRED', 'TLS certificates and secret resolver required', 503);
+    const contexts = new Map<string, ReturnType<typeof createSecureContext>>();
+    const pem = async (value: string) =>
+      value.includes('-----BEGIN ') ? value : this.deps.resolveSecret!(value);
+    for (const item of certificates) {
+      const key = await pem(item.key),
+        cert = await pem(item.cert);
+      if (!key || !cert) throw new GatewayError('TLS_REQUIRED', 'TLS secret missing', 503);
+      const ctx = createSecureContext({ key, cert, minVersion: 'TLSv1.2' });
+      for (const sni of item.snis ?? []) contexts.set(sni.toLowerCase(), ctx);
+    }
+    const first = certificates[0],
+      key = await pem(first.key),
+      cert = await pem(first.cert);
+    const server = createHttpsServer(
+      {
+        key,
+        cert,
+        minVersion: 'TLSv1.2',
+        SNICallback: (hostname, cb) => {
+          const matching = contexts.get(hostname.toLowerCase());
+          if (!matching) {
+            cb(new Error('Unknown SNI'));
+            return;
+          }
+          cb(null, matching);
+        },
+      },
+      (req, res) => {
+        void this.handle(req, res);
+      },
+    );
+    this.server = server;
+    await new Promise<void>((resolve, reject) => {
+      server.once('error', reject);
+      server.listen(port, host, () => {
+        server.off('error', reject);
+        resolve();
+      });
+    });
+    return (server.address() as AddressInfo).port;
+  }
+  async close() {
+    for (const t of this.timers) clearInterval(t);
+    this.timers = [];
+    if (this.server) {
+      const s = this.server;
+      this.server = undefined;
+      await new Promise<void>((resolve, reject) => s.close((e) => (e ? reject(e) : resolve())));
+    }
+  }
 }
 
-export {GatewayHttpPolicies} from './saas-http.js';
-export {GatewayTlsPolicy} from './saas-http.js';
+export { GatewayHttpPolicies } from './saas-http.js';
+export { GatewayTlsPolicy } from './saas-http.js';

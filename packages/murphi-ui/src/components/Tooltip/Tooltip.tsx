@@ -1,12 +1,12 @@
-import React, { useState, useRef, useEffect } from "react";
-import { createPortal } from "react-dom";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { useState, useRef, useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface TooltipProps {
   children: React.ReactElement;
   title: React.ReactNode;
-  placement?: "top" | "bottom" | "left" | "right";
+  placement?: 'top' | 'bottom' | 'left' | 'right';
   arrow?: boolean;
   open?: boolean;
   className?: string;
@@ -25,7 +25,7 @@ const TooltipContent = styled.div<{ placement: string }>`
   pointer-events: none;
   opacity: 0;
   transition: opacity 0.2s ease-in-out;
-  
+
   &.visible {
     opacity: 1;
   }
@@ -37,35 +37,35 @@ const Arrow = styled.div<{ placement: string }>`
   height: 8px;
   background-color: ${(props) => (props.theme as XloxTheme).colors.neutral[800]};
   transform: rotate(45deg);
-  
+
   ${(props) => {
     switch (props.placement) {
-      case "top":
+      case 'top':
         return `
           bottom: -4px;
           left: 50%;
           margin-left: -4px;
         `;
-      case "bottom":
+      case 'bottom':
         return `
           top: -4px;
           left: 50%;
           margin-left: -4px;
         `;
-      case "left":
+      case 'left':
         return `
           right: -4px;
           top: 50%;
           margin-top: -4px;
         `;
-      case "right":
+      case 'right':
         return `
           left: -4px;
           top: 50%;
           margin-top: -4px;
         `;
       default:
-        return "";
+        return '';
     }
   }}
 `;
@@ -73,7 +73,7 @@ const Arrow = styled.div<{ placement: string }>`
 export const Tooltip: React.FC<TooltipProps> = ({
   children,
   title,
-  placement = "top",
+  placement = 'top',
   arrow = false,
   open: controlledOpen,
   ...props
@@ -82,91 +82,98 @@ export const Tooltip: React.FC<TooltipProps> = ({
   const [position, setPosition] = useState({ top: 0, left: 0 });
   const childRef = useRef<HTMLElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
-  
+
   const isOpen = controlledOpen !== undefined ? controlledOpen : internalOpen;
-  
+
   const updatePosition = () => {
     if (!childRef.current || !tooltipRef.current) return;
-    
+
     const childRect = childRef.current.getBoundingClientRect();
     const tooltipRect = tooltipRef.current.getBoundingClientRect();
     const offset = 8;
-    
+
     let top = 0;
     let left = 0;
-    
+
     switch (placement) {
-      case "top":
+      case 'top':
         top = childRect.top - tooltipRect.height - offset;
         left = childRect.left + (childRect.width - tooltipRect.width) / 2;
         break;
-      case "bottom":
+      case 'bottom':
         top = childRect.bottom + offset;
         left = childRect.left + (childRect.width - tooltipRect.width) / 2;
         break;
-      case "left":
+      case 'left':
         top = childRect.top + (childRect.height - tooltipRect.height) / 2;
         left = childRect.left - tooltipRect.width - offset;
         break;
-      case "right":
+      case 'right':
         top = childRect.top + (childRect.height - tooltipRect.height) / 2;
         left = childRect.right + offset;
         break;
     }
-    
+
     setPosition({ top, left });
   };
-  
+
   useEffect(() => {
     if (isOpen) {
       updatePosition();
-      window.addEventListener("scroll", updatePosition);
-      window.addEventListener("resize", updatePosition);
-      
+      window.addEventListener('scroll', updatePosition);
+      window.addEventListener('resize', updatePosition);
+
       return () => {
-        window.removeEventListener("scroll", updatePosition);
-        window.removeEventListener("resize", updatePosition);
+        window.removeEventListener('scroll', updatePosition);
+        window.removeEventListener('resize', updatePosition);
       };
     }
   }, [isOpen]);
-  
+
   const handleMouseEnter = () => {
     if (controlledOpen === undefined) {
       setInternalOpen(true);
     }
   };
-  
+
   const handleMouseLeave = () => {
     if (controlledOpen === undefined) {
       setInternalOpen(false);
     }
   };
-  
-  const childWithRef = React.cloneElement(children as React.ReactElement<React.RefAttributes<HTMLElement> & React.DOMAttributes<HTMLElement>>, {
-    ref: childRef,
-    onMouseEnter: handleMouseEnter,
-    onMouseLeave: handleMouseLeave,
-  });
-  
+
+  const childWithRef = React.cloneElement(
+    children as React.ReactElement<
+      React.RefAttributes<HTMLElement> & React.DOMAttributes<HTMLElement>
+    >,
+    {
+      ref: childRef,
+      onMouseEnter: handleMouseEnter,
+      onMouseLeave: handleMouseLeave,
+    },
+  );
+
   return (
     <>
       {childWithRef}
-      {isOpen && title && createPortal(
-        <TooltipContent
-          ref={tooltipRef}
-          placement={placement}
-          className={isOpen ? "visible" : ""}
-          style={{ top: `${position.top}px`, left: `${position.left}px` }}
-          role="tooltip"
-          {...props}
-        >
-          {title}
-          {arrow && <Arrow placement={placement} />}
-        </TooltipContent>,
-        document.body
-      )}
+      {isOpen &&
+        title &&
+        createPortal(
+          <TooltipContent
+            ref={tooltipRef}
+            placement={placement}
+            className={isOpen ? 'visible' : ''}
+            style={{ top: `${position.top}px`, left: `${position.left}px` }}
+            role="tooltip"
+            {...props}
+          >
+            {title}
+            {arrow && <Arrow placement={placement} />}
+          </TooltipContent>,
+          document.body,
+        )}
     </>
   );
 };
 
-Tooltip.displayName = "Tooltip";
+Tooltip.displayName = 'Tooltip';

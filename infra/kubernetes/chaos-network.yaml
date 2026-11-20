@@ -1,11 +1,11 @@
 apiVersion: chaos-mesh.org/v1alpha1
 kind: NetworkChaos
-metadata: {name: sapling-api-latency-experiment, namespace: sapling-quality}
+metadata: { name: sapling-api-latency-experiment, namespace: sapling-quality }
 spec:
   action: delay
   mode: one
   selector:
     namespaces: [sapling-quality]
-    labelSelectors: {app: sapling-example-api}
-  delay: {latency: 200ms, correlation: "10", jitter: 30ms}
+    labelSelectors: { app: sapling-example-api }
+  delay: { latency: 200ms, correlation: '10', jitter: 30ms }
   duration: 20s

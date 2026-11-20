@@ -1,0 +1,10 @@
+**/dist/
+**/node_modules/
+**/coverage/
+**/*.md
+docs/
+pnpm-lock.yaml
+packages/catalog/src/index.ts
+packages/sdk/src/feature-types.ts
+packages/validations/compat/
+**/helm/**/templates/
