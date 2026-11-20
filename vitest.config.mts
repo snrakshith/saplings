@@ -1,4 +1,4 @@
-import {defineConfig} from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 
 /** SDK core regression suite. Live DB/cloud suites and UI hooks run separately. */
 export default defineConfig({

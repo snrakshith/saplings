@@ -1,9 +1,111 @@
-import {test} from 'vitest';import assert from 'node:assert/strict';import {createServer} from 'node:http';import {mkdtemp,readFile,rm} from 'node:fs/promises';import {tmpdir} from 'node:os';import {join} from 'node:path';import {categories,validate,runQuality,writeReports,thresholdFailures} from '@saplings/backend-quality';import {defineSaplingConfig} from '@saplings/sdk';
-const local=(origin,suites)=>({environment:'local',allowedOrigins:[origin],targets:{api:origin},suites});const suite={id:'smoke',category:'performance',engine:'native',target:'api',requests:40,concurrency:4,probes:[{path:'/health'}]};
-test('15 categories and shared config',()=>{assert.equal(new Set(categories).size,15);const q=local('http://127.0.0.1:3000',[suite]);assert.equal(defineSaplingConfig({app:{id:'test',environment:'test'},quality:q}).quality,q);});
-test('target safety, duplicate IDs, bad thresholds and incompatible engine',()=>{const q=local('http://127.0.0.1:3000',[suite]);assert.throws(()=>validate({...q,targets:{api:'https://example.org'}}));assert.throws(()=>validate({...q,suites:[suite,suite]}));assert.throws(()=>validate({...q,suites:[{...suite,probes:[{path:'//example.org'}]}]}));assert.throws(()=>validate({...q,suites:[{...suite,thresholds:{maxErrorRate:2}}]}));assert.throws(()=>validate({...q,suites:[{...suite,category:'chaos'}]}));});
-test('native HTTP, thresholds, status assertions, reports',async()=>{const server=createServer((req,res)=>{res.statusCode=req.url==='/health'?200:403;res.end('ok');});await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;const dir=await mkdtemp(join(tmpdir(),'sapling-quality-'));try{const r=await runQuality(local(origin,[{...suite,probes:[{path:'/health'},{path:'/denied',statuses:[403]}]}]));assert.equal(r.passed,true);assert.equal(r.results[0].metrics.requests,40);assert.equal(r.results[0].metrics.errors,0);await writeReports(r,dir);assert.equal(JSON.parse(await readFile(join(dir,'quality.json'),'utf8')).passed,true);assert.match(await readFile(join(dir,'quality.junit.xml'),'utf8'),/failures="0"/);const fail=await runQuality(local(origin,[{...suite,probes:[{path:'/denied'}]}]));assert.equal(fail.passed,false);assert.equal(fail.results[0].status,'failed');assert.equal(thresholdFailures(r.results[0].metrics,{minRequestsPerSecond:1e9}).length,1);}finally{server.closeAllConnections();await new Promise(r=>server.close(r));await rm(dir,{recursive:true,force:true});}});
-test('disruptive, disabled and missing engine never pass',async()=>{const q=local('http://127.0.0.1:1',[{...suite,category:'stress'},{...suite,id:'disabled',enabled:false},{id:'contract',category:'contract',engine:'node-test'}]);const r=await runQuality(q);assert.equal(r.passed,false);assert.ok(r.results.every(x=>x.status==='blocked'));});
-test('operator Vitest engine executes actual assertions',async()=>{const q=local('http://127.0.0.1:1',[{id:'vitest-check',category:'contract',engine:'vitest',script:'tests/quality-fixtures/contract.test.mjs'}]);const r=await runQuality(q);assert.equal(r.passed,true);});
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { mkdtemp, readFile, rm } from 'node:fs/promises';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import {
+  categories,
+  validate,
+  runQuality,
+  writeReports,
+  thresholdFailures,
+} from '@saplings/backend-quality';
+import { defineSaplingConfig } from '@saplings/sdk';
+const local = (origin, suites) => ({
+  environment: 'local',
+  allowedOrigins: [origin],
+  targets: { api: origin },
+  suites,
+});
+const suite = {
+  id: 'smoke',
+  category: 'performance',
+  engine: 'native',
+  target: 'api',
+  requests: 40,
+  concurrency: 4,
+  probes: [{ path: '/health' }],
+};
+test('15 categories and shared config', () => {
+  assert.equal(new Set(categories).size, 15);
+  const q = local('http://127.0.0.1:3000', [suite]);
+  assert.equal(
+    defineSaplingConfig({ app: { id: 'test', environment: 'test' }, quality: q }).quality,
+    q,
+  );
+});
+test('target safety, duplicate IDs, bad thresholds and incompatible engine', () => {
+  const q = local('http://127.0.0.1:3000', [suite]);
+  assert.throws(() => validate({ ...q, targets: { api: 'https://example.org' } }));
+  assert.throws(() => validate({ ...q, suites: [suite, suite] }));
+  assert.throws(() =>
+    validate({ ...q, suites: [{ ...suite, probes: [{ path: '//example.org' }] }] }),
+  );
+  assert.throws(() => validate({ ...q, suites: [{ ...suite, thresholds: { maxErrorRate: 2 } }] }));
+  assert.throws(() => validate({ ...q, suites: [{ ...suite, category: 'chaos' }] }));
+});
+test('native HTTP, thresholds, status assertions, reports', async () => {
+  const server = createServer((req, res) => {
+    res.statusCode = req.url === '/health' ? 200 : 403;
+    res.end('ok');
+  });
+  await new Promise((r) => server.listen(0, '127.0.0.1', r));
+  const origin = 'http://127.0.0.1:' + server.address().port;
+  const dir = await mkdtemp(join(tmpdir(), 'sapling-quality-'));
+  try {
+    const r = await runQuality(
+      local(origin, [
+        { ...suite, probes: [{ path: '/health' }, { path: '/denied', statuses: [403] }] },
+      ]),
+    );
+    assert.equal(r.passed, true);
+    assert.equal(r.results[0].metrics.requests, 40);
+    assert.equal(r.results[0].metrics.errors, 0);
+    await writeReports(r, dir);
+    assert.equal(JSON.parse(await readFile(join(dir, 'quality.json'), 'utf8')).passed, true);
+    assert.match(await readFile(join(dir, 'quality.junit.xml'), 'utf8'), /failures="0"/);
+    const fail = await runQuality(local(origin, [{ ...suite, probes: [{ path: '/denied' }] }]));
+    assert.equal(fail.passed, false);
+    assert.equal(fail.results[0].status, 'failed');
+    assert.equal(thresholdFailures(r.results[0].metrics, { minRequestsPerSecond: 1e9 }).length, 1);
+  } finally {
+    server.closeAllConnections();
+    await new Promise((r) => server.close(r));
+    await rm(dir, { recursive: true, force: true });
+  }
+});
+test('disruptive, disabled and missing engine never pass', async () => {
+  const q = local('http://127.0.0.1:1', [
+    { ...suite, category: 'stress' },
+    { ...suite, id: 'disabled', enabled: false },
+    { id: 'contract', category: 'contract', engine: 'node-test' },
+  ]);
+  const r = await runQuality(q);
+  assert.equal(r.passed, false);
+  assert.ok(r.results.every((x) => x.status === 'blocked'));
+});
+test('operator Vitest engine executes actual assertions', async () => {
+  const q = local('http://127.0.0.1:1', [
+    {
+      id: 'vitest-check',
+      category: 'contract',
+      engine: 'vitest',
+      script: 'tests/quality-fixtures/contract.test.mjs',
+    },
+  ]);
+  const r = await runQuality(q);
+  assert.equal(r.passed, true);
+});
 
-test('legacy node-test engine identifier remains valid but executes Vitest',()=>{const q=local('http://127.0.0.1:1',[{id:'legacy',category:'contract',engine:'node-test',script:'tests/quality-fixtures/contract.test.mjs'}]);assert.equal(validate(q),q);});
+test('legacy node-test engine identifier remains valid but executes Vitest', () => {
+  const q = local('http://127.0.0.1:1', [
+    {
+      id: 'legacy',
+      category: 'contract',
+      engine: 'node-test',
+      script: 'tests/quality-fixtures/contract.test.mjs',
+    },
+  ]);
+  assert.equal(validate(q), q);
+});

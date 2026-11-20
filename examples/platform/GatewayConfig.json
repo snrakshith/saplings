@@ -13,19 +13,33 @@
     "secretStoreRefs": ["env", "aws"],
     "observabilityRef": "default",
     "certificates": [
-      { "name": "school-api-tls", "cert": "{vault://aws/school-api/cert}", "key": "{vault://aws/school-api/key}", "snis": ["api.school.com"] },
-      { "name": "school-auth-tls", "cert": "{vault://aws/school-auth/cert}", "key": "{vault://aws/school-auth/key}", "snis": ["auth.school.com"] }
+      {
+        "name": "school-api-tls",
+        "cert": "{vault://aws/school-api/cert}",
+        "key": "{vault://aws/school-api/key}",
+        "snis": ["api.school.com"]
+      },
+      {
+        "name": "school-auth-tls",
+        "cert": "{vault://aws/school-auth/cert}",
+        "key": "{vault://aws/school-auth/key}",
+        "snis": ["auth.school.com"]
+      }
     ],
     "upstreams": [
       {
-        "name": "identity-upstream", "algorithm": "round-robin",
+        "name": "identity-upstream",
+        "algorithm": "round-robin",
         "targets": [
           { "target": "identity-svc-a:4000", "weight": 100, "tags": ["zone-a"] },
           { "target": "identity-svc-b:4000", "weight": 100, "tags": ["zone-b"] }
         ],
         "healthchecks": {
           "active": {
-            "type": "http", "path": "/health", "interval": "10s", "timeout": "2s",
+            "type": "http",
+            "path": "/health",
+            "interval": "10s",
+            "timeout": "2s",
             "healthy": { "successes": 2 },
             "unhealthy": { "failures": 3, "httpStatuses": [500, 502, 503, 504] }
           },
@@ -34,7 +48,8 @@
         "circuitBreaker": { "errorThresholdPercent": 50, "minRequests": 20, "openFor": "30s" }
       },
       {
-        "name": "students-upstream", "algorithm": "least-connections",
+        "name": "students-upstream",
+        "algorithm": "least-connections",
         "targets": [
           { "target": "students-svc-v1:4001", "weight": 90, "tags": ["stable"] },
           { "target": "students-svc-v2:4001", "weight": 10, "tags": ["canary"] }
@@ -44,129 +59,370 @@
     ],
     "services": [
       {
-        "name": "identity", "protocol": "http", "upstream": "identity-upstream", "path": "/",
-        "timeouts": { "connect": "5s", "read": "10s", "write": "10s" }, "retries": 2,
+        "name": "identity",
+        "protocol": "http",
+        "upstream": "identity-upstream",
+        "path": "/",
+        "timeouts": { "connect": "5s", "read": "10s", "write": "10s" },
+        "retries": 2,
         "tags": ["auth", "tier-1"],
-        "plugins": [{ "name": "rate-limiting", "config": { "limitBy": "ip", "limits": [{ "max": 50, "window": "1m" }] } }],
+        "plugins": [
+          {
+            "name": "rate-limiting",
+            "config": { "limitBy": "ip", "limits": [{ "max": 50, "window": "1m" }] }
+          }
+        ],
         "routes": [
           {
-            "name": "oidc-token", "hosts": ["auth.school.com"],
+            "name": "oidc-token",
+            "hosts": ["auth.school.com"],
             "paths": ["/realms/school-platform/protocol/openid-connect/token"],
-            "methods": ["POST"], "stripPath": false,
+            "methods": ["POST"],
+            "stripPath": false,
             "plugins": [
-              { "name": "rate-limiting", "config": { "limitBy": "ip", "limits": [{ "max": 20, "window": "1m" }] } },
+              {
+                "name": "rate-limiting",
+                "config": { "limitBy": "ip", "limits": [{ "max": 20, "window": "1m" }] }
+              },
               { "name": "request-size-limiting", "config": { "maxBodySize": "16kb" } }
             ]
           },
           {
-            "name": "oidc-protocol", "hosts": ["auth.school.com"],
-            "paths": ["/realms/school-platform/protocol/openid-connect/", "/realms/school-platform/.well-known/"],
-            "pathMatch": "prefix", "methods": ["GET", "POST"], "stripPath": false
+            "name": "oidc-protocol",
+            "hosts": ["auth.school.com"],
+            "paths": [
+              "/realms/school-platform/protocol/openid-connect/",
+              "/realms/school-platform/.well-known/"
+            ],
+            "pathMatch": "prefix",
+            "methods": ["GET", "POST"],
+            "stripPath": false
           },
           {
-            "name": "login-and-account-pages", "hosts": ["auth.school.com"],
+            "name": "login-and-account-pages",
+            "hosts": ["auth.school.com"],
             "paths": ["/realms/school-platform/login-actions/", "/realms/school-platform/account/"],
-            "pathMatch": "prefix", "methods": ["GET", "POST"], "stripPath": false,
-            "plugins": [{ "name": "rate-limiting", "config": { "limitBy": "ip", "limits": [{ "max": 10, "window": "15m" }] } }]
+            "pathMatch": "prefix",
+            "methods": ["GET", "POST"],
+            "stripPath": false,
+            "plugins": [
+              {
+                "name": "rate-limiting",
+                "config": { "limitBy": "ip", "limits": [{ "max": 10, "window": "15m" }] }
+              }
+            ]
           },
           {
-            "name": "identity-health", "hosts": ["auth.school.com"],
-            "paths": ["/health/live", "/health/ready"], "methods": ["GET"],
+            "name": "identity-health",
+            "hosts": ["auth.school.com"],
+            "paths": ["/health/live", "/health/ready"],
+            "methods": ["GET"],
             "plugins": [
               { "name": "bot-detection", "enabled": false },
-              { "name": "logging-override", "config": { "streams": { "access": { "enabled": false } } } }
+              {
+                "name": "logging-override",
+                "config": { "streams": { "access": { "enabled": false } } }
+              }
             ]
           }
         ]
       },
       {
-        "name": "students", "protocol": "http", "upstream": "students-upstream",
+        "name": "students",
+        "protocol": "http",
+        "upstream": "students-upstream",
         "timeouts": { "connect": "5s", "read": "15s", "write": "15s" },
-        "retries": 1, "tags": ["core"],
-        "plugins": [{ "name": "jwt", "config": { "realmRef": "school-platform", "audiences": ["school-platform"], "algorithms": ["RS256"], "clockSkew": "30s" } }],
+        "retries": 1,
+        "tags": ["core"],
+        "plugins": [
+          {
+            "name": "jwt",
+            "config": {
+              "realmRef": "school-platform",
+              "audiences": ["school-platform"],
+              "algorithms": ["RS256"],
+              "clockSkew": "30s"
+            }
+          }
+        ],
         "routes": [
           {
-            "name": "students-read-v1", "paths": ["/api/v1/students"], "pathMatch": "prefix", "methods": ["GET"],
+            "name": "students-read-v1",
+            "paths": ["/api/v1/students"],
+            "pathMatch": "prefix",
+            "methods": ["GET"],
             "version": { "value": "v1", "strategy": "path" },
             "plugins": [
-              { "name": "acl", "config": { "claim": "roles", "match": "any", "allow": ["student", "teacher", "admin"] } },
-              { "name": "proxy-cache", "config": { "ttl": "30s", "varyHeaders": ["Authorization"] } },
-              { "name": "response-transformer", "config": { "remove": { "json": ["ssn", "internalNotes"] }, "mask": { "json": ["phone"] } } }
+              {
+                "name": "acl",
+                "config": {
+                  "claim": "roles",
+                  "match": "any",
+                  "allow": ["student", "teacher", "admin"]
+                }
+              },
+              {
+                "name": "proxy-cache",
+                "config": { "ttl": "30s", "varyHeaders": ["Authorization"] }
+              },
+              {
+                "name": "response-transformer",
+                "config": {
+                  "remove": { "json": ["ssn", "internalNotes"] },
+                  "mask": { "json": ["phone"] }
+                }
+              }
             ]
           },
           {
-            "name": "students-write-v1", "paths": ["/api/v1/students"], "pathMatch": "prefix", "methods": ["POST", "PUT", "PATCH", "DELETE"],
+            "name": "students-write-v1",
+            "paths": ["/api/v1/students"],
+            "pathMatch": "prefix",
+            "methods": ["POST", "PUT", "PATCH", "DELETE"],
             "version": { "value": "v1", "strategy": "path" },
             "plugins": [
-              { "name": "acl", "config": { "claim": "roles", "match": "any", "allow": ["teacher", "admin"] } },
-              { "name": "request-validator", "config": { "bodySchemaRef": "schemas/student.json", "maxBodySize": "256kb" } }
+              {
+                "name": "acl",
+                "config": { "claim": "roles", "match": "any", "allow": ["teacher", "admin"] }
+              },
+              {
+                "name": "request-validator",
+                "config": { "bodySchemaRef": "schemas/student.json", "maxBodySize": "256kb" }
+              }
             ]
           },
           {
-            "name": "students-legacy", "paths": ["/api/students"], "pathMatch": "prefix", "methods": ["GET"],
-            "version": { "value": "v0", "strategy": "path", "deprecation": { "deprecated": true, "sunset": "2027-03-31", "link": "https://docs.school.com/migrate-v1" } }
+            "name": "students-legacy",
+            "paths": ["/api/students"],
+            "pathMatch": "prefix",
+            "methods": ["GET"],
+            "version": {
+              "value": "v0",
+              "strategy": "path",
+              "deprecation": {
+                "deprecated": true,
+                "sunset": "2027-03-31",
+                "link": "https://docs.school.com/migrate-v1"
+              }
+            }
           }
         ]
       }
     ],
     "consumerGroups": [
-      { "name": "premium", "plugins": [{ "name": "rate-limiting", "config": { "limitBy": "consumer", "limits": [{ "max": 1000, "window": "1m" }, { "max": 100000, "window": "1d" }] } }] },
-      { "name": "free", "plugins": [{ "name": "rate-limiting", "config": { "limitBy": "consumer", "limits": [{ "max": 60, "window": "1m" }] } }] }
+      {
+        "name": "premium",
+        "plugins": [
+          {
+            "name": "rate-limiting",
+            "config": {
+              "limitBy": "consumer",
+              "limits": [
+                { "max": 1000, "window": "1m" },
+                { "max": 100000, "window": "1d" }
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "free",
+        "plugins": [
+          {
+            "name": "rate-limiting",
+            "config": { "limitBy": "consumer", "limits": [{ "max": 60, "window": "1m" }] }
+          }
+        ]
+      }
     ],
     "consumers": [
       {
-        "username": "mobile-app", "customId": "app-001", "groups": ["premium"],
-        "credentials": { "keyAuth": [{ "key": "{vault://env/MOBILE_APP_KEY}", "expiresAt": "2027-01-01T00:00:00Z" }] },
+        "username": "mobile-app",
+        "customId": "app-001",
+        "groups": ["premium"],
+        "credentials": {
+          "keyAuth": [
+            { "key": "{vault://env/MOBILE_APP_KEY}", "expiresAt": "2027-01-01T00:00:00Z" }
+          ]
+        },
         "tags": ["first-party"]
       },
       {
-        "username": "partner-erp", "clientId": "partner-erp", "realmRef": "school-platform", "groups": ["free"],
+        "username": "partner-erp",
+        "clientId": "partner-erp",
+        "realmRef": "school-platform",
+        "groups": ["free"],
         "plugins": [{ "name": "ip-restriction", "config": { "allow": ["203.0.113.0/24"] } }]
       }
     ],
     "plugins": [
-      { "name": "correlation-id", "config": { "header": "X-Correlation-ID", "generator": "uuid", "echoDownstream": true } },
-      { "name": "cors", "config": { "origins": ["https://app.school.com"], "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"], "headers": ["Content-Type", "Authorization", "X-API-Key", "X-Correlation-ID"] } },
-      { "name": "ddos-protection", "config": { "perIp": { "maxRps": 50, "burst": 100 }, "global": { "maxRps": 5000 }, "action": "ban", "banDuration": "10m", "slowRequestTimeout": "10s" } },
-      { "name": "bot-detection", "config": { "sensitivity": "medium", "action": "challenge", "allowBots": ["Googlebot", "Bingbot"], "denyUserAgents": ["curl/*", "python-requests/*"] } },
-      { "name": "ip-restriction", "config": { "deny": [], "allow": [], "threatFeeds": [{ "name": "abuseipdb", "refresh": "1h" }] } },
-      { "name": "geo-restriction", "config": { "mode": "deny", "countries": [], "action": "block" } },
-      { "name": "request-size-limiting", "config": { "maxBodySize": "1mb", "maxHeaderSize": "16kb" } },
-      { "name": "rate-limiting", "config": { "policy": "redis", "limitBy": "ip", "limits": [{ "max": 100, "window": "15m" }], "faultTolerant": true, "headers": "ietf-draft" } },
-      { "name": "response-transformer", "config": { "remove": { "headers": ["X-Powered-By", "Server"] }, "add": { "headers": { "Strict-Transport-Security": "max-age=31536000" } } } }
+      {
+        "name": "correlation-id",
+        "config": { "header": "X-Correlation-ID", "generator": "uuid", "echoDownstream": true }
+      },
+      {
+        "name": "cors",
+        "config": {
+          "origins": ["https://app.school.com"],
+          "methods": ["GET", "POST", "PUT", "PATCH", "DELETE"],
+          "headers": ["Content-Type", "Authorization", "X-API-Key", "X-Correlation-ID"]
+        }
+      },
+      {
+        "name": "ddos-protection",
+        "config": {
+          "perIp": { "maxRps": 50, "burst": 100 },
+          "global": { "maxRps": 5000 },
+          "action": "ban",
+          "banDuration": "10m",
+          "slowRequestTimeout": "10s"
+        }
+      },
+      {
+        "name": "bot-detection",
+        "config": {
+          "sensitivity": "medium",
+          "action": "challenge",
+          "allowBots": ["Googlebot", "Bingbot"],
+          "denyUserAgents": ["curl/*", "python-requests/*"]
+        }
+      },
+      {
+        "name": "ip-restriction",
+        "config": {
+          "deny": [],
+          "allow": [],
+          "threatFeeds": [{ "name": "abuseipdb", "refresh": "1h" }]
+        }
+      },
+      {
+        "name": "geo-restriction",
+        "config": { "mode": "deny", "countries": [], "action": "block" }
+      },
+      {
+        "name": "request-size-limiting",
+        "config": { "maxBodySize": "1mb", "maxHeaderSize": "16kb" }
+      },
+      {
+        "name": "rate-limiting",
+        "config": {
+          "policy": "redis",
+          "limitBy": "ip",
+          "limits": [{ "max": 100, "window": "15m" }],
+          "faultTolerant": true,
+          "headers": "ietf-draft"
+        }
+      },
+      {
+        "name": "response-transformer",
+        "config": {
+          "remove": { "headers": ["X-Powered-By", "Server"] },
+          "add": { "headers": { "Strict-Transport-Security": "max-age=31536000" } }
+        }
+      }
     ],
     "observability": {
       "logs": {
         "sinks": [
           { "name": "stdout", "type": "stdout" },
-          { "name": "local-file", "type": "file", "config": { "path": "/var/log/harbor", "rotation": { "interval": "1d", "maxSize": "100mb", "compress": true, "retention": "14d" } } },
-          { "name": "loki", "type": "http", "config": { "url": "http://loki:3100/loki/api/v1/push", "batchSize": 500, "flushInterval": "5s", "retry": { "max": 3, "backoff": "2s" } } },
+          {
+            "name": "local-file",
+            "type": "file",
+            "config": {
+              "path": "/var/log/harbor",
+              "rotation": {
+                "interval": "1d",
+                "maxSize": "100mb",
+                "compress": true,
+                "retention": "14d"
+              }
+            }
+          },
+          {
+            "name": "loki",
+            "type": "http",
+            "config": {
+              "url": "http://loki:3100/loki/api/v1/push",
+              "batchSize": 500,
+              "flushInterval": "5s",
+              "retry": { "max": 3, "backoff": "2s" }
+            }
+          },
           { "name": "mongo", "type": "mongodb", "config": { "collection": "logs", "ttl": "30d" } },
           { "name": "audit", "type": "audit", "config": { "policyRef": "default" } },
           { "name": "siem", "type": "event-stream", "config": { "topic": "gateway.security" } }
         ],
         "streams": {
           "access": {
-            "enabled": true, "format": "json", "sinks": ["stdout", "mongo"], "sampleRate": 1.0,
-            "fields": ["timestamp", "correlationId", "method", "path", "status", "latency", "upstreamLatency", "service", "route", "consumer", "clientIp", "geo.country", "requestSize", "responseSize"],
+            "enabled": true,
+            "format": "json",
+            "sinks": ["stdout", "mongo"],
+            "sampleRate": 1.0,
+            "fields": [
+              "timestamp",
+              "correlationId",
+              "method",
+              "path",
+              "status",
+              "latency",
+              "upstreamLatency",
+              "service",
+              "route",
+              "consumer",
+              "clientIp",
+              "geo.country",
+              "requestSize",
+              "responseSize"
+            ],
             "exclude": { "paths": ["/health", "/metrics"] }
           },
           "error": {
-            "enabled": true, "format": "json", "level": "warn", "sinks": ["stdout", "local-file", "loki"],
-            "include": { "statusCodes": ["5xx", "429", "401", "403"], "upstreamErrors": true, "pluginErrors": true },
-            "captureRequestBody": false, "captureStackTrace": true
+            "enabled": true,
+            "format": "json",
+            "level": "warn",
+            "sinks": ["stdout", "local-file", "loki"],
+            "include": {
+              "statusCodes": ["5xx", "429", "401", "403"],
+              "upstreamErrors": true,
+              "pluginErrors": true
+            },
+            "captureRequestBody": false,
+            "captureStackTrace": true
           },
           "audit": {
-            "enabled": true, "format": "json", "sinks": ["audit"],
-            "events": ["config.change", "consumer.create", "credential.rotate", "admin.login", "admin.login.failed"], "retention": "365d"
+            "enabled": true,
+            "format": "json",
+            "sinks": ["audit"],
+            "events": [
+              "config.change",
+              "consumer.create",
+              "credential.rotate",
+              "admin.login",
+              "admin.login.failed"
+            ],
+            "retention": "365d"
           },
           "security": {
-            "enabled": true, "format": "json", "sinks": ["siem", "loki"],
-            "events": ["ip.blocked", "geo.blocked", "bot.detected", "ddos.ban", "auth.failed", "rate.limited", "request.terminated"]
+            "enabled": true,
+            "format": "json",
+            "sinks": ["siem", "loki"],
+            "events": [
+              "ip.blocked",
+              "geo.blocked",
+              "bot.detected",
+              "ddos.ban",
+              "auth.failed",
+              "rate.limited",
+              "request.terminated"
+            ]
           },
           "debug": {
-            "enabled": false, "sinks": ["stdout"], "sampleRate": 0.01,
-            "captureRequestBody": true, "captureResponseBody": true, "maxBodySize": "4kb"
+            "enabled": false,
+            "sinks": ["stdout"],
+            "sampleRate": 0.01,
+            "captureRequestBody": true,
+            "captureResponseBody": true,
+            "maxBodySize": "4kb"
           }
         },
         "redaction": {
@@ -176,8 +432,16 @@
           "replacement": "[REDACTED]"
         }
       },
-      "metrics": { "perConsumer": false, "latencyBuckets": [5, 10, 25, 50, 100, 250, 500, 1000, 2500], "statusCodeMetrics": true, "upstreamHealthMetrics": true },
-      "tracing": { "propagation": ["w3c", "b3"], "resourceAttributes": { "service.name": "gateways" } }
+      "metrics": {
+        "perConsumer": false,
+        "latencyBuckets": [5, 10, 25, 50, 100, 250, 500, 1000, 2500],
+        "statusCodeMetrics": true,
+        "upstreamHealthMetrics": true
+      },
+      "tracing": {
+        "propagation": ["w3c", "b3"],
+        "resourceAttributes": { "service.name": "gateways" }
+      }
     }
   }
 }

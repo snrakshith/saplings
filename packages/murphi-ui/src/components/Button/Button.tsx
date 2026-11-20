@@ -1,11 +1,11 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
-import {buttonAppearance} from "@saplings/ui-core";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
+import { buttonAppearance } from '@saplings/ui-core';
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "primary" | "secondary" | "outlined" | "text";
-  size?: "small" | "medium" | "large";
+  variant?: 'primary' | 'secondary' | 'outlined' | 'text';
+  size?: 'small' | 'medium' | 'large';
   fullWidth?: boolean;
   loading?: boolean;
   disabled?: boolean;
@@ -24,10 +24,10 @@ const StyledButton = styled('button', {
   font-size: ${(props) => {
     const theme = props.theme as XloxTheme;
     switch (props.size) {
-      case "small":
-        return "0.75rem";
-      case "large":
-        return "1rem";
+      case 'small':
+        return '0.75rem';
+      case 'large':
+        return '1rem';
       default:
         return theme.typography.button.fontSize;
     }
@@ -37,33 +37,32 @@ const StyledButton = styled('button', {
   padding: ${(props) => {
     const theme = props.theme as XloxTheme;
     switch (props.size) {
-      case "small":
+      case 'small':
         return `${theme.spacing(1)} ${theme.spacing(2)}`;
-      case "large":
+      case 'large':
         return `${theme.spacing(1.5)} ${theme.spacing(4)}`;
       default:
         return `${theme.spacing(1)} ${theme.spacing(3)}`;
     }
   }};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
-  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
   transition: all 0.2s ease-in-out;
   opacity: ${(props) => (props.disabled || props.loading ? 0.6 : 1)};
-  pointer-events: ${(props) => (props.disabled || props.loading ? "none" : "auto")};
+  pointer-events: ${(props) => (props.disabled || props.loading ? 'none' : 'auto')};
 
   ${(props) => {
     const theme = props.theme as XloxTheme;
-    const style = buttonAppearance(theme,props.variant);
+    const style = buttonAppearance(theme, props.variant);
     return `background-color: ${style.backgroundColor}; color: ${style.color}; border: ${style.borderWidth}px solid ${style.borderColor};
       &:hover { background-color: ${style.hoverColor}; }`;
-
   }}
 `;
 
 export const Button: React.FC<ButtonProps> = ({
   children,
-  variant = "primary",
-  size = "medium",
+  variant = 'primary',
+  size = 'medium',
   fullWidth = false,
   loading = false,
   disabled = false,
@@ -78,9 +77,9 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       {...props}
     >
-      {loading ? "Loading..." : children}
+      {loading ? 'Loading...' : children}
     </StyledButton>
   );
 };
 
-Button.displayName = "Button";
+Button.displayName = 'Button';

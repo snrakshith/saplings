@@ -1,8 +1,8 @@
-import React, { forwardRef } from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { forwardRef } from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
-export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "type"> {
+export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>, 'type'> {
   label?: string;
   error?: boolean;
   indeterminate?: boolean;
@@ -27,22 +27,21 @@ const StyledCheckbox = styled.div<{ checked?: boolean; error?: boolean; disabled
   width: 20px;
   height: 20px;
   border-radius: 4px;
-  border: 2px solid ${(props) => {
-    const theme = props.theme as XloxTheme;
-    if (props.error) return theme.colors.error[500];
-    if (props.checked) return theme.colors.primary[500];
-    return theme.colors.neutral[400];
-  }};
+  border: 2px solid
+    ${(props) => {
+      const theme = props.theme as XloxTheme;
+      if (props.error) return theme.colors.error[500];
+      if (props.checked) return theme.colors.primary[500];
+      return theme.colors.neutral[400];
+    }};
   background-color: ${(props) =>
-    props.checked
-      ? (props.theme as XloxTheme).colors.primary[500]
-      : "transparent"};
+    props.checked ? (props.theme as XloxTheme).colors.primary[500] : 'transparent'};
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease-in-out;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  
+
   &:hover {
     border-color: ${(props) => {
       if (props.disabled) return;
@@ -51,7 +50,7 @@ const StyledCheckbox = styled.div<{ checked?: boolean; error?: boolean; disabled
       return theme.colors.primary[600];
     }};
   }
-  
+
   svg {
     width: 14px;
     height: 14px;
@@ -96,7 +95,7 @@ export const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>(
         {label && <Label disabled={disabled}>{label}</Label>}
       </CheckboxWrapper>
     );
-  }
+  },
 );
 
-Checkbox.displayName = "Checkbox";
+Checkbox.displayName = 'Checkbox';

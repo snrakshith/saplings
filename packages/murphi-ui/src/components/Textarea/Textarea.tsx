@@ -1,6 +1,6 @@
-import React, { forwardRef } from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { forwardRef } from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;
@@ -14,7 +14,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
 const TextareaWrapper = styled.div<{ fullWidth?: boolean }>`
   display: inline-flex;
   flex-direction: column;
-  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
   gap: ${(props) => (props.theme as XloxTheme).spacing(0.5)};
 `;
 
@@ -32,10 +32,11 @@ const StyledTextarea = styled.textarea<{ hasError?: boolean }>`
   font-size: ${(props) => (props.theme as XloxTheme).typography.body1.fontSize};
   color: ${(props) => (props.theme as XloxTheme).colors.text.primary};
   background-color: ${(props) => (props.theme as XloxTheme).colors.background.paper};
-  border: 1px solid ${(props) =>
-    props.hasError
-      ? (props.theme as XloxTheme).colors.error[500]
-      : (props.theme as XloxTheme).colors.neutral[300]};
+  border: 1px solid
+    ${(props) =>
+      props.hasError
+        ? (props.theme as XloxTheme).colors.error[500]
+        : (props.theme as XloxTheme).colors.neutral[300]};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
   outline: none;
   resize: vertical;
@@ -69,34 +70,15 @@ const HelperText = styled.span<{ isError?: boolean }>`
 `;
 
 export const Textarea = forwardRef<HTMLTextAreaElement, TextareaProps>(
-  (
-    {
-      label,
-      error,
-      helperText,
-      fullWidth = false,
-      minRows = 3,
-      maxRows,
-      rows,
-      ...props
-    },
-    ref
-  ) => {
+  ({ label, error, helperText, fullWidth = false, minRows = 3, maxRows, rows, ...props }, ref) => {
     return (
       <TextareaWrapper fullWidth={fullWidth}>
         {label && <Label>{label}</Label>}
-        <StyledTextarea
-          ref={ref}
-          hasError={!!error}
-          rows={rows || minRows}
-          {...props}
-        />
-        {(error || helperText) && (
-          <HelperText isError={!!error}>{error || helperText}</HelperText>
-        )}
+        <StyledTextarea ref={ref} hasError={!!error} rows={rows || minRows} {...props} />
+        {(error || helperText) && <HelperText isError={!!error}>{error || helperText}</HelperText>}
       </TextareaWrapper>
     );
-  }
+  },
 );
 
-Textarea.displayName = "Textarea";
+Textarea.displayName = 'Textarea';

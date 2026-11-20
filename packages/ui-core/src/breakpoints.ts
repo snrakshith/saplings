@@ -1,4 +1,4 @@
-import { ThemeBreakpoints } from "./types.js";
+import { ThemeBreakpoints } from './types.js';
 
 const breakpointValues = {
   xs: 0,
@@ -13,7 +13,7 @@ export const breakpoints: ThemeBreakpoints = {
   up: (key) => `@media (min-width: ${breakpointValues[key]}px)`,
   down: (key) => {
     const value = breakpointValues[key];
-    return value === 0 ? "@media (max-width: 0px)" : `@media (max-width: ${value - 1}px)`;
+    return value === 0 ? '@media (max-width: 0px)' : `@media (max-width: ${value - 1}px)`;
   },
   between: (start, end) =>
     `@media (min-width: ${breakpointValues[start]}px) and (max-width: ${breakpointValues[end] - 1}px)`,

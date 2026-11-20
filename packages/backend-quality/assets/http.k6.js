@@ -1,4 +1,39 @@
-import http from 'k6/http';import {check,sleep} from 'k6';
-const base=__ENV.SAPLING_TARGET;const probes=JSON.parse(__ENV.SAPLING_PROBES);const stages=JSON.parse(__ENV.SAPLING_STAGES);const t=JSON.parse(__ENV.SAPLING_THRESHOLDS);if(!base||!probes.length)throw Error('Missing target or probes');
-export const options={stages:stages.map(x=>({duration:`${x.seconds}s`,target:x.concurrency})),discardResponseBodies:true,thresholds:{checks:[`rate>=${1-(t.maxErrorRate??0)}`],...(t.maxP95Ms===undefined?{}:{http_req_duration:[`p(95)<=${t.maxP95Ms}`,...(t.maxP99Ms===undefined?[]:[`p(99)<=${t.maxP99Ms}`])]}),...(t.maxP95Ms===undefined&&t.maxP99Ms!==undefined?{http_req_duration:[`p(99)<=${t.maxP99Ms}`]}:{}),http_reqs:['count>0',...(t.minRequestsPerSecond===undefined?[]:[`rate>=${t.minRequestsPerSecond}`])]}};
-export default function(){for(const p of probes){const r=http.get(base.replace(/\/$/,'')+p.path,{headers:p.headers??{},redirects:0});check(r,{'expected status':x=>(p.statuses??[200]).includes(x.status)});}sleep(.1);}
+import http from 'k6/http';
+import { check, sleep } from 'k6';
+const base = __ENV.SAPLING_TARGET;
+const probes = JSON.parse(__ENV.SAPLING_PROBES);
+const stages = JSON.parse(__ENV.SAPLING_STAGES);
+const t = JSON.parse(__ENV.SAPLING_THRESHOLDS);
+if (!base || !probes.length) throw Error('Missing target or probes');
+export const options = {
+  stages: stages.map((x) => ({ duration: `${x.seconds}s`, target: x.concurrency })),
+  discardResponseBodies: true,
+  thresholds: {
+    checks: [`rate>=${1 - (t.maxErrorRate ?? 0)}`],
+    ...(t.maxP95Ms === undefined
+      ? {}
+      : {
+          http_req_duration: [
+            `p(95)<=${t.maxP95Ms}`,
+            ...(t.maxP99Ms === undefined ? [] : [`p(99)<=${t.maxP99Ms}`]),
+          ],
+        }),
+    ...(t.maxP95Ms === undefined && t.maxP99Ms !== undefined
+      ? { http_req_duration: [`p(99)<=${t.maxP99Ms}`] }
+      : {}),
+    http_reqs: [
+      'count>0',
+      ...(t.minRequestsPerSecond === undefined ? [] : [`rate>=${t.minRequestsPerSecond}`]),
+    ],
+  },
+};
+export default function () {
+  for (const p of probes) {
+    const r = http.get(base.replace(/\/$/, '') + p.path, {
+      headers: p.headers ?? {},
+      redirects: 0,
+    });
+    check(r, { 'expected status': (x) => (p.statuses ?? [200]).includes(x.status) });
+  }
+  sleep(0.1);
+}

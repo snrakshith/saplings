@@ -1,44 +1,628 @@
-import {test} from 'vitest';
+import { test } from 'vitest';
 import assert from 'node:assert/strict';
-import {readFileSync,existsSync,readdirSync} from 'node:fs';
-import {createHash,randomBytes,scryptSync,timingSafeEqual} from 'node:crypto';
-import {request as httpRequest} from 'node:http';
-import {Gateway,GatewayError,GatewayTransactionalRateLimitStore,GatewayTransactionalBanStore} from '@saplings/harbor';
-import {IdentityPlatform} from '@saplings/kingsman';
-import {createSapling,InMemoryStore} from '@saplings/sdk';
-const root=new URL('../',import.meta.url);
-const config=JSON.parse(readFileSync(new URL('../examples/platform/RealmConfig-full.json',import.meta.url),'utf8'));
-const realm=()=>{const c=structuredClone(config);c.metadata.environment='test';return c;};
-const hasher={algorithm:'argon2id',hash:async p=>{const salt=randomBytes(16);return salt.toString('hex')+':'+scryptSync(p,salt,32).toString('hex');},verify:async (value,p)=>{const [salt,hash]=value.split(':');return !!hash&&timingSafeEqual(scryptSync(p,Buffer.from(salt,'hex'),32),Buffer.from(hash,'hex'));}};
-const actions=[];
-const makeRealm=(overrides={})=>new IdentityPlatform(realm(),{passwordHasher:hasher,breachedPassword:async()=>false,sendAction:async x=>actions.push(x),resolveSecret:async r=>r.includes('students-svc-secret')?'secret-test':r,...overrides});
-const credential='HighEntropyPass2028!';
-const register=async idp=>{actions.length=0;const u=await idp.registerUser({username:'learner',email:'learner@school.com',password:credential,attributes:{firstName:'Test'}});await idp.verifyEmail(actions.at(-1).token);return u;};
-const challenge=verifier=>createHash('sha256').update(verifier).digest('base64url');
-const gatewayConfig=(plugins=[],routePlugins=[],methods=['GET'])=>({apiVersion:'gateway.sapling.dev/v1alpha1',kind:'GatewayConfig',metadata:{name:'test-gateway',environment:'test'},spec:{upstreams:[{name:'api',targets:[{target:'example.internal:8080'}]}],services:[{name:'api',upstream:'api',routes:[{name:'resource',paths:['/api'],pathMatch:'prefix',methods,plugins:routePlugins}]}],plugins}});
-const fetchOptions={method:'GET'};
-async function req(port,path,method='GET',body,headers={}){return new Promise((resolve,reject)=>{const r=httpRequest({hostname:'127.0.0.1',port,path,method,headers},res=>{let text='';res.on('data',chunk=>text+=chunk);res.on('end',()=>resolve({status:res.statusCode,body:text,headers:res.headers}));});r.on('error',reject);r.end(body);});}
-test('31 SaaS modules moved to root; no expanded folder and no runtime expanded property',()=>{const source=new URL('../packages/sdk/src/',import.meta.url);assert.equal(existsSync(new URL('expanded/',source)),false);for(const name of ['registry','accounts','domain-policy','business-workflows','governance','cashfree','provider-workflow','stripe-recurring','offboarding','operations','worker','totp','valkey','primitives'])assert.ok(existsSync(new URL(name+'.ts',source)));const sdk=createSapling({app:{id:'refactor',environment:'test'}});assert.ok(sdk.domains&&sdk.providerWorkflows&&sdk.governance);assert.equal('expanded' in sdk,false);assert.equal(sdk.featureManifest().length,182);});
-test('shared rate store enforces atomic distributed ceilings with clock windows',async()=>{const store=new InMemoryStore();let time=1000;const a=new GatewayTransactionalRateLimitStore(store,()=>time);const b=new GatewayTransactionalRateLimitStore(store,()=>time);const results=await Promise.all(Array.from({length:20},(_,n)=>(n%2?a:b).check('tenant:X',7,5000)));assert.equal(results.filter(x=>x.allowed).length,7);assert.equal(results.at(-1).remaining,0);assert.equal(results.at(-1).resetAt,6000);time=6000;assert.equal((await b.check('tenant:X',7,5000)).allowed,true);await assert.rejects(a.check('tenant:X',0,1000),{code:'INVALID_LIMIT'});});
-test('shared ban state extends TTL, expires and does not share keys across addresses',async()=>{const store=new InMemoryStore();let time=1000;const a=new GatewayTransactionalBanStore(store,()=>time);const b=new GatewayTransactionalBanStore(store,()=>time);await a.ban('127.0.0.1',1500);assert.equal(await b.isBanned('127.0.0.1'),true);assert.equal(await b.isBanned('127.0.0.2'),false);time=2000;await b.ban('127.0.0.1',3500);time=3000;assert.equal(await a.isBanned('127.0.0.1'),true);time=5501;assert.equal(await a.isBanned('127.0.0.1'),false);});
-test('gateway challenge driver issues explicit challenge, blocks and allows by verdict',async()=>{let verdict='challenge';const gw=new Gateway(gatewayConfig([{name:'bot-detection',config:{action:'challenge'}}]),{botChallenge:async()=>verdict==='challenge'?{verdict:'challenge',body:'verify request'}:{verdict},fetch:async()=>new Response('upstream-ok',{status:200})});const port=await gw.listen();try{assert.deepEqual((await req(port,'/api')).status,403);verdict='block';assert.equal((await req(port,'/api')).status,403);verdict='allow';assert.equal((await req(port,'/api')).body,'upstream-ok');}finally{await gw.close();}});
-test('gateway DDoS ban and rate limits use shared atomic store',async()=>{const store=new InMemoryStore();const gw=new Gateway(gatewayConfig([{name:'ddos-protection',config:{action:'ban',perIp:{maxRps:1},banDuration:'30s'}}]),{rateLimit:new GatewayTransactionalRateLimitStore(store),ddosBans:new GatewayTransactionalBanStore(store),fetch:async()=>new Response('ok')});const port=await gw.listen();try{assert.equal((await req(port,'/api')).status,200);assert.equal((await req(port,'/api')).status,429);assert.equal((await req(port,'/api')).status,403);}finally{await gw.close();}});
-test('gateway rejects ambiguous encoded separators/traversal and malformed URL before forwarding',async()=>{let forwarded=0;const gw=new Gateway(gatewayConfig(),{fetch:async()=>{forwarded++;return new Response('ok');}});const port=await gw.listen();try{for(const path of ['/api/%2e%2e/secrets','/api/..%2Fsecrets','/api/%5Csecrets','/api/%25encoded','/api/%ZZ']){const r=await req(port,path);assert.equal(r.status,400,path);}assert.equal((await req(port,'/api/status')).status,200);assert.equal(forwarded,1);}finally{await gw.close();}});
-test('gateway malformed JSON produces HTTP 400, not a server error',async()=>{const gw=new Gateway(gatewayConfig([], [{name:'request-validator',config:{bodySchemaRef:'schemas/thing.json'}}],['POST']),{validateBody:async()=>true,fetch:async()=>new Response('ok')});const port=await gw.listen();try{const r=await req(port,'/api','POST','{',{ 'content-type':'application/json'});assert.equal(r.status,400);assert.equal(JSON.parse(r.body).error,'INVALID_JSON');}finally{await gw.close();}});
-test('gateway removes inconsistent content-encoding metadata after fetch decompresses a body',async()=>{const gw=new Gateway(gatewayConfig(),{fetch:async()=>new Response(JSON.stringify({secret:'hide',title:'safe'}),{headers:{'content-type':'application/json','content-encoding':'gzip','etag':'"old"'}})});const port=await gw.listen();try{const r=await req(port,'/api');assert.equal(r.status,200);assert.equal(r.headers['content-encoding'],undefined);assert.equal(JSON.parse(r.body).title,'safe');}finally{await gw.close();}});
-test('production rejects missing challenge and ban security drivers, accepts explicit drivers with shared rate state',()=>{const c=gatewayConfig([{name:'bot-detection',config:{action:'challenge'}},{name:'ddos-protection',config:{action:'ban'}}]);c.metadata.environment='production';const st=new InMemoryStore();const rate=new GatewayTransactionalRateLimitStore(st);const bans=new GatewayTransactionalBanStore(st);assert.throws(()=>new Gateway(c,{rateLimit:rate}),{code:'UNSUPPORTED_SECURITY_PLUGIN'});assert.throws(()=>new Gateway(c,{rateLimit:rate,botChallenge:async()=>({verdict:'allow'})}),{code:'UNSUPPORTED_SECURITY_PLUGIN'});assert.doesNotThrow(()=>new Gateway(c,{rateLimit:rate,ddosBans:bans,botChallenge:async()=>({verdict:'allow'})}));});
-test('identity denies reserved profile keys even when a misconfigured realm permits user edit',async()=>{const config=realm();config.spec.userProfile.attributes.push({name:'roles',permissions:{edit:['user'],view:['user']}});const idp=new IdentityPlatform(config,{passwordHasher:hasher,breachedPassword:async()=>false,sendAction:async()=>{}});await assert.rejects(idp.registerUser({username:'learner',email:'learner@school.com',password:credential,attributes:{roles:'admin'}}),{code:'INVALID_PROFILE'});});
-test('identity rejects client-credentials scope escalation and disabled client access',async()=>{const idp=makeRealm();await assert.rejects(idp.clientCredentials({clientId:'students-svc',clientSecret:'secret-test',scope:'admin:all'}),{code:'INVALID_SCOPE'});const token=await idp.clientCredentials({clientId:'students-svc',clientSecret:'secret-test'});const client=idp.config.spec.clients.find(c=>c.clientId==='students-svc');client.enabled=false;await assert.rejects(idp.verifyAccessToken(token.access_token),{code:'INVALID_CLIENT'});});
-test('identity confidential token introspection/revocation is client-bound and denies invalid secret',async()=>{const idp=makeRealm();const token=await idp.clientCredentials({clientId:'students-svc',clientSecret:'secret-test'});const input={clientId:'students-svc',clientSecret:'secret-test',token:token.access_token};assert.equal((await idp.introspectToken(input)).active,true);assert.equal((await idp.introspectToken({...input,token:'bad-token'})).active,false);await assert.rejects(idp.introspectToken({...input,clientSecret:'wrong'}),{code:'INVALID_CLIENT'});await idp.revokeToken(input);assert.equal((await idp.introspectToken(input)).active,false);await assert.rejects(idp.verifyAccessToken(token.access_token),{code:'TOKEN_REVOKED'});});
-test('identity refresh replay revokes the original login session and its access tokens immediately',async()=>{const idp=makeRealm();await register(idp);const {sessionId}=await idp.authenticatePassword({login:'learner@school.com',password:credential});const verifier='b'.repeat(55);const code=await idp.authorizeCode({sessionId,clientId:'school-web',redirectUri:'https://app.school.com/callback',codeChallenge:challenge(verifier),state:'random-state-123456789',scope:'openid'});const original=await idp.exchangeCode({clientId:'school-web',code:code.code,redirectUri:'https://app.school.com/callback',codeVerifier:verifier});const replacement=await idp.refresh({clientId:'school-web',refreshToken:original.refresh_token});await assert.rejects(idp.refresh({clientId:'school-web',refreshToken:original.refresh_token}),{code:'INVALID_GRANT'});await assert.rejects(idp.verifyAccessToken(replacement.access_token),{code:'SESSION_EXPIRED'});});
-test('identity authenticated HTTP introspection and revocation endpoints serve confidential clients only',async()=>{const idp=makeRealm();const token=await idp.clientCredentials({clientId:'students-svc',clientSecret:'secret-test'});const {createIdentityHttpHandler}=await import('@saplings/kingsman');const {createServer}=await import('node:http');const srv=createServer(createIdentityHttpHandler(idp));await new Promise(r=>srv.listen(0,'127.0.0.1',r));const port=srv.address().port;const endpoint='/realms/school-platform/protocol/openid-connect';try{const post=async(path,values)=>{const form=new URLSearchParams(values).toString();const r=await req(port,endpoint+path,'POST',form,{'content-type':'application/x-www-form-urlencoded'});return {status:r.status,body:JSON.parse(r.body)};};const args={client_id:'students-svc',client_secret:'secret-test',token:token.access_token};const introspected=await post('/introspect',args);assert.equal(introspected.body.active,true,JSON.stringify(introspected));assert.equal((await post('/revoke',args)).status,200);assert.equal((await post('/introspect',args)).body.active,false);assert.equal((await post('/introspect',{...args,client_secret:'bad'})).status,401);}finally{await new Promise(r=>srv.close(r));}});
-test('tenant export enforces configured row/field policies and does not leak unauthorized records',async()=>{const store=new InMemoryStore();const app={id:'export',environment:'test'};const sdk=createSapling({app,providers:{store},services:{domainPolicies:{projects:{read:['title'],write:['title'],authorize:(ctx,action,row)=>ctx.actorId===row.ownerId}}}});const ctx={tenantId:'t',actorId:'alice',permissions:['*']};await store.put('t','projects',{id:'p1',title:'Visible',secret:'Private',ownerId:'alice'});await store.put('t','projects',{id:'p2',title:'Hidden',secret:'Private',ownerId:'bob'});const result=await sdk.exportTenantData(ctx,['projects']);assert.deepEqual(result.collections.projects,[{id:'p1',title:'Visible'}]);assert.deepEqual((await sdk.exportTenantData({...ctx,actorId:'bob'},['projects'])).collections.projects,[{id:'p2',title:'Hidden'}]);await assert.rejects(sdk.exportTenantData({...ctx,permissions:[]},['projects']),{code:'FORBIDDEN'});await assert.rejects(sdk.exportTenantData(ctx,['private']),{code:'EXPORT_NOT_ALLOWED'});await assert.rejects(sdk.exportTenantData(ctx,['projects','projects']),{code:'EXPORT_INVALID'});});
-test('gateway production trusted proxy rejects plaintext or untrusted HTTPS assertions on each request',async()=>{const c=gatewayConfig();c.metadata.environment='production';await assert.rejects(new Gateway(c,{tlsTerminatedByTrustedProxy:true}).listen(),{code:'TLS_REQUIRED'});const gw=new Gateway(c,{tlsTerminatedByTrustedProxy:true,trustProxy:true,trustedProxyCidrs:['127.0.0.1/32'],fetch:async()=>new Response('secured')});const port=await gw.listen();try{assert.equal((await req(port,'/api')).status,403);assert.equal((await req(port,'/api','GET',undefined,{'x-forwarded-proto':'http'})).status,403);assert.equal((await req(port,'/api','GET',undefined,{'x-forwarded-proto':'https'})).status,200);}finally{await gw.close();}});
-test('gateway maintenance sweeps expired state without deleting active ban/rate records',async()=>{const {GatewayStateMaintenance}=await import('@saplings/harbor');const store=new InMemoryStore();let now=1000;const rate=new GatewayTransactionalRateLimitStore(store,()=>now),ban=new GatewayTransactionalBanStore(store,()=>now),maintenance=new GatewayStateMaintenance(store,()=>now);await rate.check('expiring',1,1000);await rate.check('long',1,5000);await ban.ban('10.10.10.1',1000);await ban.ban('10.10.10.2',5000);now=2500;const a=await maintenance.sweep('gateway-rate'),b=await maintenance.sweep('gateway-bans');assert.equal(a.deleted,1);assert.equal(b.deleted,1);assert.equal(await ban.isBanned('10.10.10.1'),false);assert.equal(await ban.isBanned('10.10.10.2'),true);assert.equal((await rate.check('long',1,5000)).allowed,false);});
-test('remember-me session keeps configured sliding idle instead of accidentally using SSO 30 minutes',async()=>{let clock=1000;const idp=makeRealm({now:()=>clock});await register(idp);const {sessionId}=await idp.authenticatePassword({login:'learner@school.com',password:credential,rememberMe:true});clock+=6*24*3600_000;assert.equal((await idp.sessionUser(sessionId)).user.username,'learner');clock+=6*24*3600_000;assert.equal((await idp.sessionUser(sessionId)).user.username,'learner');clock=32*24*3600_000;await assert.rejects(idp.sessionUser(sessionId),{code:'SESSION_EXPIRED'});});
-test('identity MFA prohibits reuse of one-time code for a second login',async()=>{const idp=makeRealm();const u=await register(idp);await idp.store.put(idp.realm,'users',{...(await idp.store.get(idp.realm,'users',u.id)),roles:['admin']});const secret=randomBytes(32).toString('base64url');await idp.configureTotp(u.id,secret);const timestep=Math.floor(Date.now()/30000);const mac=(await import('node:crypto')).createHmac('sha256',Buffer.from(secret,'base64url'));const buf=Buffer.alloc(8);buf.writeBigUInt64BE(BigInt(timestep));const digest=mac.update(buf).digest(),offset=digest.at(-1)&15,otp=String((digest.readUInt32BE(offset)&0x7fffffff)%1000000).padStart(6,'0');await idp.authenticatePassword({login:'learner@school.com',password:credential,otp});await assert.rejects(idp.authenticatePassword({login:'learner@school.com',password:credential,otp}),{code:'MFA_REPLAY'});});
-test('SDK embedded gateway uses transactional rate/ban state when a shared store is available',async()=>{const store=new InMemoryStore();const sdk=createSapling({app:{id:'sdk-gw',environment:'test'},providers:{store},platforms:{gateway:{config:gatewayConfig([{name:'rate-limiting',config:{limitBy:'ip',limits:[{max:1,window:'1m'}]}}])}}});assert.ok(sdk.gateway);assert.ok(sdk.gateway.deps.rateLimit instanceof GatewayTransactionalRateLimitStore);assert.ok(sdk.gateway.deps.ddosBans instanceof GatewayTransactionalBanStore);const a=await sdk.gateway.deps.rateLimit.check('test',1,60000);const b=await sdk.gateway.deps.rateLimit.check('test',1,60000);assert.equal(a.allowed,true);assert.equal(b.allowed,false);});
-test('production SDK tenant export requires domain policy and fails closed',async()=>{const memory=new InMemoryStore();const backing={get:(...a)=>memory.get(...a),put:(...a)=>memory.put(...a),list:(...a)=>memory.list(...a),delete:(...a)=>memory.delete(...a),page:(...a)=>memory.page(...a),transaction:(tenant,fn)=>memory.transaction(tenant,fn),health:()=>memory.health()};const sdk=createSapling({app:{id:'export-production',environment:'production'},storage:{enabled:false},providers:{store:backing},hooks:{resolveRequestContext:()=>({tenantId:'t',actorId:'admin',permissions:['*']})}});await backing.put('t','projects',{id:'p1',title:'private'});await assert.rejects(sdk.exportTenantData({tenantId:'t',actorId:'admin',permissions:['*']},['projects']),{code:'DOMAIN_POLICY_REQUIRED'});});
-test('gateway key-auth plugin requires a real configured secret and consumer group',async()=>{const c=gatewayConfig([{name:'key-auth',config:{groups:['premium']}}]);c.spec.consumers=[{username:'partner-app',groups:['premium'],credentials:{keyAuth:[{key:'{vault://env/APP_KEY}'}]}},{username:'free-app',groups:['free'],credentials:{keyAuth:[{key:'{vault://env/FREE_KEY}'}]}}];let upstream=0;const gw=new Gateway(c,{resolveSecret:async ref=>ref.includes('FREE')?'free-secret':'premium-secret',fetch:async()=>{upstream++;return new Response('authorized');}});const port=await gw.listen();try{assert.equal((await req(port,'/api')).status,401);assert.equal((await req(port,'/api','GET',undefined,{'x-api-key':'bad'})).status,401);assert.equal((await req(port,'/api','GET',undefined,{'x-api-key':'free-secret'})).status,403);assert.equal((await req(port,'/api','GET',undefined,{'x-api-key':'premium-secret'})).status,200);assert.equal(upstream,1);}finally{await gw.close();}});
+import { readFileSync, existsSync, readdirSync } from 'node:fs';
+import { createHash, randomBytes, scryptSync, timingSafeEqual } from 'node:crypto';
+import { request as httpRequest } from 'node:http';
+import {
+  Gateway,
+  GatewayError,
+  GatewayTransactionalRateLimitStore,
+  GatewayTransactionalBanStore,
+} from '@saplings/harbor';
+import { IdentityPlatform } from '@saplings/kingsman';
+import { createSapling, InMemoryStore } from '@saplings/sdk';
+const root = new URL('../', import.meta.url);
+const config = JSON.parse(
+  readFileSync(new URL('../examples/platform/RealmConfig-full.json', import.meta.url), 'utf8'),
+);
+const realm = () => {
+  const c = structuredClone(config);
+  c.metadata.environment = 'test';
+  return c;
+};
+const hasher = {
+  algorithm: 'argon2id',
+  hash: async (p) => {
+    const salt = randomBytes(16);
+    return salt.toString('hex') + ':' + scryptSync(p, salt, 32).toString('hex');
+  },
+  verify: async (value, p) => {
+    const [salt, hash] = value.split(':');
+    return (
+      !!hash &&
+      timingSafeEqual(scryptSync(p, Buffer.from(salt, 'hex'), 32), Buffer.from(hash, 'hex'))
+    );
+  },
+};
+const actions = [];
+const makeRealm = (overrides = {}) =>
+  new IdentityPlatform(realm(), {
+    passwordHasher: hasher,
+    breachedPassword: async () => false,
+    sendAction: async (x) => actions.push(x),
+    resolveSecret: async (r) => (r.includes('students-svc-secret') ? 'secret-test' : r),
+    ...overrides,
+  });
+const credential = 'HighEntropyPass2028!';
+const register = async (idp) => {
+  actions.length = 0;
+  const u = await idp.registerUser({
+    username: 'learner',
+    email: 'learner@school.com',
+    password: credential,
+    attributes: { firstName: 'Test' },
+  });
+  await idp.verifyEmail(actions.at(-1).token);
+  return u;
+};
+const challenge = (verifier) => createHash('sha256').update(verifier).digest('base64url');
+const gatewayConfig = (plugins = [], routePlugins = [], methods = ['GET']) => ({
+  apiVersion: 'gateway.sapling.dev/v1alpha1',
+  kind: 'GatewayConfig',
+  metadata: { name: 'test-gateway', environment: 'test' },
+  spec: {
+    upstreams: [{ name: 'api', targets: [{ target: 'example.internal:8080' }] }],
+    services: [
+      {
+        name: 'api',
+        upstream: 'api',
+        routes: [
+          {
+            name: 'resource',
+            paths: ['/api'],
+            pathMatch: 'prefix',
+            methods,
+            plugins: routePlugins,
+          },
+        ],
+      },
+    ],
+    plugins,
+  },
+});
+const fetchOptions = { method: 'GET' };
+async function req(port, path, method = 'GET', body, headers = {}) {
+  return new Promise((resolve, reject) => {
+    const r = httpRequest({ hostname: '127.0.0.1', port, path, method, headers }, (res) => {
+      let text = '';
+      res.on('data', (chunk) => (text += chunk));
+      res.on('end', () => resolve({ status: res.statusCode, body: text, headers: res.headers }));
+    });
+    r.on('error', reject);
+    r.end(body);
+  });
+}
+test('31 SaaS modules moved to root; no expanded folder and no runtime expanded property', () => {
+  const source = new URL('../packages/sdk/src/', import.meta.url);
+  assert.equal(existsSync(new URL('expanded/', source)), false);
+  for (const name of [
+    'registry',
+    'accounts',
+    'domain-policy',
+    'business-workflows',
+    'governance',
+    'cashfree',
+    'provider-workflow',
+    'stripe-recurring',
+    'offboarding',
+    'operations',
+    'worker',
+    'totp',
+    'valkey',
+    'primitives',
+  ])
+    assert.ok(existsSync(new URL(name + '.ts', source)));
+  const sdk = createSapling({ app: { id: 'refactor', environment: 'test' } });
+  assert.ok(sdk.domains && sdk.providerWorkflows && sdk.governance);
+  assert.equal('expanded' in sdk, false);
+  assert.equal(sdk.featureManifest().length, 182);
+});
+test('shared rate store enforces atomic distributed ceilings with clock windows', async () => {
+  const store = new InMemoryStore();
+  let time = 1000;
+  const a = new GatewayTransactionalRateLimitStore(store, () => time);
+  const b = new GatewayTransactionalRateLimitStore(store, () => time);
+  const results = await Promise.all(
+    Array.from({ length: 20 }, (_, n) => (n % 2 ? a : b).check('tenant:X', 7, 5000)),
+  );
+  assert.equal(results.filter((x) => x.allowed).length, 7);
+  assert.equal(results.at(-1).remaining, 0);
+  assert.equal(results.at(-1).resetAt, 6000);
+  time = 6000;
+  assert.equal((await b.check('tenant:X', 7, 5000)).allowed, true);
+  await assert.rejects(a.check('tenant:X', 0, 1000), { code: 'INVALID_LIMIT' });
+});
+test('shared ban state extends TTL, expires and does not share keys across addresses', async () => {
+  const store = new InMemoryStore();
+  let time = 1000;
+  const a = new GatewayTransactionalBanStore(store, () => time);
+  const b = new GatewayTransactionalBanStore(store, () => time);
+  await a.ban('127.0.0.1', 1500);
+  assert.equal(await b.isBanned('127.0.0.1'), true);
+  assert.equal(await b.isBanned('127.0.0.2'), false);
+  time = 2000;
+  await b.ban('127.0.0.1', 3500);
+  time = 3000;
+  assert.equal(await a.isBanned('127.0.0.1'), true);
+  time = 5501;
+  assert.equal(await a.isBanned('127.0.0.1'), false);
+});
+test('gateway challenge driver issues explicit challenge, blocks and allows by verdict', async () => {
+  let verdict = 'challenge';
+  const gw = new Gateway(
+    gatewayConfig([{ name: 'bot-detection', config: { action: 'challenge' } }]),
+    {
+      botChallenge: async () =>
+        verdict === 'challenge' ? { verdict: 'challenge', body: 'verify request' } : { verdict },
+      fetch: async () => new Response('upstream-ok', { status: 200 }),
+    },
+  );
+  const port = await gw.listen();
+  try {
+    assert.deepEqual((await req(port, '/api')).status, 403);
+    verdict = 'block';
+    assert.equal((await req(port, '/api')).status, 403);
+    verdict = 'allow';
+    assert.equal((await req(port, '/api')).body, 'upstream-ok');
+  } finally {
+    await gw.close();
+  }
+});
+test('gateway DDoS ban and rate limits use shared atomic store', async () => {
+  const store = new InMemoryStore();
+  const gw = new Gateway(
+    gatewayConfig([
+      {
+        name: 'ddos-protection',
+        config: { action: 'ban', perIp: { maxRps: 1 }, banDuration: '30s' },
+      },
+    ]),
+    {
+      rateLimit: new GatewayTransactionalRateLimitStore(store),
+      ddosBans: new GatewayTransactionalBanStore(store),
+      fetch: async () => new Response('ok'),
+    },
+  );
+  const port = await gw.listen();
+  try {
+    assert.equal((await req(port, '/api')).status, 200);
+    assert.equal((await req(port, '/api')).status, 429);
+    assert.equal((await req(port, '/api')).status, 403);
+  } finally {
+    await gw.close();
+  }
+});
+test('gateway rejects ambiguous encoded separators/traversal and malformed URL before forwarding', async () => {
+  let forwarded = 0;
+  const gw = new Gateway(gatewayConfig(), {
+    fetch: async () => {
+      forwarded++;
+      return new Response('ok');
+    },
+  });
+  const port = await gw.listen();
+  try {
+    for (const path of [
+      '/api/%2e%2e/secrets',
+      '/api/..%2Fsecrets',
+      '/api/%5Csecrets',
+      '/api/%25encoded',
+      '/api/%ZZ',
+    ]) {
+      const r = await req(port, path);
+      assert.equal(r.status, 400, path);
+    }
+    assert.equal((await req(port, '/api/status')).status, 200);
+    assert.equal(forwarded, 1);
+  } finally {
+    await gw.close();
+  }
+});
+test('gateway malformed JSON produces HTTP 400, not a server error', async () => {
+  const gw = new Gateway(
+    gatewayConfig(
+      [],
+      [{ name: 'request-validator', config: { bodySchemaRef: 'schemas/thing.json' } }],
+      ['POST'],
+    ),
+    { validateBody: async () => true, fetch: async () => new Response('ok') },
+  );
+  const port = await gw.listen();
+  try {
+    const r = await req(port, '/api', 'POST', '{', { 'content-type': 'application/json' });
+    assert.equal(r.status, 400);
+    assert.equal(JSON.parse(r.body).error, 'INVALID_JSON');
+  } finally {
+    await gw.close();
+  }
+});
+test('gateway removes inconsistent content-encoding metadata after fetch decompresses a body', async () => {
+  const gw = new Gateway(gatewayConfig(), {
+    fetch: async () =>
+      new Response(JSON.stringify({ secret: 'hide', title: 'safe' }), {
+        headers: { 'content-type': 'application/json', 'content-encoding': 'gzip', etag: '"old"' },
+      }),
+  });
+  const port = await gw.listen();
+  try {
+    const r = await req(port, '/api');
+    assert.equal(r.status, 200);
+    assert.equal(r.headers['content-encoding'], undefined);
+    assert.equal(JSON.parse(r.body).title, 'safe');
+  } finally {
+    await gw.close();
+  }
+});
+test('production rejects missing challenge and ban security drivers, accepts explicit drivers with shared rate state', () => {
+  const c = gatewayConfig([
+    { name: 'bot-detection', config: { action: 'challenge' } },
+    { name: 'ddos-protection', config: { action: 'ban' } },
+  ]);
+  c.metadata.environment = 'production';
+  const st = new InMemoryStore();
+  const rate = new GatewayTransactionalRateLimitStore(st);
+  const bans = new GatewayTransactionalBanStore(st);
+  assert.throws(() => new Gateway(c, { rateLimit: rate }), { code: 'UNSUPPORTED_SECURITY_PLUGIN' });
+  assert.throws(
+    () => new Gateway(c, { rateLimit: rate, botChallenge: async () => ({ verdict: 'allow' }) }),
+    { code: 'UNSUPPORTED_SECURITY_PLUGIN' },
+  );
+  assert.doesNotThrow(
+    () =>
+      new Gateway(c, {
+        rateLimit: rate,
+        ddosBans: bans,
+        botChallenge: async () => ({ verdict: 'allow' }),
+      }),
+  );
+});
+test('identity denies reserved profile keys even when a misconfigured realm permits user edit', async () => {
+  const config = realm();
+  config.spec.userProfile.attributes.push({
+    name: 'roles',
+    permissions: { edit: ['user'], view: ['user'] },
+  });
+  const idp = new IdentityPlatform(config, {
+    passwordHasher: hasher,
+    breachedPassword: async () => false,
+    sendAction: async () => {},
+  });
+  await assert.rejects(
+    idp.registerUser({
+      username: 'learner',
+      email: 'learner@school.com',
+      password: credential,
+      attributes: { roles: 'admin' },
+    }),
+    { code: 'INVALID_PROFILE' },
+  );
+});
+test('identity rejects client-credentials scope escalation and disabled client access', async () => {
+  const idp = makeRealm();
+  await assert.rejects(
+    idp.clientCredentials({
+      clientId: 'students-svc',
+      clientSecret: 'secret-test',
+      scope: 'admin:all',
+    }),
+    { code: 'INVALID_SCOPE' },
+  );
+  const token = await idp.clientCredentials({
+    clientId: 'students-svc',
+    clientSecret: 'secret-test',
+  });
+  const client = idp.config.spec.clients.find((c) => c.clientId === 'students-svc');
+  client.enabled = false;
+  await assert.rejects(idp.verifyAccessToken(token.access_token), { code: 'INVALID_CLIENT' });
+});
+test('identity confidential token introspection/revocation is client-bound and denies invalid secret', async () => {
+  const idp = makeRealm();
+  const token = await idp.clientCredentials({
+    clientId: 'students-svc',
+    clientSecret: 'secret-test',
+  });
+  const input = {
+    clientId: 'students-svc',
+    clientSecret: 'secret-test',
+    token: token.access_token,
+  };
+  assert.equal((await idp.introspectToken(input)).active, true);
+  assert.equal((await idp.introspectToken({ ...input, token: 'bad-token' })).active, false);
+  await assert.rejects(idp.introspectToken({ ...input, clientSecret: 'wrong' }), {
+    code: 'INVALID_CLIENT',
+  });
+  await idp.revokeToken(input);
+  assert.equal((await idp.introspectToken(input)).active, false);
+  await assert.rejects(idp.verifyAccessToken(token.access_token), { code: 'TOKEN_REVOKED' });
+});
+test('identity refresh replay revokes the original login session and its access tokens immediately', async () => {
+  const idp = makeRealm();
+  await register(idp);
+  const { sessionId } = await idp.authenticatePassword({
+    login: 'learner@school.com',
+    password: credential,
+  });
+  const verifier = 'b'.repeat(55);
+  const code = await idp.authorizeCode({
+    sessionId,
+    clientId: 'school-web',
+    redirectUri: 'https://app.school.com/callback',
+    codeChallenge: challenge(verifier),
+    state: 'random-state-123456789',
+    scope: 'openid',
+  });
+  const original = await idp.exchangeCode({
+    clientId: 'school-web',
+    code: code.code,
+    redirectUri: 'https://app.school.com/callback',
+    codeVerifier: verifier,
+  });
+  const replacement = await idp.refresh({
+    clientId: 'school-web',
+    refreshToken: original.refresh_token,
+  });
+  await assert.rejects(
+    idp.refresh({ clientId: 'school-web', refreshToken: original.refresh_token }),
+    { code: 'INVALID_GRANT' },
+  );
+  await assert.rejects(idp.verifyAccessToken(replacement.access_token), {
+    code: 'SESSION_EXPIRED',
+  });
+});
+test('identity authenticated HTTP introspection and revocation endpoints serve confidential clients only', async () => {
+  const idp = makeRealm();
+  const token = await idp.clientCredentials({
+    clientId: 'students-svc',
+    clientSecret: 'secret-test',
+  });
+  const { createIdentityHttpHandler } = await import('@saplings/kingsman');
+  const { createServer } = await import('node:http');
+  const srv = createServer(createIdentityHttpHandler(idp));
+  await new Promise((r) => srv.listen(0, '127.0.0.1', r));
+  const port = srv.address().port;
+  const endpoint = '/realms/school-platform/protocol/openid-connect';
+  try {
+    const post = async (path, values) => {
+      const form = new URLSearchParams(values).toString();
+      const r = await req(port, endpoint + path, 'POST', form, {
+        'content-type': 'application/x-www-form-urlencoded',
+      });
+      return { status: r.status, body: JSON.parse(r.body) };
+    };
+    const args = {
+      client_id: 'students-svc',
+      client_secret: 'secret-test',
+      token: token.access_token,
+    };
+    const introspected = await post('/introspect', args);
+    assert.equal(introspected.body.active, true, JSON.stringify(introspected));
+    assert.equal((await post('/revoke', args)).status, 200);
+    assert.equal((await post('/introspect', args)).body.active, false);
+    assert.equal((await post('/introspect', { ...args, client_secret: 'bad' })).status, 401);
+  } finally {
+    await new Promise((r) => srv.close(r));
+  }
+});
+test('tenant export enforces configured row/field policies and does not leak unauthorized records', async () => {
+  const store = new InMemoryStore();
+  const app = { id: 'export', environment: 'test' };
+  const sdk = createSapling({
+    app,
+    providers: { store },
+    services: {
+      domainPolicies: {
+        projects: {
+          read: ['title'],
+          write: ['title'],
+          authorize: (ctx, action, row) => ctx.actorId === row.ownerId,
+        },
+      },
+    },
+  });
+  const ctx = { tenantId: 't', actorId: 'alice', permissions: ['*'] };
+  await store.put('t', 'projects', {
+    id: 'p1',
+    title: 'Visible',
+    secret: 'Private',
+    ownerId: 'alice',
+  });
+  await store.put('t', 'projects', {
+    id: 'p2',
+    title: 'Hidden',
+    secret: 'Private',
+    ownerId: 'bob',
+  });
+  const result = await sdk.exportTenantData(ctx, ['projects']);
+  assert.deepEqual(result.collections.projects, [{ id: 'p1', title: 'Visible' }]);
+  assert.deepEqual(
+    (await sdk.exportTenantData({ ...ctx, actorId: 'bob' }, ['projects'])).collections.projects,
+    [{ id: 'p2', title: 'Hidden' }],
+  );
+  await assert.rejects(sdk.exportTenantData({ ...ctx, permissions: [] }, ['projects']), {
+    code: 'FORBIDDEN',
+  });
+  await assert.rejects(sdk.exportTenantData(ctx, ['private']), { code: 'EXPORT_NOT_ALLOWED' });
+  await assert.rejects(sdk.exportTenantData(ctx, ['projects', 'projects']), {
+    code: 'EXPORT_INVALID',
+  });
+});
+test('gateway production trusted proxy rejects plaintext or untrusted HTTPS assertions on each request', async () => {
+  const c = gatewayConfig();
+  c.metadata.environment = 'production';
+  await assert.rejects(new Gateway(c, { tlsTerminatedByTrustedProxy: true }).listen(), {
+    code: 'TLS_REQUIRED',
+  });
+  const gw = new Gateway(c, {
+    tlsTerminatedByTrustedProxy: true,
+    trustProxy: true,
+    trustedProxyCidrs: ['127.0.0.1/32'],
+    fetch: async () => new Response('secured'),
+  });
+  const port = await gw.listen();
+  try {
+    assert.equal((await req(port, '/api')).status, 403);
+    assert.equal(
+      (await req(port, '/api', 'GET', undefined, { 'x-forwarded-proto': 'http' })).status,
+      403,
+    );
+    assert.equal(
+      (await req(port, '/api', 'GET', undefined, { 'x-forwarded-proto': 'https' })).status,
+      200,
+    );
+  } finally {
+    await gw.close();
+  }
+});
+test('gateway maintenance sweeps expired state without deleting active ban/rate records', async () => {
+  const { GatewayStateMaintenance } = await import('@saplings/harbor');
+  const store = new InMemoryStore();
+  let now = 1000;
+  const rate = new GatewayTransactionalRateLimitStore(store, () => now),
+    ban = new GatewayTransactionalBanStore(store, () => now),
+    maintenance = new GatewayStateMaintenance(store, () => now);
+  await rate.check('expiring', 1, 1000);
+  await rate.check('long', 1, 5000);
+  await ban.ban('10.10.10.1', 1000);
+  await ban.ban('10.10.10.2', 5000);
+  now = 2500;
+  const a = await maintenance.sweep('gateway-rate'),
+    b = await maintenance.sweep('gateway-bans');
+  assert.equal(a.deleted, 1);
+  assert.equal(b.deleted, 1);
+  assert.equal(await ban.isBanned('10.10.10.1'), false);
+  assert.equal(await ban.isBanned('10.10.10.2'), true);
+  assert.equal((await rate.check('long', 1, 5000)).allowed, false);
+});
+test('remember-me session keeps configured sliding idle instead of accidentally using SSO 30 minutes', async () => {
+  let clock = 1000;
+  const idp = makeRealm({ now: () => clock });
+  await register(idp);
+  const { sessionId } = await idp.authenticatePassword({
+    login: 'learner@school.com',
+    password: credential,
+    rememberMe: true,
+  });
+  clock += 6 * 24 * 3600_000;
+  assert.equal((await idp.sessionUser(sessionId)).user.username, 'learner');
+  clock += 6 * 24 * 3600_000;
+  assert.equal((await idp.sessionUser(sessionId)).user.username, 'learner');
+  clock = 32 * 24 * 3600_000;
+  await assert.rejects(idp.sessionUser(sessionId), { code: 'SESSION_EXPIRED' });
+});
+test('identity MFA prohibits reuse of one-time code for a second login', async () => {
+  const idp = makeRealm();
+  const u = await register(idp);
+  await idp.store.put(idp.realm, 'users', {
+    ...(await idp.store.get(idp.realm, 'users', u.id)),
+    roles: ['admin'],
+  });
+  const secret = randomBytes(32).toString('base64url');
+  await idp.configureTotp(u.id, secret);
+  const timestep = Math.floor(Date.now() / 30000);
+  const mac = (await import('node:crypto')).createHmac('sha256', Buffer.from(secret, 'base64url'));
+  const buf = Buffer.alloc(8);
+  buf.writeBigUInt64BE(BigInt(timestep));
+  const digest = mac.update(buf).digest(),
+    offset = digest.at(-1) & 15,
+    otp = String((digest.readUInt32BE(offset) & 0x7fffffff) % 1000000).padStart(6, '0');
+  await idp.authenticatePassword({ login: 'learner@school.com', password: credential, otp });
+  await assert.rejects(
+    idp.authenticatePassword({ login: 'learner@school.com', password: credential, otp }),
+    { code: 'MFA_REPLAY' },
+  );
+});
+test('SDK embedded gateway uses transactional rate/ban state when a shared store is available', async () => {
+  const store = new InMemoryStore();
+  const sdk = createSapling({
+    app: { id: 'sdk-gw', environment: 'test' },
+    providers: { store },
+    platforms: {
+      gateway: {
+        config: gatewayConfig([
+          { name: 'rate-limiting', config: { limitBy: 'ip', limits: [{ max: 1, window: '1m' }] } },
+        ]),
+      },
+    },
+  });
+  assert.ok(sdk.gateway);
+  assert.ok(sdk.gateway.deps.rateLimit instanceof GatewayTransactionalRateLimitStore);
+  assert.ok(sdk.gateway.deps.ddosBans instanceof GatewayTransactionalBanStore);
+  const a = await sdk.gateway.deps.rateLimit.check('test', 1, 60000);
+  const b = await sdk.gateway.deps.rateLimit.check('test', 1, 60000);
+  assert.equal(a.allowed, true);
+  assert.equal(b.allowed, false);
+});
+test('production SDK tenant export requires domain policy and fails closed', async () => {
+  const memory = new InMemoryStore();
+  const backing = {
+    get: (...a) => memory.get(...a),
+    put: (...a) => memory.put(...a),
+    list: (...a) => memory.list(...a),
+    delete: (...a) => memory.delete(...a),
+    page: (...a) => memory.page(...a),
+    transaction: (tenant, fn) => memory.transaction(tenant, fn),
+    health: () => memory.health(),
+  };
+  const sdk = createSapling({
+    app: { id: 'export-production', environment: 'production' },
+    storage: { enabled: false },
+    providers: { store: backing },
+    hooks: {
+      resolveRequestContext: () => ({ tenantId: 't', actorId: 'admin', permissions: ['*'] }),
+    },
+  });
+  await backing.put('t', 'projects', { id: 'p1', title: 'private' });
+  await assert.rejects(
+    sdk.exportTenantData({ tenantId: 't', actorId: 'admin', permissions: ['*'] }, ['projects']),
+    { code: 'DOMAIN_POLICY_REQUIRED' },
+  );
+});
+test('gateway key-auth plugin requires a real configured secret and consumer group', async () => {
+  const c = gatewayConfig([{ name: 'key-auth', config: { groups: ['premium'] } }]);
+  c.spec.consumers = [
+    {
+      username: 'partner-app',
+      groups: ['premium'],
+      credentials: { keyAuth: [{ key: '{vault://env/APP_KEY}' }] },
+    },
+    {
+      username: 'free-app',
+      groups: ['free'],
+      credentials: { keyAuth: [{ key: '{vault://env/FREE_KEY}' }] },
+    },
+  ];
+  let upstream = 0;
+  const gw = new Gateway(c, {
+    resolveSecret: async (ref) => (ref.includes('FREE') ? 'free-secret' : 'premium-secret'),
+    fetch: async () => {
+      upstream++;
+      return new Response('authorized');
+    },
+  });
+  const port = await gw.listen();
+  try {
+    assert.equal((await req(port, '/api')).status, 401);
+    assert.equal((await req(port, '/api', 'GET', undefined, { 'x-api-key': 'bad' })).status, 401);
+    assert.equal(
+      (await req(port, '/api', 'GET', undefined, { 'x-api-key': 'free-secret' })).status,
+      403,
+    );
+    assert.equal(
+      (await req(port, '/api', 'GET', undefined, { 'x-api-key': 'premium-secret' })).status,
+      200,
+    );
+    assert.equal(upstream, 1);
+  } finally {
+    await gw.close();
+  }
+});
 
-test('gateway independent rate windows and thresholds cannot overwrite each other',async()=>{const store=new InMemoryStore();const limiter=new GatewayTransactionalRateLimitStore(store,()=>1000);assert.equal((await limiter.check('consumer:alice',1,60000)).allowed,true);assert.equal((await limiter.check('consumer:alice',1,60000)).allowed,false);assert.equal((await limiter.check('consumer:alice',10,86400000)).allowed,true);assert.equal((await limiter.check('consumer:alice',10,86400000)).remaining,8);assert.equal((await limiter.check('consumer:bob',1,60000)).allowed,true);});
+test('gateway independent rate windows and thresholds cannot overwrite each other', async () => {
+  const store = new InMemoryStore();
+  const limiter = new GatewayTransactionalRateLimitStore(store, () => 1000);
+  assert.equal((await limiter.check('consumer:alice', 1, 60000)).allowed, true);
+  assert.equal((await limiter.check('consumer:alice', 1, 60000)).allowed, false);
+  assert.equal((await limiter.check('consumer:alice', 10, 86400000)).allowed, true);
+  assert.equal((await limiter.check('consumer:alice', 10, 86400000)).remaining, 8);
+  assert.equal((await limiter.check('consumer:bob', 1, 60000)).allowed, true);
+});

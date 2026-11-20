@@ -2,7 +2,7 @@
 
 # @saplings/kingsman
 
-Keycloak-inspired **multi-tenant realm and organization identity core** for Node 22. Loads uploaded RealmConfig JSON (`identity.sapling.dev/v1alpha1`), exposes user/profile, email verification, password reset, session, client, organization invitation, one-time OAuth Authorization Code + PKCE S256, rotating refresh tokens, RS256 access/ID JWT, JWKS and HTTP OIDC endpoints.
+Keycloak-inspired **multi-tenant realm and organization identity core** for Node.js 26. Loads uploaded RealmConfig JSON (`identity.sapling.dev/v1alpha1`), exposes user/profile, email verification, password reset, session, client, organization invitation, one-time OAuth Authorization Code + PKCE S256, rotating refresh tokens, RS256 access/ID JWT, JWKS and HTTP OIDC endpoints.
 
 ```ts
 import {IdentityPlatform,loadRealmConfig,createIdentityHttpHandler} from '@saplings/kingsman';

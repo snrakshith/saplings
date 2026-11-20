@@ -1,4 +1,4 @@
-import { ThemeSpacing } from "./types.js";
+import { ThemeSpacing } from './types.js';
 
 const BASE_SPACING = 8;
 

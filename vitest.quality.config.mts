@@ -1,4 +1,4 @@
-import {defineConfig} from 'vitest/config';
+import { defineConfig } from 'vitest/config';
 
 /** Operator-authorized quality fixtures launched in a separate bounded process. */
 export default defineConfig({

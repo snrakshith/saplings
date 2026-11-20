@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect } from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { useState, useRef, useEffect } from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface SliderProps {
   value?: number;
@@ -43,7 +43,7 @@ const SliderTrack = styled.div<{ disabled?: boolean }>`
   height: 4px;
   background-color: ${(props) => (props.theme as XloxTheme).colors.neutral[200]};
   border-radius: 2px;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
 `;
 
@@ -67,15 +67,15 @@ const SliderThumb = styled.div<{ percentage: number; disabled?: boolean }>`
   border: 2px solid white;
   border-radius: 50%;
   box-shadow: ${(props) => (props.theme as XloxTheme).shadows[2]};
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "grab")};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'grab')};
   transition: transform 0.1s ease-out;
-  
+
   &:hover {
     transform: translate(-50%, -50%) scale(1.2);
   }
-  
+
   &:active {
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "grabbing")};
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'grabbing')};
     transform: translate(-50%, -50%) scale(1.3);
   }
 `;
@@ -111,52 +111,52 @@ export const Slider: React.FC<SliderProps> = ({
   const [internalValue, setInternalValue] = useState(defaultValue);
   const [isDragging, setIsDragging] = useState(false);
   const trackRef = useRef<HTMLDivElement>(null);
-  
+
   const value = controlledValue !== undefined ? controlledValue : internalValue;
-  
+
   const percentage = ((value - min) / (max - min)) * 100;
-  
+
   const updateValue = (clientX: number) => {
     if (!trackRef.current || disabled) return;
-    
+
     const rect = trackRef.current.getBoundingClientRect();
     const percent = Math.max(0, Math.min(1, (clientX - rect.left) / rect.width));
     const rawValue = min + percent * (max - min);
     const steppedValue = Math.round(rawValue / step) * step;
     const clampedValue = Math.max(min, Math.min(max, steppedValue));
-    
+
     if (controlledValue === undefined) {
       setInternalValue(clampedValue);
     }
     onChange?.(clampedValue);
   };
-  
+
   const handleMouseDown = (e: React.MouseEvent) => {
     if (disabled) return;
     setIsDragging(true);
     updateValue(e.clientX);
   };
-  
+
   useEffect(() => {
     if (!isDragging) return;
-    
+
     const handleMouseMove = (e: MouseEvent) => {
       updateValue(e.clientX);
     };
-    
+
     const handleMouseUp = () => {
       setIsDragging(false);
     };
-    
-    document.addEventListener("mousemove", handleMouseMove);
-    document.addEventListener("mouseup", handleMouseUp);
-    
+
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+
     return () => {
-      document.removeEventListener("mousemove", handleMouseMove);
-      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
     };
   }, [isDragging]);
-  
+
   return (
     <SliderWrapper {...props}>
       {(label || showValue) && (
@@ -193,4 +193,4 @@ export const Slider: React.FC<SliderProps> = ({
   );
 };
 
-Slider.displayName = "Slider";
+Slider.displayName = 'Slider';

@@ -1,1 +1,9 @@
-{"extends":"../../packages/murph-appui/tsconfig.json","compilerOptions":{"noEmit":true},"include":["../../packages/murph-appui/src/**/*.ts","../../packages/murph-appui/src/**/*.tsx","../shims/react-native-local.d.ts"]}
+{
+  "extends": "../../packages/murph-appui/tsconfig.json",
+  "compilerOptions": { "noEmit": true },
+  "include": [
+    "../../packages/murph-appui/src/**/*.ts",
+    "../../packages/murph-appui/src/**/*.tsx",
+    "../shims/react-native-local.d.ts"
+  ]
+}

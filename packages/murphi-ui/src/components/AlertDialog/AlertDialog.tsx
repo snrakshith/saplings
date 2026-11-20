@@ -1,7 +1,7 @@
-import React from "react";
-import { createPortal } from "react-dom";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import { createPortal } from 'react-dom';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface AlertDialogProps {
   open: boolean;
@@ -11,7 +11,7 @@ export interface AlertDialogProps {
   description?: string;
   confirmText?: string;
   cancelText?: string;
-  severity?: "info" | "warning" | "error";
+  severity?: 'info' | 'warning' | 'error';
   className?: string;
 }
 
@@ -27,7 +27,7 @@ const Backdrop = styled.div`
   justify-content: center;
   z-index: 1400;
   animation: fadeIn 0.2s ease-in-out;
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -45,7 +45,7 @@ const DialogContainer = styled.div`
   max-width: 400px;
   width: 90%;
   animation: slideIn 0.2s ease-in-out;
-  
+
   @keyframes slideIn {
     from {
       transform: scale(0.95);
@@ -63,16 +63,16 @@ const DialogHeader = styled.div<{ severity?: string }>`
   display: flex;
   align-items: flex-start;
   gap: ${(props) => (props.theme as XloxTheme).spacing(2)};
-  
+
   ${(props) => {
     const theme = props.theme as XloxTheme;
-    if (props.severity === "error") {
+    if (props.severity === 'error') {
       return `border-left: 4px solid ${theme.colors.error[500]};`;
     }
-    if (props.severity === "warning") {
+    if (props.severity === 'warning') {
       return `border-left: 4px solid ${theme.colors.warning[500]};`;
     }
-    return "";
+    return '';
   }}
 `;
 
@@ -82,9 +82,9 @@ const IconWrapper = styled.div<{ severity?: string }>`
   color: ${(props) => {
     const theme = props.theme as XloxTheme;
     switch (props.severity) {
-      case "error":
+      case 'error':
         return theme.colors.error[500];
-      case "warning":
+      case 'warning':
         return theme.colors.warning[500];
       default:
         return theme.colors.info[500];
@@ -118,7 +118,7 @@ const DialogActions = styled.div`
   padding: ${(props) => `${(props.theme as XloxTheme).spacing(2)} ${(props.theme as XloxTheme).spacing(3)} ${(props.theme as XloxTheme).spacing(3)}`};
 `;
 
-const Button = styled.button<{ variant?: "primary" | "secondary" }>`
+const Button = styled.button<{ variant?: 'primary' | 'secondary' }>`
   padding: ${(props) => `${(props.theme as XloxTheme).spacing(1)} ${(props.theme as XloxTheme).spacing(2)}`};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
   font-family: ${(props) => (props.theme as XloxTheme).typography.fontFamily};
@@ -127,10 +127,10 @@ const Button = styled.button<{ variant?: "primary" | "secondary" }>`
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   border: none;
-  
+
   ${(props) => {
     const theme = props.theme as XloxTheme;
-    if (props.variant === "primary") {
+    if (props.variant === 'primary') {
       return `
         background-color: ${theme.colors.primary[500]};
         color: white;
@@ -151,23 +151,23 @@ const Button = styled.button<{ variant?: "primary" | "secondary" }>`
 `;
 
 const getIcon = (severity?: string) => {
-  if (severity === "error") {
+  if (severity === 'error') {
     return (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
       </svg>
     );
   }
-  if (severity === "warning") {
+  if (severity === 'warning') {
     return (
       <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+        <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z" />
       </svg>
     );
   }
   return (
     <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
+      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z" />
     </svg>
   );
 };
@@ -178,18 +178,18 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
   onConfirm,
   title,
   description,
-  confirmText = "Confirm",
-  cancelText = "Cancel",
-  severity = "info",
+  confirmText = 'Confirm',
+  cancelText = 'Cancel',
+  severity = 'info',
   ...props
 }) => {
   if (!open) return null;
-  
+
   const handleConfirm = () => {
     onConfirm();
     onClose();
   };
-  
+
   return createPortal(
     <Backdrop onClick={onClose}>
       <DialogContainer onClick={(e) => e.stopPropagation()} role="alertdialog" {...props}>
@@ -208,8 +208,8 @@ export const AlertDialog: React.FC<AlertDialogProps> = ({
         </DialogActions>
       </DialogContainer>
     </Backdrop>,
-    document.body
+    document.body,
   );
 };
 
-AlertDialog.displayName = "AlertDialog";
+AlertDialog.displayName = 'AlertDialog';

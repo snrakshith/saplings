@@ -1,15 +1,15 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface BadgeProps {
   children: React.ReactNode;
   badgeContent?: React.ReactNode;
-  color?: "primary" | "secondary" | "success" | "error" | "warning" | "info";
-  variant?: "standard" | "dot";
+  color?: 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
+  variant?: 'standard' | 'dot';
   anchorOrigin?: {
-    vertical: "top" | "bottom";
-    horizontal: "left" | "right";
+    vertical: 'top' | 'bottom';
+    horizontal: 'left' | 'right';
   };
   invisible?: boolean;
   max?: number;
@@ -36,13 +36,13 @@ const StyledBadge = styled.span<{
   font-family: ${(props) => (props.theme as XloxTheme).typography.fontFamily};
   font-weight: ${(props) => (props.theme as XloxTheme).typography.button.fontWeight};
   font-size: 0.75rem;
-  min-width: ${(props) => (props.variant === "dot" ? "8px" : "20px")};
-  height: ${(props) => (props.variant === "dot" ? "8px" : "20px")};
-  padding: ${(props) => (props.variant === "dot" ? "0" : "0 6px")};
-  border-radius: ${(props) => (props.variant === "dot" ? "4px" : "10px")};
+  min-width: ${(props) => (props.variant === 'dot' ? '8px' : '20px')};
+  height: ${(props) => (props.variant === 'dot' ? '8px' : '20px')};
+  padding: ${(props) => (props.variant === 'dot' ? '0' : '0 6px')};
+  border-radius: ${(props) => (props.variant === 'dot' ? '4px' : '10px')};
   z-index: 1;
   transition: transform 0.2s ease-in-out;
-  
+
   ${(props) => {
     const theme = props.theme as XloxTheme;
     const colorMap = {
@@ -53,20 +53,20 @@ const StyledBadge = styled.span<{
       warning: theme.colors.warning[500],
       info: theme.colors.info[500],
     };
-    
+
     const bgColor = colorMap[props.color as keyof typeof colorMap] || theme.colors.primary[500];
-    
+
     return `
       background-color: ${bgColor};
       color: white;
     `;
   }}
-  
+
   ${(props) => {
-    const { vertical = "top", horizontal = "right" } = props.anchorOrigin || {};
-    const offset = props.variant === "dot" ? "14%" : "0";
-    
-    if (vertical === "top" && horizontal === "right") {
+    const { vertical = 'top', horizontal = 'right' } = props.anchorOrigin || {};
+    const offset = props.variant === 'dot' ? '14%' : '0';
+
+    if (vertical === 'top' && horizontal === 'right') {
       return `
         top: ${offset};
         right: ${offset};
@@ -74,7 +74,7 @@ const StyledBadge = styled.span<{
         transform-origin: 100% 0%;
       `;
     }
-    if (vertical === "top" && horizontal === "left") {
+    if (vertical === 'top' && horizontal === 'left') {
       return `
         top: ${offset};
         left: ${offset};
@@ -82,7 +82,7 @@ const StyledBadge = styled.span<{
         transform-origin: 0% 0%;
       `;
     }
-    if (vertical === "bottom" && horizontal === "right") {
+    if (vertical === 'bottom' && horizontal === 'right') {
       return `
         bottom: ${offset};
         right: ${offset};
@@ -102,23 +102,23 @@ const StyledBadge = styled.span<{
 export const Badge: React.FC<BadgeProps> = ({
   children,
   badgeContent,
-  color = "primary",
-  variant = "standard",
-  anchorOrigin = { vertical: "top", horizontal: "right" },
+  color = 'primary',
+  variant = 'standard',
+  anchorOrigin = { vertical: 'top', horizontal: 'right' },
   invisible = false,
   max = 99,
   ...props
 }) => {
   const displayContent = () => {
-    if (variant === "dot") return null;
-    if (typeof badgeContent === "number" && badgeContent > max) {
+    if (variant === 'dot') return null;
+    if (typeof badgeContent === 'number' && badgeContent > max) {
       return `${max}+`;
     }
     return badgeContent;
   };
-  
-  const showBadge = !invisible && (badgeContent !== undefined || variant === "dot");
-  
+
+  const showBadge = !invisible && (badgeContent !== undefined || variant === 'dot');
+
   return (
     <BadgeContainer {...props}>
       {children}
@@ -131,4 +131,4 @@ export const Badge: React.FC<BadgeProps> = ({
   );
 };
 
-Badge.displayName = "Badge";
+Badge.displayName = 'Badge';

@@ -1,8 +1,11 @@
-import React, { useState } from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { useState } from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
-export interface AccordionProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title' | 'onChange'> {
+export interface AccordionProps extends Omit<
+  React.HTMLAttributes<HTMLDivElement>,
+  'title' | 'onChange'
+> {
   title: React.ReactNode;
   children: React.ReactNode;
   defaultExpanded?: boolean;
@@ -25,7 +28,7 @@ const AccordionHeader = styled.button<{ expanded?: boolean; disabled?: boolean }
   padding: ${(props) => `${(props.theme as XloxTheme).spacing(2)} ${(props.theme as XloxTheme).spacing(2)}`};
   background-color: ${(props) => (props.theme as XloxTheme).colors.background.paper};
   border: none;
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   font-family: ${(props) => (props.theme as XloxTheme).typography.fontFamily};
   font-size: ${(props) => (props.theme as XloxTheme).typography.body1.fontSize};
   font-weight: ${(props) => (props.theme as XloxTheme).typography.subtitle1.fontWeight};
@@ -33,7 +36,7 @@ const AccordionHeader = styled.button<{ expanded?: boolean; disabled?: boolean }
   text-align: left;
   transition: background-color 0.2s ease-in-out;
   opacity: ${(props) => (props.disabled ? 0.5 : 1)};
-  
+
   &:hover {
     background-color: ${(props) => {
       if (props.disabled) return;
@@ -46,12 +49,12 @@ const AccordionIcon = styled.div<{ expanded?: boolean }>`
   display: flex;
   align-items: center;
   transition: transform 0.2s ease-in-out;
-  transform: rotate(${(props) => (props.expanded ? "180deg" : "0deg")});
+  transform: rotate(${(props) => (props.expanded ? '180deg' : '0deg')});
   color: ${(props) => (props.theme as XloxTheme).colors.text.secondary};
 `;
 
 const AccordionContent = styled.div<{ expanded?: boolean }>`
-  max-height: ${(props) => (props.expanded ? "1000px" : "0")};
+  max-height: ${(props) => (props.expanded ? '1000px' : '0')};
   overflow: hidden;
   transition: max-height 0.3s ease-in-out;
 `;
@@ -72,21 +75,21 @@ export const Accordion: React.FC<AccordionProps> = ({
   ...props
 }) => {
   const [internalExpanded, setInternalExpanded] = useState(defaultExpanded);
-  
+
   const expanded = controlledExpanded !== undefined ? controlledExpanded : internalExpanded;
-  
+
   const handleToggle = () => {
     if (disabled) return;
-    
+
     const newExpanded = !expanded;
-    
+
     if (controlledExpanded === undefined) {
       setInternalExpanded(newExpanded);
     }
-    
+
     onChange?.(newExpanded);
   };
-  
+
   return (
     <AccordionContainer {...props}>
       <AccordionHeader
@@ -110,4 +113,4 @@ export const Accordion: React.FC<AccordionProps> = ({
   );
 };
 
-Accordion.displayName = "Accordion";
+Accordion.displayName = 'Accordion';

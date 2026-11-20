@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface ListProps extends React.HTMLAttributes<HTMLUListElement> {
   children: React.ReactNode;
@@ -22,7 +22,12 @@ const StyledList = styled.ul<{ disablePadding?: boolean }>`
   padding: ${(props) => (props.disablePadding ? 0 : `${(props.theme as XloxTheme).spacing(1)} 0`)};
 `;
 
-const StyledListItem = styled.li<{ button?: boolean; selected?: boolean; disabled?: boolean; dense?: boolean }>`
+const StyledListItem = styled.li<{
+  button?: boolean;
+  selected?: boolean;
+  disabled?: boolean;
+  dense?: boolean;
+}>`
   display: flex;
   align-items: center;
   padding: ${(props) => {
@@ -42,16 +47,19 @@ const StyledListItem = styled.li<{ button?: boolean; selected?: boolean; disable
   background-color: ${(props) => {
     const theme = props.theme as XloxTheme;
     if (props.selected) return theme.colors.primary[50];
-    return "transparent";
+    return 'transparent';
   }};
   cursor: ${(props) => {
-    if (props.disabled) return "not-allowed";
-    if (props.button) return "pointer";
-    return "default";
+    if (props.disabled) return 'not-allowed';
+    if (props.button) return 'pointer';
+    return 'default';
   }};
   transition: background-color 0.2s ease-in-out;
-  
-  ${(props) => props.button && !props.disabled && `
+
+  ${(props) =>
+    props.button &&
+    !props.disabled &&
+    `
     &:hover {
       background-color: ${(props.theme as XloxTheme).colors.neutral[50]};
     }
@@ -89,14 +97,14 @@ export const ListItem: React.FC<ListItemProps> = ({
       onClick();
     }
   };
-  
+
   return (
     <StyledListItem
       button={button}
       selected={selected}
       disabled={disabled}
       onClick={handleClick}
-      role={button ? "button" : undefined}
+      role={button ? 'button' : undefined}
       aria-disabled={disabled}
       {...props}
     >
@@ -105,5 +113,5 @@ export const ListItem: React.FC<ListItemProps> = ({
   );
 };
 
-List.displayName = "List";
-ListItem.displayName = "ListItem";
+List.displayName = 'List';
+ListItem.displayName = 'ListItem';

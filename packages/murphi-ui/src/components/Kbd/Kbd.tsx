@@ -1,10 +1,10 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface KbdProps extends React.HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
 }
 
 const StyledKbd = styled.kbd<{ size?: string }>`
@@ -15,10 +15,10 @@ const StyledKbd = styled.kbd<{ size?: string }>`
   font-size: ${(props) => {
     const theme = props.theme as XloxTheme;
     switch (props.size) {
-      case "small":
-        return "0.75rem";
-      case "large":
-        return "1rem";
+      case 'small':
+        return '0.75rem';
+      case 'large':
+        return '1rem';
       default:
         return theme.typography.body2.fontSize;
     }
@@ -28,9 +28,9 @@ const StyledKbd = styled.kbd<{ size?: string }>`
   padding: ${(props) => {
     const theme = props.theme as XloxTheme;
     switch (props.size) {
-      case "small":
+      case 'small':
         return `${theme.spacing(0.25)} ${theme.spacing(0.5)}`;
-      case "large":
+      case 'large':
         return `${theme.spacing(0.75)} ${theme.spacing(1.5)}`;
       default:
         return `${theme.spacing(0.5)} ${theme.spacing(1)}`;
@@ -38,12 +38,12 @@ const StyledKbd = styled.kbd<{ size?: string }>`
   }};
   min-width: ${(props) => {
     switch (props.size) {
-      case "small":
-        return "20px";
-      case "large":
-        return "32px";
+      case 'small':
+        return '20px';
+      case 'large':
+        return '32px';
       default:
-        return "24px";
+        return '24px';
     }
   }};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
@@ -55,7 +55,7 @@ const StyledKbd = styled.kbd<{ size?: string }>`
   white-space: nowrap;
 `;
 
-export const Kbd: React.FC<KbdProps> = ({ children, size = "medium", ...props }) => {
+export const Kbd: React.FC<KbdProps> = ({ children, size = 'medium', ...props }) => {
   return (
     <StyledKbd size={size} {...props}>
       {children}
@@ -63,4 +63,4 @@ export const Kbd: React.FC<KbdProps> = ({ children, size = "medium", ...props })
   );
 };
 
-Kbd.displayName = "Kbd";
+Kbd.displayName = 'Kbd';

@@ -1,13 +1,128 @@
-import {createServer} from 'node:http';
-import {performance,monitorEventLoopDelay} from 'node:perf_hooks';
-import {writeFileSync,readFileSync} from 'node:fs';
+import { createServer } from 'node:http';
+import { performance, monitorEventLoopDelay } from 'node:perf_hooks';
+import { writeFileSync, readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
-import {createSapling} from '../../packages/sdk/dist/index.js';
-const total=Number(process.env.LOAD_REQUESTS??2000), concurrency=Number(process.env.LOAD_CONCURRENCY??32);
-if(!Number.isSafeInteger(total)||total<1||total>100000||!Number.isSafeInteger(concurrency)||concurrency<1||concurrency>256)throw Error('Invalid load limits');
-const identities=Array.from({length:16},(_,i)=>({tenantId:`tenant-${i}`,actorId:'load-user',permissions:['projects:read','projects:write']}));
-const sdk=createSapling({app:{id:'local-load',environment:'test'},security:{defender:{rateLimit:{maxRequests:total+100,windowMs:60000}}},hooks:{resolveRequestContext(req){const match=/^Bearer load-(\d+)$/.exec(String(req.headers.authorization));return match?identities[Number(match[1])]:undefined;}}});
-const projects=await Promise.all(identities.map(c=>sdk.projects.create(c,{name:c.tenantId})));const middleware=sdk.middleware();
-const server=createServer((req,res)=>{void middleware(req,res,async(err)=>{try{if(err)throw err;const c=identities.find(x=>x.tenantId===req.sapling?.tenantId);if(!c){res.statusCode=401;res.end();return;}const data=await sdk.projects.get(c,req.url.slice(1));if(!data){res.statusCode=404;res.end();return;}res.setHeader('content-type','application/json');res.end(JSON.stringify(data));}catch(e){res.statusCode=e.statusCode??500;res.end();}});});
-await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));const base=`http://127.0.0.1:${server.address().port}`;const samples=[];let cursor=0,errors=0,denials=0;const lag=monitorEventLoopDelay({resolution:10});lag.enable();const begin=performance.now();
-try{await Promise.all(Array.from({length:concurrency},async()=>{while(cursor<total){const n=cursor++,i=n%identities.length,cross=n%20===0;const t=performance.now();try{const r=await fetch(`${base}/${projects[cross?(i+1)%16:i].id}`,{headers:{authorization:`Bearer load-${i}`},signal:AbortSignal.timeout(5000)});if(cross){if(r.status===404||r.status===403)denials++;else errors++;await r.text();}else if(r.ok&&(await r.json()).name===identities[i].tenantId){}else{await r.text().catch(()=>{});errors++;}}catch{errors++;}samples.push(performance.now()-t);}}));const seconds=(performance.now()-begin)/1000;lag.disable();samples.sort((a,b)=>a-b);const pct=p=>Number(samples[Math.min(samples.length-1,Math.ceil(samples.length*p)-1)].toFixed(2));const result={version:JSON.parse(readFileSync('package.json','utf8')).version,environment:'local-loopback-in-memory',requests:total,concurrency,tenants:16,expectedCrossTenantDenials:Math.ceil(total/20),crossTenantDenials:denials,unexpectedErrors:errors,seconds:Number(seconds.toFixed(3)),requestsPerSecond:Number((total/seconds).toFixed(2)),p50Ms:pct(.5),p95Ms:pct(.95),p99Ms:pct(.99),eventLoopP95Ms:Number((lag.percentile(95)/1e6).toFixed(2)),at:new Date().toISOString()};console.log(JSON.stringify(result,null,2));if(process.env.LOAD_OUTPUT)writeFileSync(process.env.LOAD_OUTPUT,JSON.stringify(result,null,2)+'\n');assert.equal(errors,0);assert.equal(denials,Math.ceil(total/20));}finally{server.closeAllConnections();await new Promise(r=>server.close(r));}
+import { createSapling } from '../../packages/sdk/dist/index.js';
+const total = Number(process.env.LOAD_REQUESTS ?? 2000),
+  concurrency = Number(process.env.LOAD_CONCURRENCY ?? 32);
+if (
+  !Number.isSafeInteger(total) ||
+  total < 1 ||
+  total > 100000 ||
+  !Number.isSafeInteger(concurrency) ||
+  concurrency < 1 ||
+  concurrency > 256
+)
+  throw Error('Invalid load limits');
+const identities = Array.from({ length: 16 }, (_, i) => ({
+  tenantId: `tenant-${i}`,
+  actorId: 'load-user',
+  permissions: ['projects:read', 'projects:write'],
+}));
+const sdk = createSapling({
+  app: { id: 'local-load', environment: 'test' },
+  security: { defender: { rateLimit: { maxRequests: total + 100, windowMs: 60000 } } },
+  hooks: {
+    resolveRequestContext(req) {
+      const match = /^Bearer load-(\d+)$/.exec(String(req.headers.authorization));
+      return match ? identities[Number(match[1])] : undefined;
+    },
+  },
+});
+const projects = await Promise.all(
+  identities.map((c) => sdk.projects.create(c, { name: c.tenantId })),
+);
+const middleware = sdk.middleware();
+const server = createServer((req, res) => {
+  void middleware(req, res, async (err) => {
+    try {
+      if (err) throw err;
+      const c = identities.find((x) => x.tenantId === req.sapling?.tenantId);
+      if (!c) {
+        res.statusCode = 401;
+        res.end();
+        return;
+      }
+      const data = await sdk.projects.get(c, req.url.slice(1));
+      if (!data) {
+        res.statusCode = 404;
+        res.end();
+        return;
+      }
+      res.setHeader('content-type', 'application/json');
+      res.end(JSON.stringify(data));
+    } catch (e) {
+      res.statusCode = e.statusCode ?? 500;
+      res.end();
+    }
+  });
+});
+await new Promise((resolve) => server.listen(0, '127.0.0.1', resolve));
+const base = `http://127.0.0.1:${server.address().port}`;
+const samples = [];
+let cursor = 0,
+  errors = 0,
+  denials = 0;
+const lag = monitorEventLoopDelay({ resolution: 10 });
+lag.enable();
+const begin = performance.now();
+try {
+  await Promise.all(
+    Array.from({ length: concurrency }, async () => {
+      while (cursor < total) {
+        const n = cursor++,
+          i = n % identities.length,
+          cross = n % 20 === 0;
+        const t = performance.now();
+        try {
+          const r = await fetch(`${base}/${projects[cross ? (i + 1) % 16 : i].id}`, {
+            headers: { authorization: `Bearer load-${i}` },
+            signal: AbortSignal.timeout(5000),
+          });
+          if (cross) {
+            if (r.status === 404 || r.status === 403) denials++;
+            else errors++;
+            await r.text();
+          } else if (r.ok && (await r.json()).name === identities[i].tenantId) {
+          } else {
+            await r.text().catch(() => {});
+            errors++;
+          }
+        } catch {
+          errors++;
+        }
+        samples.push(performance.now() - t);
+      }
+    }),
+  );
+  const seconds = (performance.now() - begin) / 1000;
+  lag.disable();
+  samples.sort((a, b) => a - b);
+  const pct = (p) =>
+    Number(samples[Math.min(samples.length - 1, Math.ceil(samples.length * p) - 1)].toFixed(2));
+  const result = {
+    version: JSON.parse(readFileSync('package.json', 'utf8')).version,
+    environment: 'local-loopback-in-memory',
+    requests: total,
+    concurrency,
+    tenants: 16,
+    expectedCrossTenantDenials: Math.ceil(total / 20),
+    crossTenantDenials: denials,
+    unexpectedErrors: errors,
+    seconds: Number(seconds.toFixed(3)),
+    requestsPerSecond: Number((total / seconds).toFixed(2)),
+    p50Ms: pct(0.5),
+    p95Ms: pct(0.95),
+    p99Ms: pct(0.99),
+    eventLoopP95Ms: Number((lag.percentile(95) / 1e6).toFixed(2)),
+    at: new Date().toISOString(),
+  };
+  console.log(JSON.stringify(result, null, 2));
+  if (process.env.LOAD_OUTPUT)
+    writeFileSync(process.env.LOAD_OUTPUT, JSON.stringify(result, null, 2) + '\n');
+  assert.equal(errors, 0);
+  assert.equal(denials, Math.ceil(total / 20));
+} finally {
+  server.closeAllConnections();
+  await new Promise((r) => server.close(r));
+}

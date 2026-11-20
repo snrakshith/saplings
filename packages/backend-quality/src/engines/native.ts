@@ -1,7 +1,45 @@
-import type {BackendQualityConfig,QualitySuiteConfig} from '../core/config.js';
-import {summarize,thresholdFailures} from '../core/results.js';
-export async function native(c:BackendQualityConfig,s:QualitySuiteConfig){
- const base=c.targets[s.target!];const probes=s.probes?.length?s.probes:[{path:'/health',statuses:[200]}];const xs:number[]=[];let errors=0;let next=0;const start=performance.now();const max=s.requests??(s.stages?.length||s.durationSeconds?1000000:100);const requestTimeout=Math.min(s.timeoutMs??5000,30000);const stages=s.stages?.length?s.stages:[{concurrency:s.concurrency??4,seconds:s.durationSeconds??60}];
- for(const stage of stages){const end=performance.now()+stage.seconds*1000;await Promise.all(Array.from({length:stage.concurrency},async()=>{while(next<max&&performance.now()<end){const i=next++;const p=probes[i%probes.length];const url=new URL(p.path,base);if(url.origin!==new URL(base).origin)throw Error('Probe escaped target');const t=performance.now();try{const res=await fetch(url,{headers:p.headers,redirect:'manual',signal:AbortSignal.timeout(Math.max(1,Math.min(requestTimeout,Math.ceil(end-performance.now()))))});if(!(p.statuses??[200]).includes(res.status))errors++;await res.body?.cancel();}catch{errors++;}xs.push(performance.now()-t);}}));}
- const metrics=summarize(xs,errors,performance.now()-start);return {metrics,failures:thresholdFailures(metrics,s.thresholds)};
+import type { BackendQualityConfig, QualitySuiteConfig } from '../core/config.js';
+import { summarize, thresholdFailures } from '../core/results.js';
+export async function native(c: BackendQualityConfig, s: QualitySuiteConfig) {
+  const base = c.targets[s.target!];
+  const probes = s.probes?.length ? s.probes : [{ path: '/health', statuses: [200] }];
+  const xs: number[] = [];
+  let errors = 0;
+  let next = 0;
+  const start = performance.now();
+  const max = s.requests ?? (s.stages?.length || s.durationSeconds ? 1000000 : 100);
+  const requestTimeout = Math.min(s.timeoutMs ?? 5000, 30000);
+  const stages = s.stages?.length
+    ? s.stages
+    : [{ concurrency: s.concurrency ?? 4, seconds: s.durationSeconds ?? 60 }];
+  for (const stage of stages) {
+    const end = performance.now() + stage.seconds * 1000;
+    await Promise.all(
+      Array.from({ length: stage.concurrency }, async () => {
+        while (next < max && performance.now() < end) {
+          const i = next++;
+          const p = probes[i % probes.length];
+          const url = new URL(p.path, base);
+          if (url.origin !== new URL(base).origin) throw Error('Probe escaped target');
+          const t = performance.now();
+          try {
+            const res = await fetch(url, {
+              headers: p.headers,
+              redirect: 'manual',
+              signal: AbortSignal.timeout(
+                Math.max(1, Math.min(requestTimeout, Math.ceil(end - performance.now()))),
+              ),
+            });
+            if (!(p.statuses ?? [200]).includes(res.status)) errors++;
+            await res.body?.cancel();
+          } catch {
+            errors++;
+          }
+          xs.push(performance.now() - t);
+        }
+      }),
+    );
+  }
+  const metrics = summarize(xs, errors, performance.now() - start);
+  return { metrics, failures: thresholdFailures(metrics, s.thresholds) };
 }

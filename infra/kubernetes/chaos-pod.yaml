@@ -10,5 +10,5 @@ spec:
   mode: one
   selector:
     namespaces: [sapling-quality]
-    labelSelectors: {app: sapling-example-api}
+    labelSelectors: { app: sapling-example-api }
   duration: 10s

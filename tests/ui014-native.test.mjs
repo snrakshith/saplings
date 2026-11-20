@@ -1,6 +1,73 @@
-import {test} from 'vitest';import assert from 'node:assert/strict';import fs from 'node:fs';import path from 'node:path';import {createRequire} from 'node:module';import ts from 'typescript';import {fileURLToPath} from 'node:url';
-const base=new URL('../packages/murph-appui/src/',import.meta.url);
-function files(dir){const list=[];for(const entry of fs.readdirSync(dir,{withFileTypes:true})){const p=path.join(dir,entry.name);if(entry.isDirectory())list.push(...files(p));else if(/\.(ts|tsx)$/.test(p))list.push(p);}return list;}
-const names=files(fileURLToPath(base));
-test('React Native source is syntax-valid TSX and contains no DOM/Emotion import',()=>{let filesChecked=0;for(const p of names){const src=fs.readFileSync(p,'utf8');assert.doesNotMatch(src,/from\s+['"](?:react-dom|@emotion\/react|@emotion\/styled)['"]/);assert.doesNotMatch(src,/\b(?:document\.|window\.|localStorage\.)/);const result=ts.transpileModule(src,{fileName:p,reportDiagnostics:true,compilerOptions:{jsx:ts.JsxEmit.ReactJSX,module:ts.ModuleKind.NodeNext,target:ts.ScriptTarget.ES2022}});assert.equal(result.diagnostics.filter(d=>d.category===ts.DiagnosticCategory.Error).length,0,p);filesChecked++;}assert.ok(filesChecked>=6);});
-test('Native source exports common component contract without importing web UI',()=>{const src=fs.readFileSync(new URL('components/index.ts',base),'utf8');for(const module of ['primitives','forms','feedback','disclosure','extras'])assert.match(src,new RegExp('./'+module+'.js'));for(const name of ['Box','Stack','Typography','Button','Card','Input','Textarea','Checkbox','Radio','Select','Switch','Modal','Drawer','Tabs','Table','Tooltip','Command']){const refs=names.map(f=>fs.readFileSync(f,'utf8'));assert.ok(refs.some(s=>new RegExp('export (?:function|const) '+name+'\\b').test(s)),name);}assert.doesNotMatch(src,/@sapling\/murphi-ui/);});
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
+import { createRequire } from 'node:module';
+import ts from 'typescript';
+import { fileURLToPath } from 'node:url';
+const base = new URL('../packages/murph-appui/src/', import.meta.url);
+function files(dir) {
+  const list = [];
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    const p = path.join(dir, entry.name);
+    if (entry.isDirectory()) list.push(...files(p));
+    else if (/\.(ts|tsx)$/.test(p)) list.push(p);
+  }
+  return list;
+}
+const names = files(fileURLToPath(base));
+test('React Native source is syntax-valid TSX and contains no DOM/Emotion import', () => {
+  let filesChecked = 0;
+  for (const p of names) {
+    const src = fs.readFileSync(p, 'utf8');
+    assert.doesNotMatch(src, /from\s+['"](?:react-dom|@emotion\/react|@emotion\/styled)['"]/);
+    assert.doesNotMatch(src, /\b(?:document\.|window\.|localStorage\.)/);
+    const result = ts.transpileModule(src, {
+      fileName: p,
+      reportDiagnostics: true,
+      compilerOptions: {
+        jsx: ts.JsxEmit.ReactJSX,
+        module: ts.ModuleKind.NodeNext,
+        target: ts.ScriptTarget.ES2022,
+      },
+    });
+    assert.equal(
+      result.diagnostics.filter((d) => d.category === ts.DiagnosticCategory.Error).length,
+      0,
+      p,
+    );
+    filesChecked++;
+  }
+  assert.ok(filesChecked >= 6);
+});
+test('Native source exports common component contract without importing web UI', () => {
+  const src = fs.readFileSync(new URL('components/index.ts', base), 'utf8');
+  for (const module of ['primitives', 'forms', 'feedback', 'disclosure', 'extras'])
+    assert.match(src, new RegExp('./' + module + '.js'));
+  for (const name of [
+    'Box',
+    'Stack',
+    'Typography',
+    'Button',
+    'Card',
+    'Input',
+    'Textarea',
+    'Checkbox',
+    'Radio',
+    'Select',
+    'Switch',
+    'Modal',
+    'Drawer',
+    'Tabs',
+    'Table',
+    'Tooltip',
+    'Command',
+  ]) {
+    const refs = names.map((f) => fs.readFileSync(f, 'utf8'));
+    assert.ok(
+      refs.some((s) => new RegExp('export (?:function|const) ' + name + '\\b').test(s)),
+      name,
+    );
+  }
+  assert.doesNotMatch(src, /@sapling\/murphi-ui/);
+});

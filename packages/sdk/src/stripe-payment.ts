@@ -1,15 +1,151 @@
-import type {PaymentAdapter,PaymentOrderInput,PaymentRefundInput,PaymentResult,Store,ActorContext} from './types.js';
-import {atomic,fail,hash,integer,object,text} from './primitives.js';
-import type {Row} from './primitives.js';
-import {boundedResponseText} from './http.js';
+import type {
+  PaymentAdapter,
+  PaymentOrderInput,
+  PaymentRefundInput,
+  PaymentResult,
+  Store,
+  ActorContext,
+} from './types.js';
+import { atomic, fail, hash, integer, object, text } from './primitives.js';
+import type { Row } from './primitives.js';
+import { boundedResponseText } from './http.js';
 /** Basic Stripe PaymentIntent checkout. Recurring gateway and tokenized methods remain separate. */
 export class StripePaymentAdapter implements PaymentAdapter {
- readonly name='stripe';
- constructor(private secret:string){text(secret,'Stripe secret',500);}
- private async post(path:string,fields:Record<string,string>,key:string){const r=await fetch('https://api.stripe.com/v1'+path,{method:'POST',headers:{authorization:`Bearer ${this.secret}`,'content-type':'application/x-www-form-urlencoded','idempotency-key':key},body:new URLSearchParams(fields),redirect:'error',signal:AbortSignal.timeout(10000)});const raw=await boundedResponseText(r,1000000);if(!r.ok)return fail(`Stripe HTTP ${r.status}`,'PAYMENT_PROVIDER_ERROR',502);return object(JSON.parse(raw));}
- async createOrder(i:PaymentOrderInput):Promise<PaymentResult>{integer(i.amountMinor,'amount',1);if(!/^[A-Z]{3}$/.test(i.currency))return fail('Invalid currency');const id=hash(JSON.stringify(['stripe-order',i.tenantId,i.idempotencyKey??i.reference]));const r=await this.post('/payment_intents',{amount:String(i.amountMinor),currency:i.currency.toLowerCase(),'automatic_payment_methods[enabled]':'true','metadata[sapling_order]':id},id);if(r.amount!==i.amountMinor||r.currency!==i.currency.toLowerCase()||object(r.metadata).sapling_order!==id)return fail('Stripe order mismatch','PAYMENT_MISMATCH',409);return {id:text(r.id),status:text(r.status),provider:'stripe',clientSecret:text(r.client_secret,'client secret',4096)};}
- async refund(i:PaymentRefundInput):Promise<PaymentResult>{const key=hash(JSON.stringify(['stripe-refund',i.tenantId,text(i.idempotencyKey)]));const paymentIntent=text(i.orderId??i.paymentId);if(!/^pi_[A-Za-z0-9]+$/.test(paymentIntent))return fail('Verified Stripe PaymentIntent required');const r=await this.post('/refunds',{payment_intent:paymentIntent,amount:String(integer(i.amountMinor,'refund amount',1))},key);if(r.payment_intent!==paymentIntent||r.amount!==i.amountMinor)return fail('Stripe refund mismatch','PAYMENT_MISMATCH',409);return {id:text(r.id),status:this.refundStatus(r.status),provider:'stripe'};}
- private refundStatus(status:unknown){return status==='succeeded'?'processed':status==='failed'||status==='canceled'?'failed':'pending';}
- private async get(path:string){const r=await fetch('https://api.stripe.com/v1'+path,{headers:{authorization:`Bearer ${this.secret}`},redirect:'error',signal:AbortSignal.timeout(10000)});const raw=await boundedResponseText(r,1000000);if(!r.ok)return fail(`Stripe HTTP ${r.status}`,'PAYMENT_PROVIDER_ERROR',502);return object(JSON.parse(raw));}
- async reconcilePayment(store:Store,ctx:ActorContext,orderId:string,paymentId:string){if(orderId!==paymentId||!/^pi_[A-Za-z0-9]+$/.test(orderId))return fail('Stripe payment intent ID required');const order=await store.get<Row>(ctx.tenantId,'payment-orders',orderId);if(!order||order.provider!=='stripe')return fail('Stripe tenant order not found','PAYMENT_MISMATCH',409);const p=await this.get('/payment_intents/'+orderId);if(p.id!==orderId||p.status!=='succeeded'||p.amount_received!==order.amountMinor||p.currency!==String(order.currency).toLowerCase())return fail('Stripe payment mismatch','PAYMENT_MISMATCH',409);return atomic(store,ctx.tenantId,async tx=>{const o=await tx.get<Row>(ctx.tenantId,'payment-orders',orderId);if(!o||o.provider!=='stripe'||o.amountMinor!==order.amountMinor||o.currency!==order.currency||o.invoiceId!==order.invoiceId||o.paymentId&&o.paymentId!==paymentId)return fail('Stripe order changed','PAYMENT_MISMATCH',409);const old=await tx.get<Row>(ctx.tenantId,'verified-payments',paymentId);if(old){if(old.provider!=='stripe'||old.orderId!==orderId)return fail('Payment conflict','CONFLICT',409);return {processed:false,duplicate:true,paymentId};}if(o.invoiceId){const invoice=await tx.get<Row>(ctx.tenantId,'invoices',String(o.invoiceId));if(!invoice||invoice.status!=='open'||invoice.totalMinor!==o.amountMinor||invoice.currency!==o.currency)return fail('Invoice mismatch','PAYMENT_MISMATCH',409);await tx.put(ctx.tenantId,'invoices',{...invoice,status:'paid',paymentId,paidAt:new Date().toISOString()});}await tx.put(ctx.tenantId,'verified-payments',{id:paymentId,provider:'stripe',orderId,status:'captured',amountMinor:o.amountMinor,currency:o.currency});await tx.put(ctx.tenantId,'payment-orders',{...o,status:'captured',paymentId});return {processed:true,paymentId};});}
+  readonly name = 'stripe';
+  constructor(private secret: string) {
+    text(secret, 'Stripe secret', 500);
+  }
+  private async post(path: string, fields: Record<string, string>, key: string) {
+    const r = await fetch('https://api.stripe.com/v1' + path, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${this.secret}`,
+        'content-type': 'application/x-www-form-urlencoded',
+        'idempotency-key': key,
+      },
+      body: new URLSearchParams(fields),
+      redirect: 'error',
+      signal: AbortSignal.timeout(10000),
+    });
+    const raw = await boundedResponseText(r, 1000000);
+    if (!r.ok) return fail(`Stripe HTTP ${r.status}`, 'PAYMENT_PROVIDER_ERROR', 502);
+    return object(JSON.parse(raw));
+  }
+  async createOrder(i: PaymentOrderInput): Promise<PaymentResult> {
+    integer(i.amountMinor, 'amount', 1);
+    if (!/^[A-Z]{3}$/.test(i.currency)) return fail('Invalid currency');
+    const id = hash(JSON.stringify(['stripe-order', i.tenantId, i.idempotencyKey ?? i.reference]));
+    const r = await this.post(
+      '/payment_intents',
+      {
+        amount: String(i.amountMinor),
+        currency: i.currency.toLowerCase(),
+        'automatic_payment_methods[enabled]': 'true',
+        'metadata[sapling_order]': id,
+      },
+      id,
+    );
+    if (
+      r.amount !== i.amountMinor ||
+      r.currency !== i.currency.toLowerCase() ||
+      object(r.metadata).sapling_order !== id
+    )
+      return fail('Stripe order mismatch', 'PAYMENT_MISMATCH', 409);
+    return {
+      id: text(r.id),
+      status: text(r.status),
+      provider: 'stripe',
+      clientSecret: text(r.client_secret, 'client secret', 4096),
+    };
+  }
+  async refund(i: PaymentRefundInput): Promise<PaymentResult> {
+    const key = hash(JSON.stringify(['stripe-refund', i.tenantId, text(i.idempotencyKey)]));
+    const paymentIntent = text(i.orderId ?? i.paymentId);
+    if (!/^pi_[A-Za-z0-9]+$/.test(paymentIntent))
+      return fail('Verified Stripe PaymentIntent required');
+    const r = await this.post(
+      '/refunds',
+      { payment_intent: paymentIntent, amount: String(integer(i.amountMinor, 'refund amount', 1)) },
+      key,
+    );
+    if (r.payment_intent !== paymentIntent || r.amount !== i.amountMinor)
+      return fail('Stripe refund mismatch', 'PAYMENT_MISMATCH', 409);
+    return { id: text(r.id), status: this.refundStatus(r.status), provider: 'stripe' };
+  }
+  private refundStatus(status: unknown) {
+    return status === 'succeeded'
+      ? 'processed'
+      : status === 'failed' || status === 'canceled'
+        ? 'failed'
+        : 'pending';
+  }
+  private async get(path: string) {
+    const r = await fetch('https://api.stripe.com/v1' + path, {
+      headers: { authorization: `Bearer ${this.secret}` },
+      redirect: 'error',
+      signal: AbortSignal.timeout(10000),
+    });
+    const raw = await boundedResponseText(r, 1000000);
+    if (!r.ok) return fail(`Stripe HTTP ${r.status}`, 'PAYMENT_PROVIDER_ERROR', 502);
+    return object(JSON.parse(raw));
+  }
+  async reconcilePayment(store: Store, ctx: ActorContext, orderId: string, paymentId: string) {
+    if (orderId !== paymentId || !/^pi_[A-Za-z0-9]+$/.test(orderId))
+      return fail('Stripe payment intent ID required');
+    const order = await store.get<Row>(ctx.tenantId, 'payment-orders', orderId);
+    if (!order || order.provider !== 'stripe')
+      return fail('Stripe tenant order not found', 'PAYMENT_MISMATCH', 409);
+    const p = await this.get('/payment_intents/' + orderId);
+    if (
+      p.id !== orderId ||
+      p.status !== 'succeeded' ||
+      p.amount_received !== order.amountMinor ||
+      p.currency !== String(order.currency).toLowerCase()
+    )
+      return fail('Stripe payment mismatch', 'PAYMENT_MISMATCH', 409);
+    return atomic(store, ctx.tenantId, async (tx) => {
+      const o = await tx.get<Row>(ctx.tenantId, 'payment-orders', orderId);
+      if (
+        !o ||
+        o.provider !== 'stripe' ||
+        o.amountMinor !== order.amountMinor ||
+        o.currency !== order.currency ||
+        o.invoiceId !== order.invoiceId ||
+        (o.paymentId && o.paymentId !== paymentId)
+      )
+        return fail('Stripe order changed', 'PAYMENT_MISMATCH', 409);
+      const old = await tx.get<Row>(ctx.tenantId, 'verified-payments', paymentId);
+      if (old) {
+        if (old.provider !== 'stripe' || old.orderId !== orderId)
+          return fail('Payment conflict', 'CONFLICT', 409);
+        return { processed: false, duplicate: true, paymentId };
+      }
+      if (o.invoiceId) {
+        const invoice = await tx.get<Row>(ctx.tenantId, 'invoices', String(o.invoiceId));
+        if (
+          !invoice ||
+          invoice.status !== 'open' ||
+          invoice.totalMinor !== o.amountMinor ||
+          invoice.currency !== o.currency
+        )
+          return fail('Invoice mismatch', 'PAYMENT_MISMATCH', 409);
+        await tx.put(ctx.tenantId, 'invoices', {
+          ...invoice,
+          status: 'paid',
+          paymentId,
+          paidAt: new Date().toISOString(),
+        });
+      }
+      await tx.put(ctx.tenantId, 'verified-payments', {
+        id: paymentId,
+        provider: 'stripe',
+        orderId,
+        status: 'captured',
+        amountMinor: o.amountMinor,
+        currency: o.currency,
+      });
+      await tx.put(ctx.tenantId, 'payment-orders', { ...o, status: 'captured', paymentId });
+      return { processed: true, paymentId };
+    });
+  }
 }

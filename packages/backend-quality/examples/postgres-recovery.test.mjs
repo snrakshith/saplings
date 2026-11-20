@@ -1,2 +1,36 @@
-import {test} from 'vitest';import assert from 'node:assert/strict';import {GenericContainer,Wait} from 'testcontainers';
-test('disposable PostgreSQL transaction rollback and reconnect',async()=>{const c=await new GenericContainer('postgres:16').withEnvironment({POSTGRES_PASSWORD:'quality_disposable',POSTGRES_DB:'quality'}).withExposedPorts(5432).withWaitStrategy(Wait.forLogMessage(/database system is ready to accept connections/,2)).start();try{const {default:pg}=await import('pg');const pool=new pg.Pool({host:c.getHost(),port:c.getMappedPort(5432),user:'postgres',password:'quality_disposable',database:'quality'});try{await pool.query('CREATE TABLE invariant(id int primary key)');const client=await pool.connect();try{await client.query('BEGIN');await client.query('INSERT INTO invariant VALUES(1)');await client.query('ROLLBACK');}finally{client.release();}assert.equal((await pool.query('SELECT * FROM invariant')).rowCount,0);}finally{await pool.end();}}finally{await c.stop();}});
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import { GenericContainer, Wait } from 'testcontainers';
+test('disposable PostgreSQL transaction rollback and reconnect', async () => {
+  const c = await new GenericContainer('postgres:16')
+    .withEnvironment({ POSTGRES_PASSWORD: 'quality_disposable', POSTGRES_DB: 'quality' })
+    .withExposedPorts(5432)
+    .withWaitStrategy(Wait.forLogMessage(/database system is ready to accept connections/, 2))
+    .start();
+  try {
+    const { default: pg } = await import('pg');
+    const pool = new pg.Pool({
+      host: c.getHost(),
+      port: c.getMappedPort(5432),
+      user: 'postgres',
+      password: 'quality_disposable',
+      database: 'quality',
+    });
+    try {
+      await pool.query('CREATE TABLE invariant(id int primary key)');
+      const client = await pool.connect();
+      try {
+        await client.query('BEGIN');
+        await client.query('INSERT INTO invariant VALUES(1)');
+        await client.query('ROLLBACK');
+      } finally {
+        client.release();
+      }
+      assert.equal((await pool.query('SELECT * FROM invariant')).rowCount, 0);
+    } finally {
+      await pool.end();
+    }
+  } finally {
+    await c.stop();
+  }
+});

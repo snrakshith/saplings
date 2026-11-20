@@ -1,15 +1,141 @@
-import type {ActorContext,JsonRecord,Store} from './types.js';
-import {fail,insert,integer,now,strings,text,object} from './primitives.js';
-import type {Row} from './primitives.js';
+import type { ActorContext, JsonRecord, Store } from './types.js';
+import { fail, insert, integer, now, strings, text, object } from './primitives.js';
+import type { Row } from './primitives.js';
 export class Analytics {
- constructor(private store:Store,private maxEvents=50000){}
- async track(ctx:ActorContext,input:JsonRecord){return insert(this.store,ctx,'product-events',{name:text(input.name,'event name',100),subjectId:text(input.subjectId??ctx.actorId,'subjectId',200),groupId:input.groupId===undefined?null:text(input.groupId),properties:object(input.properties??{}),occurredAt:now()});}
- async identify(ctx:ActorContext,input:JsonRecord){const id=text(input.subjectId??ctx.actorId,'subjectId');const r={id,traits:object(input.traits??{}),updatedAt:now()};await this.store.put(ctx.tenantId,'analytics-identities',r);return r;}
- private async events(ctx:ActorContext,input:JsonRecord){const data=await this.store.list<Row>(ctx.tenantId,'product-events');if(data.length>this.maxEvents)return fail('Analytics query exceeds local engine; configure analytics provider','QUERY_LIMIT',413);const from=input.from===undefined?0:Date.parse(text(input.from)),to=input.to===undefined?Date.now():Date.parse(text(input.to));if(!Number.isFinite(from)||!Number.isFinite(to)||from>to)return fail('Invalid time window');return data.filter(r=>Date.parse(String(r.occurredAt))>=from&&Date.parse(String(r.occurredAt))<=to).sort((a,b)=>String(a.occurredAt).localeCompare(String(b.occurredAt)));}
- async count(ctx:ActorContext,input:JsonRecord){const events=await this.events(ctx,input);const by=String(input.by??'name');if(!['name','groupId','subjectId'].includes(by))return fail('Unsupported dimension');const counts=new Map<string,number>();for(const r of events){if(input.name&&input.name!==r.name)continue;const key=String(r[by]??'unknown');counts.set(key,(counts.get(key)??0)+1);}return {total:[...counts.values()].reduce((a,b)=>a+b,0),groups:[...counts].map(([key,count])=>({key,count}))};}
- async funnel(ctx:ActorContext,input:JsonRecord){const steps=strings(input.steps);if(!steps.length||steps.length>20)return fail('Expected 1–20 steps');const progress=new Map<string,number>();for(const r of await this.events(ctx,input)){const id=String(r.subjectId),i=progress.get(id)??0;if(r.name===steps[i])progress.set(id,i+1);}return steps.map((step,i)=>({step,users:[...progress.values()].filter(n=>n>i).length}));}
- async retention(ctx:ActorContext,input:JsonRecord){const first=text(input.firstEvent),returnEvent=text(input.returnEvent),days=integer(input.days??30,'days',1,365),events=await this.events(ctx,input);const starts=new Map<string,number>(),buckets=Array.from({length:days+1},()=>new Set<string>());for(const r of events){const id=String(r.subjectId),at=Date.parse(String(r.occurredAt));if(r.name===first&&!starts.has(id))starts.set(id,at);const start=starts.get(id);if(start!==undefined&&r.name===returnEvent){const day=Math.floor((at-start)/86400000);if(day>=0&&day<=days)buckets[day].add(id);}}return {cohort:starts.size,days:buckets.map((b,day)=>({day,users:b.size,rate:starts.size?b.size/starts.size:null}))};}
- async cohort(ctx:ActorContext,input:JsonRecord){const name=text(input.name);return [...new Set((await this.events(ctx,input)).filter(e=>e.name===name).map(e=>String(e.subjectId)))];}
- async metric(ctx:ActorContext,input:JsonRecord){const key=text(input.property),name=text(input.name);const values=(await this.events(ctx,input)).filter(e=>e.name===name).map(e=>object(e.properties??{})[key]).filter((n):n is number=>typeof n==='number'&&Number.isFinite(n));return {count:values.length,sum:values.reduce((a,b)=>a+b,0),mean:values.length?values.reduce((a,b)=>a+b,0)/values.length:null};}
- async experiment(ctx:ActorContext,input:JsonRecord){const key=text(input.experimentId),events=(await this.events(ctx,input)).filter(e=>object(e.properties??{}).experimentId===key);const variants=new Map<string,{exposures:Set<string>;conversions:Set<string>}>();for(const r of events){const variant=String(object(r.properties??{}).variant??'unknown'),v=variants.get(variant)??{exposures:new Set(),conversions:new Set()};variants.set(variant,v);if(r.name==='experiment.exposure')v.exposures.add(String(r.subjectId));if(r.name===input.conversionEvent&&v.exposures.has(String(r.subjectId)))v.conversions.add(String(r.subjectId));}return [...variants].map(([variant,v])=>({variant,exposed:v.exposures.size,converted:v.conversions.size,rate:v.exposures.size?v.conversions.size/v.exposures.size:null}));}
+  constructor(
+    private store: Store,
+    private maxEvents = 50000,
+  ) {}
+  async track(ctx: ActorContext, input: JsonRecord) {
+    return insert(this.store, ctx, 'product-events', {
+      name: text(input.name, 'event name', 100),
+      subjectId: text(input.subjectId ?? ctx.actorId, 'subjectId', 200),
+      groupId: input.groupId === undefined ? null : text(input.groupId),
+      properties: object(input.properties ?? {}),
+      occurredAt: now(),
+    });
+  }
+  async identify(ctx: ActorContext, input: JsonRecord) {
+    const id = text(input.subjectId ?? ctx.actorId, 'subjectId');
+    const r = { id, traits: object(input.traits ?? {}), updatedAt: now() };
+    await this.store.put(ctx.tenantId, 'analytics-identities', r);
+    return r;
+  }
+  private async events(ctx: ActorContext, input: JsonRecord) {
+    const data = await this.store.list<Row>(ctx.tenantId, 'product-events');
+    if (data.length > this.maxEvents)
+      return fail(
+        'Analytics query exceeds local engine; configure analytics provider',
+        'QUERY_LIMIT',
+        413,
+      );
+    const from = input.from === undefined ? 0 : Date.parse(text(input.from)),
+      to = input.to === undefined ? Date.now() : Date.parse(text(input.to));
+    if (!Number.isFinite(from) || !Number.isFinite(to) || from > to)
+      return fail('Invalid time window');
+    return data
+      .filter(
+        (r) => Date.parse(String(r.occurredAt)) >= from && Date.parse(String(r.occurredAt)) <= to,
+      )
+      .sort((a, b) => String(a.occurredAt).localeCompare(String(b.occurredAt)));
+  }
+  async count(ctx: ActorContext, input: JsonRecord) {
+    const events = await this.events(ctx, input);
+    const by = String(input.by ?? 'name');
+    if (!['name', 'groupId', 'subjectId'].includes(by)) return fail('Unsupported dimension');
+    const counts = new Map<string, number>();
+    for (const r of events) {
+      if (input.name && input.name !== r.name) continue;
+      const key = String(r[by] ?? 'unknown');
+      counts.set(key, (counts.get(key) ?? 0) + 1);
+    }
+    return {
+      total: [...counts.values()].reduce((a, b) => a + b, 0),
+      groups: [...counts].map(([key, count]) => ({ key, count })),
+    };
+  }
+  async funnel(ctx: ActorContext, input: JsonRecord) {
+    const steps = strings(input.steps);
+    if (!steps.length || steps.length > 20) return fail('Expected 1–20 steps');
+    const progress = new Map<string, number>();
+    for (const r of await this.events(ctx, input)) {
+      const id = String(r.subjectId),
+        i = progress.get(id) ?? 0;
+      if (r.name === steps[i]) progress.set(id, i + 1);
+    }
+    return steps.map((step, i) => ({
+      step,
+      users: [...progress.values()].filter((n) => n > i).length,
+    }));
+  }
+  async retention(ctx: ActorContext, input: JsonRecord) {
+    const first = text(input.firstEvent),
+      returnEvent = text(input.returnEvent),
+      days = integer(input.days ?? 30, 'days', 1, 365),
+      events = await this.events(ctx, input);
+    const starts = new Map<string, number>(),
+      buckets = Array.from({ length: days + 1 }, () => new Set<string>());
+    for (const r of events) {
+      const id = String(r.subjectId),
+        at = Date.parse(String(r.occurredAt));
+      if (r.name === first && !starts.has(id)) starts.set(id, at);
+      const start = starts.get(id);
+      if (start !== undefined && r.name === returnEvent) {
+        const day = Math.floor((at - start) / 86400000);
+        if (day >= 0 && day <= days) buckets[day].add(id);
+      }
+    }
+    return {
+      cohort: starts.size,
+      days: buckets.map((b, day) => ({
+        day,
+        users: b.size,
+        rate: starts.size ? b.size / starts.size : null,
+      })),
+    };
+  }
+  async cohort(ctx: ActorContext, input: JsonRecord) {
+    const name = text(input.name);
+    return [
+      ...new Set(
+        (await this.events(ctx, input))
+          .filter((e) => e.name === name)
+          .map((e) => String(e.subjectId)),
+      ),
+    ];
+  }
+  async metric(ctx: ActorContext, input: JsonRecord) {
+    const key = text(input.property),
+      name = text(input.name);
+    const values = (await this.events(ctx, input))
+      .filter((e) => e.name === name)
+      .map((e) => object(e.properties ?? {})[key])
+      .filter((n): n is number => typeof n === 'number' && Number.isFinite(n));
+    return {
+      count: values.length,
+      sum: values.reduce((a, b) => a + b, 0),
+      mean: values.length ? values.reduce((a, b) => a + b, 0) / values.length : null,
+    };
+  }
+  async experiment(ctx: ActorContext, input: JsonRecord) {
+    const key = text(input.experimentId),
+      events = (await this.events(ctx, input)).filter(
+        (e) => object(e.properties ?? {}).experimentId === key,
+      );
+    const variants = new Map<string, { exposures: Set<string>; conversions: Set<string> }>();
+    for (const r of events) {
+      const variant = String(object(r.properties ?? {}).variant ?? 'unknown'),
+        v = variants.get(variant) ?? { exposures: new Set(), conversions: new Set() };
+      variants.set(variant, v);
+      if (r.name === 'experiment.exposure') v.exposures.add(String(r.subjectId));
+      if (r.name === input.conversionEvent && v.exposures.has(String(r.subjectId)))
+        v.conversions.add(String(r.subjectId));
+    }
+    return [...variants].map(([variant, v]) => ({
+      variant,
+      exposed: v.exposures.size,
+      converted: v.conversions.size,
+      rate: v.exposures.size ? v.conversions.size / v.exposures.size : null,
+    }));
+  }
 }

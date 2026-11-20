@@ -1,20 +1,152 @@
-import type {ActorContext,Store,JsonRecord} from './types.js';
-import {randomUUID} from 'node:crypto';
-import {atomic,fail,insert,now,read,text,hash,integer} from './primitives.js';
-import type {Row} from './primitives.js';
-import {timeout} from './reliability.js';
-export const offboardingSteps=['freeze','revoke','export','purge-external','purge-records','verify'] as const;
-export type OffboardingStep=typeof offboardingSteps[number];
-export interface OffboardingSettings { /** Trusted application callbacks must be idempotent, handle legal holds/retention, and return evidence IDs. */
- deadlineMs?:number;
- /** Trusted, current legal-hold decision. Any value other than false prevents destructive work. */
- legalHold?:(ctx:ActorContext,signal:AbortSignal)=>Promise<boolean>;
- handlers:Record<OffboardingStep,(ctx:ActorContext,input:{operationId:string;signal?:AbortSignal})=>Promise<{evidenceId:string}>>;
+import type { ActorContext, Store, JsonRecord } from './types.js';
+import { randomUUID } from 'node:crypto';
+import { atomic, fail, insert, now, read, text, hash, integer } from './primitives.js';
+import type { Row } from './primitives.js';
+import { timeout } from './reliability.js';
+export const offboardingSteps = [
+  'freeze',
+  'revoke',
+  'export',
+  'purge-external',
+  'purge-records',
+  'verify',
+] as const;
+export type OffboardingStep = (typeof offboardingSteps)[number];
+export interface OffboardingSettings {
+  /** Trusted application callbacks must be idempotent, handle legal holds/retention, and return evidence IDs. */
+  deadlineMs?: number;
+  /** Trusted, current legal-hold decision. Any value other than false prevents destructive work. */
+  legalHold?: (ctx: ActorContext, signal: AbortSignal) => Promise<boolean>;
+  handlers: Record<
+    OffboardingStep,
+    (
+      ctx: ActorContext,
+      input: { operationId: string; signal?: AbortSignal },
+    ) => Promise<{ evidenceId: string }>
+  >;
 }
 export class TenantOffboarding {
- constructor(private store:Store,private settings?:OffboardingSettings){if(settings)integer(settings.deadlineMs??60000,'offboarding deadline',1,240000);}
- async request(ctx:ActorContext,input:JsonRecord){if(!this.settings||offboardingSteps.some(s=>typeof this.settings?.handlers[s]!=='function'))return fail('Configure complete offboarding policy','CONFIG_REQUIRED',503);if(input.confirm!==ctx.tenantId)return fail('Explicit tenant confirmation required');return atomic(this.store,ctx.tenantId,async tx=>{const profile=await read(tx,ctx,'tenant-profile','profile');const existing=await tx.get<Row>(ctx.tenantId,'tenant-offboarding','current');if(existing)return existing;if(profile.status!=='active')return fail('Tenant is not active','CONFLICT',409);const request=await insert(tx,ctx,'tenant-offboarding',{operationId:randomUUID(),status:'requested',requestedBy:ctx.actorId,reason:text(input.reason,'reason',500),step:0,evidence:[]},'current');await tx.put(ctx.tenantId,'tenant-profile',{...profile,status:'offboarding',requestedAt:now()});return request;});}
- async approve(ctx:ActorContext){return atomic(this.store,ctx.tenantId,async tx=>{const row=await read(tx,ctx,'tenant-offboarding','current');if(row.status!=='requested'||row.requestedBy===ctx.actorId)return fail('Independent approver required','FORBIDDEN',403);const next={...row,status:'approved',approvedBy:ctx.actorId,approvedAt:now()};await tx.put(ctx.tenantId,'tenant-offboarding',next);return next;});}
- async status(ctx:ActorContext){return read(this.store,ctx,'tenant-offboarding','current');}
- async advance(ctx:ActorContext,signal?:AbortSignal){if(signal?.aborted)throw Error('Aborted');if(!this.settings)return fail('Offboarding policy required','CONFIG_REQUIRED',503);const claim=await atomic(this.store,ctx.tenantId,async tx=>{if(signal?.aborted)throw Error('Aborted');const row=await read(tx,ctx,'tenant-offboarding','current');if(row.status==='complete')return undefined;if(!['approved','running'].includes(String(row.status)))return fail('Offboarding is not approved','CONFLICT',409);if(Number(row.leaseUntil??0)>Date.now())return fail('Offboarding step already leased','CONFLICT',409);const step=offboardingSteps[Number(row.step)];if(!step)return fail('Invalid step');const lease=randomUUID();await tx.put(ctx.tenantId,'tenant-offboarding',{...row,status:'running',lease,leaseUntil:Date.now()+(this.settings!.deadlineMs??60000)+5000});return {row,step,lease};});if(!claim)return {status:'complete'};const handler=this.settings.handlers[claim.step];const proof=await timeout(async deadline=>{const combined=signal?AbortSignal.any([signal,deadline]):deadline;if(combined.aborted)throw Error('Aborted');if(['purge-external','purge-records'].includes(claim.step)&&((await this.store.get<Row>(ctx.tenantId,'legal-holds','current'))?.active===true||this.settings!.legalHold&&await this.settings!.legalHold(ctx,combined)!==false))return fail('Legal hold prevents destructive work','LEGAL_HOLD',409);if(combined.aborted)throw Error('Aborted');return handler(ctx,{operationId:hash(`${claim.row.operationId}:${claim.step}`),signal:combined});},this.settings.deadlineMs??60000);if(signal?.aborted)throw Error('Aborted');const evidenceId=text(proof.evidenceId,'evidenceId',500);return atomic(this.store,ctx.tenantId,async tx=>{const row=await read(tx,ctx,'tenant-offboarding','current');if(row.lease!==claim.lease||Number(row.leaseUntil)<Date.now())return fail('Stale offboarding lease','CONFLICT',409);const step=Number(row.step)+1,complete=step===offboardingSteps.length;const next={...row,step,status:complete?'complete':'approved',lease:null,leaseUntil:0,evidence:[...(Array.isArray(row.evidence)?row.evidence:[]),{step:claim.step,evidenceId,at:now()}]};await tx.put(ctx.tenantId,'tenant-offboarding',next);if(complete){const profile=await read(tx,ctx,'tenant-profile','profile');await tx.put(ctx.tenantId,'tenant-profile',{...profile,status:'offboarded',offboardedAt:now()});}return next;});}
+  constructor(
+    private store: Store,
+    private settings?: OffboardingSettings,
+  ) {
+    if (settings) integer(settings.deadlineMs ?? 60000, 'offboarding deadline', 1, 240000);
+  }
+  async request(ctx: ActorContext, input: JsonRecord) {
+    if (
+      !this.settings ||
+      offboardingSteps.some((s) => typeof this.settings?.handlers[s] !== 'function')
+    )
+      return fail('Configure complete offboarding policy', 'CONFIG_REQUIRED', 503);
+    if (input.confirm !== ctx.tenantId) return fail('Explicit tenant confirmation required');
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      const profile = await read(tx, ctx, 'tenant-profile', 'profile');
+      const existing = await tx.get<Row>(ctx.tenantId, 'tenant-offboarding', 'current');
+      if (existing) return existing;
+      if (profile.status !== 'active') return fail('Tenant is not active', 'CONFLICT', 409);
+      const request = await insert(
+        tx,
+        ctx,
+        'tenant-offboarding',
+        {
+          operationId: randomUUID(),
+          status: 'requested',
+          requestedBy: ctx.actorId,
+          reason: text(input.reason, 'reason', 500),
+          step: 0,
+          evidence: [],
+        },
+        'current',
+      );
+      await tx.put(ctx.tenantId, 'tenant-profile', {
+        ...profile,
+        status: 'offboarding',
+        requestedAt: now(),
+      });
+      return request;
+    });
+  }
+  async approve(ctx: ActorContext) {
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      const row = await read(tx, ctx, 'tenant-offboarding', 'current');
+      if (row.status !== 'requested' || row.requestedBy === ctx.actorId)
+        return fail('Independent approver required', 'FORBIDDEN', 403);
+      const next = { ...row, status: 'approved', approvedBy: ctx.actorId, approvedAt: now() };
+      await tx.put(ctx.tenantId, 'tenant-offboarding', next);
+      return next;
+    });
+  }
+  async status(ctx: ActorContext) {
+    return read(this.store, ctx, 'tenant-offboarding', 'current');
+  }
+  async advance(ctx: ActorContext, signal?: AbortSignal) {
+    if (signal?.aborted) throw Error('Aborted');
+    if (!this.settings) return fail('Offboarding policy required', 'CONFIG_REQUIRED', 503);
+    const claim = await atomic(this.store, ctx.tenantId, async (tx) => {
+      if (signal?.aborted) throw Error('Aborted');
+      const row = await read(tx, ctx, 'tenant-offboarding', 'current');
+      if (row.status === 'complete') return undefined;
+      if (!['approved', 'running'].includes(String(row.status)))
+        return fail('Offboarding is not approved', 'CONFLICT', 409);
+      if (Number(row.leaseUntil ?? 0) > Date.now())
+        return fail('Offboarding step already leased', 'CONFLICT', 409);
+      const step = offboardingSteps[Number(row.step)];
+      if (!step) return fail('Invalid step');
+      const lease = randomUUID();
+      await tx.put(ctx.tenantId, 'tenant-offboarding', {
+        ...row,
+        status: 'running',
+        lease,
+        leaseUntil: Date.now() + (this.settings!.deadlineMs ?? 60000) + 5000,
+      });
+      return { row, step, lease };
+    });
+    if (!claim) return { status: 'complete' };
+    const handler = this.settings.handlers[claim.step];
+    const proof = await timeout(async (deadline) => {
+      const combined = signal ? AbortSignal.any([signal, deadline]) : deadline;
+      if (combined.aborted) throw Error('Aborted');
+      if (
+        ['purge-external', 'purge-records'].includes(claim.step) &&
+        ((await this.store.get<Row>(ctx.tenantId, 'legal-holds', 'current'))?.active === true ||
+          (this.settings!.legalHold && (await this.settings!.legalHold(ctx, combined)) !== false))
+      )
+        return fail('Legal hold prevents destructive work', 'LEGAL_HOLD', 409);
+      if (combined.aborted) throw Error('Aborted');
+      return handler(ctx, {
+        operationId: hash(`${claim.row.operationId}:${claim.step}`),
+        signal: combined,
+      });
+    }, this.settings.deadlineMs ?? 60000);
+    if (signal?.aborted) throw Error('Aborted');
+    const evidenceId = text(proof.evidenceId, 'evidenceId', 500);
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      const row = await read(tx, ctx, 'tenant-offboarding', 'current');
+      if (row.lease !== claim.lease || Number(row.leaseUntil) < Date.now())
+        return fail('Stale offboarding lease', 'CONFLICT', 409);
+      const step = Number(row.step) + 1,
+        complete = step === offboardingSteps.length;
+      const next = {
+        ...row,
+        step,
+        status: complete ? 'complete' : 'approved',
+        lease: null,
+        leaseUntil: 0,
+        evidence: [
+          ...(Array.isArray(row.evidence) ? row.evidence : []),
+          { step: claim.step, evidenceId, at: now() },
+        ],
+      };
+      await tx.put(ctx.tenantId, 'tenant-offboarding', next);
+      if (complete) {
+        const profile = await read(tx, ctx, 'tenant-profile', 'profile');
+        await tx.put(ctx.tenantId, 'tenant-profile', {
+          ...profile,
+          status: 'offboarded',
+          offboardedAt: now(),
+        });
+      }
+      return next;
+    });
+  }
 }

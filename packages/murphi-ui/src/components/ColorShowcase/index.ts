@@ -1,2 +1,2 @@
-export { ColorShowcase } from "./ColorShowcase.js";
-export type { ColorShowcaseProps } from "./ColorShowcase.js";
+export { ColorShowcase } from './ColorShowcase.js';
+export type { ColorShowcaseProps } from './ColorShowcase.js';

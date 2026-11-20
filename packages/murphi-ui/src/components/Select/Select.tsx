@@ -1,6 +1,6 @@
-import React, { useState, useRef, useEffect, forwardRef } from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { useState, useRef, useEffect, forwardRef } from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface SelectOption {
   value: string;
@@ -8,7 +8,7 @@ export interface SelectOption {
   disabled?: boolean;
 }
 
-export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, "size"> {
+export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
   label?: string;
   error?: string;
   helperText?: string;
@@ -20,7 +20,7 @@ export interface SelectProps extends Omit<React.SelectHTMLAttributes<HTMLSelectE
 const SelectWrapper = styled.div<{ fullWidth?: boolean }>`
   display: inline-flex;
   flex-direction: column;
-  width: ${(props) => (props.fullWidth ? "100%" : "auto")};
+  width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
   gap: ${(props) => (props.theme as XloxTheme).spacing(0.5)};
 `;
 
@@ -45,10 +45,11 @@ const StyledSelect = styled.select<{ hasError?: boolean }>`
   font-size: ${(props) => (props.theme as XloxTheme).typography.body1.fontSize};
   color: ${(props) => (props.theme as XloxTheme).colors.text.primary};
   background-color: ${(props) => (props.theme as XloxTheme).colors.background.paper};
-  border: 1px solid ${(props) =>
-    props.hasError
-      ? (props.theme as XloxTheme).colors.error[500]
-      : (props.theme as XloxTheme).colors.neutral[300]};
+  border: 1px solid
+    ${(props) =>
+      props.hasError
+        ? (props.theme as XloxTheme).colors.error[500]
+        : (props.theme as XloxTheme).colors.neutral[300]};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
   outline: none;
   cursor: pointer;
@@ -88,18 +89,7 @@ const HelperText = styled.span<{ isError?: boolean }>`
 `;
 
 export const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  (
-    {
-      label,
-      error,
-      helperText,
-      fullWidth = false,
-      options,
-      placeholder,
-      ...props
-    },
-    ref
-  ) => {
+  ({ label, error, helperText, fullWidth = false, options, placeholder, ...props }, ref) => {
     return (
       <SelectWrapper fullWidth={fullWidth}>
         {label && <Label>{label}</Label>}
@@ -111,11 +101,7 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
               </option>
             )}
             {options.map((option) => (
-              <option
-                key={option.value}
-                value={option.value}
-                disabled={option.disabled}
-              >
+              <option key={option.value} value={option.value} disabled={option.disabled}>
                 {option.label}
               </option>
             ))}
@@ -126,12 +112,10 @@ export const Select = forwardRef<HTMLSelectElement, SelectProps>(
             </svg>
           </SelectIcon>
         </SelectContainer>
-        {(error || helperText) && (
-          <HelperText isError={!!error}>{error || helperText}</HelperText>
-        )}
+        {(error || helperText) && <HelperText isError={!!error}>{error || helperText}</HelperText>}
       </SelectWrapper>
     );
-  }
+  },
 );
 
-Select.displayName = "Select";
+Select.displayName = 'Select';

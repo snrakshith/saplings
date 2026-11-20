@@ -1,13 +1,188 @@
 // Operator-controlled evidence policy. This verifies completeness, hashes and freshness;
 // does NOT authenticate a human auditor or replace an approval-controlled CI environment.
-import {readFileSync,statSync,realpathSync,readdirSync,existsSync} from 'node:fs';import {createHash} from 'node:crypto';import {resolve,relative,sep} from 'node:path';
-const version=JSON.parse(readFileSync('package.json','utf8')).version;
-const required=['core-build','regression','catalog','adapter-build','postgres-live','valkey-live','provider-live','staging-load','staging-soak','restore-drill','dependency-audit','scanner-triage','independent-security-audit','application-authorization','operations-review','quality-build','backend-quality-live','frontend-quality-live','foundation-live','validation-compat','technical-evaluation','recurring-payment-live','tenant-offboarding-drill','workspace-install','react-hooks','cashfree-live','saas-gap-audit','saas-feature-acceptance-live','platform-config','gateway-integration-live','identity-oidc-conformance','ui-core-build','ui-web-build','ui-native-build','ui-native-live','ui-accessibility-live','sdk-root-refactor','gateway-security-local','identity-security-local','tenant-export-local','vitest-migration','vitest-runtime','vitest-coverage','architecture-consolidation-local','architecture-consolidation-live'];
-const root=realpathSync(process.cwd()),sha=(x)=>createHash('sha256').update(x).digest('hex');
-function files(dir){return readdirSync(dir,{withFileTypes:true}).flatMap(e=>{const p=resolve(dir,e.name);return e.isSymbolicLink()||['node_modules','dist','.git','evidence'].includes(e.name)?[]:e.isDirectory()?files(p):[p];});}
-const source= ['packages','tests','scripts','examples','apps','infra','sapling.config.ts','deploy','.github','package.json','pnpm-workspace.yaml','.npmrc','tsconfig.base.json','vitest.config.mts','vitest.integration.config.mts','vitest.quality.config.mts','types','Dockerfile','compose.yaml',...(existsSync(resolve(root,'pnpm-lock.yaml'))?['pnpm-lock.yaml']:[])].flatMap(p=>{const f=resolve(root,p);return statSync(f).isDirectory()?files(f):[f];}).sort();const sourceHash=sha(source.map(f=>`${relative(root,f)}:${sha(readFileSync(f))}`).join('\n'));
-if(process.argv.includes('--print-source-hash')){console.log(sourceHash);process.exit(0);}
-const manifestPath=process.env.SAPLING_RELEASE_EVIDENCE??'docs/evidence/release-gates.json';const manifest=JSON.parse(readFileSync(manifestPath,'utf8'));const failures=[];const seen=new Set();
-for(const entry of manifest.gates??[]){if(seen.has(entry.id))failures.push(`duplicate ${entry.id}`);seen.add(entry.id);}
-for(const id of required){const g=manifest.gates?.find(x=>x.id===id);if(!g||g.status!=='passed'){failures.push(`${id}: not passed`);continue;}if(g.sourceHash!==sourceHash||manifest.version!==version){failures.push(`${id}: wrong source/version`);continue;}if(!g.reviewer||typeof g.reviewer!=='string'||!g.reviewer.trim()||!g.environment||!g.evidence||!g.sha256){failures.push(`${id}: missing evidence metadata`);continue;}const age=Date.now()-Date.parse(g.at);if(!Number.isFinite(age)||age<0||age>30*86400000){failures.push(`${id}: stale evidence`);continue;}if(['postgres-live','valkey-live','provider-live','staging-load','staging-soak','restore-drill','independent-security-audit','backend-quality-live','frontend-quality-live','foundation-live','recurring-payment-live','tenant-offboarding-drill','cashfree-live','saas-feature-acceptance-live','gateway-integration-live','identity-oidc-conformance','architecture-consolidation-live','ui-native-live','ui-accessibility-live'].includes(id)&&['local','mock','in-memory'].some(s=>String(g.environment).toLowerCase().includes(s))){failures.push(`${id}: local/mock evidence not accepted`);continue;}if(id==='independent-security-audit'&&(g.independent!==true||g.unresolvedCriticalHigh!==0)){failures.push(`${id}: independent signoff and zero unresolved critical/high required`);continue;}try{const path=realpathSync(resolve(root,g.evidence));if(!path.startsWith(root+sep)||sha(readFileSync(path))!==g.sha256)failures.push(`${id}: invalid evidence hash/path`);}catch{failures.push(`${id}: evidence unavailable`);}}
-console.log(JSON.stringify({version,sourceHash,decision:failures.length?'BLOCKED':'EVIDENCE_COMPLETE_REQUIRES_APPROVAL',failures},null,2));if(failures.length)process.exitCode=1;
+import { readFileSync, statSync, realpathSync, readdirSync, existsSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import { resolve, relative, sep } from 'node:path';
+const version = JSON.parse(readFileSync('package.json', 'utf8')).version;
+const required = [
+  'core-build',
+  'regression',
+  'catalog',
+  'adapter-build',
+  'postgres-live',
+  'valkey-live',
+  'provider-live',
+  'staging-load',
+  'staging-soak',
+  'restore-drill',
+  'dependency-audit',
+  'scanner-triage',
+  'independent-security-audit',
+  'application-authorization',
+  'operations-review',
+  'quality-build',
+  'backend-quality-live',
+  'frontend-quality-live',
+  'foundation-live',
+  'validation-compat',
+  'technical-evaluation',
+  'recurring-payment-live',
+  'tenant-offboarding-drill',
+  'workspace-install',
+  'react-hooks',
+  'cashfree-live',
+  'saas-gap-audit',
+  'saas-feature-acceptance-live',
+  'platform-config',
+  'gateway-integration-live',
+  'identity-oidc-conformance',
+  'ui-core-build',
+  'ui-web-build',
+  'ui-native-build',
+  'ui-native-live',
+  'ui-accessibility-live',
+  'sdk-root-refactor',
+  'gateway-security-local',
+  'identity-security-local',
+  'tenant-export-local',
+  'vitest-migration',
+  'vitest-runtime',
+  'vitest-coverage',
+  'architecture-consolidation-local',
+  'architecture-consolidation-live',
+];
+const root = realpathSync(process.cwd()),
+  sha = (x) => createHash('sha256').update(x).digest('hex');
+function files(dir) {
+  return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+    const p = resolve(dir, e.name);
+    return e.isSymbolicLink() || ['node_modules', 'dist', '.git', 'evidence'].includes(e.name)
+      ? []
+      : e.isDirectory()
+        ? files(p)
+        : [p];
+  });
+}
+const source = [
+  'packages',
+  'tests',
+  'scripts',
+  'examples',
+  'apps',
+  'infra',
+  'sapling.config.ts',
+  'deploy',
+  '.github',
+  'package.json',
+  'pnpm-workspace.yaml',
+  '.npmrc',
+  'tsconfig.base.json',
+  'vitest.config.mts',
+  'vitest.integration.config.mts',
+  'vitest.quality.config.mts',
+  'types',
+  'Dockerfile',
+  'compose.yaml',
+  ...(existsSync(resolve(root, 'pnpm-lock.yaml')) ? ['pnpm-lock.yaml'] : []),
+]
+  .flatMap((p) => {
+    const f = resolve(root, p);
+    return statSync(f).isDirectory() ? files(f) : [f];
+  })
+  .sort();
+const sourceHash = sha(
+  source.map((f) => `${relative(root, f)}:${sha(readFileSync(f))}`).join('\n'),
+);
+if (process.argv.includes('--print-source-hash')) {
+  console.log(sourceHash);
+  process.exit(0);
+}
+const manifestPath = process.env.SAPLING_RELEASE_EVIDENCE ?? 'docs/evidence/release-gates.json';
+const manifest = JSON.parse(readFileSync(manifestPath, 'utf8'));
+const failures = [];
+const seen = new Set();
+for (const entry of manifest.gates ?? []) {
+  if (seen.has(entry.id)) failures.push(`duplicate ${entry.id}`);
+  seen.add(entry.id);
+}
+for (const id of required) {
+  const g = manifest.gates?.find((x) => x.id === id);
+  if (!g || g.status !== 'passed') {
+    failures.push(`${id}: not passed`);
+    continue;
+  }
+  if (g.sourceHash !== sourceHash || manifest.version !== version) {
+    failures.push(`${id}: wrong source/version`);
+    continue;
+  }
+  if (
+    !g.reviewer ||
+    typeof g.reviewer !== 'string' ||
+    !g.reviewer.trim() ||
+    !g.environment ||
+    !g.evidence ||
+    !g.sha256
+  ) {
+    failures.push(`${id}: missing evidence metadata`);
+    continue;
+  }
+  const age = Date.now() - Date.parse(g.at);
+  if (!Number.isFinite(age) || age < 0 || age > 30 * 86400000) {
+    failures.push(`${id}: stale evidence`);
+    continue;
+  }
+  if (
+    [
+      'postgres-live',
+      'valkey-live',
+      'provider-live',
+      'staging-load',
+      'staging-soak',
+      'restore-drill',
+      'independent-security-audit',
+      'backend-quality-live',
+      'frontend-quality-live',
+      'foundation-live',
+      'recurring-payment-live',
+      'tenant-offboarding-drill',
+      'cashfree-live',
+      'saas-feature-acceptance-live',
+      'gateway-integration-live',
+      'identity-oidc-conformance',
+      'architecture-consolidation-live',
+      'ui-native-live',
+      'ui-accessibility-live',
+    ].includes(id) &&
+    ['local', 'mock', 'in-memory'].some((s) => String(g.environment).toLowerCase().includes(s))
+  ) {
+    failures.push(`${id}: local/mock evidence not accepted`);
+    continue;
+  }
+  if (
+    id === 'independent-security-audit' &&
+    (g.independent !== true || g.unresolvedCriticalHigh !== 0)
+  ) {
+    failures.push(`${id}: independent signoff and zero unresolved critical/high required`);
+    continue;
+  }
+  try {
+    const path = realpathSync(resolve(root, g.evidence));
+    if (!path.startsWith(root + sep) || sha(readFileSync(path)) !== g.sha256)
+      failures.push(`${id}: invalid evidence hash/path`);
+  } catch {
+    failures.push(`${id}: evidence unavailable`);
+  }
+}
+console.log(
+  JSON.stringify(
+    {
+      version,
+      sourceHash,
+      decision: failures.length ? 'BLOCKED' : 'EVIDENCE_COMPLETE_REQUIRES_APPROVAL',
+      failures,
+    },
+    null,
+    2,
+  ),
+);
+if (failures.length) process.exitCode = 1;

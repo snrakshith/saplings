@@ -15,8 +15,7 @@ Reusable packages are released under the `@saplings` npm organization. See the [
 **Dependency limitation:** This packaging environment cannot access npm/pnpm registries; the real Vitest package and V8 coverage plugin could not be installed or executed. TypeScript compilation and static migration checks are recorded separately. Previous 190/191 test results belong to v0.15.0 and are **not** v0.16.0 Vitest results. No lockfile or coverage percentages were invented. **Production remains blocked.** See [testing specification](docs/technical-specifications/TESTING_V016.md).
 
 ```bash
-corepack enable
-corepack prepare pnpm@10.11.0 --activate
+npm install --global pnpm@10.11.0
 pnpm install --no-frozen-lockfile      # one time; review/commit the generated pnpm-lock.yaml
 pnpm run build:all
 pnpm run test:vitest:verify
@@ -40,7 +39,7 @@ Critical implementation changes include persistent transactional gateway quota/b
 **75% objective:** target, **not a verified production-readiness score**. The historical 35% estimate had no audited denominator. Full pnpm, real React Native builds, live Postgres/Valkey, Cashfree sandbox, gateway/identity protocol conformance and independent security review remain open; do not deploy to production on the strength of local tests.
 
 ```bash
-corepack enable && corepack prepare pnpm@10.11.0 --activate
+npm install --global pnpm@10.11.0
 pnpm install --frozen-lockfile # requires reviewed pnpm-lock.yaml (absent in this source archive)
 pnpm run build
 pnpm run verify:sdk-layout
@@ -57,8 +56,7 @@ pnpm run release:preflight
 The SDK now contains **24 workspace packages**, adding `@saplings/ui-core` (shared tokens), `@saplings/murphi-ui` (React/Emotion web, 39 Murphi source component directories) and `@saplings/murph-appui` (React Native, 38 matching component names). See [cross-platform UI documentation](docs/ui-platforms/README.md), [component matrix](docs/ui-platforms/COMPONENT_PARITY.md) and [source provenance](docs/ui-platforms/PROVENANCE.md). The existing 182 SaaS IDs, gateway, identity platform, scanner/defender and quality packages remain intact.
 
 ```bash
-corepack enable
-corepack prepare pnpm@10.11.0 --activate
+npm install --global pnpm@10.11.0
 pnpm install --frozen-lockfile   # generate/review pnpm-lock.yaml first if absent
 pnpm run build:ui
 pnpm run typecheck:ui
@@ -105,8 +103,7 @@ See [technical specifications](docs/technical-specifications/README.md), [qualit
 **v0.11.0:** Cashfree preferred gateway, typed provider selection, and [feature-level product/technical/gaps documentation](docs/features/README.md). 19 workspace packages. [Payment guide](docs/technical-specifications/CASHFREE_PAYMENTS.md). Prior v0.10.0 changes: 19 packages, flat typed SDK service access, 182 typed catalog IDs and actions, React hooks, pnpm 10 workspace. See [migration guide](docs/technical-specifications/ENGINEERING_0100.md).
 
 ```sh
-corepack enable
-corepack prepare pnpm@10.11.0 --activate
+npm install --global pnpm@10.11.0
 # First installation only: generate and review the lockfile; commit it.
 pnpm install --no-frozen-lockfile
 # Subsequent CI/reproducible installations:
@@ -143,7 +140,7 @@ One TypeScript SDK for reusable SaaS and security capabilities, using a single t
 
 ## Quick start
 
-Node.js 22 in an internet-connected environment:
+Use the Node.js 26 LTS version in `.node-version` and pnpm 10.11.0.
 
 ```sh
 pnpm install
@@ -168,6 +165,13 @@ const plan = await sdk.capabilities.invoke(ctx, 'SAAS-034', 'create', {
 ```
 
 Use `sdk.defender.preflight()` before bounded request parsing and `sdk.middleware()` after parsing; explicitly authorize domain routes. Direct SDK services and raw store are trusted backend APIs. Never expose them or the action registry directly to arbitrary clients. For signed webhooks preserve raw bytes.
+
+## Local code checks
+
+Run `pnpm run format` to apply Prettier and `pnpm run lint:fix` to apply safe
+lint fixes. Pull requests run `pnpm run format:check`, `pnpm run lint`, and
+`pnpm run typecheck`.
+
 
 ## Repository
 

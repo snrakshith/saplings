@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "engines": {
-    "node": ">=22",
+    "node": "^26.13.1",
     "pnpm": ">=10 <11"
   },
   "scripts": {
@@ -24,9 +24,9 @@
     "release:gate": "node scripts/release/gate.mjs",
     "test:aws": "vitest run --config vitest.integration.config.mts tests/integration/aws.test.mjs",
     "build:quality": "tsc -p packages/quality-contracts && tsc -p packages/quality-node-diagnostics && tsc -p packages/quality-browser-runtime && tsc -p packages/quality-core && tsc -p packages/backend-quality && tsc -p packages/frontend-quality && tsc -p packages/quality-cli",
-    "quality": "node --experimental-strip-types packages/quality-cli/dist/cli.js",
+    "quality": "node packages/quality-cli/dist/cli.js",
     "quality:test": "vitest run --config vitest.config.mts tests/quality.test.mjs tests/fullstack-quality.test.mjs",
-    "quality:legacy": "node --experimental-strip-types packages/backend-quality/dist/cli.js",
+    "quality:legacy": "node packages/backend-quality/dist/cli.js",
     "build:web": "pnpm run build:hooks && pnpm run build:murphi-ui && pnpm --filter @sapling/example-web run build",
     "dev:web": "pnpm --filter @sapling/example-web run dev",
     "dev:api": "pnpm --filter @sapling/example-api run dev",
@@ -76,11 +76,16 @@
     "typecheck:platforms": "tsc --noEmit --strict --skipLibCheck --module NodeNext --target ES2022 tests/types/platforms.ts",
     "changeset": "changeset",
     "release:version": "changeset version && pnpm install --lockfile-only",
-    "release:verify": "pnpm run build:all && pnpm test && node scripts/release/verify-npm-packages.mjs"
+    "release:verify": "pnpm run build:all && pnpm test && node scripts/release/verify-npm-packages.mjs",
+    "format": "prettier --write apps examples packages scripts tests deploy infra .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
+    "format:check": "prettier --check apps examples packages scripts tests deploy infra .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
+    "lint": "oxlint --quiet apps examples packages scripts tests",
+    "lint:fix": "oxlint --fix apps examples packages scripts tests",
+    "typecheck": "pnpm run build:all && pnpm run test:types && pnpm run typecheck:platforms && pnpm run typecheck:validation:compat && pnpm run typecheck:quality"
   },
   "devDependencies": {
     "typescript": "^5.9.3",
-    "@types/node": "^22.0.0",
+    "@types/node": "^26.0.0",
     "testcontainers": "^11.14.0",
     "tsx": "^4.20.6",
     "zod": "4.6.7",
@@ -134,7 +139,9 @@
     "react-native": "^0.88.1",
     "vitest": "5.0.0",
     "@vitest/coverage-v8": "5.0.0",
-    "@changesets/cli": "3.0.3"
+    "@changesets/cli": "3.0.3",
+    "prettier": "3.10.1",
+    "oxlint": "1.94.0"
   },
   "packageManager": "pnpm@10.11.0"
 }

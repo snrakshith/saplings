@@ -1,13 +1,13 @@
-import React, { useEffect } from "react";
-import { createPortal } from "react-dom";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface DrawerProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
-  anchor?: "left" | "right" | "top" | "bottom";
+  anchor?: 'left' | 'right' | 'top' | 'bottom';
   width?: string | number;
 }
 
@@ -30,45 +30,45 @@ const DrawerContainer = styled.div<{ anchor: string; width: string | number; ope
   box-shadow: ${(props) => (props.theme as XloxTheme).shadows[4]};
   overflow-y: auto;
   transition: transform 0.3s ease-in-out;
-  
+
   ${(props) => {
-    const width = typeof props.width === "number" ? `${props.width}px` : props.width;
-    
+    const width = typeof props.width === 'number' ? `${props.width}px` : props.width;
+
     switch (props.anchor) {
-      case "left":
+      case 'left':
         return `
           top: 0;
           left: 0;
           bottom: 0;
           width: ${width};
-          transform: translateX(${props.open ? "0" : "-100%"});
+          transform: translateX(${props.open ? '0' : '-100%'});
         `;
-      case "right":
+      case 'right':
         return `
           top: 0;
           right: 0;
           bottom: 0;
           width: ${width};
-          transform: translateX(${props.open ? "0" : "100%"});
+          transform: translateX(${props.open ? '0' : '100%'});
         `;
-      case "top":
+      case 'top':
         return `
           top: 0;
           left: 0;
           right: 0;
           height: ${width};
-          transform: translateY(${props.open ? "0" : "-100%"});
+          transform: translateY(${props.open ? '0' : '-100%'});
         `;
-      case "bottom":
+      case 'bottom':
         return `
           bottom: 0;
           left: 0;
           right: 0;
           height: ${width};
-          transform: translateY(${props.open ? "0" : "100%"});
+          transform: translateY(${props.open ? '0' : '100%'});
         `;
       default:
-        return "";
+        return '';
     }
   }}
 `;
@@ -77,35 +77,35 @@ export const Drawer: React.FC<DrawerProps> = ({
   open,
   onClose,
   children,
-  anchor = "left",
-  width = "300px",
+  anchor = 'left',
+  width = '300px',
   ...props
 }) => {
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
-    
+
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [open]);
-  
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && open) {
+      if (e.key === 'Escape' && open) {
         onClose();
       }
     };
-    
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [open, onClose]);
-  
+
   if (!open) return null;
-  
+
   return createPortal(
     <>
       <Backdrop open={open} onClick={onClose} />
@@ -113,8 +113,8 @@ export const Drawer: React.FC<DrawerProps> = ({
         {children}
       </DrawerContainer>
     </>,
-    document.body
+    document.body,
   );
 };
 
-Drawer.displayName = "Drawer";
+Drawer.displayName = 'Drawer';

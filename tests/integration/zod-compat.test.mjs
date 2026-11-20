@@ -1,6 +1,65 @@
-import {test} from 'vitest';import assert from 'node:assert/strict';import {createRequire} from 'node:module';import * as upstream from 'zod';import * as sapling from '@saplings/validations';
-const require=createRequire(import.meta.url);
-test('pinned upstream identity and export parity',()=>{assert.equal(require('zod/package.json').version,'4.6.7');assert.deepEqual(Object.keys(sapling).sort(),Object.keys(upstream).sort());for(const k of Object.keys(upstream))assert.equal(sapling[k],upstream[k],k);assert.equal(require('@saplings/validations'),require('zod'));});
-for(const sub of ['v3','v4','mini','v4-mini','v4/mini','v4/core','locales','v4/locales','compile'])test(`public entry point ${sub}`,async()=>{const a=await import('@saplings/validations/'+sub),b=await import('zod/'+sub);assert.deepEqual(Object.keys(a).sort(),Object.keys(b).sort());for(const k of Object.keys(b))assert.equal(a[k],b[k],k);assert.equal(require('@saplings/validations/'+sub),require('zod/'+sub));});
-test('named locale subpaths',async()=>{const names=require('../../packages/validations/compat/locale-names.json');for(const name of names){const suffix='v4/locales/'+name;const a=await import('@saplings/validations/'+suffix+'.js');const b=await import('zod/'+suffix+'.js');assert.equal(a.default,b.default);assert.equal(require('@saplings/validations/'+suffix+'.cjs'),require('zod/'+suffix+'.cjs'));}});
-test('schemas, errors, JSON schema, async and shared class identity',async()=>{const z=sapling.z;const schema=z.object({email:z.email(),age:z.coerce.number().int().min(18),tags:z.array(z.string()).default([])});const v={email:'a@example.com',age:'20'};assert.deepEqual(schema.parse(v),{email:v.email,age:20,tags:[]});const bad=schema.safeParse({email:'bad',age:3});assert.equal(bad.success,false);assert.ok(bad.error instanceof upstream.ZodError);assert.deepEqual(z.treeifyError(bad.error),upstream.treeifyError(bad.error));assert.equal(z.toJSONSchema(schema).type,'object');assert.equal(await z.string().transform(async x=>x.length).parseAsync('abc'),3);});
+import { test } from 'vitest';
+import assert from 'node:assert/strict';
+import { createRequire } from 'node:module';
+import * as upstream from 'zod';
+import * as sapling from '@saplings/validations';
+const require = createRequire(import.meta.url);
+test('pinned upstream identity and export parity', () => {
+  assert.equal(require('zod/package.json').version, '4.6.7');
+  assert.deepEqual(Object.keys(sapling).sort(), Object.keys(upstream).sort());
+  for (const k of Object.keys(upstream)) assert.equal(sapling[k], upstream[k], k);
+  assert.equal(require('@saplings/validations'), require('zod'));
+});
+for (const sub of [
+  'v3',
+  'v4',
+  'mini',
+  'v4-mini',
+  'v4/mini',
+  'v4/core',
+  'locales',
+  'v4/locales',
+  'compile',
+])
+  test(`public entry point ${sub}`, async () => {
+    const a = await import('@saplings/validations/' + sub),
+      b = await import('zod/' + sub);
+    assert.deepEqual(Object.keys(a).sort(), Object.keys(b).sort());
+    for (const k of Object.keys(b)) assert.equal(a[k], b[k], k);
+    assert.equal(require('@saplings/validations/' + sub), require('zod/' + sub));
+  });
+test('named locale subpaths', async () => {
+  const names = require('../../packages/validations/compat/locale-names.json');
+  for (const name of names) {
+    const suffix = 'v4/locales/' + name;
+    const a = await import('@saplings/validations/' + suffix + '.js');
+    const b = await import('zod/' + suffix + '.js');
+    assert.equal(a.default, b.default);
+    assert.equal(
+      require('@saplings/validations/' + suffix + '.cjs'),
+      require('zod/' + suffix + '.cjs'),
+    );
+  }
+});
+test('schemas, errors, JSON schema, async and shared class identity', async () => {
+  const z = sapling.z;
+  const schema = z.object({
+    email: z.email(),
+    age: z.coerce.number().int().min(18),
+    tags: z.array(z.string()).default([]),
+  });
+  const v = { email: 'a@example.com', age: '20' };
+  assert.deepEqual(schema.parse(v), { email: v.email, age: 20, tags: [] });
+  const bad = schema.safeParse({ email: 'bad', age: 3 });
+  assert.equal(bad.success, false);
+  assert.ok(bad.error instanceof upstream.ZodError);
+  assert.deepEqual(z.treeifyError(bad.error), upstream.treeifyError(bad.error));
+  assert.equal(z.toJSONSchema(schema).type, 'object');
+  assert.equal(
+    await z
+      .string()
+      .transform(async (x) => x.length)
+      .parseAsync('abc'),
+    3,
+  );
+});

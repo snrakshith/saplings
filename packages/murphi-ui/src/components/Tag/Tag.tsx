@@ -1,12 +1,12 @@
-import React from "react";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React from 'react';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
   children: React.ReactNode;
-  color?: "default" | "primary" | "secondary" | "success" | "error" | "warning" | "info";
-  variant?: "filled" | "outlined" | "subtle";
-  size?: "small" | "medium" | "large";
+  color?: 'default' | 'primary' | 'secondary' | 'success' | 'error' | 'warning' | 'info';
+  variant?: 'filled' | 'outlined' | 'subtle';
+  size?: 'small' | 'medium' | 'large';
   onRemove?: () => void;
 }
 
@@ -17,21 +17,21 @@ const StyledTag = styled.span<TagProps>`
   font-family: ${(props) => (props.theme as XloxTheme).typography.fontFamily};
   font-size: ${(props) => {
     switch (props.size) {
-      case "small":
-        return "0.75rem";
-      case "large":
-        return "0.875rem";
+      case 'small':
+        return '0.75rem';
+      case 'large':
+        return '0.875rem';
       default:
-        return "0.8125rem";
+        return '0.8125rem';
     }
   }};
   font-weight: 500;
   padding: ${(props) => {
     const theme = props.theme as XloxTheme;
     switch (props.size) {
-      case "small":
+      case 'small':
         return `${theme.spacing(0.25)} ${theme.spacing(0.75)}`;
-      case "large":
+      case 'large':
         return `${theme.spacing(0.75)} ${theme.spacing(1.5)}`;
       default:
         return `${theme.spacing(0.5)} ${theme.spacing(1)}`;
@@ -39,7 +39,7 @@ const StyledTag = styled.span<TagProps>`
   }};
   border-radius: ${(props) => `${(props.theme as XloxTheme).shape.borderRadius}px`};
   white-space: nowrap;
-  
+
   ${(props) => {
     const theme = props.theme as XloxTheme;
     const colorMap = {
@@ -51,25 +51,25 @@ const StyledTag = styled.span<TagProps>`
       warning: theme.colors.warning,
       info: theme.colors.info,
     };
-    
-    const colors = colorMap[props.color || "default"];
-    
-    if (props.variant === "outlined") {
+
+    const colors = colorMap[props.color || 'default'];
+
+    if (props.variant === 'outlined') {
       return `
         background-color: transparent;
         color: ${colors[700]};
         border: 1px solid ${colors[500]};
       `;
     }
-    
-    if (props.variant === "subtle") {
+
+    if (props.variant === 'subtle') {
       return `
         background-color: ${colors[50]};
         color: ${colors[700]};
         border: none;
       `;
     }
-    
+
     return `
       background-color: ${colors[500]};
       color: white;
@@ -89,7 +89,7 @@ const RemoveButton = styled.button`
   color: inherit;
   opacity: 0.7;
   transition: opacity 0.2s;
-  
+
   &:hover {
     opacity: 1;
   }
@@ -97,9 +97,9 @@ const RemoveButton = styled.button`
 
 export const Tag: React.FC<TagProps> = ({
   children,
-  color = "default",
-  variant = "filled",
-  size = "medium",
+  color = 'default',
+  variant = 'filled',
+  size = 'medium',
   onRemove,
   ...props
 }) => {
@@ -109,7 +109,7 @@ export const Tag: React.FC<TagProps> = ({
       {onRemove && (
         <RemoveButton onClick={onRemove} aria-label="Remove tag">
           <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor">
-            <path d="M7 5.59L11.3 1.3a1 1 0 111.4 1.42L8.42 7l4.3 4.3a1 1 0 01-1.42 1.4L7 8.42l-4.3 4.3a1 1 0 01-1.4-1.42L5.58 7l-4.3-4.3A1 1 0 012.7 1.3L7 5.59z"/>
+            <path d="M7 5.59L11.3 1.3a1 1 0 111.4 1.42L8.42 7l4.3 4.3a1 1 0 01-1.42 1.4L7 8.42l-4.3 4.3a1 1 0 01-1.4-1.42L5.58 7l-4.3-4.3A1 1 0 012.7 1.3L7 5.59z" />
           </svg>
         </RemoveButton>
       )}
@@ -117,4 +117,4 @@ export const Tag: React.FC<TagProps> = ({
   );
 };
 
-Tag.displayName = "Tag";
+Tag.displayName = 'Tag';

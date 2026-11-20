@@ -1,14 +1,14 @@
-import React, { useEffect } from "react";
-import { createPortal } from "react-dom";
-import styled from "@emotion/styled";
-import { XloxTheme } from "../../theme/types.js";
+import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
+import styled from '@emotion/styled';
+import { XloxTheme } from '../../theme/types.js';
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   open: boolean;
   onClose: () => void;
   children: React.ReactNode;
   title?: string;
-  maxWidth?: "xs" | "sm" | "md" | "lg" | "xl";
+  maxWidth?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
   disableBackdropClick?: boolean;
 }
 
@@ -24,7 +24,7 @@ const Backdrop = styled.div`
   justify-content: center;
   z-index: 1300;
   animation: fadeIn 0.2s ease-in-out;
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;
@@ -41,20 +41,20 @@ const ModalContainer = styled.div<{ maxWidth?: string }>`
   box-shadow: ${(props) => (props.theme as XloxTheme).shadows[5]};
   max-width: ${(props) => {
     const widths = {
-      xs: "444px",
-      sm: "600px",
-      md: "900px",
-      lg: "1200px",
-      xl: "1536px",
+      xs: '444px',
+      sm: '600px',
+      md: '900px',
+      lg: '1200px',
+      xl: '1536px',
     };
-    return widths[props.maxWidth as keyof typeof widths] || "600px";
+    return widths[props.maxWidth as keyof typeof widths] || '600px';
   }};
   width: 90%;
   max-height: 90vh;
   display: flex;
   flex-direction: column;
   animation: slideIn 0.2s ease-in-out;
-  
+
   @keyframes slideIn {
     from {
       transform: translateY(-50px);
@@ -93,7 +93,7 @@ const CloseButton = styled.button`
   border-radius: 4px;
   color: ${(props) => (props.theme as XloxTheme).colors.text.secondary};
   transition: background-color 0.2s;
-  
+
   &:hover {
     background-color: ${(props) => (props.theme as XloxTheme).colors.neutral[100]};
   }
@@ -110,41 +110,41 @@ export const Modal: React.FC<ModalProps> = ({
   onClose,
   children,
   title,
-  maxWidth = "sm",
+  maxWidth = 'sm',
   disableBackdropClick = false,
   ...props
 }) => {
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     }
-    
+
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = '';
     };
   }, [open]);
-  
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && open) {
+      if (e.key === 'Escape' && open) {
         onClose();
       }
     };
-    
-    document.addEventListener("keydown", handleEscape);
-    return () => document.removeEventListener("keydown", handleEscape);
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
   }, [open, onClose]);
-  
+
   if (!open) return null;
-  
+
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget && !disableBackdropClick) {
       onClose();
     }
   };
-  
+
   return createPortal(
     <Backdrop onClick={handleBackdropClick}>
       <ModalContainer maxWidth={maxWidth} role="dialog" aria-modal="true" {...props}>
@@ -153,7 +153,7 @@ export const Modal: React.FC<ModalProps> = ({
             <ModalTitle>{title}</ModalTitle>
             <CloseButton onClick={onClose} aria-label="Close">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
               </svg>
             </CloseButton>
           </ModalHeader>
@@ -161,8 +161,8 @@ export const Modal: React.FC<ModalProps> = ({
         <ModalContent>{children}</ModalContent>
       </ModalContainer>
     </Backdrop>,
-    document.body
+    document.body,
   );
 };
 
-Modal.displayName = "Modal";
+Modal.displayName = 'Modal';
