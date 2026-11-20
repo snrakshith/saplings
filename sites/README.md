@@ -20,4 +20,12 @@ The CLI prints the preview URL. Run `npx --yes mint@4.3.76 broken-links` in this
 - Edit other pages directly and update `docs.json` when adding routes to the sidebar.
 - Run `pnpm run docs:site:check` to check that package references are current and every navigation route resolves.
 
-To host from GitHub, connect the repository in the Mintlify dashboard and enable the docs subdirectory setting and enter `/sites`. See [Mintlify publishing documentation](https://www.mintlify.com/library/publish-open-source-local-docs-on-mintlify).
+## Publish to GitHub Pages
+
+The Documentation Pages workflow checks and exports the site when a pull request to `main` changes the docs, packages, or examples. After a qualifying push to `main`, it deploys the export to [Saplings documentation](https://snrakshith.github.io/saplings/). The workflow also supports manual runs.
+
+Set the repository's Pages source to **GitHub Actions**. The workflow reads the production base path from Pages and checks pull request builds with the repository path. To reproduce that build locally, run from the repository root.
+
+```bash
+bash scripts/build-docs-pages.sh /saplings "$(mktemp -d)/site"
+```
