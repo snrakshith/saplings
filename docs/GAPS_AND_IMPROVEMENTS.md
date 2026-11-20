@@ -1,3 +1,54 @@
+# Core deployment readiness assessment
+
+The first production profile uses Node.js 26, PostgreSQL, Valkey, Harbor, and
+Kingsman. Its [readiness register](readiness/core-register.json) covers all 24
+packages, all 182 SaaS feature IDs, and the 45 existing release gates. It maps
+80 proposed core feature IDs to acceptance evidence and keeps experimental and
+later integrations visible. Package and feature owners in the register are roles
+for review assignment.
+
+**Production status is blocked.** This assessment reviewed current source and
+ran a frozen install, package build, release tarball checks, 217 unit tests,
+and 11 disposable PostgreSQL and Valkey integration tests. One unit test was
+skipped. All 24 published packages installed in a clean consumer. For 23
+packages, public Node entry points or CLI smoke checks passed. Murph AppUI still
+needs a supported native device or emulator run.
+
+## SDK findings
+
+- Direct resource mutations and durable job admission now check tenant state
+  inside the write transaction. Two independently pooled SDK instances verified
+  that an offboarding tenant cannot start these changes or claim pending work
+  while another tenant continues. Pending work can resume if the original
+  tenant returns to active status. The change ships through the SDK changeset.
+- The direct resource list path reads the full collection before applying
+  authorization, filtering, sorting, and pagination. Replace it with a bounded
+  path that preserves the existing visibility and ordering contract.
+- Durable dispatch remains at least once. Test recovery between delivery and
+  completion for supported external effects and require idempotency or
+  reconciliation for handlers that perform them.
+- The production gateway-to-application trust boundary, application ownership
+  checks, and Kingsman conformance, signing rotation, and cross-replica
+  revocation need evidence from the deployed topology. Review the supported
+  account store before enabling any credential migration.
+
+## Evidence still needed
+
+The local restore recovered 75 records with identical contents. Use the real
+staging backup and recovery configuration to verify role grants, point-in-time
+recovery, and agreed recovery objectives. Local loopback load is a diagnostic
+baseline. Before testing production-equivalent staging, record expected traffic,
+safety limits, error and latency targets, and rollback criteria.
+
+The dependency audit passed the high-severity threshold with six moderate
+advisories still under review. Independent security, application authorization,
+and operations approval remain outstanding. The UI rights record and native
+acceptance remain open. AWS and payment sandboxes are follow-on profiles.
+
+The release result remains source-bound. Local results in the readiness register
+do not close the official live gates. Follow the [release validation
+runbook](RELEASE_VALIDATION.md) for exact-candidate evidence and approval.
+
 # v0.17.0 consolidation open gaps
 
 - **P0:** Real Vitest runtime and V8 coverage not executed due missing installed dependencies; full release regressions cannot be asserted. Registry access/lockfile remain a blocker.

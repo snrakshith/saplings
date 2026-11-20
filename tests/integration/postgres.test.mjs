@@ -181,3 +181,58 @@ test('live PostgreSQL: indexed public text search remains tenant scoped and excl
     await pool.end();
   }
 });
+
+test('live PostgreSQL: offboarding pauses direct writes and durable job admission across SDK instances', async () => {
+  const connectionString = process.env.TEST_DATABASE_URL;
+  if (!connectionString) throw Error('TEST_DATABASE_URL required');
+  const firstPool = new pg.Pool({ connectionString });
+  const secondPool = new pg.Pool({ connectionString });
+  const store = new DrizzleStore(drizzle(firstPool));
+  const first = createSapling({
+    app: { id: 'tenant-freeze-first', environment: 'test' },
+    providers: { store },
+  });
+  const second = createSapling({
+    app: { id: 'tenant-freeze-second', environment: 'test' },
+    providers: { store: new DrizzleStore(drizzle(secondPool)) },
+  });
+  const tenant = { tenantId: randomUUID(), actorId: 'service', permissions: ['*'] };
+  const otherTenant = { ...tenant, tenantId: randomUUID() };
+
+  try {
+    const project = await first.projects.create(tenant, { name: 'Original' });
+    const job = await first.automation.enqueue(tenant, { type: 'report.generate' });
+    const event = await first.automation.outbox(tenant, { type: 'project.updated', payload: {} });
+    await store.put(tenant.tenantId, 'tenant-profile', { id: 'profile', status: 'offboarding' });
+
+    await assert.rejects(second.projects.create(tenant, { name: 'Paused' }), {
+      code: 'TENANT_FROZEN',
+    });
+    await assert.rejects(second.projects.update(tenant, project.id, { name: 'Paused' }), {
+      code: 'TENANT_FROZEN',
+    });
+    await assert.rejects(second.projects.delete(tenant, project.id), { code: 'TENANT_FROZEN' });
+    await assert.rejects(second.automation.enqueue(tenant, { type: 'report.generate' }), {
+      code: 'TENANT_FROZEN',
+    });
+    await assert.rejects(
+      second.automation.outbox(tenant, { type: 'project.updated', payload: {} }),
+      {
+        code: 'TENANT_FROZEN',
+      },
+    );
+    assert.equal(await second.automation.claim(tenant), undefined);
+    assert.equal(await second.worker.relay(tenant), 0);
+    assert.equal((await store.get(tenant.tenantId, 'outbox', event.id)).status, 'pending');
+    assert.equal((await store.get(tenant.tenantId, 'durable-jobs', job.id)).status, 'queued');
+    assert.equal((await first.projects.get(tenant, project.id)).name, 'Original');
+
+    const otherProject = await second.projects.create(otherTenant, { name: 'Active' });
+    assert.equal(otherProject.name, 'Active');
+    await store.put(tenant.tenantId, 'tenant-profile', { id: 'profile', status: 'active' });
+    assert.equal((await second.automation.claim(tenant)).id, job.id);
+    assert.equal(await second.worker.relay(tenant), 1);
+  } finally {
+    await Promise.all([firstPool.end(), secondPool.end()]);
+  }
+});

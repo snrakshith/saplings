@@ -1,7 +1,19 @@
 import { timeout } from './reliability.js';
 import { randomUUID } from 'node:crypto';
 import type { ActorContext, JsonRecord, Store } from './types.js';
-import { atomic, fail, insert, integer, now, object, read, strings, text } from './primitives.js';
+import {
+  atomic,
+  fail,
+  insert,
+  integer,
+  now,
+  object,
+  read,
+  strings,
+  text,
+  requireActiveTenant,
+  tenantIsActive,
+} from './primitives.js';
 import type { Row } from './primitives.js';
 export class Automation {
   private handlers = new Map<
@@ -27,6 +39,7 @@ export class Automation {
     if (key.startsWith('outbox:')) return fail('Reserved job key', 'FORBIDDEN', 403);
     const dueAt = input.dueAt === undefined ? now() : new Date(text(input.dueAt)).toISOString();
     return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
       const old = await tx.get<Row>(ctx.tenantId, 'durable-jobs', key);
       if (old) {
         if (
@@ -67,6 +80,7 @@ export class Automation {
   async claim(ctx: ActorContext, leaseMs = 60000) {
     integer(leaseMs, 'leaseMs', 100, 300000);
     return atomic(this.store, ctx.tenantId, async (tx) => {
+      if (!(await tenantIsActive(tx, ctx.tenantId))) return undefined;
       const t = Date.now();
       const jobs = (
         tx.claimableJobs
@@ -153,6 +167,7 @@ export class Automation {
   }
   async requeue(ctx: ActorContext, id: unknown) {
     return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
       const job = await read(tx, ctx, 'durable-jobs', id);
       if (job.status !== 'dead') return fail('Job is not dead', 'CONFLICT', 409);
       const next = { ...job, status: 'queued', attempts: 0, dueAt: now() };
@@ -194,13 +209,14 @@ export class Automation {
     });
   }
   async outbox(ctx: ActorContext, input: JsonRecord) {
-    return atomic(this.store, ctx.tenantId, (tx) =>
-      insert(tx, ctx, 'outbox', {
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
+      return insert(tx, ctx, 'outbox', {
         type: text(input.type),
         payload: object(input.payload),
         status: 'pending',
-      }),
-    );
+      });
+    });
   }
   /** Atomically append event alongside local state. External delivery is at-least-once. */
   async publishWithState(
@@ -210,6 +226,7 @@ export class Automation {
     event: { type: string; payload: JsonRecord },
   ) {
     return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
       const row = await insert(tx, ctx, collection, data);
       await insert(tx, ctx, 'outbox', { ...event, status: 'pending', resourceId: row.id });
       return row;
