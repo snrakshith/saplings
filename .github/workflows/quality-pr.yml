@@ -4,7 +4,8 @@ permissions:
   contents: read
 jobs:
   quality:
-    runs-on: ubuntu-latest
+    # Playwright 1.56.1 provides system dependencies for Ubuntu 24.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +24,7 @@ jobs:
           for i in $(seq 1 45); do curl -fsS http://127.0.0.1:3000/health >/dev/null && curl -fsS http://127.0.0.1:5173/ >/dev/null && exit 0; sleep 1; done
           cat /tmp/api.log /tmp/web.log
           exit 1
-      - run: pnpm run quality -- run --profile pr
+      - run: pnpm run quality run --profile pr
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: sapling-quality-pr, path: quality-results/, if-no-files-found: warn}

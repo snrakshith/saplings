@@ -14,7 +14,8 @@ permissions:
 jobs:
   quality:
     if: vars.SAPLING_ENABLE_SCHEDULED_QUALITY == 'true'
-    runs-on: ubuntu-latest
+    # Playwright 1.56.1 provides system dependencies for Ubuntu 24.04.
+    runs-on: ubuntu-24.04
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
@@ -30,10 +31,10 @@ jobs:
         run: |
           # Install required engines here or use the dedicated runner image.
           # Nightly scenarios involving cluster faults require an isolated K8s cluster.
-          pnpm run quality -- doctor
+          pnpm run quality doctor
       - name: Execute configured nightly suites
         run: |
-          pnpm run quality -- run --profile "${{ inputs.profile || 'nightly' }}"
+          pnpm run quality run --profile "${{ inputs.profile || 'nightly' }}"
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: sapling-quality-nightly, path: quality-results/, if-no-files-found: ignore}
