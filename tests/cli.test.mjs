@@ -19,6 +19,7 @@ test('the sapling executable exposes catalog, readiness, and quality commands', 
   assert.match(suites.stdout, /Backend suites:/);
   assert.match(suites.stdout, /Frontend suites:/);
   assert.match(run('quality', 'legacy', 'list').stdout, /performance/i);
+  assert.match(run('quality', 'legacy', '--help').stdout, /sapling quality legacy run/);
   const invalid = run('quality', 'unknown');
   assert.equal(invalid.status, 2);
   assert.match(invalid.stderr, /Unknown command/);
