@@ -636,7 +636,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snrakshith/sapling.git",
+    "url": "git+https://github.com/snrakshith/saplings.git",
     "directory": "packages/validations"
   },
   "publishConfig": {

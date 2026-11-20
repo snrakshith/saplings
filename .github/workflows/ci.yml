@@ -62,7 +62,7 @@ jobs:
           LOAD_OUTPUT: local-load.json
       - run: node scripts/release/verify-npm-packages.mjs
       - run: pnpm audit --audit-level=high
-      - run: node packages/cli/dist/index.js scan --path packages/sdk/src --format sarif > scan.sarif
+      - run: node scripts/release/check-ci-source-scan.mjs > scan.sarif
       - uses: actions/upload-artifact@v4
         if: always()
         with:

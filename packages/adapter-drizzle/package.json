@@ -6,7 +6,7 @@
   "types": "./dist/index.d.ts",
   "dependencies": {
     "@saplings/sdk": "workspace:*",
-    "drizzle-orm": "^0.44.0",
+    "drizzle-orm": "^0.45.2",
     "pg": "^8.0.0"
   },
   "devDependencies": {
@@ -20,7 +20,7 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/snrakshith/sapling.git",
+    "url": "git+https://github.com/snrakshith/saplings.git",
     "directory": "packages/adapter-drizzle"
   },
   "publishConfig": {

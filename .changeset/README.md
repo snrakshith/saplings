@@ -32,7 +32,7 @@ GitHub Actions version PR setting is disabled.
   variable `NPM_RELEASE_ENABLED` to `true`. Run **npm Release** on `main` to
   process changesets already merged.
 - After the packages exist, configure an [npm trusted publisher](https://docs.npmjs.com/trusted-publishers/)
-  for each package. Use owner `snrakshith`, repository `sapling`, workflow
+  for each package. Use owner `snrakshith`, repository `saplings`, workflow
   `npm-release.yml`, and allow `npm publish`. Then remove `NPM_TOKEN` so later
   releases use GitHub OIDC.
 
