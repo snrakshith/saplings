@@ -1,6 +1,6 @@
 {
   "name": "@saplings/murph-appui",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "description": "Murphi design language rendered as React Native components",
   "type": "module",
   "sideEffects": false,

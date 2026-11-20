@@ -1,6 +1,6 @@
 {
   "name": "@saplings/murphi-ui",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "description": "Murphi React web component system integrated with Sapling tokens",
   "type": "module",
   "sideEffects": false,

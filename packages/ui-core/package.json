@@ -1,6 +1,6 @@
 {
   "name": "@saplings/ui-core",
-  "version": "0.17.0",
+  "version": "0.17.1",
   "description": "Platform-independent Murphi design tokens and responsive design language",
   "type": "module",
   "sideEffects": false,
