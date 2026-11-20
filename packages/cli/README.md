@@ -1,0 +1,58 @@
+# @saplings/cli
+
+One `sapling` command for the Saplings catalog, local source scan reports, SDK readiness guidance, and frontend and backend quality suites. Use Node.js 26.13.1 or newer in the Node.js 26 line.
+
+## Install
+
+```bash
+npm install --save-dev @saplings/cli
+npm exec -- sapling --help
+```
+
+## Commands
+
+| Command | What it does |
+| --- | --- |
+| `sapling catalog` | Prints feature and scanner catalogs as JSON. |
+| `sapling doctor` | Prints SDK readiness guidance and the catalog coverage summary. |
+| `sapling scan --path ./src --format sarif` | Writes a SARIF report for files in your project. The default format is JSON. |
+| `sapling quality list` | Lists backend and frontend suite IDs. |
+| `sapling quality doctor` | Checks for browsers and optional external engines. |
+| `sapling quality run --config sapling.config.ts --profile pr` | Runs the configured PR suites. |
+| `sapling quality report --file <report.json>` | Prints a report saved by a run. |
+| `sapling quality legacy run --config <file>` | Runs a legacy backend quality config. |
+
+Scan exits `2` for high or critical findings. With `--require-all` it exits `3` if coverage is incomplete. Quality runs exit `1` when a suite fails or is skipped and `2` for usage or configuration errors. A successful `--dry-run` writes a selection report with execution disabled.
+
+## Try a quality profile
+
+Create `sapling.config.mjs` in your project.
+
+```js
+export default {
+  name: 'my-web-app',
+  environment: 'local',
+  frontend: {
+    baseUrl: 'http://127.0.0.1:5173',
+    routes: ['/'],
+    browsers: ['chromium'],
+  },
+  profiles: { pr: ['frontend:accessibility'] },
+};
+```
+
+Preview the selected suites, then start your web server on port 5173 and run them.
+
+```bash
+npm exec -- sapling quality run --config sapling.config.mjs --profile pr --dry-run
+npm exec playwright@1.56.1 -- install chromium
+npm exec -- sapling quality run --config sapling.config.mjs --profile pr
+```
+
+Each run writes JSON, HTML, and JUnit outputs in `quality-results/` by default. Set `outputDir` to place artifacts elsewhere. Use `--suite` to select explicit suite IDs and `--scope frontend, backend, or fullstack` to filter selection. Install the engines required by the suites you run.
+
+## Migration
+
+Install `@saplings/cli` in place of `@saplings/quality-cli`. Replace `sapling-quality <args>` with `sapling quality <args>` and replace `sapling-quality-legacy <args>` with `sapling quality legacy <args>`. The repository's `pnpm run quality <args>` script uses the unified CLI.
+
+See the [quality integration guide](https://github.com/snrakshith/saplings/blob/main/docs/QUALITY_INTEGRATION.md) for profile examples and CI configuration.

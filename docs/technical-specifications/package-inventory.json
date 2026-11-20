@@ -59,9 +59,13 @@
     "package": "@saplings/cli",
     "version": "0.17.0",
     "dependencies": {
+      "@saplings/backend-quality": "workspace:*",
       "@saplings/catalog": "workspace:*",
+      "@saplings/frontend-quality": "workspace:*",
+      "@saplings/quality-core": "workspace:*",
+      "@saplings/sdk": "workspace:*",
       "@saplings/security": "workspace:*",
-      "@saplings/sdk": "workspace:*"
+      "playwright": "1.56.1"
     },
     "peerDependencies": {},
     "source": "packages/cli"
@@ -153,18 +157,6 @@
       "react": ">=18"
     },
     "source": "packages/quality-browser-runtime"
-  },
-  {
-    "package": "@saplings/quality-cli",
-    "version": "0.17.0",
-    "dependencies": {
-      "@saplings/quality-core": "workspace:*",
-      "@saplings/backend-quality": "workspace:*",
-      "@saplings/frontend-quality": "workspace:*",
-      "playwright": "1.56.1"
-    },
-    "peerDependencies": {},
-    "source": "packages/quality-cli"
   },
   {
     "package": "@saplings/quality-contracts",

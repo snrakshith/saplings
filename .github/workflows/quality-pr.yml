@@ -17,7 +17,6 @@ jobs:
           node-version-file: .node-version
       - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
       - run: pnpm run build
-      - run: pnpm run build:quality
       - run: pnpm run build:quality:demo
       - name: Start backend and frontend
         run: |

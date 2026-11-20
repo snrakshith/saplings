@@ -1,0 +1,30 @@
+# @saplings/quality-browser-runtime
+
+Collect Web Vitals, browser errors, and optional React commit samples inside an application.
+
+## Install
+
+```bash
+npm install @saplings/quality-browser-runtime
+```
+
+## Quick start
+
+```ts
+import { startFrontendObservability } from '@saplings/quality-browser-runtime';
+
+const stop = startFrontendObservability({
+  sampleRate: 0.1,
+  onEvent: (event) => console.debug(event.type),
+});
+
+// Call stop() when disposing the instrumentation.
+```
+
+## API and integration
+
+- `startFrontendObservability(options?)` returns a cleanup function. Choose a sample rate between 0 and 1 and call it once per application mount.
+- Provide `onEvent` or a trusted `endpoint` to collect events. Review error fields and telemetry retention for your application.
+- `@saplings/quality-browser-runtime/react` exports `SaplingProfiler`. Wrap a React subtree with a stable `id` and optionally collect `onSample` callbacks.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/quality/frontend/GETTING_STARTED.md) for configuration and operational details.

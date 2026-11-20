@@ -1,0 +1,22 @@
+---
+title: 'Develop and release Saplings'
+description: 'Build the monorepo, find architecture documents, and review package releases.'
+---
+
+## Build and test
+
+Clone the [Saplings repository](https://github.com/snrakshith/saplings), use the Node.js version in `.node-version`, and install pnpm 10.11.0.
+
+```bash
+pnpm install --frozen-lockfile
+pnpm run build:all
+pnpm test
+pnpm run quality list
+pnpm run release:verify
+```
+
+The repository includes [sample applications](https://github.com/snrakshith/saplings/tree/main/examples), [the full project documentation](https://github.com/snrakshith/saplings/tree/main/docs), [architecture and ownership notes](https://github.com/snrakshith/saplings/tree/main/docs/architecture), and [the provider matrix](https://github.com/snrakshith/saplings/blob/main/docs/PROVIDER_MATRIX.md).
+
+## Verify a release
+
+Package guides under `packages/*/README.md` are included in npm archives. After editing them, run `pnpm run docs:site:sync` to update the Mintlify reference pages. Use Changesets to version the updated packages. The npm release preview builds the workspace and verifies the tarballs before publication. See the [release workflow guide](https://github.com/snrakshith/saplings/blob/main/.changeset/README.md).

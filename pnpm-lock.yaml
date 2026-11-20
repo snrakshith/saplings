@@ -65,9 +65,6 @@ importers:
       '@saplings/quality-browser-runtime':
         specifier: workspace:*
         version: link:packages/quality-browser-runtime
-      '@saplings/quality-cli':
-        specifier: workspace:*
-        version: link:packages/quality-cli
       '@saplings/quality-contracts':
         specifier: workspace:*
         version: link:packages/quality-contracts
@@ -349,15 +346,27 @@ importers:
 
   packages/cli:
     dependencies:
+      '@saplings/backend-quality':
+        specifier: workspace:*
+        version: link:../backend-quality
       '@saplings/catalog':
         specifier: workspace:*
         version: link:../catalog
+      '@saplings/frontend-quality':
+        specifier: workspace:*
+        version: link:../frontend-quality
+      '@saplings/quality-core':
+        specifier: workspace:*
+        version: link:../quality-core
       '@saplings/sdk':
         specifier: workspace:*
         version: link:../sdk
       '@saplings/security':
         specifier: workspace:*
         version: link:../security
+      playwright:
+        specifier: 1.56.1
+        version: 1.56.1
 
   packages/frontend-quality:
     dependencies:
@@ -486,21 +495,6 @@ importers:
       '@types/react':
         specifier: ^19.2.0
         version: 19.3.0
-
-  packages/quality-cli:
-    dependencies:
-      '@saplings/backend-quality':
-        specifier: workspace:*
-        version: link:../backend-quality
-      '@saplings/frontend-quality':
-        specifier: workspace:*
-        version: link:../frontend-quality
-      '@saplings/quality-core':
-        specifier: workspace:*
-        version: link:../quality-core
-      playwright:
-        specifier: 1.56.1
-        version: 1.56.1
 
   packages/quality-contracts: {}
 

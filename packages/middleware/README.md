@@ -1,3 +1,30 @@
-# Sapling middleware — v0.8.0
+# @saplings/middleware
 
-See the monorepo's docs/FOUNDATION_PACKAGES.md for integration, limitations and API examples. This package is independently installable and contains no quality testing engines.
+Compose Node HTTP middleware for correlation IDs, authentication, validation, caching, and request limits.
+
+## Install
+
+```bash
+npm install @saplings/middleware @saplings/validations
+```
+
+## Quick start
+
+```ts
+import { correlationId, requireAuth, validate } from '@saplings/middleware';
+import { z } from '@saplings/validations';
+
+const createProjectMiddleware = [
+  correlationId(),
+  requireAuth(),
+  validate({ body: z.object({ name: z.string().min(1).max(80) }) }),
+];
+```
+
+## API and integration
+
+- Mount bounded parsing and trusted authentication before the protected middleware. `requireAuth()` expects a populated server-side Sapling context.
+- `validate(schemas)` calls `safeParseAsync` and places validated values in `req.validated`. Install your error middleware after the routes.
+- `createMiddleware(config?)` constructs middleware from configuration. In-memory cache and idempotency stores are local process state. Use an appropriate shared implementation for multiple replicas.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/FOUNDATION_PACKAGES.md) for configuration and operational details.

@@ -21,15 +21,19 @@ Workspace package retained; full installed-workspace release gate open. Package-
     }
   },
   "dependencies": {
+    "@saplings/backend-quality": "workspace:*",
     "@saplings/catalog": "workspace:*",
+    "@saplings/frontend-quality": "workspace:*",
+    "@saplings/quality-core": "workspace:*",
+    "@saplings/sdk": "workspace:*",
     "@saplings/security": "workspace:*",
-    "@saplings/sdk": "workspace:*"
+    "playwright": "1.56.1"
   }
 }
 ```
 
 ## Configuration and dependencies
-Dependencies: @saplings/catalog, @saplings/security, @saplings/sdk. Peer dependencies: none.
+Install as a development dependency. The quality runners and Playwright are dependencies of the unified executable.
 
 ## Execution, persistence and consistency
 Compile types and code, enforce package export map, verify dependency graph and clean consuming application; keep dev-only quality out of runtime.

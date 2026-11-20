@@ -1,14 +1,34 @@
 # @saplings/hooks
 
-Typed reusable React hooks (React 18.2+ or 19). Independently installable; not a dependency of `@saplings/sdk`.
+Use typed React hooks for controlled state, asynchronous work, browser events, and storage.
+
+## Install
 
 ```bash
-pnpm add @saplings/hooks react
+npm install @saplings/hooks react
 ```
+
+## Quick start
 
 ```tsx
-import {useCounter,useDebounce,useAsync,useMediaQuery} from '@saplings/hooks';
-function Counter(){const {value,increment}=useCounter(0);return <button onClick={()=>increment()}>{value}</button>}
+import { useCounter } from '@saplings/hooks';
+
+export function Counter() {
+  const { value, increment, reset } = useCounter(0);
+  return (
+    <>
+      <output>{value}</output>
+      <button onClick={() => increment()}>Increment</button>
+      <button onClick={() => reset()}>Reset</button>
+    </>
+  );
+}
 ```
 
-See `docs/technical-specifications/REACT_HOOKS.md` in the monorepo for all 28 hooks, examples, SSR/cancellation/storage contracts and validation limitations. Source release: build and test with `pnpm run build:hooks`, `pnpm run typecheck:hooks`, `pnpm run test:hooks` from workspace root. Requires installed React and types; not verified against a live React runtime in the packaging environment.
+## API and integration
+
+- `useCounter(initial?)` gives you the current value and state actions. `useDebounce(value, delayMs?)` returns the debounced value.
+- Use hooks inside React components or custom hooks. Check each browser and storage hook's SSR behavior before using it in a server-rendered application.
+- Provide the React peer from your host application.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/technical-specifications/REACT_HOOKS.md) for configuration and operational details.

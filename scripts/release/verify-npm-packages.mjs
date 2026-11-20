@@ -37,6 +37,7 @@ function verifyPackage(archive, manifest) {
   assert.equal(packed.name, name);
   assert.equal(packed.version, version, name);
   assert.ok(files.has('package/LICENSE'), `${name} is missing its license`);
+  assert.ok(files.has('package/README.md'), `${name} is missing its README`);
   assert.ok(
     [...files].some((file) => /^package\/dist\/.+\.[cm]?js$/.test(file)),
     `${name} is missing compiled JavaScript`,

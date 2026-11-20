@@ -1,10 +1,34 @@
-# @saplings/murphi-ui — React web
+# @saplings/murphi-ui
 
-Adapted from the uploaded Murphi React/Emotion component library with **all 36 existing component folders**, including Box, Stack, Container, Typography, Button, Input, Select, Modal, Drawer, Table, Tooltip, Alert, Tabs and the rest. Project structure follows Xlox UI (`src/core`, `src/components`, `src/lib`, `src/icons`, `src/stories`), not Xlox's single component implementation.
+Compose React web screens with the Murphi theme and responsive components. The host supplies React and React DOM 18.3 or 19.
 
-```tsx
-import {MurphiThemeProvider,Button,Card,Typography} from '@saplings/murphi-ui';
-export function Screen(){return <MurphiThemeProvider><Card><Typography variant="h5">School</Typography><Button onClick={()=>{}}>Continue</Button></Card></MurphiThemeProvider>}
+## Install
+
+```bash
+npm install @saplings/murphi-ui
 ```
 
-`@saplings/ui-core` is the only theme/token source. Web components use Emotion and React; do not import this package into React Native. See `docs/ui-platforms` for contracts, original-source mapping, status and production backlog. Confirm original Murphi source redistribution rights before publishing.
+## Quick start
+
+```tsx
+import { Button, Card, MurphiThemeProvider, Typography } from '@saplings/murphi-ui';
+
+export function ProjectCard() {
+  return (
+    <MurphiThemeProvider>
+      <Card>
+        <Typography variant="h5">Projects</Typography>
+        <Button onClick={() => {}}>Continue</Button>
+      </Card>
+    </MurphiThemeProvider>
+  );
+}
+```
+
+## API and integration
+
+- Add `MurphiThemeProvider` once around your component tree. Import from the root, `/components`, or `/core`.
+- Use layout, form, overlay, navigation, and feedback components with your app state and accessible labels.
+- Web styles use Emotion. For an SSR framework, integrate its Emotion SSR setup and verify styling after hydration. See this package's attribution and the UI platform guide.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/ui-platforms/README.md) for configuration and operational details.

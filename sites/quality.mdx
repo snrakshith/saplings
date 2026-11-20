@@ -1,0 +1,29 @@
+---
+title: 'Run a quality profile'
+description: 'Use sapling quality locally and in CI to test your web and API applications.'
+---
+
+Install [the Saplings CLI](/packages/cli) as a development dependency. Put a quality config in your project with the local or CI server URLs and the suites to run. The CLI guide includes a working frontend config.
+
+```bash
+npm install --save-dev @saplings/cli
+npm exec -- sapling quality list
+npm exec -- sapling quality run --config sapling.config.mjs --profile pr --dry-run
+```
+
+## Run and inspect
+
+Start the applications. Install the browsers or native tools selected by your config. Run the profile without `--dry-run` to execute the checks.
+
+```bash
+npm exec playwright@1.56.1 -- install chromium
+npm exec -- sapling quality run --config sapling.config.mjs --profile pr
+```
+
+Save the generated `report.json`, `report.html`, and `junit.xml` as CI artifacts, including for failed jobs. A dry run writes a selection report with skipped suites. A live run returns a failing exit status when selected suites fail or are skipped.
+
+Use [quality core](/packages/quality-core) and the [frontend](/packages/frontend-quality) or [backend](/packages/backend-quality) adapters when embedding quality checks in a Node.js tool.
+
+## Move from the old commands
+
+Replace `@saplings/quality-cli` with `@saplings/cli`. Use `sapling quality <args>` in place of `sapling-quality <args>`. Use `sapling quality legacy <args>` for the previous backend-only CLI.

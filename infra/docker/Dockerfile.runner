@@ -6,8 +6,8 @@ ENV PATH=/opt/node/bin:${PATH}
 WORKDIR /repo
 RUN npm install --global --prefix /opt/node pnpm@10.11.0
 COPY . .
-RUN pnpm install --frozen-lockfile && pnpm run build && pnpm run build:quality && pnpm run build:hooks
+RUN pnpm install --frozen-lockfile && pnpm run build && pnpm run build:hooks
 RUN mkdir -p /repo/quality-results && chown -R pwuser:pwuser /repo
 USER pwuser
-ENTRYPOINT ["node","packages/quality-cli/dist/cli.js"]
+ENTRYPOINT ["node","packages/cli/dist/index.js","quality"]
 CMD ["help"]

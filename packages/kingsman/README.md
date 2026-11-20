@@ -1,15 +1,26 @@
-> **v0.17.0 package identity:** `@saplings/kingsman` is a reusable library, not a deployed platform on its own. Previous package name deprecated; update imports.
-
 # @saplings/kingsman
 
-Keycloak-inspired **multi-tenant realm and organization identity core** for Node.js 26. Loads uploaded RealmConfig JSON (`identity.sapling.dev/v1alpha1`), exposes user/profile, email verification, password reset, session, client, organization invitation, one-time OAuth Authorization Code + PKCE S256, rotating refresh tokens, RS256 access/ID JWT, JWKS and HTTP OIDC endpoints.
+Configure a tenant-aware identity realm for application identity, memberships, sessions, and OAuth/OIDC flows.
 
-```ts
-import {IdentityPlatform,loadRealmConfig,createIdentityHttpHandler} from '@saplings/kingsman';
-const config=await loadRealmConfig('./RealmConfig-full.json');
-const realm=new IdentityPlatform(config,{store:yourDurableStore,passwordHasher:yourArgon2id,signingKey:yourPersistedRSA,resolveSecret:yourVaultResolver,sendAction:yourSafeMailQueue,breachedPassword:yourBreachChecker});
-const handler=createIdentityHttpHandler(realm,{authenticateBrowser:yourVerifiedBrowserSession});
-// Mount behind TLS ingress; never use untrusted Host/cookies or client-supplied tenant IDs.
+## Install
+
+```bash
+npm install @saplings/kingsman
 ```
 
-**Production requires** persistent transactional store, stable injected RSA signing key, real Argon2id and actual delivery integrations. `MemoryIdentityStore` and ephemeral keys are development only. Google/SAML/LDAP/WebAuthn/SMTP/branding and several policy profiles are configuration-only; no Keycloak/OIDC certification claim. See `docs/platforms/identity/` in the monorepo for exact coverage and gap list.
+## Quick start
+
+```ts
+import { loadRealmConfig, validateRealmConfig } from '@saplings/kingsman';
+
+const config = validateRealmConfig(await loadRealmConfig('./RealmConfig-full.json'));
+console.log(config.metadata.environment);
+```
+
+## API and integration
+
+- Copy the [sample realm config](https://github.com/snrakshith/saplings/blob/main/examples/platform/RealmConfig-full.json) and set issuers, client IDs, and redirect URIs for your deployment.
+- `new IdentityPlatform(config, dependencies?)` creates the realm. `createIdentityHttpHandler(realm, options)` exposes HTTP flows, using your verified browser authentication callback.
+- Production requires a persistent transactional store, stable RSA signing keys, an Argon2id adapter, and actual delivery integrations. Read the coverage guide before enabling external identity providers.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/platforms/kingsman/TECHNICAL_SPECIFICATION.md) for configuration and operational details.

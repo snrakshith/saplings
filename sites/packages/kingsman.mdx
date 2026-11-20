@@ -1,0 +1,27 @@
+---
+title: "@saplings/kingsman"
+description: "Configure a tenant-aware identity realm for application identity, memberships, sessions, and OAuth/OIDC flows."
+---
+
+## Install
+
+```bash
+npm install @saplings/kingsman
+```
+
+## Quick start
+
+```ts
+import { loadRealmConfig, validateRealmConfig } from '@saplings/kingsman';
+
+const config = validateRealmConfig(await loadRealmConfig('./RealmConfig-full.json'));
+console.log(config.metadata.environment);
+```
+
+## API and integration
+
+- Copy the [sample realm config](https://github.com/snrakshith/saplings/blob/main/examples/platform/RealmConfig-full.json) and set issuers, client IDs, and redirect URIs for your deployment.
+- `new IdentityPlatform(config, dependencies?)` creates the realm. `createIdentityHttpHandler(realm, options)` exposes HTTP flows, using your verified browser authentication callback.
+- Production requires a persistent transactional store, stable RSA signing keys, an Argon2id adapter, and actual delivery integrations. Read the coverage guide before enabling external identity providers.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/platforms/kingsman/TECHNICAL_SPECIFICATION.md) for configuration and operational details.

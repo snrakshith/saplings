@@ -4,7 +4,7 @@
 
 - [ ] Confirm target environment, owner, allowlisted hosts, URL and namespace/context.
 - [ ] Confirm sample data is synthetic and recoverable.
-- [ ] Review requested profile and engine prerequisites with `sapling-quality doctor`.
+- [ ] Review requested profile and engine prerequisites with `sapling quality doctor`.
 - [ ] Confirm browser binaries, Vite build artifacts, API availability and timeouts.
 - [ ] For stress/chaos/recovery/DR, obtain approval and segregated credentials; enable two-key guard only where appropriate.
 - [ ] Confirm report persistence and alert destination.

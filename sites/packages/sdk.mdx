@@ -1,0 +1,62 @@
+---
+title: "@saplings/sdk"
+description: "Server-side TypeScript SDK for multi-tenant applications. It combines tenant-scoped data, authorization, identity and gateway integration, storage, billing, events, and background jobs behind one configured instance."
+---
+
+## Install
+
+Use Node.js 26.13.1 or newer in the Node.js 26 line. The SDK uses ESM and ships TypeScript declarations.
+
+```bash
+npm install @saplings/sdk
+```
+
+## Create and read a project
+
+Save this as `quickstart.mts` and run `node quickstart.mts`. The fixture uses an in-memory store and a server-created actor.
+
+```ts
+import { createSapling, defineSaplingConfig, type ActorContext } from '@saplings/sdk';
+
+const sdk = createSapling(
+  defineSaplingConfig({ app: { id: 'my-app', environment: 'development' } }),
+);
+
+const actor: ActorContext = {
+  tenantId: 'demo-tenant',
+  actorId: 'demo-user',
+  permissions: ['projects:read', 'projects:write'],
+};
+
+const created = await sdk.projects.create(actor, { name: 'First project' });
+console.log(await sdk.projects.get(actor, created.id));
+console.log(await sdk.readiness());
+```
+
+For HTTP requests, derive the actor from a verified session or an authentication adapter. Keep tenant and permission decisions on the server. Use `sdk.authorize(actor, permission, resource)` for application-specific actions and translate `SaplingError` into the appropriate response for your framework.
+
+## SDK signatures
+
+| Entry point | Signature or result |
+| --- | --- |
+| `defineSaplingConfig` | `<T extends SaplingConfig>(config: T): T` preserves the configuration's inferred type. |
+| `createSapling` | `(config: SaplingConfig): SaplingSDK` creates the SDK instance. |
+| `sdk.projects.create` | `(ctx: ActorContext, data: JsonRecord): Promise<ResourceRecord>` creates a tenant-scoped record. |
+| `sdk.projects.get` | `(ctx: ActorContext, id: string): Promise<ResourceRecord \| undefined>` reads a record in the actor's tenant. |
+| `sdk.projects.list` | `(ctx: ActorContext, options?: { limit?: number; offset?: number; filter?: JsonRecord }): Promise<ResourceRecord[]>` lists visible records. |
+| `sdk.authorize` | `(ctx: ActorContext, permission: string, resource?: Record<string, unknown>)` checks access and throws when denied. |
+| `sdk.invokeCapability` | `<I extends FeatureId>(ctx: ActorContext, id: I, action: FeatureAction<NoInfer<I>>, input?: JsonRecord)` invokes a catalog action. Provider results need application validation. |
+| `sdk.featureManifest` | Lists registered feature actions. `sdk.getCapability(id)` and `sdk.listCapabilities()` expose catalog metadata. |
+| `sdk.readiness` | Runs configured probes and reports a ready, degraded, or unready state. |
+| `sdk.closeRealtime` | `(): Promise<void>` closes the configured realtime hub. |
+
+`SaplingConfig` starts with `app.id` and `app.environment`. Supply infrastructure through `providers`, application policies through `services` and `access`, and verified context through `hooks.resolveRequestContext` or `providers.authentication`. The published `.d.ts` files and [SDK source](https://github.com/snrakshith/saplings/tree/main/packages/sdk/src) describe the remaining service methods.
+
+## Prepare a deployment
+
+- Inject a durable `providers.store` such as [the Drizzle adapter](https://www.npmjs.com/package/@saplings/adapter-drizzle). Apply the database migrations, run with a restricted database role, and verify tenant isolation.
+- Wire providers for features your application enables. Test provider failures, webhook verification, retries, and idempotency using your deployment configuration.
+- Use `sdk.defender.preflight()` before bounded request parsing and `sdk.middleware()` after parsing. Signed webhooks need access to the original request bytes.
+- Register background handlers with `sdk.automation.register` and run `sdk.worker.run` in a worker with a trusted tenant context source and a shutdown signal.
+
+See the [configuration reference](https://github.com/snrakshith/saplings/blob/main/docs/CONFIGURATION_REFERENCE.md), [Express starter](https://github.com/snrakshith/saplings/tree/main/examples/express-app), and [release validation guide](https://github.com/snrakshith/saplings/blob/main/docs/RELEASE_VALIDATION.md).

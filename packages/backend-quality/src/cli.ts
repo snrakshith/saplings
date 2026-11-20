@@ -24,7 +24,7 @@ export async function main(args = process.argv.slice(2)) {
   }
   if (command === 'help') {
     console.log(
-      'sapling-quality run [category|suite] --config sapling.config.ts [--output dir] | list | report',
+      'sapling quality legacy run [category|suite] --config sapling.config.ts [--output dir] | list | report',
     );
     return;
   }
