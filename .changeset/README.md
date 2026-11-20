@@ -1,7 +1,7 @@
 # Releasing Sapling packages
 
 The reusable libraries under `packages/` publish publicly as `@saplings/*`.
-The root workspace, example apps, and demos are private. Package versions are
+The root workspace (`saplings`), example apps, and demos are private. Package versions are
 independent. The root version tracks the SDK repository's readiness evidence.
 
 ## Prepare and review a release
@@ -11,8 +11,9 @@ independent. The root version tracks the SDK repository's readiness evidence.
 2. Merge the changeset to `main`. The **npm Release** workflow creates or updates
    the version PR with package versions, changelogs, and the pnpm lockfile.
 3. Review and merge the version PR. The workflow installs the frozen lockfile,
-   builds and tests the workspace, verifies the package tarballs, and publishes
-   unpublished versions to npm. GitHub tags and releases record what was published.
+   builds and tests the workspace, verifies the compiled code and type
+   declarations in the exact release tarballs, and publishes unpublished
+   versions to npm. GitHub tags and releases record what was published.
 
 Run **npm Release** manually with `preview` enabled (the default) to see the
 Changesets mode, apply pending version bumps in the runner, and download the
@@ -41,3 +42,9 @@ GitHub Actions version PR setting is disabled.
   releases use GitHub OIDC.
 
 Replace package dependencies and imports that use `@sapling/` with `@saplings/`.
+
+## Inspect a published package
+
+Use the npm package's version selector to inspect `latest` (currently
+`0.17.1`). The older `0.0.0-stage` entries are placeholders. You can inspect
+the released files with `npm pack @saplings/middleware@latest --dry-run`.
