@@ -34,6 +34,11 @@ needs a supported native device or emulator run.
 
 ## Evidence still needed
 
+Two loopback Harbor and SDK instances verified tenant-isolated resource reads,
+shared Valkey rate limiting, and Kingsman API-key revocation. The check used
+test-mode HTTP and local fixtures. Production ingress, TLS, and OIDC
+conformance remain open.
+
 The local restore recovered 75 records with identical contents. Use the real
 staging backup and recovery configuration to verify role grants, point-in-time
 recovery, and agreed recovery objectives. Local loopback load is a diagnostic

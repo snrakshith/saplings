@@ -92,6 +92,20 @@
       "critical": 0,
       "high": 0,
       "moderate": 6
+    },
+    "localCoreTopology": {
+      "environment": "Test-mode loopback HTTP with two Harbor and SDK instances, independent PostgreSQL and Valkey clients, and Kingsman API keys",
+      "verified": [
+        "authorized reads on both replicas",
+        "tenant-isolated reads",
+        "shared Valkey rate window",
+        "revocation across replicas"
+      ],
+      "pending": [
+        "approved production ingress and TLS trust boundary",
+        "OIDC conformance",
+        "deployment signoff"
+      ]
     }
   },
   "featureDispositions": {
@@ -915,7 +929,7 @@
       "source": "packages/kingsman/src",
       "dossier": "docs/features/saas/SAAS-008",
       "acceptance": "Plain key returned once; expired/revoked keys cannot authenticate; cross-tenant listing denied.",
-      "localEvidence": null,
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
       "gapId": "ID-01"
     },
     {
@@ -1176,7 +1190,7 @@
       "source": "packages/sdk/src/registry.ts",
       "dossier": "docs/features/saas/SAAS-021",
       "acceptance": "Two tenant sessions attempt same ID, join, export, and raw SQL; none leaks data.",
-      "localEvidence": "PostgreSQL restricted-role and transaction integration",
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
       "gapId": "SDK-03"
     },
     {
@@ -1945,7 +1959,7 @@
       "source": "packages/harbor/src",
       "dossier": "docs/features/saas/SAAS-059",
       "acceptance": "Burst across replicas enforces limits; dependency outage fails closed; reset tested.",
-      "localEvidence": "Valkey atomic rate-window integration",
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
       "gapId": "EDGE-01"
     },
     {
@@ -3401,7 +3415,7 @@
       "source": "packages/harbor/src",
       "dossier": "docs/features/saas/SAAS-133",
       "acceptance": "Key with read scope cannot mutate; revoked key rejected across replicas.",
-      "localEvidence": null,
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
       "gapId": "EDGE-01"
     },
     {
@@ -4753,7 +4767,7 @@
       "officialStatus": "blocked",
       "reason": "not passed",
       "scopeReview": "required-review",
-      "localEvidence": null
+      "localEvidence": "Two loopback Harbor and SDK instances exercised tenant isolation, shared rate limiting and API-key revocation. Production-equivalent staging is pending."
     },
     {
       "id": "identity-oidc-conformance",
@@ -4858,7 +4872,7 @@
       "officialStatus": "blocked",
       "reason": "not passed",
       "scopeReview": "required-review",
-      "localEvidence": null
+      "localEvidence": "Two loopback Harbor and SDK instances exercised tenant isolation, shared rate limiting and API-key revocation. Production-equivalent staging is pending."
     }
   ]
 }
