@@ -6,22 +6,21 @@
   "sideEffects": false,
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "react-native": "./src/index.ts",
+  "react-native": "./dist/index.js",
   "files": [
     "dist",
-    "src",
     "README.md",
     "ATTRIBUTION.md",
     "CHANGELOG.md"
   ],
   "exports": {
     ".": {
-      "react-native": "./src/index.ts",
+      "react-native": "./dist/index.js",
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
     "./components": {
-      "react-native": "./src/components/index.ts",
+      "react-native": "./dist/components/index.js",
       "types": "./dist/components/index.d.ts",
       "import": "./dist/components/index.js"
     },
