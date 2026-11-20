@@ -93,7 +93,7 @@ jobs:
     permissions:
       contents: read
     outputs:
-      package-artifact: ${{ steps.changesets.outputs.pack-dir-artifact-id }}
+      package-artifact: ${{ steps.upload.outputs.artifact-id }}
     steps:
       - uses: actions/checkout@v7
         with:
@@ -111,24 +111,31 @@ jobs:
           pnpm run release:version
           pnpm install --frozen-lockfile
       - run: pnpm run release:verify
-      - name: Pack release candidates in preview
-        if: inputs.preview
+      - name: Download release plan
+        if: ${{ !inputs.preview }}
+        uses: actions/download-artifact@v8
+        with:
+          artifact-ids: ${{ needs.select-mode.outputs.publish-plan }}
+          path: ${{ runner.temp }}/npm-release-plan
+          merge-multiple: true
+          digest-mismatch: error
+      - name: Pack and verify release candidates
+        env:
+          PREVIEW: ${{ inputs.preview }}
         run: |
-          pnpm exec changeset publish-plan --output "$RUNNER_TEMP/npm-preview-plan.json"
-          pnpm exec changeset pack --from-publish-plan "$RUNNER_TEMP/npm-preview-plan.json" --out-dir "$RUNNER_TEMP/npm-preview"
-      - name: Upload release preview
-        if: inputs.preview
+          if [[ "$PREVIEW" == true ]]; then
+            mkdir -p "$RUNNER_TEMP/npm-release-plan"
+            pnpm exec changeset publish-plan --output "$RUNNER_TEMP/npm-release-plan/publish-plan.json"
+          fi
+          pnpm exec changeset pack --from-publish-plan "$RUNNER_TEMP/npm-release-plan/publish-plan.json" --out-dir "$RUNNER_TEMP/npm-release-pack"
+          node scripts/release/verify-npm-packages.mjs "$RUNNER_TEMP/npm-release-pack"
+      - name: Upload verified release tarballs
+        id: upload
         uses: actions/upload-artifact@v7
         with:
-          name: npm-release-preview
-          path: |
-            ${{ runner.temp }}/npm-preview/
-            ${{ runner.temp }}/npm-preview-plan.json
-      - if: ${{ !inputs.preview }}
-        uses: changesets/action/pack@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
-        id: changesets
-        with:
-          publish-plan-artifact-id: ${{ needs.select-mode.outputs.publish-plan }}
+          name: ${{ inputs.preview && 'npm-release-preview' || 'npm-release-pack' }}
+          path: ${{ runner.temp }}/npm-release-pack/
+          if-no-files-found: error
 
   publish:
     if: >-
