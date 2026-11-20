@@ -34,9 +34,9 @@ const renamed = defineSaplingConfig({
 const sdk017 = createSapling(renamed);
 const harbor: Gateway | undefined = sdk017.harbor;
 const kingsman: IdentityPlatform | undefined = sdk017.kingsman;
-// @ts-expect-error Harbor must not accept a Kingsman RealmConfig
 const invalidHarbor = defineSaplingConfig({
   app: { id: 'invalid', environment: 'test' },
+  // @ts-expect-error Harbor must not accept a Kingsman RealmConfig
   platforms: { harbor: { config: realm } },
 });
 void [harbor, kingsman, invalidHarbor];
