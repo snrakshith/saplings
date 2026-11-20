@@ -1,0 +1,183 @@
+{
+  "version": "0.9.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "5dd58ec01a08f920806c9674a227d870ac9d54b469d4ffe621de028eeaa67204",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "fa8e1e5855f878e7c89ab51e9f5b1af1e35ac0c7082086df8d9938b6a569afb6",
+      "at": "2026-11-14T12:13:03.559346+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "5dd58ec01a08f920806c9674a227d870ac9d54b469d4ffe621de028eeaa67204",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "ad3ca7b971541779fd4c2c0b18fd9defd00ed257659a3eed0515f4217525440a",
+      "at": "2026-11-14T12:13:03.559346+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "5dd58ec01a08f920806c9674a227d870ac9d54b469d4ffe621de028eeaa67204",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "be12c165c4357475670b1b039ce11d66f8945fd9601560fddbc7ebb8e94b1d4b",
+      "at": "2026-11-14T12:13:03.559346+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "package:@aws-sdk/client-s3",
+        "package:@aws-sdk/client-sesv2",
+        "package:@aws-sdk/client-sns",
+        "package:graphql"
+      ]
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "env:TEST_DATABASE_URL"
+      ]
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "package:redis",
+        "env:TEST_VALKEY_URL"
+      ]
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "env:SAPLING_PROVIDER_TEST_MODULE",
+        "env:SAPLING_SANDBOX_CONFIRM",
+        "approved sandbox confirmation"
+      ]
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "file:package-lock.json"
+      ]
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "package:react",
+        "package:web-vitals",
+        "package:playwright",
+        "package:express",
+        "package:vite"
+      ]
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "package:ws",
+        "package:socket.io",
+        "package:socket.io-client",
+        "package:express",
+        "package:compression",
+        "package:multer"
+      ]
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required",
+      "missing": [
+        "package:zod"
+      ]
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "5dd58ec01a08f920806c9674a227d870ac9d54b469d4ffe621de028eeaa67204",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "fd404a8f5d78bc8214bc083332d8079221a8ff8d250ed7830d67cd1d743352ef",
+      "at": "2026-11-14T12:13:03.559346+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    }
+  ]
+}

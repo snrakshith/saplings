@@ -1,0 +1,15 @@
+{
+  "version": "0.14.0",
+  "packages": 24,
+  "newPackages": [
+    "@sapling/ui-core",
+    "@sapling/murphi-ui",
+    "@sapling/murph-appui"
+  ],
+  "webComponentFolders": 39,
+  "nativeMatchingComponents": 38,
+  "pendingNative": [
+    "Slider"
+  ],
+  "result": "source and package layout verified; live platform evidence remains required"
+}

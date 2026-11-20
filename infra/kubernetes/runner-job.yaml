@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata: {name: sapling-quality-pr, namespace: sapling-quality}
+spec:
+  backoffLimit: 0
+  ttlSecondsAfterFinished: 86400
+  activeDeadlineSeconds: 900
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: sapling-quality-runner
+      securityContext: {runAsNonRoot: true}
+      containers:
+        - name: quality-runner
+          image: ghcr.io/YOUR_ORG/sapling-quality-runner:CHANGE_ME
+          imagePullPolicy: IfNotPresent
+          args: [run, --config, sapling.config.ts, --profile, pr]
+          env:
+            - {name: API_URL, value: "http://sapling-example-api:3000"}
+            - {name: WEB_URL, value: "http://sapling-example-web:8080"}
+            - {name: QUALITY_ENV, value: staging}
+            - {name: SAPLING_QUALITY_CONFIRM, value: "yes"}
+          resources:
+            requests: {cpu: "500m", memory: 1Gi}
+            limits: {cpu: "2", memory: 4Gi}
+          volumeMounts: [{name: reports, mountPath: /repo/quality-results}]
+      volumes: [{name: reports, emptyDir: {}}]

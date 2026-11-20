@@ -1,0 +1,29 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata: {name: sapling-quality-nightly, namespace: sapling-quality}
+spec:
+  schedule: "0 2 * * *"
+  suspend: true # enable only after staging prerequisites and approval
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 2
+  failedJobsHistoryLimit: 4
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      activeDeadlineSeconds: 5400
+      template:
+        spec:
+          serviceAccountName: sapling-quality-runner
+          restartPolicy: Never
+          containers:
+            - name: quality-runner
+              image: ghcr.io/YOUR_ORG/sapling-quality-runner:CHANGE_ME
+              args: [run, --config, sapling.config.ts, --profile, nightly]
+              env:
+                - {name: QUALITY_ENV, value: staging}
+                - {name: SAPLING_QUALITY_CONFIRM, value: "yes"}
+                - {name: API_URL, value: "http://sapling-example-api:3000"}
+                - {name: WEB_URL, value: "http://sapling-example-web:8080"}
+              resources:
+                requests: {cpu: 1, memory: 2Gi}
+                limits: {cpu: 3, memory: 6Gi}

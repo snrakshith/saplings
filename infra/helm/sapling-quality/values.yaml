@@ -1,0 +1,13 @@
+namespace: sapling-quality
+image:
+  repository: ghcr.io/YOUR_ORG/sapling-quality-runner
+  tag: CHANGE_ME
+serviceAccountName: sapling-quality-runner
+apiUrl: http://sapling-example-api:3000
+webUrl: http://sapling-example-web:8080
+schedule: "0 2 * * *"
+profile: pr
+nightlyProfile: nightly
+resources:
+  requests: {cpu: "500m", memory: 1Gi}
+  limits: {cpu: "2", memory: 4Gi}

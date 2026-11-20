@@ -1,0 +1,19 @@
+{
+  "version": "0.5.0",
+  "sourceHash": "d6d7e80d85309f64fb0aaacd96507ea81b28774c26fabf87a23db8d2b9491a24",
+  "decision": "BLOCKED",
+  "failures": [
+    "adapter-build: not passed",
+    "postgres-live: not passed",
+    "valkey-live: not passed",
+    "provider-live: not passed",
+    "staging-load: not passed",
+    "staging-soak: not passed",
+    "restore-drill: not passed",
+    "dependency-audit: not passed",
+    "scanner-triage: not passed",
+    "independent-security-audit: not passed",
+    "application-authorization: not passed",
+    "operations-review: not passed"
+  ]
+}

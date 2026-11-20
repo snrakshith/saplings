@@ -1,0 +1,41 @@
+import {defineQualityConfig} from '@sapling/quality-contracts';
+export default defineQualityConfig({
+ name:'sapling-example-fullstack',environment:(process.env.QUALITY_ENV as 'local'|'ci'|'staging'|'production')??'local',
+ outputDir:process.env.QUALITY_RUN_DIR??'quality-results',
+ allowedHosts:['localhost','127.0.0.1','api','web','example-api','example-web'],
+ safety:{allowDestructive:false,allowProductionTarget:false,maxVirtualUsers:100,timeoutMs:420000},
+ thresholds:{'latency.p95.ms':{max:500}},
+ backend:{
+  baseUrl:process.env.API_URL??'http://127.0.0.1:3000',
+  endpoints:[{path:'/api/items',expectedStatuses:[200],weight:8},{path:'/health',expectedStatuses:[200],weight:2}],
+  benchmark:{connections:10,durationSeconds:10,path:'/api/items'},
+  profiles:{load:{vus:10,duration:'30s'},stress:{stages:[{duration:'15s',target:5},{duration:'20s',target:50},{duration:'10s',target:0}]},spike:{stages:[{duration:'5s',target:1},{duration:'5s',target:60},{duration:'5s',target:1}]},soak:{vus:5,duration:'10m'},scalability:{stages:[{duration:'30s',target:10},{duration:'30s',target:50},{duration:'30s',target:0}]}},
+  concurrency:{path:'/api/orders',method:'POST',requests:20,idempotencyHeader:'Idempotency-Key',body:{quantity:2},expectedStatuses:[201],responseIdField:'id'},
+  metricsPath:'/metrics',healthPath:'/health',
+  openapi:'examples/configs/openapi.yaml',
+  kubernetes:{namespace:process.env.QUALITY_NAMESPACE??'sapling-quality',deployment:'sapling-example-api',hpa:'sapling-example-api',chaosManifest:'infra/kubernetes/chaos-pod.yaml',expectedReplicas:2},
+ },
+ frontend:{
+  baseUrl:process.env.WEB_URL??'http://127.0.0.1:5173',
+  routes:['/','/login','/dashboard'],publicRoutes:['/'],browsers:['chromium','firefox','webkit'],
+  viewports:[{name:'mobile',width:390,height:844},{name:'tablet',width:768,height:1024},{name:'desktop',width:1440,height:900}],
+  visual:{baselineDir:'quality-baselines',thresholdRatio:0.01},
+  bundle:{directory:'apps/web/dist',maxTotalGzipKb:350},
+  perf:{maxNavigationMs:4000,maxLcpMs:2500,maxLongTaskMs:200},
+  accessibility:{wcagTags:['wcag2a','wcag2aa','wcag21aa'],criticalViolationsMax:0},
+  memory:{iterations:5,maxHeapGrowthMb:15},
+  network:{blockPattern:'**/api/**',offline:false},
+  security:{requiredHeaders:['x-content-type-options','content-security-policy']},
+  navigation:{links:['/login','/dashboard'],expectedSelector:'main'},
+  recovery:{selector:'[data-quality-state]',persistAcrossReload:true},
+  localization:{locales:[]},
+  telemetryEndpoint:'/api/telemetry',
+  apiMocks:[{urlPattern:'**/api/items',status:200,body:{items:[]}}],apiAssertions:['main'],
+ },
+ profiles:{
+  pr:['backend:performance','backend:observability','backend:concurrency','frontend:accessibility','frontend:responsive','frontend:bundle'],
+  main:['backend:performance','backend:load','backend:security','backend:contract','frontend:performance','frontend:visual','frontend:cross-browser','frontend:seo'],
+  nightly:['backend:stress','backend:spike','backend:soak','backend:resilience','backend:kubernetes','frontend:memory','frontend:network','frontend:rendering','frontend:navigation','frontend:recovery'],
+  release:['backend:performance','backend:load','backend:stress','backend:spike','backend:soak','backend:scalability','backend:security','backend:concurrency','backend:resilience','backend:recovery','backend:observability','backend:contract','backend:chaos','backend:disaster-recovery','backend:kubernetes','backend:profiling','frontend:performance','frontend:rendering','frontend:visual','frontend:accessibility','frontend:responsive','frontend:cross-browser','frontend:bundle','frontend:memory','frontend:security','frontend:network','frontend:seo','frontend:api-integration','frontend:observability','frontend:recovery','frontend:localization','frontend:navigation'],
+ }
+});

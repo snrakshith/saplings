@@ -1,0 +1,275 @@
+{
+  "version": "0.17.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "f530fa902a4bc206a74de35ff9d206016d18de6437cad31264d4defb92ca739a",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "pending",
+      "reason": "Real Vitest runtime unavailable (EAI_AGAIN); 16 direct smoke scenarios are not full regression"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "6656cba0de6e274212dbe0e30168688584af0cd28b2ab3162bec2b730fd9c0bc",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "c1ae9f8f1aff9846ef0f3305e6991ad6097469ec7937935aeb458718b4ec17f6",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "workspace-install",
+      "status": "pending",
+      "reason": "pnpm and real reviewed lockfile unavailable; registry DNS resolution failure"
+    },
+    {
+      "id": "react-hooks",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "saas-gap-audit",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/saas-gap-audit-output.txt",
+      "sha256": "8c79bdc53b81eaae4579e00bc643ab8d50f36fa39c267c97ca2fa9799731f69c",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "platform-config",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/platform-coverage-output.txt",
+      "sha256": "3c4a9efa2b3f70706641bcec8a496b968c4e754247812606d8776cbfa3ae00b7",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "gateway-integration-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "identity-oidc-conformance",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "ui-core-build",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/quality-local-build.txt",
+      "sha256": "c9555ff980109f90f792ae6dcc02d3977ec8d224c7c1247983506a4fbe00fa3d",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "ui-web-build",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "ui-native-build",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "ui-native-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "ui-accessibility-live",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "sdk-root-refactor",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/sdk-layout.json",
+      "sha256": "3756a88b9692bba822e5d9dd0d497cd8726cbaaf762c5d3d7257625d352916c2",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "gateway-security-local",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "identity-security-local",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "tenant-export-local",
+      "status": "pending",
+      "reason": "Current-release live integration, full runtime, or independent review required"
+    },
+    {
+      "id": "vitest-migration",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/vitest-static.json",
+      "sha256": "2887e6e1abd46128b38e29fff06bbfc5b74d0214193f4b7bc4458fa6bca82298",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "vitest-runtime",
+      "status": "pending",
+      "reason": "Vitest 5 dependency unavailable; current release Vitest suite not run"
+    },
+    {
+      "id": "vitest-coverage",
+      "status": "pending",
+      "reason": "Vitest V8 coverage requires real dependency install and source-bound run"
+    },
+    {
+      "id": "architecture-consolidation-local",
+      "status": "passed",
+      "sourceHash": "79d281074f706650d293aac17dccd6102966f038e964413b1330456a1dd713bb",
+      "reviewer": "local direct execution; not independent",
+      "environment": "local Node/TypeScript (temporary workspace links, no pnpm install)",
+      "evidence": "docs/evidence/consolidation-smoke.txt",
+      "sha256": "6606547d59aac0de527456272d5eb439b43c7d49c90b14845da95eac6cf7c585",
+      "at": "2026-11-19T15:07:11.826933+00:00"
+    },
+    {
+      "id": "architecture-consolidation-live",
+      "status": "pending",
+      "reason": "Production trusted ingress, multi-tenant DB/Valkey, revocation/migration, and independent audit required"
+    }
+  ]
+}

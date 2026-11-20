@@ -1,0 +1,16 @@
+{
+  "version": "0.15.0",
+  "reviewed": 182,
+  "enhanced": 39,
+  "baseline": 143,
+  "productionReady": 0,
+  "codeDomainCounts": {
+    "accounts": 2,
+    "access": 5,
+    "billing": 6,
+    "domains": 8,
+    "crud": 13,
+    "business": 5,
+    "shared": 0
+  }
+}

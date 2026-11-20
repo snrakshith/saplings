@@ -1,0 +1,183 @@
+{
+  "version": "0.8.3",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "284daeff6a7542f37836aaf1b17ee82d7b2b1cc67e4f4120786ae2bcad809167",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "94dd611b7fa0930390c4118bfb46587b420a2415643f21781000bf67bccd65e6",
+      "at": "2026-11-14T11:57:26.259401+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "284daeff6a7542f37836aaf1b17ee82d7b2b1cc67e4f4120786ae2bcad809167",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "8b342c6d07f0712d9439ff0070700c49569e37efdc99766a55298875c6c017cc",
+      "at": "2026-11-14T11:57:26.259471+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "284daeff6a7542f37836aaf1b17ee82d7b2b1cc67e4f4120786ae2bcad809167",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "2bf5b508e6ba1053b21d5a3100332f17d8733d099681a78d8bb53ba93275cd18",
+      "at": "2026-11-14T11:57:26.260092+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "package:@aws-sdk/client-s3",
+        "package:@aws-sdk/client-sesv2",
+        "package:@aws-sdk/client-sns",
+        "package:graphql"
+      ]
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "env:TEST_DATABASE_URL"
+      ]
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "package:redis",
+        "env:TEST_VALKEY_URL"
+      ]
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "env:SAPLING_PROVIDER_TEST_MODULE",
+        "env:SAPLING_SANDBOX_CONFIRM",
+        "approved sandbox confirmation"
+      ]
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "file:package-lock.json"
+      ]
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "package:react",
+        "package:web-vitals",
+        "package:playwright",
+        "package:express",
+        "package:vite"
+      ]
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "package:ws",
+        "package:socket.io",
+        "package:socket.io-client",
+        "package:express",
+        "package:compression",
+        "package:multer"
+      ]
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight",
+      "missing": [
+        "package:zod"
+      ]
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "284daeff6a7542f37836aaf1b17ee82d7b2b1cc67e4f4120786ae2bcad809167",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "f2f553802d88f9facf0dfa5b13671a7a8ab140dd0dbacda8390a3d66c101161f",
+      "at": "2026-11-14T11:57:26.260164+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Requires actual current-release evidence; see release blockers and preflight"
+    }
+  ]
+}

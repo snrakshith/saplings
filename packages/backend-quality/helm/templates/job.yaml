@@ -1,0 +1,25 @@
+{{- if ne .Release.Namespace .Values.namespace }}
+{{- fail "Release namespace must match approved quality namespace" }}
+{{- end }}
+{{- $image := required "Set reviewed quality runner image" .Values.image }}
+{{- $origin := required "Set dedicated staging origin" .Values.stagingOrigin }}
+{{- if .Values.schedule }}
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+{{- else }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: {{ .Release.Name }}
+spec:
+{{- end }}
+{{- $indent := 2 }}
+{{- if .Values.schedule }}{{- $indent = 6 }}{{- end }}
+{{- include "sapling-quality.job" (dict "image" $image "origin" $origin "values" .Values) | nindent $indent }}

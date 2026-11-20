@@ -1,0 +1,29 @@
+name: Sapling Quality PR
+on: [pull_request, workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
+      - run: pnpm run build
+      - run: pnpm run build:quality
+      - run: pnpm run build:quality:demo
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Start backend and frontend
+        run: |
+          pnpm run dev:api > /tmp/api.log 2>&1 &
+          pnpm run dev:web > /tmp/web.log 2>&1 &
+          for i in $(seq 1 45); do curl -fsS http://127.0.0.1:3000/health >/dev/null && curl -fsS http://127.0.0.1:5173/ >/dev/null && exit 0; sleep 1; done
+          cat /tmp/api.log /tmp/web.log
+          exit 1
+      - run: pnpm run quality -- run --profile pr
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: sapling-quality-pr, path: quality-results/, if-no-files-found: warn}

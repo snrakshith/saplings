@@ -1,0 +1,23 @@
+{
+  "version": "0.14.0",
+  "dossiers": 825,
+  "documents": 2475,
+  "counts": {
+    "saas": 182,
+    "scanner": 41,
+    "quality": 32,
+    "defender": 27,
+    "utilities": 342,
+    "react-hooks": 31,
+    "validation-native": 40,
+    "realtime": 24,
+    "middleware": 28,
+    "instrumentation": 5,
+    "providers": 11,
+    "gateway": 19,
+    "identity-platform": 18,
+    "packages": 24,
+    "validation-compat": 1
+  },
+  "status": "all triplets and source references present; not functional certification"
+}

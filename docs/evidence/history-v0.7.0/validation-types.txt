@@ -1,0 +1,1 @@
+TypeScript inference fixture compiled successfully (exit code 0).

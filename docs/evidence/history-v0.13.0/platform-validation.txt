@@ -1,0 +1,7 @@
+{
+  "version": "0.13.0",
+  "gateway": 9,
+  "realm": 27,
+  "plugins": 14,
+  "status": "all sample spec keys mapped; not complete implementation"
+}

@@ -1,0 +1,6 @@
+
+> sapling-unified-sdk-monorepo@0.8.0 quality
+> node --experimental-strip-types packages/quality-cli/dist/cli.js list
+
+Backend suites: performance, load, stress, spike, soak, scalability, security, concurrency, resilience, recovery, observability, contract, chaos, disaster-recovery, kubernetes, profiling
+Frontend suites: performance, rendering, visual, accessibility, responsive, cross-browser, bundle, memory, security, network, seo, api-integration, observability, recovery, localization, navigation

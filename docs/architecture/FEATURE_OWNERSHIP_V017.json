@@ -1,0 +1,2754 @@
+{
+  "version": "0.17.0",
+  "total": 182,
+  "counts": {
+    "@sapling/kingsman": 23,
+    "@sapling/sdk": 146,
+    "@sapling/harbor": 13
+  },
+  "features": [
+    {
+      "id": "SAAS-001",
+      "name": "User registration",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "register"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-002",
+      "name": "Passwordless authentication",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "issue",
+        "consume"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-003",
+      "name": "Email verification",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "issue",
+        "consume"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-004",
+      "name": "Password reset",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "issue",
+        "consume"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-005",
+      "name": "Login and logout",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "login",
+        "logout"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-006",
+      "name": "Session management",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "verify",
+        "list",
+        "revoke"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-007",
+      "name": "JWT validation",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman realm verifier or explicit external adapter",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "verify"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-008",
+      "name": "API key lifecycle",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman API-key service",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "create",
+        "list",
+        "revoke"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-009",
+      "name": "MFA and step-up auth",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "enroll",
+        "confirm",
+        "challenge",
+        "verify",
+        "revoke"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-010",
+      "name": "SSO and SAML",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "provider-required (NOT moved as working code)",
+      "completeness": "partial/provider-needed",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "start",
+        "callback",
+        "metadata"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-011",
+      "name": "OAuth2 and OIDC",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "provider-required (NOT moved as working code)",
+      "completeness": "partial/provider-needed",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "authorize",
+        "callback",
+        "refresh",
+        "revoke"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-012",
+      "name": "Social login",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "provider-required (NOT moved as working code)",
+      "completeness": "partial/provider-needed",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "start",
+        "callback"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-013",
+      "name": "Device trust",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "SDK device record (hardware attestation missing)",
+      "completeness": "partial/provider-needed",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "register",
+        "revoke"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-014",
+      "name": "Service accounts",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman API-key service",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "create",
+        "revoke"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-015",
+      "name": "Role-based authorization",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "setRole",
+        "check",
+        "assign"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-016",
+      "name": "Attribute-based authorization",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "check"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-017",
+      "name": "Permission policies",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "check"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-018",
+      "name": "Account lockout",
+      "category": "Identity & access",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "login"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-019",
+      "name": "Tenant provisioning",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Kingsman identity and Harbor routing consume the SaaS tenant provisioning record",
+      "actions": [
+        "provision"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-020",
+      "name": "Tenant identification",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Harbor verifies ingress; SDK derives current tenant context; Kingsman owns identity",
+      "actions": [
+        "context"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-021",
+      "name": "Tenant isolation",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK RLS and field/row policy remain authoritative, not Harbor",
+      "actions": [
+        "check"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-022",
+      "name": "Tenant context propagation",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK propagates trusted async context; Harbor establishes edge request context",
+      "actions": [
+        "context"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-023",
+      "name": "Tenant data residency",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK physical residency; Harbor only routes configured upstreams",
+      "actions": [
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-024",
+      "name": "Tenant offboarding",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "request",
+        "approve",
+        "status",
+        "advance"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-025",
+      "name": "Organizations",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK owns organizations; Kingsman manages identity org membership",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-026",
+      "name": "Workspaces",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK owns workspaces; Kingsman verifies memberships",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-027",
+      "name": "Projects",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK owns projects; Kingsman verifies memberships",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-028",
+      "name": "Teams",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK owns teams; Kingsman verifies memberships",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-029",
+      "name": "Membership management",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK owns business memberships; Kingsman validates identity membership proof",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-030",
+      "name": "User invitations",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "invite",
+        "accept"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-031",
+      "name": "Organization switching",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/kingsman",
+      "implementation": "KingsmanMembership on existing SDK membership rows",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "switch"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-032",
+      "name": "Custom roles",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "set"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-033",
+      "name": "Impersonation controls",
+      "category": "Tenancy & organization",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman-owned scoped impersonation service",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "start",
+        "stop"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-034",
+      "name": "Plans and tiers",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-035",
+      "name": "Subscriptions",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-036",
+      "name": "Subscription lifecycle",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "transition",
+        "schedule",
+        "issueDue",
+        "cancelSchedule",
+        "quoteChange"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-037",
+      "name": "Free trials",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "start"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-038",
+      "name": "Usage metering",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "meter",
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-039",
+      "name": "Quotas",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "set",
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-040",
+      "name": "Entitlements",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "set",
+        "check"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-041",
+      "name": "Invoices",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-042",
+      "name": "Payment collection",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "order"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-043",
+      "name": "Payment methods",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "attach",
+        "list",
+        "detach"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-044",
+      "name": "Tax calculation",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "calculate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-045",
+      "name": "Coupons and discounts",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "redeem"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-046",
+      "name": "Credits and wallets",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "post"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-047",
+      "name": "Refunds",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "refund"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-048",
+      "name": "Dunning and retries",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "enqueue",
+        "chargeDue",
+        "resume",
+        "sweep"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-049",
+      "name": "Revenue metrics",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-050",
+      "name": "Webhooks for billing",
+      "category": "Billing & monetization",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "verify",
+        "reconcile"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-051",
+      "name": "Security scanner",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "scan"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-052",
+      "name": "Runtime threat defender",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Security defender detection lives @sapling/security; Harbor applies edge plugins",
+      "actions": [
+        "assess"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-053",
+      "name": "Secrets management",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "get",
+        "put",
+        "rotate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-054",
+      "name": "Encryption at rest",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "encrypt",
+        "decrypt"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-055",
+      "name": "Encryption in transit",
+      "category": "Security & governance",
+      "owner": "@sapling/harbor",
+      "implementation": "GatewayTlsPolicy behind SDK Operations TLS facade",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "verify",
+        "configure"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-056",
+      "name": "HTTP security headers",
+      "category": "Security & governance",
+      "owner": "@sapling/harbor",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "completeness": "partial/shared enforcement",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "policy"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-057",
+      "name": "CORS policy",
+      "category": "Security & governance",
+      "owner": "@sapling/harbor",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "completeness": "partial/shared enforcement",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "policy"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-058",
+      "name": "CSRF controls",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "CSRF in SDK cookie/session middleware; Harbor CORS does not replace CSRF",
+      "actions": [
+        "policy"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-059",
+      "name": "Rate limiting",
+      "category": "Security & governance",
+      "owner": "@sapling/harbor",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "completeness": "partial/shared enforcement",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "policy"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-060",
+      "name": "Abuse detection",
+      "category": "Security & governance",
+      "owner": "@sapling/harbor",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "completeness": "partial/shared enforcement",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "policy"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-061",
+      "name": "Data retention",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "run"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-062",
+      "name": "Data deletion",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-063",
+      "name": "Consent management",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "record",
+        "history"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-064",
+      "name": "Privacy export",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "export"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-065",
+      "name": "Audit trail",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "list",
+        "record"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-066",
+      "name": "IP allowlists",
+      "category": "Security & governance",
+      "owner": "@sapling/harbor",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "completeness": "partial/shared enforcement",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "policy"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-067",
+      "name": "IP denylists",
+      "category": "Security & governance",
+      "owner": "@sapling/harbor",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "completeness": "partial/shared enforcement",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "policy"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-068",
+      "name": "Security incident alerts",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "list",
+        "ack"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-069",
+      "name": "Vulnerability management",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-070",
+      "name": "Compliance evidence",
+      "category": "Security & governance",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-071",
+      "name": "Transactional email",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "send"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-072",
+      "name": "Bulk email",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "enqueue"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-073",
+      "name": "SMS",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "send"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-074",
+      "name": "Push notifications",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "send"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-075",
+      "name": "In-app notifications",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "send",
+        "list",
+        "read"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-076",
+      "name": "Notification templates",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-077",
+      "name": "User notification preferences",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "set",
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-078",
+      "name": "Delivery tracking",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-079",
+      "name": "Notification retries",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "enqueue"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-080",
+      "name": "Notification opt-out",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "optOut"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-081",
+      "name": "Webhooks for notifications",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "verify",
+        "reconcile"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-082",
+      "name": "Multilingual notifications",
+      "category": "Communications",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "render"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-083",
+      "name": "Object storage",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "upload",
+        "download",
+        "list",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-084",
+      "name": "File uploads",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "upload",
+        "download",
+        "list",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-085",
+      "name": "Presigned download URLs",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "sign"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-086",
+      "name": "File metadata",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-087",
+      "name": "File versions",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-088",
+      "name": "Document management",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-089",
+      "name": "Import pipelines",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "import"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-090",
+      "name": "Data export",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "export"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-091",
+      "name": "Backup and restore",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "backup",
+        "restore",
+        "status"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-092",
+      "name": "Data migrations",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "plan",
+        "apply",
+        "status"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-093",
+      "name": "Full-text search",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "search"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-094",
+      "name": "CDN integration",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "purge",
+        "configure"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-095",
+      "name": "Media processing",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "transform",
+        "status"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-096",
+      "name": "Data validation",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "validate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-097",
+      "name": "Soft delete",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-098",
+      "name": "Data archival",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "archive"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-099",
+      "name": "Data masking",
+      "category": "Data & content",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "mask"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-100",
+      "name": "Product events",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "track"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-101",
+      "name": "User identification",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "identify"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-102",
+      "name": "Group analytics",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-103",
+      "name": "Funnels",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-104",
+      "name": "Retention analysis",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-105",
+      "name": "Cohort analysis",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-106",
+      "name": "Dashboards",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-107",
+      "name": "Reports",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-108",
+      "name": "Scheduled reports",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "schedule"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-109",
+      "name": "Custom metrics",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-110",
+      "name": "Error tracking",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "capture",
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-111",
+      "name": "Experiment analytics",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-112",
+      "name": "Usage analytics",
+      "category": "Analytics & insights",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-113",
+      "name": "Background jobs",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "enqueue",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-114",
+      "name": "Scheduled jobs",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "enqueue",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-115",
+      "name": "Job retries",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "requeue"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-116",
+      "name": "Dead-letter queue",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "list",
+        "requeue"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-117",
+      "name": "Workflow orchestration",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "start"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-118",
+      "name": "Approval workflows",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "request",
+        "decide"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-119",
+      "name": "Business rules",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "evaluate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-120",
+      "name": "Event-driven automation",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "enqueue"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-121",
+      "name": "Webhook triggers",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "verify",
+        "dispatch"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-122",
+      "name": "Idempotency",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "record"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-123",
+      "name": "Outbox pattern",
+      "category": "Workflows & automation",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "append"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-124",
+      "name": "REST API patterns",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/harbor",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "envelope"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-125",
+      "name": "GraphQL APIs",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "execute",
+        "schema"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-126",
+      "name": "OpenAPI specification",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK owns OpenAPI schema; Harbor routes versions and HTTP policy",
+      "actions": [
+        "document"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-127",
+      "name": "SDK clients",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "generate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-128",
+      "name": "API versioning",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/harbor",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "resolve"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-129",
+      "name": "API pagination",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "page"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-130",
+      "name": "API filtering",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "filter"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-131",
+      "name": "API rate-limit headers",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/harbor",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "headers"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-132",
+      "name": "Developer portal",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-133",
+      "name": "API key scopes",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/harbor",
+      "implementation": "Kingsman AccessService authorization consumed at HTTP boundary",
+      "completeness": "partial/shared enforcement",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "check"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-134",
+      "name": "Webhook signing",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK signs outbound webhook; Harbor validates ingress only",
+      "actions": [
+        "sign",
+        "verify"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-135",
+      "name": "Webhook delivery",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "enqueue"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-136",
+      "name": "Event bus",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "emit"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-137",
+      "name": "Correlation IDs",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/harbor",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "get"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-138",
+      "name": "Error envelope",
+      "category": "APIs & developer tools",
+      "owner": "@sapling/harbor",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.",
+      "actions": [
+        "envelope"
+      ],
+      "source": "packages/harbor/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-139",
+      "name": "Feature flags",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "set",
+        "evaluate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-140",
+      "name": "Percentage rollouts",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "set",
+        "evaluate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-141",
+      "name": "A/B experiments",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "set",
+        "evaluate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-142",
+      "name": "Environment configuration",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-143",
+      "name": "Tenant configuration",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-144",
+      "name": "Remote configuration",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-145",
+      "name": "Plugins",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "install",
+        "uninstall",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-146",
+      "name": "Custom integrations",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-147",
+      "name": "White labeling",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-148",
+      "name": "Custom domains",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK domain ownership, Harbor TLS/host routing",
+      "actions": [
+        "request",
+        "verify",
+        "activate",
+        "remove"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-149",
+      "name": "Localization",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "format"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-150",
+      "name": "Timezone handling",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "format"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-151",
+      "name": "Theme configuration",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-152",
+      "name": "App branding",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-153",
+      "name": "Maintenance mode",
+      "category": "Product configuration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-154",
+      "name": "Structured logging",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK/business audit and Harbor ingress telemetry are separate",
+      "actions": [
+        "log"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-155",
+      "name": "Distributed tracing",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "Trace context is shared; SDK owns internal spans and Harbor edge spans",
+      "actions": [
+        "export",
+        "status"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-156",
+      "name": "Request metrics",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Each layer owns its own low-cardinality metrics",
+      "actions": [
+        "observe",
+        "snapshot"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-157",
+      "name": "Application health",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Distinct app and gateway health/readiness",
+      "actions": [
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-158",
+      "name": "Readiness checks",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "SDK checks DB/provider; Harbor tracks upstream health",
+      "actions": [
+        "get"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-159",
+      "name": "Circuit breaker",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Harbor upstream circuit breaker; SDK internal provider breaker",
+      "actions": [
+        "describe"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-160",
+      "name": "Retry with backoff",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Harbor safe HTTP retry; SDK idempotent internal retry",
+      "actions": [
+        "describe"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-161",
+      "name": "Timeouts",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Harbor request timeout; SDK job/business deadline",
+      "actions": [
+        "describe"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-162",
+      "name": "Bulkheads",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "Harbor upstream concurrency; SDK tenant job bulkheads",
+      "actions": [
+        "describe"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-163",
+      "name": "SLO and SLI",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "report"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-164",
+      "name": "Alerting",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "record",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-165",
+      "name": "Deployment pipelines",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "deploy",
+        "status",
+        "rollback"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-166",
+      "name": "Environment provisioning",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "plan",
+        "apply",
+        "destroy"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-167",
+      "name": "Horizontal scaling",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "scale",
+        "status"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-168",
+      "name": "Disaster recovery",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "completeness": "provider-needed",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "backup",
+        "restore",
+        "drill"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-169",
+      "name": "Graceful shutdown",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "status"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-170",
+      "name": "Configuration validation",
+      "category": "Operations & reliability",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "validate"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-171",
+      "name": "Comments",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-172",
+      "name": "Activity feeds",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-173",
+      "name": "Task assignments",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "assign",
+        "complete",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-174",
+      "name": "Approval history",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-175",
+      "name": "Shared resources",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-176",
+      "name": "Contacts and accounts",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-177",
+      "name": "User directories",
+      "category": "Business & collaboration",
+      "owner": "@sapling/kingsman",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "completeness": "implemented-delegate; live validation pending",
+      "notes": "No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.",
+      "actions": [
+        "list"
+      ],
+      "source": "packages/kingsman/src",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-178",
+      "name": "Helpdesk tickets",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "update",
+        "list"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-179",
+      "name": "Feedback collection",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-180",
+      "name": "Admin console",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "overview"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-181",
+      "name": "Usage policies",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK local binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    },
+    {
+      "id": "SAAS-182",
+      "name": "Data ownership transitions",
+      "category": "Business & collaboration",
+      "owner": "@sapling/sdk",
+      "implementation": "SDK hybrid binding",
+      "completeness": "existing-implementation; feature-specific acceptance pending",
+      "notes": "No ownership relocation; application/provider contracts and production evidence remain required.",
+      "actions": [
+        "transfer"
+      ],
+      "source": "packages/sdk/src/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/registry.ts"
+    }
+  ]
+}

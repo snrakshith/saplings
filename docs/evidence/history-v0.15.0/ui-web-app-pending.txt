@@ -1,0 +1,3 @@
+Apps/web complete check (requires web-vitals and complete pnpm install):
+apps/web/src/main.tsx(5,31): error TS2307: Cannot find module '@sapling/quality-browser-runtime/react' or its corresponding type declarations.
+apps/web/src/main.tsx(6,42): error TS2307: Cannot find module '@sapling/quality-browser-runtime' or its corresponding type declarations.

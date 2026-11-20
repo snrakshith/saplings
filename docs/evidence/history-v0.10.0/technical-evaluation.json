@@ -1,0 +1,13 @@
+{
+  "version": "0.10.0",
+  "features": 182,
+  "scanners": 41,
+  "qualitySuites": 32,
+  "packages": 19,
+  "classification": {
+    "local": 119,
+    "hybrid": 49,
+    "provider": 14
+  },
+  "status": "inventory-verified; not production approval"
+}

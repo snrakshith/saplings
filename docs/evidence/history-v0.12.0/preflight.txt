@@ -1,0 +1,197 @@
+{
+  "version": "0.12.0",
+  "mode": "preflight",
+  "at": "2026-11-19T06:53:58.739Z",
+  "results": [
+    {
+      "id": "workspace-install",
+      "status": "blocked",
+      "missing": [
+        "file:pnpm-lock.yaml",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "saas-gap-audit",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "core-build",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "regression",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "catalog",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "adapter-build",
+      "status": "blocked",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "package:@aws-sdk/client-s3",
+        "package:@aws-sdk/client-sesv2",
+        "package:@aws-sdk/client-sns",
+        "package:graphql",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "quality-build",
+      "status": "blocked",
+      "missing": [
+        "package:react",
+        "package:web-vitals",
+        "package:playwright",
+        "package:express",
+        "package:vite",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "validation-compat",
+      "status": "blocked",
+      "missing": [
+        "package:zod",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "postgres-live",
+      "status": "blocked",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "env:TEST_DATABASE_URL",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "valkey-live",
+      "status": "blocked",
+      "missing": [
+        "package:redis",
+        "env:TEST_VALKEY_URL",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "foundation-live",
+      "status": "blocked",
+      "missing": [
+        "package:ws",
+        "package:socket.io",
+        "package:socket.io-client",
+        "package:express",
+        "package:compression",
+        "package:multer",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "provider-live",
+      "status": "blocked",
+      "missing": [
+        "env:SAPLING_PROVIDER_TEST_MODULE",
+        "env:SAPLING_SANDBOX_CONFIRM",
+        "tool:pnpm",
+        "approved sandbox confirmation"
+      ]
+    },
+    {
+      "id": "dependency-audit",
+      "status": "blocked",
+      "missing": [
+        "file:pnpm-lock.yaml",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "react-hooks",
+      "status": "blocked",
+      "missing": [
+        "package:react",
+        "package:react-dom/server",
+        "package:react-test-renderer",
+        "package:@types/react/package.json",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "staging-load",
+      "status": "operator-required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "operator-required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "operator-required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "operator-required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "operator-required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "operator-required"
+    },
+    {
+      "id": "operations-review",
+      "status": "operator-required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "operator-required"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "status": "operator-required"
+    }
+  ],
+  "note": "Execution results do not automatically close release gates. Review source-bound evidence, target and approval requirements."
+}

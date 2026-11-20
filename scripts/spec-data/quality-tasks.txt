@@ -1,0 +1,32 @@
+backend:performance|Baseline realistic route mix and payloads; compare p95/p99, throughput and errors to approved budget across replicas.
+backend:load|Run weighted normal traffic with auth fixtures, warmup and steady state; enforce latency/error and dependency saturation thresholds.
+backend:stress|Ramp until saturation in isolated staging; identify capacity breakpoint and prove graceful shedding/recovery.
+backend:spike|Burst rapidly then return to baseline; measure dropped/queued requests and recovery time.
+backend:soak|Sustain representative traffic over hours; track memory, handles, DB pool, queue and latency drift.
+backend:scalability|Record HPA time series, replica readiness, CPU/memory and throughput per replica; verify downscale and tenant fairness.
+backend:security|Run Semgrep/Trivy/ZAP on approved scope; include authenticated test routes, dependency and container evidence, independently triage findings.
+backend:concurrency|Exercise simultaneous conflicting mutations and stable idempotency keys; assert one committed effect and no cross-tenant leakage.
+backend:resilience|Inject controlled latency/disconnect with Toxiproxy; assert circuit breaker, bounded errors, recovery and cleanup in finally.
+backend:recovery|Restart a staging deployment while requests/jobs are active; measure availability and durable lease recovery.
+backend:observability|Verify Prometheus metrics, traces and redacted logs for known request/worker; assess cardinality and alert delivery.
+backend:contract|Run schema-derived positive/negative request tests and compatibility diff with authorized fixtures; validate responses and auth.
+backend:chaos|Apply approved Chaos Mesh manifest with namespace/TTL and explicit rollback; verify steady-state invariants and cleanup.
+backend:disaster-recovery|Restore physical DB and versioned object backups to isolated environment, compare checksums and RTO/RPO; record signed drill evidence.
+backend:kubernetes|Check deployments, probes, HPA, PDB, resource budgets, service account and network policies against actual namespace.
+backend:profiling|Capture bounded CPU/heap/event-loop profiles on approved workload, compare baseline and retain redacted diagnostics.
+frontend:performance|Measure route LCP/CLS/INP with lab and field profiles; budget and device/network sample required.
+frontend:rendering|Instrument React Profiler and compare commit count/duration across stable interactions; distinguish dev StrictMode from production.
+frontend:visual|Compare fixed viewport/theme/font screenshot against reviewed baseline; mask dynamic content and require human baseline review.
+frontend:accessibility|Run axe plus keyboard/focus/screen-reader manual checks; triage WCAG failures and track remediation.
+frontend:responsive|Exercise viewports, orientation, text zoom, touch controls and overflow; verify key interactions remain accessible.
+frontend:cross-browser|Run Chromium/Firefox/WebKit matrix for representative routes, JS errors and critical flows; publish per-engine outcomes.
+frontend:bundle|Budget compressed JS/CSS and chunks, identify duplicated dependencies and regression vs baseline; measure actual build output.
+frontend:memory|Repeat route transitions and inspect CDP heap/retained nodes; compare after GC baseline without treating browser limitations as pass.
+frontend:security|Check headers, CSP, token storage and unsafe rendering on test routes; verify authenticated flows with scoped accounts.
+frontend:network|Simulate offline/latency/failed API and retry; verify UI error, cancellation, fallback and no duplicate mutation.
+frontend:seo|Validate title, canonical, noindex, metadata, structured data and rendered routes; verify SSR/hydration and crawl rules.
+frontend:api-integration|Mock documented response/status then run real staging API contract; assert loading, error and tenant-aware UI behavior.
+frontend:observability|Emit known browser error/vitals/navigation and verify delivery, correlation, sampling, redaction and consent.
+frontend:recovery|Test refresh/reconnect, persisted form/session state and failed navigation; never replay sensitive mutations accidentally.
+frontend:localization|Run locale/direction/timezone/currency fixtures, missing translations, overflow and pluralization; manual language review.
+frontend:navigation|Exercise route/link, back/forward, deep-link and protected routes; assert focus, history and error handling.

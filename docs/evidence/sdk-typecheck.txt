@@ -1,0 +1,1 @@
+PASS: SDK + platform API type assertions

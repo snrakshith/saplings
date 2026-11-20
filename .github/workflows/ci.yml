@@ -1,0 +1,89 @@
+name: CI
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: sapling_ci_admin
+          POSTGRES_DB: sapling_test
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+      valkey:
+        image: valkey/valkey:8-alpine
+        ports: ['6379:6379']
+        options: >-
+          --health-cmd "valkey-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
+      - name: Record dependency lock for review
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-lock-review
+          path: pnpm-lock.yaml
+      - run: pnpm run verify:build
+      - run: pnpm run build:adapters
+      - run: pnpm run build:hooks
+      - run: pnpm run build:ui
+      - run: pnpm run typecheck:ui
+      - run: pnpm run test:ui
+      - run: pnpm run typecheck:sdk
+      - run: pnpm run ownership:refresh
+      - run: pnpm run consolidation:verify
+      - run: pnpm run test:consolidation
+      - run: pnpm run test:platforms
+      - run: pnpm run platform:coverage
+      - run: pnpm run typecheck:hooks
+      - run: pnpm run test:hooks
+      - run: pnpm test
+      - run: pnpm run test:coverage
+      - run: pnpm run test:validation:compat
+      - run: pnpm run typecheck:validation:compat
+      - run: pnpm run test:foundation:live
+      - run: node scripts/setup-test-postgres.mjs
+        env:
+          TEST_ADMIN_DATABASE_URL: postgres://postgres:sapling_ci_admin@localhost:5432/sapling_test
+      - run: pnpm run test:integration
+        env:
+          TEST_DATABASE_URL: postgres://sapling_test_app:sapling_ci_only@localhost:5432/sapling_test
+          TEST_VALKEY_URL: redis://localhost:6379
+      - run: pnpm run test:load:local
+        env:
+          LOAD_OUTPUT: local-load.json
+      - run: pnpm audit --audit-level=high
+      - run: node packages/cli/dist/index.js scan --path packages/sdk/src --format sarif > scan.sarif
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: scanner-sarif
+          path: scan.sarif
+      - name: Upload Vitest coverage evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: vitest-coverage
+          path: |
+            coverage/coverage-summary.json
+            coverage/lcov.info
+            coverage/index.html
+      - name: Collect release preflight report
+        if: always()
+        run: pnpm run release:preflight || true
+        env:
+          TEST_DATABASE_URL: postgres://sapling_test_app:sapling_ci_only@localhost:5432/sapling_test
+          TEST_VALKEY_URL: redis://localhost:6379
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: release-preflight
+          path: docs/evidence/checks/report.json

@@ -1,0 +1,15 @@
+v22.16.0
+Version 5.8.3
+TypeScript build: utils
+TypeScript build: validations
+TypeScript build: realtime
+TypeScript build: middleware
+TypeScript build: quality-contracts
+TypeScript build: catalog
+TypeScript build: security
+TypeScript build: identity-platform
+TypeScript build: gateway
+TypeScript build: sdk
+TypeScript build: cli
+SDK type contract
+PASS: core build and SDK contract

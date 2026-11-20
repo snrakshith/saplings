@@ -1,0 +1,26 @@
+{
+  "name": "@sapling/sdk",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@sapling/catalog": "workspace:*",
+    "@sapling/security": "workspace:*",
+    "@sapling/quality-contracts": "workspace:*",
+    "@sapling/realtime": "workspace:*",
+    "@sapling/middleware": "workspace:*",
+    "@sapling/harbor": "workspace:*",
+    "@sapling/kingsman": "workspace:*"
+  }
+}

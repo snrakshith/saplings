@@ -1,0 +1,7 @@
+import sharp from 'sharp';
+import {graphql,printSchema,parse,visit,validate,specifiedRules,type GraphQLSchema} from 'graphql';
+import type {ImageTransformer,OperationsSettings} from '@sapling/sdk';
+export class SharpTransformer implements ImageTransformer {
+ async transform(input:Uint8Array,settings:{width:number;height:number;format:'webp'|'png'|'jpeg'}){return sharp(input,{limitInputPixels:20_000_000,animated:false,failOn:'error'}).rotate().resize(settings.width,settings.height,{fit:'inside',withoutEnlargement:true}).toFormat(settings.format).toBuffer();}
+}
+export function graphqlExecutor(schema:GraphQLSchema,maxDepth=10,maxNodes=250):NonNullable<OperationsSettings['graphql']>{return {schema:printSchema(schema),async execute(ctx,input){const doc=parse(input.query,{maxTokens:2000});let depth=0,nodes=0;visit(doc,{Field:{enter(){if(++depth>maxDepth||++nodes>maxNodes)throw Error('GraphQL complexity limit');},leave(){depth--; }},FragmentSpread(){throw Error('Fragments not enabled in bounded executor');},InlineFragment(){throw Error('Fragments not enabled in bounded executor');}});const errors=validate(schema,doc,specifiedRules);if(errors.length)return {errors:errors.map(()=>({message:'Invalid operation'}))};const r=await graphql({schema,source:input.query,variableValues:input.variables,operationName:input.operationName,contextValue:ctx});return {data:r.data,errors:r.errors?.map(()=>({message:'GraphQL operation failed'}))};}};}

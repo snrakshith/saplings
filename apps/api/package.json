@@ -1,0 +1,24 @@
+{
+  "name": "@sapling/example-api",
+  "version": "0.17.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "express": "^5.1.0",
+    "@sapling/quality-node-diagnostics": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.3",
+    "tsx": "^4.20.6"
+  },
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ]
+}

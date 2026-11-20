@@ -1,0 +1,37 @@
+apiVersion: gateway.sapling.dev/v1alpha1
+kind: GatewayConfig
+metadata:
+  name: default
+spec:
+  upstreams:
+    - name: orders
+      algorithm: round-robin
+      targets:
+        - { target: 'orders-1.internal:8080', weight: 100 }
+        - { target: 'orders-2.internal:8080', weight: 100 }
+  plugins:
+    - { name: correlation-id, config: {} }
+    - name: jwt
+      config: { realmRef: main, audiences: [orders-api] }
+  services:
+    - name: orders
+      upstream: orders
+      retries: 2
+      timeouts: { read: 10s }
+      plugins:
+        - name: rate-limiting
+          config: { limitBy: consumer, limits: [{ max: 600, window: 1m }] }
+      routes:
+        - name: orders-v1
+          paths: [/orders]
+          pathMatch: prefix
+          methods: [GET, POST]
+          stripPath: true
+          plugins:
+            - name: acl
+              config: { claim: roles, allow: [orders-reader, orders-admin] }
+  consumers:
+    - username: partner-acme
+      credentials:
+        keyAuth:
+          - key: '${vault://env/ACME_KEY}'

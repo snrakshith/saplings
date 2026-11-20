@@ -1,0 +1,17 @@
+
+> sapling-unified-sdk-monorepo@0.4.0 verify:build
+> npm run build && npm run catalog:refresh && npm run build
+
+
+> sapling-unified-sdk-monorepo@0.4.0 build
+> tsc -p packages/catalog && tsc -p packages/security && tsc -p packages/sdk && tsc -p packages/cli
+
+
+> sapling-unified-sdk-monorepo@0.4.0 catalog:refresh
+> node scripts/refresh-v03-catalog.mjs
+
+Updated 182 features and 41 scanners
+
+> sapling-unified-sdk-monorepo@0.4.0 build
+> tsc -p packages/catalog && tsc -p packages/security && tsc -p packages/sdk && tsc -p packages/cli
+

@@ -1,0 +1,4 @@
+tsc -p packages/quality-contracts
+tsc -p packages/quality-node-diagnostics
+tsc -p packages/quality-core
+tsc -p packages/backend-quality

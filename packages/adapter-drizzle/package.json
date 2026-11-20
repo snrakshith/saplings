@@ -1,0 +1,19 @@
+{
+  "name": "@sapling/adapter-drizzle",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@sapling/sdk": "workspace:*",
+    "drizzle-orm": "^0.44.0",
+    "pg": "^8.0.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.0.0"
+  },
+  "files": [
+    "dist",
+    "migrations"
+  ]
+}

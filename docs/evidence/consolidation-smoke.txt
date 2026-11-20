@@ -1,0 +1,23 @@
+PASS SDK IAM classes and SDK legacy imports resolve to the same Kingsman authority
+PASS old data shape and legacy roles survive migration to Kingsman
+PASS API keys remain hashed, tenant-local, and revocable in Kingsman
+PASS Kingsman accounts preserve registration/verification/login and verified context
+PASS Kingsman org membership is actor and tenant scoped
+PASS Harbor-owned HTTP helpers are called by original SDK feature action IDs
+PASS SAAS-133 uses IAM effective permissions and is tenant safe
+PASS Kingsman realm config uses new property and SDK legacy getter views same realm
+PASS SAAS-007 verifies a real Kingsman-issued authorization-code JWT and tenant binding
+PASS Renamed instance accessors and deprecated config/getter aliases point to same instance
+PASS Gateway rejects untrusted API keys; Kingsman verifier requires trusted mapping
+PASS Harbor validates Kingsman API-key scope for configured route
+PASS Missing trusted Harbor API-key tenant resolver fails closed
+PASS Harbor TLS verification only probes fixed HTTPS target; certificate changes require explicit approval
+PASS all 182 catalog IDs and legacy operations are preserved
+PASS types and runtime expose canonical SDK error shape after Kingsman relocation
+{
+  "source": "compiled local packages",
+  "framework": "Node assertions (Vitest runtime unavailable)",
+  "passed": 16,
+  "total": 16,
+  "verifiedUnderVitest": false
+}

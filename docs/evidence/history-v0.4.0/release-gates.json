@@ -1,0 +1,95 @@
+{
+  "version": "0.4.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "ecad7cdc014d89a898583744bce514b8e1473f93b10ed42c9ba0527ea7f8f52e",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "843efe4c13fd166d62687a93523481a0d7a42eb766f548f4888fac229933f54f",
+      "at": "2026-11-14T03:20:21.966223+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "ecad7cdc014d89a898583744bce514b8e1473f93b10ed42c9ba0527ea7f8f52e",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "a2a248d95edf7b9aae149e82806c41e0315f303897e7b7853c5ffb1329350399",
+      "at": "2026-11-14T03:20:21.966223+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "ecad7cdc014d89a898583744bce514b8e1473f93b10ed42c9ba0527ea7f8f52e",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "61eac1cdd5e515d72e1a903950e8004f21ad3f5d759a9101b7dee4c292a6b76a",
+      "at": "2026-11-14T03:20:21.966223+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "blocked",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Missing live or independently reviewed release evidence"
+    }
+  ]
+}

@@ -1,0 +1,1 @@
+Adapted from user-provided `murphui.zip` (`src/components`, `src/utils`, `src/theme/theme-provider`). Original archive README labels the project MIT, but the ZIP lacks a standalone LICENSE notice. Validate the originating author's license before redistributing. Xlox UI provides the package folder architecture and public export organization, not copied component implementations.

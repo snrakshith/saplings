@@ -1,0 +1,25 @@
+{
+  "name": "@sapling/cli",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "@sapling/catalog": "workspace:*",
+    "@sapling/security": "workspace:*",
+    "@sapling/sdk": "workspace:*"
+  },
+  "bin": {
+    "sapling": "./dist/index.js"
+  }
+}

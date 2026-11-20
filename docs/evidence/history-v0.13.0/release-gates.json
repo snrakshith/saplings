@@ -1,0 +1,190 @@
+{
+  "version": "0.13.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "03c002438d8c62ab72bd4bf6c8210c43523829a8bf1cec1bfab4c2b441eb5cca",
+      "reviewer": "local engineering execution \u2014 not independent review",
+      "environment": "local TypeScript/Node with reference stores and mocked provider endpoints",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "67a602d52a519714285559569502c668d5a05841393ab2a7f4d1c958202f24cf",
+      "at": "2026-11-19T10:44:14.875607+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "03c002438d8c62ab72bd4bf6c8210c43523829a8bf1cec1bfab4c2b441eb5cca",
+      "reviewer": "local engineering execution \u2014 not independent review",
+      "environment": "local TypeScript/Node with reference stores and mocked provider endpoints",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "d02aa86af72fc3497b11c6b96ac82236ac56315a3d06be9cdffb16731adbed5e",
+      "at": "2026-11-19T10:44:14.875607+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "03c002438d8c62ab72bd4bf6c8210c43523829a8bf1cec1bfab4c2b441eb5cca",
+      "reviewer": "local engineering execution \u2014 not independent review",
+      "environment": "local TypeScript/Node with reference stores and mocked provider endpoints",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "6656cba0de6e274212dbe0e30168688584af0cd28b2ab3162bec2b730fd9c0bc",
+      "at": "2026-11-19T10:44:14.875607+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "03c002438d8c62ab72bd4bf6c8210c43523829a8bf1cec1bfab4c2b441eb5cca",
+      "reviewer": "local engineering execution \u2014 not independent review",
+      "environment": "local TypeScript/Node with reference stores and mocked provider endpoints",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "53d92f171d4945658c4a380229e6a4415173c3797bcafd9ac795ac1a107d23f1",
+      "at": "2026-11-19T10:44:14.875607+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "workspace-install",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "react-hooks",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "saas-gap-audit",
+      "status": "passed",
+      "sourceHash": "03c002438d8c62ab72bd4bf6c8210c43523829a8bf1cec1bfab4c2b441eb5cca",
+      "reviewer": "local engineering execution \u2014 not independent review",
+      "environment": "local TypeScript/Node with reference stores and mocked provider endpoints",
+      "evidence": "docs/evidence/saas-gap-audit.json",
+      "sha256": "697fedc7f95bb2ae890202f10d02599402ef089b1b316a363affe9c87d93d12b",
+      "at": "2026-11-19T10:44:14.875607+00:00"
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "status": "pending",
+      "reason": "Production or third-party integration / independent signoff still required"
+    },
+    {
+      "id": "platform-config",
+      "status": "passed",
+      "sourceHash": "03c002438d8c62ab72bd4bf6c8210c43523829a8bf1cec1bfab4c2b441eb5cca",
+      "reviewer": "local engineering execution \u2014 not independent review",
+      "environment": "local TypeScript/Node with reference stores and mocked provider endpoints",
+      "evidence": "docs/evidence/platform-config-audit.json",
+      "sha256": "46610e43325e7b26310b411b09ce7fd8bd2a749bc81b4116f767c75b4a3dfc49",
+      "at": "2026-11-19T10:44:14.875607+00:00"
+    },
+    {
+      "id": "gateway-integration-live",
+      "status": "pending",
+      "reason": "Real gateway TLS/Redis/upstream failover/identity authorization evidence required"
+    },
+    {
+      "id": "identity-oidc-conformance",
+      "status": "pending",
+      "reason": "OIDC conformance, KMS RSA/Argon2id and real realm federation evidence required"
+    }
+  ]
+}

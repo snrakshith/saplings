@@ -1,0 +1,49 @@
+{
+  "name": "@sapling/backend-quality",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./diagnostics": {
+      "types": "./dist/diagnostics.d.ts",
+      "default": "./dist/diagnostics.js"
+    }
+  },
+  "bin": {
+    "sapling-quality-legacy": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "assets",
+    "README.md",
+    "examples",
+    "docker",
+    "helm"
+  ],
+  "peerDependencies": {
+    "@sapling/sdk": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/autocannon": "^7.12.7"
+  },
+  "scripts": {
+    "build": "tsc -p ."
+  },
+  "dependencies": {
+    "@sapling/quality-core": "workspace:*",
+    "autocannon": "^8.0.0",
+    "@sapling/quality-node-diagnostics": "workspace:*",
+    "vitest": "5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@sapling/sdk": {
+      "optional": true
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "version": "0.16.0",
+  "files": 32,
+  "framework": "Vitest 5.0.0",
+  "coverageProvider": "@vitest/coverage-v8 5.0.0",
+  "qualityEngine": "vitest (node-test alias supported)",
+  "mode": "static source verification only",
+  "runtimeExecuted": false
+}

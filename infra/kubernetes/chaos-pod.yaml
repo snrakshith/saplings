@@ -1,0 +1,14 @@
+# Requires the Chaos Mesh CRDs and a dedicated ephemeral target environment.
+# Do not apply to a shared, staging-wide, or production namespace without review.
+apiVersion: chaos-mesh.org/v1alpha1
+kind: PodChaos
+metadata:
+  name: sapling-api-restart-experiment
+  namespace: sapling-quality
+spec:
+  action: pod-kill
+  mode: one
+  selector:
+    namespaces: [sapling-quality]
+    labelSelectors: {app: sapling-example-api}
+  duration: 10s

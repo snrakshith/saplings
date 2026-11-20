@@ -1,0 +1,17 @@
+{
+  "version": "0.12.0",
+  "environment": "local-loopback-in-memory",
+  "requests": 2000,
+  "concurrency": 32,
+  "tenants": 16,
+  "expectedCrossTenantDenials": 100,
+  "crossTenantDenials": 100,
+  "unexpectedErrors": 0,
+  "seconds": 1.371,
+  "requestsPerSecond": 1458.34,
+  "p50Ms": 17.4,
+  "p95Ms": 33.71,
+  "p99Ms": 168.38,
+  "eventLoopP95Ms": 20.46,
+  "at": "2026-11-19T06:53:58.586Z"
+}

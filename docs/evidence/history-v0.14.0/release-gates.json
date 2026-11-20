@@ -1,0 +1,225 @@
+{
+  "version": "0.14.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "d52305db9b1f3186d299e5aa167ba9f55a625cffbb0a5998914710e408e06a3c",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "f73de1c911b21e68cae2150a2a04b0d3fa46de3eb8d50581ef12fe873ce6ccb8",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "6656cba0de6e274212dbe0e30168688584af0cd28b2ab3162bec2b730fd9c0bc",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "1d88e670f8165cbd7e1f1e81b93259f87b402f84bcacab534e7a06fe83d4738a",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "workspace-install",
+      "status": "pending",
+      "reason": "No reviewed pnpm-lock.yaml and registry DNS EAI_AGAIN"
+    },
+    {
+      "id": "react-hooks",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "saas-gap-audit",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/saas-gap-audit.json",
+      "sha256": "f100646aa0cbfbeb050cf3ce1d1e1dcaca2251ab191fc6e9be1ac6fb0aa37847",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "platform-config",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/platform-config.json",
+      "sha256": "cd541d5ca051a46fc96f6cc3669e5fc4c8108b4cfe4bedc8f0536c9897840ae6",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "gateway-integration-live",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "identity-oidc-conformance",
+      "status": "pending",
+      "reason": "Requires current-release real dependency, staging/live evidence or independent review"
+    },
+    {
+      "id": "ui-core-build",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/ui-core-build.txt",
+      "sha256": "dbf6e721e2812d7be53a036cff01b1b34f9f0ead0b3c575a6a52bd6ae4297ef0",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "ui-web-build",
+      "status": "passed",
+      "sourceHash": "7652705013f29e6442a5a86a8d436fbfd9b52969d15d7e3a6525f0d21acba9db",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local Node/TypeScript, reference stores, React18/Emotion from uploaded demo (web only)",
+      "evidence": "docs/evidence/ui-web-build.txt",
+      "sha256": "3960eae78d16c503f1bc7a07c2dbbec0aa8243f1767d3db38b3a9b14bd882f6f",
+      "at": "2026-11-19T12:35:50.336582+00:00"
+    },
+    {
+      "id": "ui-native-build",
+      "status": "pending",
+      "reason": "Cannot install React Native 0.88 / React 19.3 packages; structural shim check is not the native build"
+    },
+    {
+      "id": "ui-native-live",
+      "status": "pending",
+      "reason": "No Android/iOS app, simulator, Metro or device E2E evidence"
+    },
+    {
+      "id": "ui-accessibility-live",
+      "status": "pending",
+      "reason": "No cross-browser screen-reader/focus or native VoiceOver/TalkBack acceptance evidence"
+    }
+  ]
+}

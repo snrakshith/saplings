@@ -1,0 +1,170 @@
+{
+  "version": "0.12.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "75e25191e071533cb4566032500dd1d73cec0b310dae332e9b1e05dd91188285",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local direct TypeScript and node tests with temporary workspace links",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "dece377d8e7cee15a2e4d3509170458cd208346a253c8563379d5db2555fb88e",
+      "at": "2026-11-19T06:54:37.289289+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "75e25191e071533cb4566032500dd1d73cec0b310dae332e9b1e05dd91188285",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local direct TypeScript and node tests with temporary workspace links",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "08f2e092a25b36a36545d2d47946e76d12712578237626617e1c3b220cdf9d21",
+      "at": "2026-11-19T06:54:37.289289+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "75e25191e071533cb4566032500dd1d73cec0b310dae332e9b1e05dd91188285",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local direct TypeScript and node tests with temporary workspace links",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "6656cba0de6e274212dbe0e30168688584af0cd28b2ab3162bec2b730fd9c0bc",
+      "at": "2026-11-19T06:54:37.289289+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "75e25191e071533cb4566032500dd1d73cec0b310dae332e9b1e05dd91188285",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local direct TypeScript and node tests with temporary workspace links",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "e5df03d5c8da0c448e3aa98ec77caf1dbbb36fd572bc2794fc4c129e085aa281",
+      "at": "2026-11-19T06:54:37.289289+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "workspace-install",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "react-hooks",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "pending",
+      "reason": "Current release external provider/infrastructure/independent evidence required"
+    },
+    {
+      "id": "saas-gap-audit",
+      "status": "passed",
+      "sourceHash": "75e25191e071533cb4566032500dd1d73cec0b310dae332e9b1e05dd91188285",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local direct TypeScript and node tests with temporary workspace links",
+      "evidence": "docs/evidence/saas-gap-audit.json",
+      "sha256": "c38c199b0e82b2085e0dc31e519fc72600ce0d075e39c6cfc61d48dde7292c48",
+      "at": "2026-11-19T06:54:37.289289+00:00"
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "status": "pending",
+      "reason": "182 feature-specific app/provider acceptance scenarios and independent review not verified"
+    }
+  ]
+}

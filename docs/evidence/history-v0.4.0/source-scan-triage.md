@@ -1,0 +1,3 @@
+# Initial engineering triage — not independent signoff
+
+The SDK-source scan returned exit 2: five high-severity heuristic findings, 34 source files and 36 executed scanner categories. Four EVAL_INPUT candidates are calls to the Valkey client's `eval` method with fixed Lua script strings and separately passed keys/arguments, not JavaScript eval of client input. The SQL_INTERPOLATION candidate is in `integrations.ts` refund request handling, not an SQL execution sink. These appear false positives on source inspection. Retain findings for independent reviewer verification; scanner accuracy, full scanner coverage, dependency vulnerabilities and other security risks are not closed by this triage.

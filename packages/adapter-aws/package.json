@@ -1,0 +1,17 @@
+{
+  "name": "@sapling/adapter-aws",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@sapling/sdk": "workspace:*",
+    "@aws-sdk/client-s3": "^3.0.0",
+    "@aws-sdk/client-sesv2": "^3.0.0",
+    "@aws-sdk/client-sns": "^3.0.0",
+    "@aws-sdk/s3-request-presigner": "^3.0.0"
+  },
+  "files": [
+    "dist"
+  ]
+}

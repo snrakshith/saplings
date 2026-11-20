@@ -1,0 +1,5 @@
+async.ts: syntax/transpile passed (not React type checking)
+browser.ts: syntax/transpile passed (not React type checking)
+index.ts: syntax/transpile passed (not React type checking)
+state.ts: syntax/transpile passed (not React type checking)
+storage.ts: syntax/transpile passed (not React type checking)

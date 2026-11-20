@@ -1,0 +1,38 @@
+{
+  "name": "@sapling/middleware",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "ORIGINAL_README.md"
+  ],
+  "dependencies": {},
+  "engines": {
+    "node": ">=22"
+  },
+  "peerDependencies": {
+    "compression": "^1.8.0",
+    "multer": "^2.0.2"
+  },
+  "peerDependenciesMeta": {
+    "compression": {
+      "optional": true
+    },
+    "multer": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "compression": "^1.8.0",
+    "multer": "^2.0.2"
+  }
+}

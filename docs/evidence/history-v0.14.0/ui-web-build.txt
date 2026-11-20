@@ -1,0 +1,2 @@
+tsc -p packages/murphi-ui
+WEB UI BUILD PASS

@@ -1,0 +1,8 @@
+image: ""
+configPath: examples/express-app/sapling.config.ts
+selection: performance
+schedule: ""
+namespace: sapling-quality
+serviceAccountName: sapling-quality
+stagingOrigin: ""
+# Use a prebuilt image with the selected engine installed; only dedicated staging.

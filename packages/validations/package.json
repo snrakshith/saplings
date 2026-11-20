@@ -1,0 +1,635 @@
+{
+  "name": "@saplings/validations",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./compat/index.cjs",
+  "types": "./compat/index.d.cts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./compat/index.d.mts",
+        "default": "./compat/index.mjs"
+      },
+      "require": {
+        "types": "./compat/index.d.cts",
+        "default": "./compat/index.cjs"
+      }
+    },
+    "./mini": {
+      "import": {
+        "types": "./compat/mini.d.mts",
+        "default": "./compat/mini.mjs"
+      },
+      "require": {
+        "types": "./compat/mini.d.cts",
+        "default": "./compat/mini.cjs"
+      }
+    },
+    "./compile": {
+      "import": {
+        "types": "./compat/compile.d.mts",
+        "default": "./compat/compile.mjs"
+      },
+      "require": {
+        "types": "./compat/compile.d.cts",
+        "default": "./compat/compile.cjs"
+      }
+    },
+    "./locales": {
+      "import": {
+        "types": "./compat/locales.d.mts",
+        "default": "./compat/locales.mjs"
+      },
+      "require": {
+        "types": "./compat/locales.d.cts",
+        "default": "./compat/locales.cjs"
+      }
+    },
+    "./v3": {
+      "import": {
+        "types": "./compat/v3.d.mts",
+        "default": "./compat/v3.mjs"
+      },
+      "require": {
+        "types": "./compat/v3.d.cts",
+        "default": "./compat/v3.cjs"
+      }
+    },
+    "./v4": {
+      "import": {
+        "types": "./compat/v4.d.mts",
+        "default": "./compat/v4.mjs"
+      },
+      "require": {
+        "types": "./compat/v4.d.cts",
+        "default": "./compat/v4.cjs"
+      }
+    },
+    "./v4-mini": {
+      "import": {
+        "types": "./compat/v4-mini.d.mts",
+        "default": "./compat/v4-mini.mjs"
+      },
+      "require": {
+        "types": "./compat/v4-mini.d.cts",
+        "default": "./compat/v4-mini.cjs"
+      }
+    },
+    "./v4/mini": {
+      "import": {
+        "types": "./compat/v4/mini.d.mts",
+        "default": "./compat/v4/mini.mjs"
+      },
+      "require": {
+        "types": "./compat/v4/mini.d.cts",
+        "default": "./compat/v4/mini.cjs"
+      }
+    },
+    "./v4/core": {
+      "import": {
+        "types": "./compat/v4-core.d.mts",
+        "default": "./compat/v4-core.mjs"
+      },
+      "require": {
+        "types": "./compat/v4-core.d.cts",
+        "default": "./compat/v4-core.cjs"
+      }
+    },
+    "./v4/locales": {
+      "import": {
+        "types": "./compat/v4-locales.d.mts",
+        "default": "./compat/v4-locales.mjs"
+      },
+      "require": {
+        "types": "./compat/v4-locales.d.cts",
+        "default": "./compat/v4-locales.cjs"
+      }
+    },
+    "./native": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json",
+    "./v4/locales/ar.js": {
+      "types": "./compat/locales/ar.d.ts",
+      "default": "./compat/locales/ar.js"
+    },
+    "./v4/locales/ar.cjs": {
+      "types": "./compat/locales/ar.d.cts",
+      "default": "./compat/locales/ar.cjs"
+    },
+    "./v4/locales/az.js": {
+      "types": "./compat/locales/az.d.ts",
+      "default": "./compat/locales/az.js"
+    },
+    "./v4/locales/az.cjs": {
+      "types": "./compat/locales/az.d.cts",
+      "default": "./compat/locales/az.cjs"
+    },
+    "./v4/locales/be.js": {
+      "types": "./compat/locales/be.d.ts",
+      "default": "./compat/locales/be.js"
+    },
+    "./v4/locales/be.cjs": {
+      "types": "./compat/locales/be.d.cts",
+      "default": "./compat/locales/be.cjs"
+    },
+    "./v4/locales/bg.js": {
+      "types": "./compat/locales/bg.d.ts",
+      "default": "./compat/locales/bg.js"
+    },
+    "./v4/locales/bg.cjs": {
+      "types": "./compat/locales/bg.d.cts",
+      "default": "./compat/locales/bg.cjs"
+    },
+    "./v4/locales/bn.js": {
+      "types": "./compat/locales/bn.d.ts",
+      "default": "./compat/locales/bn.js"
+    },
+    "./v4/locales/bn.cjs": {
+      "types": "./compat/locales/bn.d.cts",
+      "default": "./compat/locales/bn.cjs"
+    },
+    "./v4/locales/ca.js": {
+      "types": "./compat/locales/ca.d.ts",
+      "default": "./compat/locales/ca.js"
+    },
+    "./v4/locales/ca.cjs": {
+      "types": "./compat/locales/ca.d.cts",
+      "default": "./compat/locales/ca.cjs"
+    },
+    "./v4/locales/ckb.js": {
+      "types": "./compat/locales/ckb.d.ts",
+      "default": "./compat/locales/ckb.js"
+    },
+    "./v4/locales/ckb.cjs": {
+      "types": "./compat/locales/ckb.d.cts",
+      "default": "./compat/locales/ckb.cjs"
+    },
+    "./v4/locales/cs.js": {
+      "types": "./compat/locales/cs.d.ts",
+      "default": "./compat/locales/cs.js"
+    },
+    "./v4/locales/cs.cjs": {
+      "types": "./compat/locales/cs.d.cts",
+      "default": "./compat/locales/cs.cjs"
+    },
+    "./v4/locales/da.js": {
+      "types": "./compat/locales/da.d.ts",
+      "default": "./compat/locales/da.js"
+    },
+    "./v4/locales/da.cjs": {
+      "types": "./compat/locales/da.d.cts",
+      "default": "./compat/locales/da.cjs"
+    },
+    "./v4/locales/de.js": {
+      "types": "./compat/locales/de.d.ts",
+      "default": "./compat/locales/de.js"
+    },
+    "./v4/locales/de.cjs": {
+      "types": "./compat/locales/de.d.cts",
+      "default": "./compat/locales/de.cjs"
+    },
+    "./v4/locales/el.js": {
+      "types": "./compat/locales/el.d.ts",
+      "default": "./compat/locales/el.js"
+    },
+    "./v4/locales/el.cjs": {
+      "types": "./compat/locales/el.d.cts",
+      "default": "./compat/locales/el.cjs"
+    },
+    "./v4/locales/en.js": {
+      "types": "./compat/locales/en.d.ts",
+      "default": "./compat/locales/en.js"
+    },
+    "./v4/locales/en.cjs": {
+      "types": "./compat/locales/en.d.cts",
+      "default": "./compat/locales/en.cjs"
+    },
+    "./v4/locales/eo.js": {
+      "types": "./compat/locales/eo.d.ts",
+      "default": "./compat/locales/eo.js"
+    },
+    "./v4/locales/eo.cjs": {
+      "types": "./compat/locales/eo.d.cts",
+      "default": "./compat/locales/eo.cjs"
+    },
+    "./v4/locales/es.js": {
+      "types": "./compat/locales/es.d.ts",
+      "default": "./compat/locales/es.js"
+    },
+    "./v4/locales/es.cjs": {
+      "types": "./compat/locales/es.d.cts",
+      "default": "./compat/locales/es.cjs"
+    },
+    "./v4/locales/fa.js": {
+      "types": "./compat/locales/fa.d.ts",
+      "default": "./compat/locales/fa.js"
+    },
+    "./v4/locales/fa.cjs": {
+      "types": "./compat/locales/fa.d.cts",
+      "default": "./compat/locales/fa.cjs"
+    },
+    "./v4/locales/fi.js": {
+      "types": "./compat/locales/fi.d.ts",
+      "default": "./compat/locales/fi.js"
+    },
+    "./v4/locales/fi.cjs": {
+      "types": "./compat/locales/fi.d.cts",
+      "default": "./compat/locales/fi.cjs"
+    },
+    "./v4/locales/fr.js": {
+      "types": "./compat/locales/fr.d.ts",
+      "default": "./compat/locales/fr.js"
+    },
+    "./v4/locales/fr.cjs": {
+      "types": "./compat/locales/fr.d.cts",
+      "default": "./compat/locales/fr.cjs"
+    },
+    "./v4/locales/fr-CA.js": {
+      "types": "./compat/locales/fr-CA.d.ts",
+      "default": "./compat/locales/fr-CA.js"
+    },
+    "./v4/locales/fr-CA.cjs": {
+      "types": "./compat/locales/fr-CA.d.cts",
+      "default": "./compat/locales/fr-CA.cjs"
+    },
+    "./v4/locales/gu.js": {
+      "types": "./compat/locales/gu.d.ts",
+      "default": "./compat/locales/gu.js"
+    },
+    "./v4/locales/gu.cjs": {
+      "types": "./compat/locales/gu.d.cts",
+      "default": "./compat/locales/gu.cjs"
+    },
+    "./v4/locales/he.js": {
+      "types": "./compat/locales/he.d.ts",
+      "default": "./compat/locales/he.js"
+    },
+    "./v4/locales/he.cjs": {
+      "types": "./compat/locales/he.d.cts",
+      "default": "./compat/locales/he.cjs"
+    },
+    "./v4/locales/hi.js": {
+      "types": "./compat/locales/hi.d.ts",
+      "default": "./compat/locales/hi.js"
+    },
+    "./v4/locales/hi.cjs": {
+      "types": "./compat/locales/hi.d.cts",
+      "default": "./compat/locales/hi.cjs"
+    },
+    "./v4/locales/hr.js": {
+      "types": "./compat/locales/hr.d.ts",
+      "default": "./compat/locales/hr.js"
+    },
+    "./v4/locales/hr.cjs": {
+      "types": "./compat/locales/hr.d.cts",
+      "default": "./compat/locales/hr.cjs"
+    },
+    "./v4/locales/hu.js": {
+      "types": "./compat/locales/hu.d.ts",
+      "default": "./compat/locales/hu.js"
+    },
+    "./v4/locales/hu.cjs": {
+      "types": "./compat/locales/hu.d.cts",
+      "default": "./compat/locales/hu.cjs"
+    },
+    "./v4/locales/hy.js": {
+      "types": "./compat/locales/hy.d.ts",
+      "default": "./compat/locales/hy.js"
+    },
+    "./v4/locales/hy.cjs": {
+      "types": "./compat/locales/hy.d.cts",
+      "default": "./compat/locales/hy.cjs"
+    },
+    "./v4/locales/id.js": {
+      "types": "./compat/locales/id.d.ts",
+      "default": "./compat/locales/id.js"
+    },
+    "./v4/locales/id.cjs": {
+      "types": "./compat/locales/id.d.cts",
+      "default": "./compat/locales/id.cjs"
+    },
+    "./v4/locales/is.js": {
+      "types": "./compat/locales/is.d.ts",
+      "default": "./compat/locales/is.js"
+    },
+    "./v4/locales/is.cjs": {
+      "types": "./compat/locales/is.d.cts",
+      "default": "./compat/locales/is.cjs"
+    },
+    "./v4/locales/it.js": {
+      "types": "./compat/locales/it.d.ts",
+      "default": "./compat/locales/it.js"
+    },
+    "./v4/locales/it.cjs": {
+      "types": "./compat/locales/it.d.cts",
+      "default": "./compat/locales/it.cjs"
+    },
+    "./v4/locales/ja.js": {
+      "types": "./compat/locales/ja.d.ts",
+      "default": "./compat/locales/ja.js"
+    },
+    "./v4/locales/ja.cjs": {
+      "types": "./compat/locales/ja.d.cts",
+      "default": "./compat/locales/ja.cjs"
+    },
+    "./v4/locales/ka.js": {
+      "types": "./compat/locales/ka.d.ts",
+      "default": "./compat/locales/ka.js"
+    },
+    "./v4/locales/ka.cjs": {
+      "types": "./compat/locales/ka.d.cts",
+      "default": "./compat/locales/ka.cjs"
+    },
+    "./v4/locales/kh.js": {
+      "types": "./compat/locales/kh.d.ts",
+      "default": "./compat/locales/kh.js"
+    },
+    "./v4/locales/kh.cjs": {
+      "types": "./compat/locales/kh.d.cts",
+      "default": "./compat/locales/kh.cjs"
+    },
+    "./v4/locales/km.js": {
+      "types": "./compat/locales/km.d.ts",
+      "default": "./compat/locales/km.js"
+    },
+    "./v4/locales/km.cjs": {
+      "types": "./compat/locales/km.d.cts",
+      "default": "./compat/locales/km.cjs"
+    },
+    "./v4/locales/kn.js": {
+      "types": "./compat/locales/kn.d.ts",
+      "default": "./compat/locales/kn.js"
+    },
+    "./v4/locales/kn.cjs": {
+      "types": "./compat/locales/kn.d.cts",
+      "default": "./compat/locales/kn.cjs"
+    },
+    "./v4/locales/ko.js": {
+      "types": "./compat/locales/ko.d.ts",
+      "default": "./compat/locales/ko.js"
+    },
+    "./v4/locales/ko.cjs": {
+      "types": "./compat/locales/ko.d.cts",
+      "default": "./compat/locales/ko.cjs"
+    },
+    "./v4/locales/lt.js": {
+      "types": "./compat/locales/lt.d.ts",
+      "default": "./compat/locales/lt.js"
+    },
+    "./v4/locales/lt.cjs": {
+      "types": "./compat/locales/lt.d.cts",
+      "default": "./compat/locales/lt.cjs"
+    },
+    "./v4/locales/mk.js": {
+      "types": "./compat/locales/mk.d.ts",
+      "default": "./compat/locales/mk.js"
+    },
+    "./v4/locales/mk.cjs": {
+      "types": "./compat/locales/mk.d.cts",
+      "default": "./compat/locales/mk.cjs"
+    },
+    "./v4/locales/ms.js": {
+      "types": "./compat/locales/ms.d.ts",
+      "default": "./compat/locales/ms.js"
+    },
+    "./v4/locales/ms.cjs": {
+      "types": "./compat/locales/ms.d.cts",
+      "default": "./compat/locales/ms.cjs"
+    },
+    "./v4/locales/ne.js": {
+      "types": "./compat/locales/ne.d.ts",
+      "default": "./compat/locales/ne.js"
+    },
+    "./v4/locales/ne.cjs": {
+      "types": "./compat/locales/ne.d.cts",
+      "default": "./compat/locales/ne.cjs"
+    },
+    "./v4/locales/nl.js": {
+      "types": "./compat/locales/nl.d.ts",
+      "default": "./compat/locales/nl.js"
+    },
+    "./v4/locales/nl.cjs": {
+      "types": "./compat/locales/nl.d.cts",
+      "default": "./compat/locales/nl.cjs"
+    },
+    "./v4/locales/nn.js": {
+      "types": "./compat/locales/nn.d.ts",
+      "default": "./compat/locales/nn.js"
+    },
+    "./v4/locales/nn.cjs": {
+      "types": "./compat/locales/nn.d.cts",
+      "default": "./compat/locales/nn.cjs"
+    },
+    "./v4/locales/no.js": {
+      "types": "./compat/locales/no.d.ts",
+      "default": "./compat/locales/no.js"
+    },
+    "./v4/locales/no.cjs": {
+      "types": "./compat/locales/no.d.cts",
+      "default": "./compat/locales/no.cjs"
+    },
+    "./v4/locales/ota.js": {
+      "types": "./compat/locales/ota.d.ts",
+      "default": "./compat/locales/ota.js"
+    },
+    "./v4/locales/ota.cjs": {
+      "types": "./compat/locales/ota.d.cts",
+      "default": "./compat/locales/ota.cjs"
+    },
+    "./v4/locales/ps.js": {
+      "types": "./compat/locales/ps.d.ts",
+      "default": "./compat/locales/ps.js"
+    },
+    "./v4/locales/ps.cjs": {
+      "types": "./compat/locales/ps.d.cts",
+      "default": "./compat/locales/ps.cjs"
+    },
+    "./v4/locales/pl.js": {
+      "types": "./compat/locales/pl.d.ts",
+      "default": "./compat/locales/pl.js"
+    },
+    "./v4/locales/pl.cjs": {
+      "types": "./compat/locales/pl.d.cts",
+      "default": "./compat/locales/pl.cjs"
+    },
+    "./v4/locales/pt.js": {
+      "types": "./compat/locales/pt.d.ts",
+      "default": "./compat/locales/pt.js"
+    },
+    "./v4/locales/pt.cjs": {
+      "types": "./compat/locales/pt.d.cts",
+      "default": "./compat/locales/pt.cjs"
+    },
+    "./v4/locales/pt-BR.js": {
+      "types": "./compat/locales/pt-BR.d.ts",
+      "default": "./compat/locales/pt-BR.js"
+    },
+    "./v4/locales/pt-BR.cjs": {
+      "types": "./compat/locales/pt-BR.d.cts",
+      "default": "./compat/locales/pt-BR.cjs"
+    },
+    "./v4/locales/ro.js": {
+      "types": "./compat/locales/ro.d.ts",
+      "default": "./compat/locales/ro.js"
+    },
+    "./v4/locales/ro.cjs": {
+      "types": "./compat/locales/ro.d.cts",
+      "default": "./compat/locales/ro.cjs"
+    },
+    "./v4/locales/ru.js": {
+      "types": "./compat/locales/ru.d.ts",
+      "default": "./compat/locales/ru.js"
+    },
+    "./v4/locales/ru.cjs": {
+      "types": "./compat/locales/ru.d.cts",
+      "default": "./compat/locales/ru.cjs"
+    },
+    "./v4/locales/sk.js": {
+      "types": "./compat/locales/sk.d.ts",
+      "default": "./compat/locales/sk.js"
+    },
+    "./v4/locales/sk.cjs": {
+      "types": "./compat/locales/sk.d.cts",
+      "default": "./compat/locales/sk.cjs"
+    },
+    "./v4/locales/sl.js": {
+      "types": "./compat/locales/sl.d.ts",
+      "default": "./compat/locales/sl.js"
+    },
+    "./v4/locales/sl.cjs": {
+      "types": "./compat/locales/sl.d.cts",
+      "default": "./compat/locales/sl.cjs"
+    },
+    "./v4/locales/sv.js": {
+      "types": "./compat/locales/sv.d.ts",
+      "default": "./compat/locales/sv.js"
+    },
+    "./v4/locales/sv.cjs": {
+      "types": "./compat/locales/sv.d.cts",
+      "default": "./compat/locales/sv.cjs"
+    },
+    "./v4/locales/ta.js": {
+      "types": "./compat/locales/ta.d.ts",
+      "default": "./compat/locales/ta.js"
+    },
+    "./v4/locales/ta.cjs": {
+      "types": "./compat/locales/ta.d.cts",
+      "default": "./compat/locales/ta.cjs"
+    },
+    "./v4/locales/tg.js": {
+      "types": "./compat/locales/tg.d.ts",
+      "default": "./compat/locales/tg.js"
+    },
+    "./v4/locales/tg.cjs": {
+      "types": "./compat/locales/tg.d.cts",
+      "default": "./compat/locales/tg.cjs"
+    },
+    "./v4/locales/th.js": {
+      "types": "./compat/locales/th.d.ts",
+      "default": "./compat/locales/th.js"
+    },
+    "./v4/locales/th.cjs": {
+      "types": "./compat/locales/th.d.cts",
+      "default": "./compat/locales/th.cjs"
+    },
+    "./v4/locales/tk.js": {
+      "types": "./compat/locales/tk.d.ts",
+      "default": "./compat/locales/tk.js"
+    },
+    "./v4/locales/tk.cjs": {
+      "types": "./compat/locales/tk.d.cts",
+      "default": "./compat/locales/tk.cjs"
+    },
+    "./v4/locales/tr.js": {
+      "types": "./compat/locales/tr.d.ts",
+      "default": "./compat/locales/tr.js"
+    },
+    "./v4/locales/tr.cjs": {
+      "types": "./compat/locales/tr.d.cts",
+      "default": "./compat/locales/tr.cjs"
+    },
+    "./v4/locales/ua.js": {
+      "types": "./compat/locales/ua.d.ts",
+      "default": "./compat/locales/ua.js"
+    },
+    "./v4/locales/ua.cjs": {
+      "types": "./compat/locales/ua.d.cts",
+      "default": "./compat/locales/ua.cjs"
+    },
+    "./v4/locales/uk.js": {
+      "types": "./compat/locales/uk.d.ts",
+      "default": "./compat/locales/uk.js"
+    },
+    "./v4/locales/uk.cjs": {
+      "types": "./compat/locales/uk.d.cts",
+      "default": "./compat/locales/uk.cjs"
+    },
+    "./v4/locales/ur.js": {
+      "types": "./compat/locales/ur.d.ts",
+      "default": "./compat/locales/ur.js"
+    },
+    "./v4/locales/ur.cjs": {
+      "types": "./compat/locales/ur.d.cts",
+      "default": "./compat/locales/ur.cjs"
+    },
+    "./v4/locales/uz.js": {
+      "types": "./compat/locales/uz.d.ts",
+      "default": "./compat/locales/uz.js"
+    },
+    "./v4/locales/uz.cjs": {
+      "types": "./compat/locales/uz.d.cts",
+      "default": "./compat/locales/uz.cjs"
+    },
+    "./v4/locales/vi.js": {
+      "types": "./compat/locales/vi.d.ts",
+      "default": "./compat/locales/vi.js"
+    },
+    "./v4/locales/vi.cjs": {
+      "types": "./compat/locales/vi.d.cts",
+      "default": "./compat/locales/vi.cjs"
+    },
+    "./v4/locales/zh-CN.js": {
+      "types": "./compat/locales/zh-CN.d.ts",
+      "default": "./compat/locales/zh-CN.js"
+    },
+    "./v4/locales/zh-CN.cjs": {
+      "types": "./compat/locales/zh-CN.d.cts",
+      "default": "./compat/locales/zh-CN.cjs"
+    },
+    "./v4/locales/zh-TW.js": {
+      "types": "./compat/locales/zh-TW.d.ts",
+      "default": "./compat/locales/zh-TW.js"
+    },
+    "./v4/locales/zh-TW.cjs": {
+      "types": "./compat/locales/zh-TW.d.cts",
+      "default": "./compat/locales/zh-TW.cjs"
+    },
+    "./v4/locales/yo.js": {
+      "types": "./compat/locales/yo.d.ts",
+      "default": "./compat/locales/yo.js"
+    },
+    "./v4/locales/yo.cjs": {
+      "types": "./compat/locales/yo.d.cts",
+      "default": "./compat/locales/yo.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "compat",
+    "README.md",
+    "scripts"
+  ],
+  "dependencies": {
+    "zod": "4.6.7"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "module": "./compat/index.mjs",
+  "sideEffects": [
+    "./compat/compile.mjs",
+    "./compat/compile.cjs"
+  ]
+}

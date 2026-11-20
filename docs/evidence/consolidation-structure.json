@@ -1,0 +1,12 @@
+{
+  "version": "0.17.0",
+  "packages": 24,
+  "saasFeatures": 182,
+  "counts": {
+    "@sapling/kingsman": 23,
+    "@sapling/sdk": 146,
+    "@sapling/harbor": 13
+  },
+  "errors": [],
+  "checks": "static only; not feature-complete or production validated"
+}

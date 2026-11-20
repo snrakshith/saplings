@@ -1,0 +1,148 @@
+TAP version 13
+# Subtest: 31 SaaS modules moved to root; no expanded folder and no runtime expanded property
+ok 1 - 31 SaaS modules moved to root; no expanded folder and no runtime expanded property
+  ---
+  duration_ms: 5.255502
+  type: 'test'
+  ...
+# Subtest: shared rate store enforces atomic distributed ceilings with clock windows
+ok 2 - shared rate store enforces atomic distributed ceilings with clock windows
+  ---
+  duration_ms: 5.555344
+  type: 'test'
+  ...
+# Subtest: shared ban state extends TTL, expires and does not share keys across addresses
+ok 3 - shared ban state extends TTL, expires and does not share keys across addresses
+  ---
+  duration_ms: 0.522889
+  type: 'test'
+  ...
+# Subtest: gateway challenge driver issues explicit challenge, blocks and allows by verdict
+ok 4 - gateway challenge driver issues explicit challenge, blocks and allows by verdict
+  ---
+  duration_ms: 35.293717
+  type: 'test'
+  ...
+# Subtest: gateway DDoS ban and rate limits use shared atomic store
+ok 5 - gateway DDoS ban and rate limits use shared atomic store
+  ---
+  duration_ms: 11.233133
+  type: 'test'
+  ...
+# Subtest: gateway rejects ambiguous encoded separators/traversal and malformed URL before forwarding
+ok 6 - gateway rejects ambiguous encoded separators/traversal and malformed URL before forwarding
+  ---
+  duration_ms: 9.014955
+  type: 'test'
+  ...
+# Subtest: gateway malformed JSON produces HTTP 400, not a server error
+ok 7 - gateway malformed JSON produces HTTP 400, not a server error
+  ---
+  duration_ms: 2.987399
+  type: 'test'
+  ...
+# Subtest: gateway removes inconsistent content-encoding metadata after fetch decompresses a body
+ok 8 - gateway removes inconsistent content-encoding metadata after fetch decompresses a body
+  ---
+  duration_ms: 2.668677
+  type: 'test'
+  ...
+# Subtest: production rejects missing challenge and ban security drivers, accepts explicit drivers with shared rate state
+ok 9 - production rejects missing challenge and ban security drivers, accepts explicit drivers with shared rate state
+  ---
+  duration_ms: 2.711182
+  type: 'test'
+  ...
+# Subtest: identity denies reserved profile keys even when a misconfigured realm permits user edit
+ok 10 - identity denies reserved profile keys even when a misconfigured realm permits user edit
+  ---
+  duration_ms: 311.664142
+  type: 'test'
+  ...
+# Subtest: identity rejects client-credentials scope escalation and disabled client access
+ok 11 - identity rejects client-credentials scope escalation and disabled client access
+  ---
+  duration_ms: 183.181676
+  type: 'test'
+  ...
+# Subtest: identity confidential token introspection/revocation is client-bound and denies invalid secret
+ok 12 - identity confidential token introspection/revocation is client-bound and denies invalid secret
+  ---
+  duration_ms: 415.038004
+  type: 'test'
+  ...
+# Subtest: identity refresh replay revokes the original login session and its access tokens immediately
+ok 13 - identity refresh replay revokes the original login session and its access tokens immediately
+  ---
+  duration_ms: 372.044015
+  type: 'test'
+  ...
+# Subtest: identity authenticated HTTP introspection and revocation endpoints serve confidential clients only
+ok 14 - identity authenticated HTTP introspection and revocation endpoints serve confidential clients only
+  ---
+  duration_ms: 143.968294
+  type: 'test'
+  ...
+# Subtest: tenant export enforces configured row/field policies and does not leak unauthorized records
+ok 15 - tenant export enforces configured row/field policies and does not leak unauthorized records
+  ---
+  duration_ms: 3.100659
+  type: 'test'
+  ...
+# Subtest: gateway production trusted proxy rejects plaintext or untrusted HTTPS assertions on each request
+ok 16 - gateway production trusted proxy rejects plaintext or untrusted HTTPS assertions on each request
+  ---
+  duration_ms: 7.041698
+  type: 'test'
+  ...
+# Subtest: gateway maintenance sweeps expired state without deleting active ban/rate records
+ok 17 - gateway maintenance sweeps expired state without deleting active ban/rate records
+  ---
+  duration_ms: 1.515277
+  type: 'test'
+  ...
+# Subtest: remember-me session keeps configured sliding idle instead of accidentally using SSO 30 minutes
+ok 18 - remember-me session keeps configured sliding idle instead of accidentally using SSO 30 minutes
+  ---
+  duration_ms: 373.237988
+  type: 'test'
+  ...
+# Subtest: identity MFA prohibits reuse of one-time code for a second login
+ok 19 - identity MFA prohibits reuse of one-time code for a second login
+  ---
+  duration_ms: 290.103476
+  type: 'test'
+  ...
+# Subtest: SDK embedded gateway uses transactional rate/ban state when a shared store is available
+ok 20 - SDK embedded gateway uses transactional rate/ban state when a shared store is available
+  ---
+  duration_ms: 1.567175
+  type: 'test'
+  ...
+# Subtest: production SDK tenant export requires domain policy and fails closed
+ok 21 - production SDK tenant export requires domain policy and fails closed
+  ---
+  duration_ms: 1.195975
+  type: 'test'
+  ...
+# Subtest: gateway key-auth plugin requires a real configured secret and consumer group
+ok 22 - gateway key-auth plugin requires a real configured secret and consumer group
+  ---
+  duration_ms: 8.218093
+  type: 'test'
+  ...
+# Subtest: gateway independent rate windows and thresholds cannot overwrite each other
+ok 23 - gateway independent rate windows and thresholds cannot overwrite each other
+  ---
+  duration_ms: 0.491411
+  type: 'test'
+  ...
+1..23
+# tests 23
+# suites 0
+# pass 23
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 2338.128608

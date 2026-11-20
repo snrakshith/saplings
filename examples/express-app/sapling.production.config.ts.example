@@ -1,0 +1,31 @@
+import { defineSaplingConfig, JwksAuthenticationAdapter, ValkeyRateState } from '@sapling/sdk';
+import { DrizzleStore } from '@sapling/adapter-drizzle';
+import { S3StorageAdapter, S3PresignAdapter, AwsNotificationsAdapter } from '@sapling/adapter-aws';
+import { S3Client } from '@aws-sdk/client-s3';
+import { SESv2Client } from '@aws-sdk/client-sesv2';
+import { SNSClient } from '@aws-sdk/client-sns';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
+import { createClient } from 'redis'; // install redis in consuming app
+const env=(key:string)=>{const value=process.env[key];if(!value)throw new Error(`Missing ${key}`);return value;};
+const pool=new Pool({connectionString:env('DATABASE_URL'),max:20});
+const store=new DrizzleStore(drizzle(pool));
+const valkey=createClient({url:env('VALKEY_URL')});await valkey.connect();
+const s3=new S3Client({region:env('AWS_REGION')});const bucket=env('S3_BUCKET');
+export default defineSaplingConfig({
+  app:{id:'my-saas',environment:'production'},
+  tenancy:{enabled:true,enforceContext:true},
+  access:{enabled:true,enforceOnServices:true,defaultDecision:'deny'},
+  services:{encryptionKey:Buffer.from(env('SAPLING_ENCRYPTION_KEY'),'base64'),dataCollections:['projects','documents','contacts']},
+  security:{scanner:{enabled:true,root:'./src',allowedHosts:[]},defender:{enabled:true,mode:'block',blockThreshold:80,rateLimit:{enabled:true,maxRequests:120,windowMs:60000},policy:{rateState:new ValkeyRateState(valkey),failureMode:'block',allowedOrigins:[env('APP_ORIGIN')],maxContentLength:1048576,onError:()=>console.error('Security dependency failure')}}},
+  storage:{enabled:true,provider:'custom'},
+  payments:{provider:'cashfree',cashfree:{clientId:env('CASHFREE_CLIENT_ID'),clientSecret:env('CASHFREE_CLIENT_SECRET'),environment:'production',customer:async ({tenantId,reference})=>{const customer=await store.get<{id:string;phone:string;email?:string}>(tenantId,'checkout-customers',reference);if(!customer)throw Error('Approved checkout customer required');return customer;}}},
+  providers:{store,storage:new S3StorageAdapter(s3,bucket),notifications:new AwsNotificationsAdapter(new SESv2Client({region:env('AWS_REGION')}),new SNSClient({region:env('AWS_REGION')}),env('SES_FROM')),
+    authentication:new JwksAuthenticationAdapter({issuer:env('OIDC_ISSUER'),audience:env('OIDC_AUDIENCE'),jwksUrl:env('OIDC_JWKS_URL')}),
+    capabilities:{'SAAS-085':new S3PresignAdapter(s3,bucket)}},
+  // Add OIDC broker, Stripe, control-plane and media adapters per docs/PROVIDER_MATRIX.md.
+  // Only enable features that have been configured and independently validated.
+});
+export async function close(){await Promise.allSettled([valkey.quit(),pool.end()]);s3.destroy();}
+// Export workerTenants() from your config to run the worker, using the actual tenant registry and scoped service identities.
+// Example wiring only. Use proper TLS, proxy trust, RLS and service authorization; validate before production.

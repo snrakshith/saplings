@@ -1,0 +1,10 @@
+# Browser-capable quality runner. Install pinned external engines and use isolated approved targets.
+FROM mcr.microsoft.com/playwright:v1.56.1-noble
+WORKDIR /repo
+RUN corepack enable && corepack prepare pnpm@10.11.0 --activate
+COPY . .
+RUN pnpm install --frozen-lockfile && pnpm run build && pnpm run build:quality && pnpm run build:hooks
+RUN mkdir -p /repo/quality-results && chown -R pwuser:pwuser /repo
+USER pwuser
+ENTRYPOINT ["node","--experimental-strip-types","packages/quality-cli/dist/cli.js"]
+CMD ["help"]

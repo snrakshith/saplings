@@ -1,0 +1,10 @@
+{
+  "version": "0.17.0",
+  "count": 182,
+  "counts": {
+    "@sapling/kingsman": 23,
+    "@sapling/sdk": 146,
+    "@sapling/harbor": 13
+  },
+  "behavior": "owner inventory; does not certify feature completeness"
+}

@@ -1,0 +1,32 @@
+{
+  "version": "0.13.0",
+  "sourceHash": "03c002438d8c62ab72bd4bf6c8210c43523829a8bf1cec1bfab4c2b441eb5cca",
+  "decision": "BLOCKED",
+  "failures": [
+    "adapter-build: not passed",
+    "postgres-live: not passed",
+    "valkey-live: not passed",
+    "provider-live: not passed",
+    "staging-load: not passed",
+    "staging-soak: not passed",
+    "restore-drill: not passed",
+    "dependency-audit: not passed",
+    "scanner-triage: not passed",
+    "independent-security-audit: not passed",
+    "application-authorization: not passed",
+    "operations-review: not passed",
+    "quality-build: not passed",
+    "backend-quality-live: not passed",
+    "frontend-quality-live: not passed",
+    "foundation-live: not passed",
+    "validation-compat: not passed",
+    "recurring-payment-live: not passed",
+    "tenant-offboarding-drill: not passed",
+    "workspace-install: not passed",
+    "react-hooks: not passed",
+    "cashfree-live: not passed",
+    "saas-feature-acceptance-live: not passed",
+    "gateway-integration-live: not passed",
+    "identity-oidc-conformance: not passed"
+  ]
+}

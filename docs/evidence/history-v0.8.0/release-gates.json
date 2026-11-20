@@ -1,0 +1,140 @@
+{
+  "version": "0.8.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "7ea4080789c7fc9f1ad9ab6042f26e74e82b906f21eb2c9b23667f14b021d13c",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "1805592efc83f4e7839c5f380c80191c1e5efe538c5ef73cd06df3edc5204b06",
+      "at": "2026-11-14T11:12:08.948675+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "7ea4080789c7fc9f1ad9ab6042f26e74e82b906f21eb2c9b23667f14b021d13c",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "23181d5ae14bd5bc14401a64bc307384a8cb60c08d21b9fcf7486dd1b9218b02",
+      "at": "2026-11-14T11:12:08.948740+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "7ea4080789c7fc9f1ad9ab6042f26e74e82b906f21eb2c9b23667f14b021d13c",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "17cce864eb02175fa1df66689be790f63a3ffceb402e88268f0a73cd083399b6",
+      "at": "2026-11-14T11:12:08.949048+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "7ea4080789c7fc9f1ad9ab6042f26e74e82b906f21eb2c9b23667f14b021d13c",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "e90ba88cd99c9cde9d195f246f829c1ec6e08d38bf44cf82bc9fdd7bed081969",
+      "at": "2026-11-14T11:12:08.949085+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Current release live, dependency-backed or independently reviewed evidence missing"
+    }
+  ]
+}

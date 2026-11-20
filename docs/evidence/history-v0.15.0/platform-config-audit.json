@@ -1,0 +1,265 @@
+{
+  "version": "0.16.0",
+  "sourceConfigFiles": [
+    "examples/platform/GatewayConfig.json",
+    "examples/platform/GatewayConfig.yaml",
+    "examples/platform/RealmConfig-full.json"
+  ],
+  "gateway": [
+    {
+      "field": "secretStoreRefs",
+      "status": "partial",
+      "detail": "Secret resolver injected; remote rotation/secret store controllers not implemented"
+    },
+    {
+      "field": "observabilityRef",
+      "status": "config-only",
+      "detail": "External observability profile reference not resolved"
+    },
+    {
+      "field": "certificates",
+      "status": "partial",
+      "detail": "TLS SNI listener and PEM resolver implemented; actual cert issuance/rotation/real TLS validation pending"
+    },
+    {
+      "field": "upstreams",
+      "status": "partial",
+      "detail": "Weighted round-robin/least-connections, probe, circuit breaker; live replica, advanced passive and adaptive logic missing"
+    },
+    {
+      "field": "services",
+      "status": "partial",
+      "detail": "HTTP routes, retries, timeouts, method/path/host, basic deprecation; gRPC/TCP/WebSocket protocols not implemented"
+    },
+    {
+      "field": "consumerGroups",
+      "status": "partial",
+      "detail": "Scoped plugin override via group membership; durable consumer lifecycle/authorization missing"
+    },
+    {
+      "field": "consumers",
+      "status": "partial",
+      "detail": "Static resolved API-key authentication and JWT consumer association; hashing/rotation/revocation need DB"
+    },
+    {
+      "field": "plugins",
+      "status": "partial",
+      "detail": "See per-plugin matrix; several advanced actions require external adapters"
+    },
+    {
+      "field": "observability",
+      "status": "config-only",
+      "detail": "onEvent hook only; declared log sinks/metrics/traces not wired"
+    }
+  ],
+  "realm": [
+    {
+      "field": "state",
+      "status": "implemented",
+      "detail": "Active/inactive guard"
+    },
+    {
+      "field": "secretStoreRefs",
+      "status": "partial",
+      "detail": "Vault resolver injected for confidential client; key manager/integration rotation not implemented"
+    },
+    {
+      "field": "observabilityRef",
+      "status": "config-only",
+      "detail": "External observability ref unused"
+    },
+    {
+      "field": "frontend",
+      "status": "partial",
+      "detail": "Issuer and OIDC endpoints; browser themes/branding/locales/login UI require host integration"
+    },
+    {
+      "field": "keys",
+      "status": "partial",
+      "detail": "RS256 and JWK; stable production signer injected; key rotation/import management not implemented"
+    },
+    {
+      "field": "tokens",
+      "status": "partial",
+      "detail": "Access/ID JWT, rotating refresh with family replay, short-lived auth code; action/ID claims and token exchange incomplete"
+    },
+    {
+      "field": "sessions",
+      "status": "partial",
+      "detail": "Realm-scoped transactional sessions and revocation; Redis/rememberMe/offline policies incomplete"
+    },
+    {
+      "field": "security",
+      "status": "partial",
+      "detail": "Password policy, breach-check callback, role-conditional TOTP, brute force; WebAuthn/headers and encrypted TOTP need integration"
+    },
+    {
+      "field": "registration",
+      "status": "partial",
+      "detail": "Normalized email/domain, verification, reset and account lookup; detailed registration modes/UI need integration"
+    },
+    {
+      "field": "userProfile",
+      "status": "partial",
+      "detail": "Registration-time editable string attributes/format checks; full per-role view/edit/multivalued needed"
+    },
+    {
+      "field": "requiredActions",
+      "status": "partial",
+      "detail": "VERIFY_EMAIL/RESET_PASSWORD; UPDATE_PROFILE/PASSWORD and TOTP UX not implemented"
+    },
+    {
+      "field": "authenticationFlows",
+      "status": "partial",
+      "detail": "Password and conditional OTP; IdP redirect/cookie flow host integration not implemented"
+    },
+    {
+      "field": "flowBindings",
+      "status": "config-only",
+      "detail": "Only code flow HTTP handler; other named bindings are not executed"
+    },
+    {
+      "field": "organizations",
+      "status": "partial",
+      "detail": "Create org, hashed invitation, accept membership and role; domain verification/per-org IdP not implemented"
+    },
+    {
+      "field": "roles",
+      "status": "partial",
+      "detail": "Realm/default/composite roles used for tokens; client-role permission grants missing"
+    },
+    {
+      "field": "groups",
+      "status": "partial",
+      "detail": "Default and nested realm group role expansion; admin lifecycle management missing"
+    },
+    {
+      "field": "defaultGroups",
+      "status": "implemented",
+      "detail": "Assign default group on registration"
+    },
+    {
+      "field": "clientScopes",
+      "status": "partial",
+      "detail": "Basic role/profile/issuer claims; mapper execution per destination incomplete"
+    },
+    {
+      "field": "defaultClientScopes",
+      "status": "partial",
+      "detail": "Auth code scope allowlist/default; full optional scope/mappers/consent not implemented"
+    },
+    {
+      "field": "clients",
+      "status": "partial",
+      "detail": "Public PKCE code + confidential client secret credentials; private-key-jwt/mTLS/DPoP unavailable"
+    },
+    {
+      "field": "clientPolicies",
+      "status": "partial",
+      "detail": "Public PKCE/redirect enforced; general profile executors and advanced policies unavailable"
+    },
+    {
+      "field": "identityProviders",
+      "status": "config-only",
+      "detail": "Google/SAML broker settings retained; no federation drivers activated"
+    },
+    {
+      "field": "userFederation",
+      "status": "config-only",
+      "detail": "LDAP settings retained; no LDAP connections or sync"
+    },
+    {
+      "field": "smtp",
+      "status": "config-only",
+      "detail": "sendAction callback must be provided; SMTP settings are not a mail client"
+    },
+    {
+      "field": "events",
+      "status": "partial",
+      "detail": "onEvent callback; no configured webhook/SIEM/audit sink implementations"
+    },
+    {
+      "field": "observability",
+      "status": "config-only",
+      "detail": "No metrics/health server wired by default"
+    },
+    {
+      "field": "bootstrap",
+      "status": "config-only",
+      "detail": "No bootstrap credentials or users automatically applied; needs approved create-only provisioner"
+    }
+  ],
+  "plugins": [
+    {
+      "name": "correlation-id",
+      "status": "implemented",
+      "detail": "Bounded server-generated request ID"
+    },
+    {
+      "name": "cors",
+      "status": "partial",
+      "detail": "Exact-origin CORS/preflight; credentials/policies require browser validation"
+    },
+    {
+      "name": "ddos-protection",
+      "status": "partial",
+      "detail": "Distributed rate callback/global/IP thresholds; ban/challenge and edge defense missing"
+    },
+    {
+      "name": "bot-detection",
+      "status": "partial",
+      "detail": "UA-deny heuristic only; challenge and verified-bot support missing"
+    },
+    {
+      "name": "ip-restriction",
+      "status": "partial",
+      "detail": "CIDR and threat feed callback; external feed management missing"
+    },
+    {
+      "name": "geo-restriction",
+      "status": "partial",
+      "detail": "Country callback and deny/allow; geodb/reliability external"
+    },
+    {
+      "name": "request-size-limiting",
+      "status": "implemented",
+      "detail": "Header and request limits enforced"
+    },
+    {
+      "name": "rate-limiting",
+      "status": "partial",
+      "detail": "Scoped token counters via injected store; IETF header details, distributed operational proof pending"
+    },
+    {
+      "name": "response-transformer",
+      "status": "partial",
+      "detail": "Top-level JSON mask/remove and headers; nested/object streaming absent"
+    },
+    {
+      "name": "logging-override",
+      "status": "config-only",
+      "detail": "Source metadata retained; no dynamic log stream backend"
+    },
+    {
+      "name": "jwt",
+      "status": "partial",
+      "detail": "Verifier adapter + realm binding; remote JWKS lifecycle requires adapter"
+    },
+    {
+      "name": "acl",
+      "status": "implemented",
+      "detail": "All/any claim allowlist"
+    },
+    {
+      "name": "proxy-cache",
+      "status": "partial",
+      "detail": "Authenticated GET-only bounded local cache; no distributed invalidation"
+    },
+    {
+      "name": "request-validator",
+      "status": "partial",
+      "detail": "Schema callback required; no schema engine bundled"
+    }
+  ],
+  "note": "Descriptive coverage of config fields, not parity, security certification, or production-ready claim."
+}

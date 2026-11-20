@@ -1,0 +1,5 @@
+
+> sapling-unified-sdk-monorepo@0.8.2 catalog:refresh
+> node scripts/refresh-v03-catalog.mjs
+
+Updated 182 features and 41 scanners

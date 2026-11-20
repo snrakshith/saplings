@@ -1,0 +1,183 @@
+{
+  "version": "0.8.2",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "c14b91d592e2e8dc643be2ee3994a1deb8dd90e56b1caa4ac56bfd8781ae9584",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "b5ab6b5e22f5b360320737e601cfb081bbcb4b009c158faa31a5907de4bb2822",
+      "at": "2026-11-14T11:42:44.782861+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "c14b91d592e2e8dc643be2ee3994a1deb8dd90e56b1caa4ac56bfd8781ae9584",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "16d6df4447a54ac112368ef36309ef34fa8f6d34f394f26b1cc2369c7c35d8c1",
+      "at": "2026-11-14T11:42:44.782861+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "c14b91d592e2e8dc643be2ee3994a1deb8dd90e56b1caa4ac56bfd8781ae9584",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "2bf5b508e6ba1053b21d5a3100332f17d8733d099681a78d8bb53ba93275cd18",
+      "at": "2026-11-14T11:42:44.782861+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "package:@aws-sdk/client-s3",
+        "package:@aws-sdk/client-sesv2",
+        "package:@aws-sdk/client-sns",
+        "package:graphql"
+      ]
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "env:TEST_DATABASE_URL"
+      ]
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "package:redis",
+        "env:TEST_VALKEY_URL"
+      ]
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "env:SAPLING_PROVIDER_TEST_MODULE",
+        "env:SAPLING_SANDBOX_CONFIRM",
+        "approved sandbox confirmation"
+      ]
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "file:package-lock.json"
+      ]
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "package:react",
+        "package:web-vitals",
+        "package:playwright",
+        "package:express",
+        "package:vite"
+      ]
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "package:ws",
+        "package:socket.io",
+        "package:socket.io-client",
+        "package:express",
+        "package:compression",
+        "package:multer"
+      ]
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "blocked",
+      "missing": [
+        "package:zod"
+      ]
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "c14b91d592e2e8dc643be2ee3994a1deb8dd90e56b1caa4ac56bfd8781ae9584",
+      "reviewer": "local engineering execution (not independent)",
+      "environment": "local",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "81867bc8351470860056d2d54003025f549c84b9469b56e5536c83eee922f353",
+      "at": "2026-11-14T11:42:44.782861+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "operator-required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "operator-required"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "name": "@sapling/utils",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./fp": {
+      "types": "./dist/fp.d.ts",
+      "default": "./dist/fp.js"
+    },
+    "./hooks": {
+      "types": "./dist/hooks.d.ts",
+      "default": "./dist/hooks.js"
+    },
+    "./iterators": {
+      "types": "./dist/iterators.d.ts",
+      "default": "./dist/iterators.js"
+    },
+    "./i18n": {
+      "types": "./dist/i18n.d.ts",
+      "default": "./dist/i18n.js"
+    },
+    "./server": {
+      "types": "./dist/server.d.ts",
+      "default": "./dist/server.js"
+    },
+    "./permissions": {
+      "types": "./dist/permissions.d.ts",
+      "default": "./dist/permissions.js"
+    },
+    "./storage": {
+      "types": "./dist/storage.d.ts",
+      "default": "./dist/storage.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts",
+      "default": "./dist/types.js"
+    },
+    "./date": {
+      "types": "./dist/date.d.ts",
+      "default": "./dist/date.js"
+    },
+    "./es-toolkit": {
+      "types": "./dist/es-toolkit.d.ts",
+      "default": "./dist/es-toolkit.js"
+    },
+    "./id": {
+      "types": "./dist/id.d.ts",
+      "default": "./dist/id.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "ORIGINAL_README.md"
+  ],
+  "dependencies": {},
+  "engines": {
+    "node": ">=22"
+  }
+}

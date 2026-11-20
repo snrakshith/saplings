@@ -1,0 +1,2 @@
+Verify parser result expectations
+PASS 8/8 report decision fixtures (direct Node checks of compiled parser, not Vitest suite)

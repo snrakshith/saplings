@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-quality
+  namespace: {{ .Values.namespace }}
+spec:
+  schedule: {{ .Values.schedule | quote }}
+  suspend: true # operator enables after review
+  concurrencyPolicy: Forbid
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: {{ .Values.serviceAccountName }}
+          containers:
+            - name: runner
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              args: ["run", "--config", "sapling.config.ts", "--profile", "{{ .Values.nightlyProfile }}"]
+              env:
+                - {name: QUALITY_ENV, value: staging}
+                - {name: SAPLING_QUALITY_CONFIRM, value: "yes"}
+                - {name: API_URL, value: {{ .Values.apiUrl | quote }}}
+                - {name: WEB_URL, value: {{ .Values.webUrl | quote }}}
+              resources:
+{{ toYaml .Values.resources | indent 16 }}

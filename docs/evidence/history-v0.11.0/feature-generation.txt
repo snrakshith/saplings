@@ -1,0 +1,20 @@
+{
+  "version": "0.11.0",
+  "total": 783,
+  "documents": 2349,
+  "counts": {
+    "saas": 182,
+    "scanner": 41,
+    "quality": 32,
+    "defender": 27,
+    "utilities": 342,
+    "react-hooks": 31,
+    "validation-native": 40,
+    "realtime": 24,
+    "middleware": 28,
+    "instrumentation": 5,
+    "providers": 11,
+    "packages": 19,
+    "validation-compat": 1
+  }
+}

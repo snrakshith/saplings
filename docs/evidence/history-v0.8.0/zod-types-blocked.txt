@@ -1,0 +1,12 @@
+
+> sapling-unified-sdk-monorepo@0.8.0 typecheck:validation:compat
+> tsc --noEmit --strict --skipLibCheck --module NodeNext --target ES2022 tests/types/zod-compat.ts
+
+tests/types/zod-compat.ts(1,9): error TS2614: Module '"@saplings/validations"' has no exported member 'z'. Did you mean to use 'import z from "@saplings/validations"' instead?
+tests/types/zod-compat.ts(1,11): error TS2614: Module '"@saplings/validations"' has no exported member 'ZodError'. Did you mean to use 'import ZodError from "@saplings/validations"' instead?
+tests/types/zod-compat.ts(2,29): error TS2307: Cannot find module 'zod' or its corresponding type declarations.
+tests/types/zod-compat.ts(8,1): error TS2578: Unused '@ts-expect-error' directive.
+tests/types/zod-compat.ts(10,78): error TS2339: Property 'object' does not exist on type 'typeof import("/mnt/data/v08work/sapling-unified-sdk/packages/validations/compat/v3", { with: { "resolution-mode": "import" } })'.
+tests/types/zod-compat.ts(10,91): error TS2339: Property 'string' does not exist on type 'typeof import("/mnt/data/v08work/sapling-unified-sdk/packages/validations/compat/v3", { with: { "resolution-mode": "import" } })'.
+tests/types/zod-compat.ts(10,124): error TS2339: Property 'object' does not exist on type 'typeof import("/mnt/data/v08work/sapling-unified-sdk/packages/validations/compat/mini", { with: { "resolution-mode": "import" } })'.
+tests/types/zod-compat.ts(10,139): error TS2339: Property 'string' does not exist on type 'typeof import("/mnt/data/v08work/sapling-unified-sdk/packages/validations/compat/mini", { with: { "resolution-mode": "import" } })'.

@@ -1,0 +1,21 @@
+
+> sapling-unified-sdk-monorepo@0.8.0 build
+> npm run build:foundation && tsc -p packages/quality-contracts && tsc -p packages/catalog && tsc -p packages/security && tsc -p packages/sdk && tsc -p packages/cli
+
+
+> sapling-unified-sdk-monorepo@0.8.0 build:foundation
+> tsc -p packages/utils && tsc -p packages/validations && tsc -p packages/realtime && tsc -p packages/middleware
+
+
+> sapling-unified-sdk-monorepo@0.8.0 catalog:refresh
+> node scripts/refresh-v03-catalog.mjs
+
+Updated 182 features and 41 scanners
+
+> sapling-unified-sdk-monorepo@0.8.0 build
+> npm run build:foundation && tsc -p packages/quality-contracts && tsc -p packages/catalog && tsc -p packages/security && tsc -p packages/sdk && tsc -p packages/cli
+
+
+> sapling-unified-sdk-monorepo@0.8.0 build:foundation
+> tsc -p packages/utils && tsc -p packages/validations && tsc -p packages/realtime && tsc -p packages/middleware
+

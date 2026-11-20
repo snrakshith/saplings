@@ -1,0 +1,150 @@
+{
+  "version": "0.10.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "61c5e472d66001f8d8f9e5719b04a13e3e440a4d474d7bda59be4c606255868d",
+      "reviewer": "local direct execution (not independent; no pnpm install)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "95ded21deadfaff7b9050a6c2efc2c8caf28cb42b27a08f81cee7d63db398693",
+      "at": "2026-11-15T06:51:11.638699+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "61c5e472d66001f8d8f9e5719b04a13e3e440a4d474d7bda59be4c606255868d",
+      "reviewer": "local direct execution (not independent; no pnpm install)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "7657c5428733d419911dc9d6c295ce189acc4d56210b8a8cf4ff0feaea1c392c",
+      "at": "2026-11-15T06:51:11.638699+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "61c5e472d66001f8d8f9e5719b04a13e3e440a4d474d7bda59be4c606255868d",
+      "reviewer": "local direct execution (not independent; no pnpm install)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "be12c165c4357475670b1b039ce11d66f8945fd9601560fddbc7ebb8e94b1d4b",
+      "at": "2026-11-15T06:51:11.638699+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "61c5e472d66001f8d8f9e5719b04a13e3e440a4d474d7bda59be4c606255868d",
+      "reviewer": "local direct execution (not independent; no pnpm install)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "1e1406c6116636e9861afafabf9c6a9277008169c1e24327c2c7876f73d496c2",
+      "at": "2026-11-15T06:51:11.638699+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "workspace-install",
+      "status": "pending",
+      "reason": "Registry EAI_AGAIN; pnpm and reviewed lockfile unavailable; frozen install and runtime deploy not tested"
+    },
+    {
+      "id": "react-hooks",
+      "status": "pending",
+      "reason": "React and type declarations unavailable; full compilation and runtime/browser tests pending"
+    }
+  ]
+}

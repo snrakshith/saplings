@@ -1,0 +1,4 @@
+
+> sapling-unified-sdk-monorepo@0.6.0 build
+> tsc -p packages/quality-contracts && tsc -p packages/catalog && tsc -p packages/security && tsc -p packages/sdk && tsc -p packages/cli
+

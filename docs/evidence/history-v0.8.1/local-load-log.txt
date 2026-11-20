@@ -1,0 +1,21 @@
+
+> sapling-unified-sdk-monorepo@0.8.1 test:load:local
+> node tests/load/local-http.mjs
+
+{
+  "version": "0.8.1",
+  "environment": "local-loopback-in-memory",
+  "requests": 2000,
+  "concurrency": 32,
+  "tenants": 16,
+  "expectedCrossTenantDenials": 100,
+  "crossTenantDenials": 100,
+  "unexpectedErrors": 0,
+  "seconds": 1.03,
+  "requestsPerSecond": 1941.87,
+  "p50Ms": 14.19,
+  "p95Ms": 24.41,
+  "p99Ms": 101.26,
+  "eventLoopP95Ms": 17.55,
+  "at": "2026-11-14T11:20:55.231Z"
+}

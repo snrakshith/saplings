@@ -1,0 +1,2 @@
+tsc -p packages/ui-core
+UI CORE BUILD PASS

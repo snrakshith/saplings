@@ -1,0 +1,4 @@
+TypeScript build: quality-node-diagnostics
+TypeScript build: quality-core
+TypeScript build: backend-quality
+PASS: local quality and shared UI tokens

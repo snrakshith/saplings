@@ -1,0 +1,41 @@
+01|SQL injection|Add language-aware data-flow/ORM parameterization analysis; confirm findings with safe authorized fixture queries, including string interpolation and bound parameters.
+02|XSS|Trace untrusted data to HTML/DOM sinks and context-specific escaping; integrate browser evidence for reflected/stored/DOM XSS in isolated fixtures.
+03|Security headers|Evaluate route-specific CSP/HSTS/frame/referrer/permissions policy and actual redirect/error responses; distinguish absent from intentionally different headers.
+04|Secret exposure|Add entropy and provider-specific detectors, safe fingerprinting, repository history and revocation workflow; never report credential values.
+05|TLS|Probe certificate chain, expiry, hostname, protocol/cipher policy and redirect on authorized endpoints; test insecure client settings and renewal.
+06|CORS|Exercise allowed/disallowed origins, credentials and preflight for configured routes; verify actual response Vary and reject unsafe wildcard combinations.
+07|CSRF|Identify cookie-authenticated mutations and test session-bound token/origin defenses; account for bearer-only APIs and framework built-ins.
+08|Cookies and sessions|Parse repeated Set-Cookie safely; check flags, domain/path, expiration, rotation and fixation on authenticated fixtures.
+09|Authentication|Model login/reset/MFA paths, lockout, enumeration, session lifecycle and bypass with test accounts; do not infer full coverage from source matches.
+10|DNS and email|Check SPF/DKIM/DMARC syntax and alignment with resolver provenance, DNSSEC where required; report missing versus DNS timeout distinctly.
+11|Open redirect|Trace redirect destinations and URL normalization; test allowlist, protocol-relative, nested encoding and benign internal redirects.
+12|GraphQL|Validate auth at resolver, query cost/depth and introspection policy against authorized schema; schema exposure alone is not vulnerability proof.
+13|JWT|Check verification algorithms/issuer/audience/expiry/JWKS and replay in test fixtures; distinguish decode-only and actual auth verification.
+14|Technology/CVE|Inventory runtime/component versions and correlate verified advisories with reachability, platform and patch level; preserve SBOM provenance.
+15|Threat intel|Fetch and verify approved versioned feeds with expiry/allowlisted network, dedup indicators and privacy-conscious matching; validate stale/tampered feeds.
+16|Legal compliance|Map evidence to approved policies, consent, retention and privacy controls; legal expert must assess applicability, no automatic compliance certification.
+17|DDoS|Verify edge rate/body/connection limits, provider policy and bounded load test in staging; never perform disruptive public tests.
+18|File upload|Check MIME/content, size, path, archive bombs, storage ACL and quarantine; exercise synthetic harmless fixtures, not production uploads.
+19|Audit/logging|Trace security events and sensitive field redaction; validate tamper resistance, retention and alert delivery with known test events.
+20|Mobile API limits|Verify shared actor/device/tenant quotas and app authentication on authorized API fixtures; assess replay and bypass without device secrets.
+21|Domain hijack|Check dangling DNS and ownership through approved provider metadata; confirm takeover risk without attempting to claim third-party resources.
+22|Debug endpoints|Enumerate only approved route inventory; validate exposed health/admin/dev endpoints and redact responses; distinguish intended public health.
+23|Input validation|Trace DTO schema to controller/ORM and unknown-field handling; test invalid types, mass assignment and bounded complexity.
+24|Vercel|Use read-only project metadata and deployment configuration; check previews, secret scope, headers and domain ownership with approved access.
+25|Netlify|Use read-only site config, build/deploy permissions, redirects/headers and preview isolation; do not modify cloud assets during scanning.
+26|Cloudflare|Read scoped zone/WAF/TLS/cache settings and compare desired policy; test approved origin access controls and drift evidence.
+27|Dependencies|Run pnpm audit/Trivy/OSV on reviewed lockfile and images; distinguish affected installed path, patch and exploitability.
+28|Supabase|Verify RLS and service-role exposure, storage policies and auth using isolated roles; tenant access fixtures must demonstrate denial.
+29|Firebase|Evaluate authenticated database/storage rules and public exposure with emulator/approved test project; keep service credentials server-side.
+30|GitHub|Inspect branch protections, token permissions, workflow trust and secret exposure via read-only API; review untrusted PR paths.
+31|Browser storage|Trace token persistence and access, CSP and logout invalidation; check browser sessions without logging tokens.
+32|SAST|Integrate Semgrep and language-aware rules, baseline/fingerprint findings, false-positive triage and taint fixture coverage.
+33|Webhook signatures|Trace raw-byte verification before parsing, secret rotation, timestamp/replay and durable inbox; simulate tampered/reordered callbacks.
+34|IDOR/access|Use two approved fixture accounts and tenant IDs to test row/field authorization across routes, GraphQL and downloads; report denied/allowed outcomes.
+35|Tenant isolation|Test shared DB RLS, caches, jobs, search, object keys and export with separate tenants; source-only headers check is insufficient.
+36|SEO|Check crawlability, canonical, robots/sitemap, metadata and structured data on allowed public routes; not a security vulnerability classification.
+37|AEO|Assess semantic content, structured markup and discoverability with transparent rubric; do not promise rankings or AI inclusion.
+38|Uptime|Implement multi-region checks with timeout, incident thresholds and historical availability; one probe is not an SLO.
+39|Web vitals|Run lab and field telemetry with device/network baseline and sample sizes; distinguish LCP/INP/CLS and avoid unsupported estimates.
+40|Accessibility|Integrate axe and manual keyboard/screen-reader review; test WCAG criteria per route, no automatic compliance guarantee.
+41|Domain monitoring|Track DNS, expiry, certificate transparency and ownership changes with verified snapshots and notifications; avoid claiming domains.

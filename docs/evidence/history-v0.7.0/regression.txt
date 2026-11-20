@@ -1,0 +1,404 @@
+
+> sapling-unified-sdk-monorepo@0.7.0 test
+> node --test --test-timeout=30000 tests/*.test.mjs
+
+TAP version 13
+# Subtest: original browser-safe utilities and server subpath
+ok 1 - original browser-safe utilities and server subpath
+  ---
+  duration_ms: 2.905526
+  type: 'test'
+  ...
+# Subtest: original object path utility prevents prototype pollution and debounce flush preserves args
+ok 2 - original object path utility prevents prototype pollution and debounce flush preserves args
+  ---
+  duration_ms: 0.507753
+  type: 'test'
+  ...
+# Subtest: permissions deny by default and explicit deny wins
+ok 3 - permissions deny by default and explicit deny wins
+  ---
+  duration_ms: 0.241974
+  type: 'test'
+  ...
+# Subtest: validation parses nested DTOs, strips unknowns, defaults, rejects invalid paths
+ok 4 - validation parses nested DTOs, strips unknowns, defaults, rejects invalid paths
+  ---
+  duration_ms: 1.219752
+  type: 'test'
+  ...
+# Subtest: validation async refinements and transforms, unions and schema composition
+ok 5 - validation async refinements and transforms, unions and schema composition
+  ---
+  duration_ms: 1.321626
+  type: 'test'
+  ...
+# Subtest: validation rejects unsafe keys and bounded recursive input
+ok 6 - validation rejects unsafe keys and bounded recursive input
+  ---
+  duration_ms: 0.372439
+  type: 'test'
+  ...
+# Subtest: realtime isolates tenants, authorizes channels, limits and disconnects
+ok 7 - realtime isolates tenants, authorizes channels, limits and disconnects
+  ---
+  duration_ms: 1.918513
+  type: 'test'
+  ...
+# Subtest: Redis broker uses tenant-specific topics and cleans subscription via compatible injected client
+ok 8 - Redis broker uses tenant-specific topics and cleans subscription via compatible injected client
+  ---
+  duration_ms: 0.674023
+  type: 'test'
+  ...
+# Subtest: actual HTTP SSE authenticated stream, origin rejection and delivery
+ok 9 - actual HTTP SSE authenticated stream, origin rejection and delivery
+  ---
+  duration_ms: 36.039285
+  type: 'test'
+  ...
+# Subtest: HTTP middleware validates body, logs status without query and masks internal errors
+ok 10 - HTTP middleware validates body, logs status without query and masks internal errors
+  ---
+  duration_ms: 16.845323
+  type: 'test'
+  ...
+# Subtest: HTTP deadline aborts cooperatively and returns 504
+ok 11 - HTTP deadline aborts cooperatively and returns 504
+  ---
+  duration_ms: 24.073485
+  type: 'test'
+  ...
+# Subtest: idempotency replay, conflicting body and actor isolation
+ok 12 - idempotency replay, conflicting body and actor isolation
+  ---
+  duration_ms: 21.403622
+  type: 'test'
+  ...
+# Subtest: tenant store idempotency claims are atomic and isolated
+ok 13 - tenant store idempotency claims are atomic and isolated
+  ---
+  duration_ms: 1.373174
+  type: 'test'
+  ...
+# Subtest: cache refuses personalized traffic and serves explicit public GET
+ok 14 - cache refuses personalized traffic and serves explicit public GET
+  ---
+  duration_ms: 11.884568
+  type: 'test'
+  ...
+# Subtest: SDK config integrates middleware/realtime with secure defaults
+ok 15 - SDK config integrates middleware/realtime with secure defaults
+  ---
+  duration_ms: 4.793273
+  type: 'test'
+  ...
+# Subtest: exact 16+16 original suite IDs are registered, dry-run is not evidence
+ok 16 - exact 16+16 original suite IDs are registered, dry-run is not evidence
+  ---
+  duration_ms: 11.961173
+  type: 'test'
+  ...
+# Subtest: unified JSON config unwrap, standalone frontend config and SDK type-compatible object
+ok 17 - unified JSON config unwrap, standalone frontend config and SDK type-compatible object
+  ---
+  duration_ms: 4.2255
+  type: 'test'
+  ...
+# Subtest: guard rejects unsafe route and remote host, staging confirmation, production destructive run
+ok 18 - guard rejects unsafe route and remote host, staging confirmation, production destructive run
+  ---
+  duration_ms: 3.257975
+  type: 'test'
+  ...
+# Subtest: frontend bundle actual gzip budget passes and fails
+ok 19 - frontend bundle actual gzip budget passes and fails
+  ---
+  duration_ms: 17.612134
+  type: 'test'
+  ...
+# Subtest: backend observability and concurrent idempotency checks execute real local HTTP
+ok 20 - backend observability and concurrent idempotency checks execute real local HTTP
+  ---
+  duration_ms: 74.486659
+  type: 'test'
+  ...
+# Subtest: optional node runtime diagnostics yields finite process metrics and closes
+ok 21 - optional node runtime diagnostics yields finite process metrics and closes
+  ---
+  duration_ms: 0.868725
+  type: 'test'
+  ...
+# Subtest: external command timeouts cannot report success
+ok 22 - external command timeouts cannot report success
+  ---
+  duration_ms: 38.243457
+  type: 'test'
+  ...
+# Subtest: 15 categories and shared config
+ok 23 - 15 categories and shared config
+  ---
+  duration_ms: 0.778029
+  type: 'test'
+  ...
+# Subtest: target safety, duplicate IDs, bad thresholds and incompatible engine
+ok 24 - target safety, duplicate IDs, bad thresholds and incompatible engine
+  ---
+  duration_ms: 0.90537
+  type: 'test'
+  ...
+# Subtest: native HTTP, thresholds, status assertions, reports
+ok 25 - native HTTP, thresholds, status assertions, reports
+  ---
+  duration_ms: 110.911259
+  type: 'test'
+  ...
+# Subtest: disruptive, disabled and missing engine never pass
+ok 26 - disruptive, disabled and missing engine never pass
+  ---
+  duration_ms: 0.874664
+  type: 'test'
+  ...
+# Subtest: operator node test engine executes actual assertions
+ok 27 - operator node test engine executes actual assertions
+  ---
+  duration_ms: 125.949106
+  type: 'test'
+  ...
+# Subtest: inventory includes all SaaS and scanner categories
+ok 28 - inventory includes all SaaS and scanner categories
+  ---
+  duration_ms: 0.873873
+  type: 'test'
+  ...
+# Subtest: tenant isolation for resources and storage
+ok 29 - tenant isolation for resources and storage
+  ---
+  duration_ms: 6.974721
+  type: 'test'
+  ...
+# Subtest: RBAC defaults deny and permission policy allows explicit roles
+ok 30 - RBAC defaults deny and permission policy allows explicit roles
+  ---
+  duration_ms: 1.772683
+  type: 'test'
+  ...
+# Subtest: API key is tenant-scoped, time-limited, revoked and never listed raw
+ok 31 - API key is tenant-scoped, time-limited, revoked and never listed raw
+  ---
+  duration_ms: 4.375565
+  type: 'test'
+  ...
+# Subtest: metering quota enforcement and flag determinism
+ok 32 - metering quota enforcement and flag determinism
+  ---
+  duration_ms: 3.472037
+  type: 'test'
+  ...
+# Subtest: job retries, webhook signing, audit
+ok 33 - job retries, webhook signing, audit
+  ---
+  duration_ms: 10.632478
+  type: 'test'
+  ...
+# Subtest: defender blocks high-confidence probes and enforces per-identity rate
+ok 34 - defender blocks high-confidence probes and enforces per-identity rate
+  ---
+  duration_ms: 3.640721
+  type: 'test'
+  ...
+# Subtest: production configuration refuses volatile store
+ok 35 - production configuration refuses volatile store
+  ---
+  duration_ms: 0.358519
+  type: 'test'
+  ...
+# Subtest: scanner detects source code anti-pattern and redacts secret
+ok 36 - scanner detects source code anti-pattern and redacts secret
+  ---
+  duration_ms: 37.381487
+  type: 'test'
+  ...
+# Subtest: capability adapter routing respects config toggles and explicit provider
+ok 37 - capability adapter routing respects config toggles and explicit provider
+  ---
+  duration_ms: 1.754347
+  type: 'test'
+  ...
+# Subtest: TOTP RFC vector
+ok 38 - TOTP RFC vector
+  ---
+  duration_ms: 1.322888
+  type: 'test'
+  ...
+# Subtest: MFA blocks password and passwordless session issuance, rejects replay, supports restricted impersonation
+ok 39 - MFA blocks password and passwordless session issuance, rejects replay, supports restricted impersonation
+  ---
+  duration_ms: 263.318608
+  type: 'test'
+  ...
+# Subtest: vault encrypts, rotates, and isolates tenant secrets
+ok 40 - vault encrypts, rotates, and isolates tenant secrets
+  ---
+  duration_ms: 2.925796
+  type: 'test'
+  ...
+# Subtest: logical restore is encrypted and does not overwrite
+ok 41 - logical restore is encrypted and does not overwrite
+  ---
+  duration_ms: 2.147126
+  type: 'test'
+  ...
+# Subtest: signed callbacks are tenant-bound, replay-safe and relayed to worker
+ok 42 - signed callbacks are tenant-bound, replay-safe and relayed to worker
+  ---
+  duration_ms: 3.609874
+  type: 'test'
+  ...
+# Subtest: worker generates reports and enforces idempotency conflict
+ok 43 - worker generates reports and enforces idempotency conflict
+  ---
+  duration_ms: 1.82348
+  type: 'test'
+  ...
+# Subtest: concurrent quota reservations do not exceed quota
+ok 44 - concurrent quota reservations do not exceed quota
+  ---
+  duration_ms: 2.05614
+  type: 'test'
+  ...
+# Subtest: audit is append-only
+ok 45 - audit is append-only
+  ---
+  duration_ms: 1.630741
+  type: 'test'
+  ...
+# Subtest: payment webhook validates tenant order and reconciles capture only once
+ok 46 - payment webhook validates tenant order and reconciles capture only once
+  ---
+  duration_ms: 3.643445
+  type: 'test'
+  ...
+# Subtest: configured GitHub and Kubernetes adapters enforce tenant and confirmation (mock transport)
+ok 47 - configured GitHub and Kubernetes adapters enforce tenant and confirmation (mock transport)
+  ---
+  duration_ms: 18.538107
+  type: 'test'
+  ...
+# Subtest: scanner imports dependency and review evidence and fails stale evidence
+ok 48 - scanner imports dependency and review evidence and fails stale evidence
+  ---
+  duration_ms: 11.163494
+  type: 'test'
+  ...
+# Subtest: readiness fails when a configured dependency fails
+ok 49 - readiness fails when a configured dependency fails
+  ---
+  duration_ms: 1.691221
+  type: 'test'
+  ...
+# Subtest: transaction scope rejects cross-tenant reads and writes; rollback and nested transaction
+ok 50 - transaction scope rejects cross-tenant reads and writes; rollback and nested transaction
+  ---
+  duration_ms: 2.024012
+  type: 'test'
+  ...
+# Subtest: unsafe JSON capability input rejected before adapter called
+ok 51 - unsafe JSON capability input rejected before adapter called
+  ---
+  duration_ms: 6.039145
+  type: 'test'
+  ...
+# Subtest: bounded response rejects oversized streaming chunks
+ok 52 - bounded response rejects oversized streaming chunks
+  ---
+  duration_ms: 19.317969
+  type: 'test'
+  ...
+# Subtest: uncooperative job handler times out, retries and cannot finish stale lease
+ok 53 - uncooperative job handler times out, retries and cannot finish stale lease
+  ---
+  duration_ms: 23.297058
+  type: 'test'
+  ...
+# Subtest: tenant scheduling does not stop healthy tenant after failed relay
+ok 54 - tenant scheduling does not stop healthy tenant after failed relay
+  ---
+  duration_ms: 2.468449
+  type: 'test'
+  ...
+# Subtest: streaming export pages all records and only current tenant
+ok 55 - streaming export pages all records and only current tenant
+  ---
+  duration_ms: 2.421829
+  type: 'test'
+  ...
+# Subtest: storage ACL prevents same-tenant object access and filters listing
+ok 56 - storage ACL prevents same-tenant object access and filters listing
+  ---
+  duration_ms: 1.747566
+  type: 'test'
+  ...
+# Subtest: DNS verified activation requires confirmed provider success
+ok 57 - DNS verified activation requires confirmed provider success
+  ---
+  duration_ms: 2.55511
+  type: 'test'
+  ...
+# Subtest: invalid defender thresholds rejected
+ok 58 - invalid defender thresholds rejected
+  ---
+  duration_ms: 0.586501
+  type: 'test'
+  ...
+# Subtest: database readiness cannot be overridden by a custom probe
+ok 59 - database readiness cannot be overridden by a custom probe
+  ---
+  duration_ms: 1.556359
+  type: 'test'
+  ...
+# Subtest: CDN rejects sibling prefixes and cross-tenant targets
+ok 60 - CDN rejects sibling prefixes and cross-tenant targets
+  ---
+  duration_ms: 0.857368
+  type: 'test'
+  ...
+# Subtest: Stripe adapter does not detach another customer payment method (mock transport)
+ok 61 - Stripe adapter does not detach another customer payment method (mock transport)
+  ---
+  duration_ms: 0.97156
+  type: 'test'
+  ...
+# Subtest: Valkey malformed response fails closed (mock transport)
+ok 62 - Valkey malformed response fails closed (mock transport)
+  ---
+  duration_ms: 0.221533
+  type: 'test'
+  ...
+# Subtest: generic queue permission does not allow a privileged worker operation
+ok 63 - generic queue permission does not allow a privileged worker operation
+  ---
+  duration_ms: 1.311681
+  type: 'test'
+  ...
+# Subtest: resource updates enforce authorization on both old and resulting state
+ok 64 - resource updates enforce authorization on both old and resulting state
+  ---
+  duration_ms: 2.288269
+  type: 'test'
+  ...
+# Subtest: configured challenge delivery returns generic response instead of secret
+ok 65 - configured challenge delivery returns generic response instead of secret
+  ---
+  duration_ms: 60.383487
+  type: 'test'
+  ...
+1..65
+# tests 65
+# suites 0
+# pass 65
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 685.192857

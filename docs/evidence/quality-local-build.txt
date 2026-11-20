@@ -1,0 +1,7 @@
+tsc -p packages/quality-contracts
+tsc -p packages/quality-node-diagnostics
+tsc -p packages/quality-core
+tsc -p packages/backend-quality
+tsc -p packages/quality-cli
+tsc -p packages/ui-core
+PASS: quality local plus shared UI tokens

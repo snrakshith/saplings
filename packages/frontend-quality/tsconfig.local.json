@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "src/register.ts",
+    "src/bundle.ts",
+    "src/lighthouse.ts"
+  ]
+}

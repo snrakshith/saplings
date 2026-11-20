@@ -1,0 +1,2 @@
+npm view zod@4.6.7 version --fetch-retries=0 --fetch-timeout=5000
+Exit nonzero: EAI_AGAIN getaddrinfo registry.npmjs.org. No external dependencies installed.

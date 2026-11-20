@@ -1,0 +1,34 @@
+{
+  "name": "@sapling/example-express",
+  "private": true,
+  "version": "0.17.0",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "start": "tsx src/index.ts",
+    "worker": "tsx src/worker.ts"
+  },
+  "dependencies": {
+    "@sapling/sdk": "workspace:*",
+    "@sapling/security": "workspace:*",
+    "express": "^5.1.0",
+    "@sapling/adapter-drizzle": "workspace:*",
+    "@sapling/adapter-aws": "workspace:*",
+    "redis": "^5.0.0",
+    "pg": "^8.0.0",
+    "drizzle-orm": "^0.44.0",
+    "tsx": "^4.0.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.0.0",
+    "@sapling/backend-quality": "workspace:*"
+  },
+  "files": [
+    "src",
+    "sapling.config.ts",
+    "quality-profile.ts",
+    "sapling.production.config.ts.example",
+    "README.md"
+  ]
+}

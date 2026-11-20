@@ -1,0 +1,17 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+*.tsbuildinfo
+coverage/
+.DS_Store
+
+quality-results/
+
+quality-results/
+quality-baselines/
+.lighthouseci/
+.cache/
+
+.vitest/

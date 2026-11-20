@@ -1,0 +1,38 @@
+{
+  "name": "@sapling/realtime",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "ORIGINAL_README.md"
+  ],
+  "dependencies": {},
+  "engines": {
+    "node": ">=22"
+  },
+  "peerDependencies": {
+    "ws": "^8.0.0",
+    "socket.io": "^4.0.0"
+  },
+  "peerDependenciesMeta": {
+    "ws": {
+      "optional": true
+    },
+    "socket.io": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "ws": "^8.0.0",
+    "socket.io": "^4.0.0"
+  }
+}

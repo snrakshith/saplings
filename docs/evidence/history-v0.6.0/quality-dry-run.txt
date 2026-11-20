@@ -1,0 +1,41 @@
+
+> sapling-unified-sdk-monorepo@0.6.0 quality
+> node --experimental-strip-types packages/quality-cli/dist/cli.js run --profile release --dry-run
+
+(node:4269) ExperimentalWarning: Type Stripping is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+SKIP backend:performance            Selected; execution intentionally disabled
+SKIP backend:load                   Selected; execution intentionally disabled
+SKIP backend:stress                 Selected; execution intentionally disabled
+SKIP backend:spike                  Selected; execution intentionally disabled
+SKIP backend:soak                   Selected; execution intentionally disabled
+SKIP backend:scalability            Selected; execution intentionally disabled
+SKIP backend:security               Selected; execution intentionally disabled
+SKIP backend:concurrency            Selected; execution intentionally disabled
+SKIP backend:resilience             Selected; execution intentionally disabled
+SKIP backend:recovery               Selected; execution intentionally disabled
+SKIP backend:observability          Selected; execution intentionally disabled
+SKIP backend:contract               Selected; execution intentionally disabled
+SKIP backend:chaos                  Selected; execution intentionally disabled
+SKIP backend:disaster-recovery      Selected; execution intentionally disabled
+SKIP backend:kubernetes             Selected; execution intentionally disabled
+SKIP backend:profiling              Selected; execution intentionally disabled
+SKIP frontend:performance           Selected; execution intentionally disabled
+SKIP frontend:rendering             Selected; execution intentionally disabled
+SKIP frontend:visual                Selected; execution intentionally disabled
+SKIP frontend:accessibility         Selected; execution intentionally disabled
+SKIP frontend:responsive            Selected; execution intentionally disabled
+SKIP frontend:cross-browser         Selected; execution intentionally disabled
+SKIP frontend:bundle                Selected; execution intentionally disabled
+SKIP frontend:memory                Selected; execution intentionally disabled
+SKIP frontend:security              Selected; execution intentionally disabled
+SKIP frontend:network               Selected; execution intentionally disabled
+SKIP frontend:seo                   Selected; execution intentionally disabled
+SKIP frontend:api-integration       Selected; execution intentionally disabled
+SKIP frontend:observability         Selected; execution intentionally disabled
+SKIP frontend:recovery              Selected; execution intentionally disabled
+SKIP frontend:localization          Selected; execution intentionally disabled
+SKIP frontend:navigation            Selected; execution intentionally disabled
+
+Report: /mnt/data/v060-work/sapling-unified-sdk/quality-results/2026-11-14T04-00-05-236Z-37cb8e09/report.json
+Passed 0; failed 0; skipped 32

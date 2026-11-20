@@ -1,0 +1,19 @@
+packages/hooks/src/async.ts(2,53): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+packages/hooks/src/browser.ts(2,67): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+packages/hooks/src/browser.ts(3,30): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+packages/hooks/src/browser.ts(15,271): error TS7006: Parameter 'old' implicitly has an 'any' type.
+packages/hooks/src/state.ts(2,61): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+packages/hooks/src/state.ts(8,123): error TS7006: Parameter 'v' implicitly has an 'any' type.
+packages/hooks/src/state.ts(9,126): error TS7006: Parameter 'v' implicitly has an 'any' type.
+packages/hooks/src/state.ts(9,171): error TS7006: Parameter 'v' implicitly has an 'any' type.
+packages/hooks/src/state.ts(16,169): error TS7006: Parameter 'v' implicitly has an 'any' type.
+packages/hooks/src/state.ts(16,235): error TS7006: Parameter 'v' implicitly has an 'any' type.
+packages/hooks/src/state.ts(16,248): error TS7006: Parameter '_' implicitly has an 'any' type.
+packages/hooks/src/state.ts(16,250): error TS7006: Parameter 'i' implicitly has an 'any' type.
+packages/hooks/src/state.ts(16,323): error TS7006: Parameter 'v' implicitly has an 'any' type.
+packages/hooks/src/state.ts(16,333): error TS7006: Parameter 'old' implicitly has an 'any' type.
+packages/hooks/src/state.ts(16,337): error TS7006: Parameter 'i' implicitly has an 'any' type.
+packages/hooks/src/state.ts(17,624): error TS7006: Parameter 'p' implicitly has an 'any' type.
+packages/hooks/src/state.ts(19,182): error TS7006: Parameter 'old' implicitly has an 'any' type.
+packages/hooks/src/storage.ts(2,48): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+exit=1

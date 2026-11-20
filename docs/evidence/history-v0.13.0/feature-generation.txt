@@ -1,0 +1,38 @@
+{
+  "version": "0.13.0",
+  "total": 822,
+  "documents": 2466,
+  "counts": {
+    "saas": 182,
+    "scanner": 41,
+    "quality": 32,
+    "defender": 27,
+    "utilities": 342,
+    "react-hooks": 31,
+    "validation-native": 40,
+    "realtime": 24,
+    "middleware": 28,
+    "instrumentation": 5,
+    "providers": 11,
+    "gateway": 19,
+    "identity-platform": 18,
+    "packages": 21,
+    "validation-compat": 1
+  }
+}
+{
+  "version": "0.13.0",
+  "reviewed": 182,
+  "enhanced": 39,
+  "baseline": 143,
+  "productionReady": 0,
+  "codeDomainCounts": {
+    "accounts": 2,
+    "access": 5,
+    "billing": 6,
+    "domains": 8,
+    "crud": 13,
+    "business": 5,
+    "shared": 0
+  }
+}

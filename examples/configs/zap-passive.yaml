@@ -1,0 +1,19 @@
+# Example passive-only scan; review and authorize before using on any target.
+env:
+  contexts:
+    - name: example-api
+      urls:
+        - http://127.0.0.1:3000
+jobs:
+  - type: spider
+    parameters:
+      context: example-api
+      maxDuration: 1
+  - type: passiveScan-wait
+    parameters:
+      maxDuration: 3
+  - type: report
+    parameters:
+      template: traditional-html
+      reportDir: quality-results/zap
+      reportFile: zap-passive-report.html

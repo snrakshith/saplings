@@ -1,0 +1,155 @@
+{
+  "version": "0.11.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "b107fdcb82f8ad0a4529349da97ed112d1f8147b5c8648382c5e1a3ae69a736d",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "13b1958c5997dae3af3825a4f9082f572ff3d90f93a4e3077fafa1a1f3b3f761",
+      "at": "2026-11-16T03:00:16.488685+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "passed",
+      "sourceHash": "b107fdcb82f8ad0a4529349da97ed112d1f8147b5c8648382c5e1a3ae69a736d",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/regression.txt",
+      "sha256": "acb94d3c57bf52a4dfde8cd1cad0f04f0fd166c27bdc6678dd5b9109c940b932",
+      "at": "2026-11-16T03:00:16.488685+00:00"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "b107fdcb82f8ad0a4529349da97ed112d1f8147b5c8648382c5e1a3ae69a736d",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "6656cba0de6e274212dbe0e30168688584af0cd28b2ab3162bec2b730fd9c0bc",
+      "at": "2026-11-16T03:00:16.488685+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "b107fdcb82f8ad0a4529349da97ed112d1f8147b5c8648382c5e1a3ae69a736d",
+      "reviewer": "local direct execution (not independent)",
+      "environment": "local direct compiler and temporary workspace links",
+      "evidence": "docs/evidence/feature-spec-verification.json",
+      "sha256": "04243df239c08544de8f99a3712a651d91ae6deed424f7720b3db179481f2e9b",
+      "at": "2026-11-16T03:00:16.488685+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "workspace-install",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "react-hooks",
+      "status": "pending",
+      "reason": "Current-release live evidence or independent review required"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "pending",
+      "reason": "Approved Cashfree sandbox merchant credentials, real checkout/capture/refund and recovery evidence required"
+    }
+  ]
+}

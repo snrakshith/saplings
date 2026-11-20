@@ -1,0 +1,13 @@
+
+> sapling-unified-sdk-monorepo@0.7.0 build:adapters
+> tsc -p packages/adapter-drizzle && tsc -p packages/adapter-aws && tsc -p packages/adapter-app
+
+packages/adapter-drizzle/src/index.ts(1,36): error TS2307: Cannot find module 'drizzle-orm' or its corresponding type declarations.
+packages/adapter-drizzle/src/index.ts(2,55): error TS2307: Cannot find module 'drizzle-orm/pg-core' or its corresponding type declarations.
+packages/adapter-drizzle/src/index.ts(4,35): error TS2307: Cannot find module 'drizzle-orm/node-postgres' or its corresponding type declarations.
+packages/adapter-drizzle/src/index.ts(5,296): error TS7006: Parameter 't' implicitly has an 'any' type.
+packages/adapter-drizzle/src/index.ts(10,177): error TS7006: Parameter 'tx' implicitly has an 'any' type.
+packages/adapter-drizzle/src/index.ts(14,616): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/adapter-drizzle/src/index.ts(15,451): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/adapter-drizzle/src/index.ts(18,285): error TS7006: Parameter 'r' implicitly has an 'any' type.
+packages/adapter-drizzle/src/index.ts(20,600): error TS7006: Parameter 'r' implicitly has an 'any' type.

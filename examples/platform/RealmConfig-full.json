@@ -1,0 +1,964 @@
+{
+  "apiVersion": "identity.sapling.dev/v1alpha1",
+  "kind": "RealmConfig",
+  "metadata": {
+    "name": "school-platform",
+    "environment": "production",
+    "displayName": "School Platform",
+    "description": "Identity realm for school management apps",
+    "labels": {
+      "team": "platform",
+      "costCenter": "edu"
+    },
+    "annotations": {
+      "sapling.dev/owner": "platform@school.com",
+      "sapling.dev/managed-by": "gitops",
+      "sapling.dev/prune": "false"
+    }
+  },
+  "spec": {
+    "state": "active",
+    "secretStoreRefs": [
+      "env",
+      "aws"
+    ],
+    "observabilityRef": "default",
+    "frontend": {
+      "issuer": "https://auth.school.com/realms/school-platform",
+      "hostnames": [
+        "auth.school.com"
+      ],
+      "sslRequired": "external",
+      "themes": {
+        "login": "school",
+        "account": "school",
+        "email": "school"
+      },
+      "localization": {
+        "default": "en",
+        "supported": [
+          "en",
+          "hi",
+          "kn"
+        ]
+      },
+      "branding": {
+        "logoUrl": "https://cdn.school.com/logo.svg",
+        "primaryColor": "#1F4E79",
+        "faviconUrl": "https://cdn.school.com/favicon.ico"
+      }
+    },
+    "keys": {
+      "providers": [
+        {
+          "name": "rsa-primary",
+          "type": "rsa-generated",
+          "algorithm": "RS256",
+          "keySize": 2048,
+          "priority": 100,
+          "active": true
+        },
+        {
+          "name": "rsa-previous",
+          "type": "rsa-imported",
+          "privateKey": "{vault://aws/kingsman/rsa-prev}",
+          "priority": 50,
+          "active": false,
+          "enabled": true
+        },
+        {
+          "name": "hmac-actions",
+          "type": "hmac-generated",
+          "algorithm": "HS256",
+          "use": "action-tokens"
+        }
+      ],
+      "rotation": {
+        "interval": "90d",
+        "overlap": "7d"
+      }
+    },
+    "tokens": {
+      "defaultSignatureAlgorithm": "RS256",
+      "accessToken": {
+        "ttl": "5m"
+      },
+      "idToken": {
+        "ttl": "5m"
+      },
+      "refreshToken": {
+        "ttl": "30d",
+        "rotate": true,
+        "reuseDetection": "revoke-family"
+      },
+      "authorizationCode": {
+        "ttl": "60s"
+      },
+      "actionTokens": {
+        "verifyEmail": "12h",
+        "resetPassword": "15m",
+        "invite": "72h"
+      }
+    },
+    "sessions": {
+      "store": "redis",
+      "sso": {
+        "idle": "30m",
+        "max": "10h"
+      },
+      "rememberMe": {
+        "enabled": true,
+        "idle": "7d",
+        "max": "30d"
+      },
+      "offline": {
+        "idle": "30d",
+        "maxLifespanEnabled": false
+      }
+    },
+    "security": {
+      "passwordPolicy": {
+        "hashAlgorithm": "argon2id",
+        "minLength": 12,
+        "maxLength": 128,
+        "require": {
+          "digits": 1,
+          "lowercase": 1,
+          "uppercase": 1,
+          "symbols": 1
+        },
+        "notUsername": true,
+        "notEmail": true,
+        "history": 5,
+        "expireAfter": "180d",
+        "breachedPasswordCheck": true
+      },
+      "bruteForce": {
+        "enabled": true,
+        "strategy": "temporary-then-permanent",
+        "failureFactor": 5,
+        "waitIncrement": "1m",
+        "maxWait": "15m",
+        "failureReset": "12h",
+        "permanentLockoutAfter": 20
+      },
+      "otpPolicy": {
+        "type": "totp",
+        "algorithm": "SHA256",
+        "digits": 6,
+        "period": "30s",
+        "lookAhead": 1
+      },
+      "webauthnPolicy": {
+        "rpId": "school.com",
+        "userVerification": "preferred",
+        "attestation": "none",
+        "passwordless": false
+      },
+      "headers": {
+        "contentSecurityPolicy": "frame-src 'self'; frame-ancestors 'self'; object-src 'none';",
+        "xFrameOptions": "SAMEORIGIN",
+        "strictTransportSecurity": "max-age=31536000; includeSubDomains"
+      }
+    },
+    "registration": {
+      "enabled": true,
+      "mode": "open",
+      "allowedEmailDomains": [
+        "school.com"
+      ],
+      "emailAsUsername": true,
+      "loginWithEmail": true,
+      "duplicateEmails": false,
+      "verifyEmail": true,
+      "resetPasswordAllowed": true,
+      "autoLoginAfterRegister": false
+    },
+    "userProfile": {
+      "unmanagedAttributes": "admin-view",
+      "groups": [
+        {
+          "name": "school",
+          "displayHeader": "School details"
+        }
+      ],
+      "attributes": [
+        {
+          "name": "email",
+          "required": {
+            "roles": [
+              "user",
+              "admin"
+            ]
+          },
+          "validations": {
+            "email": {},
+            "length": {
+              "max": 255
+            }
+          },
+          "permissions": {
+            "view": [
+              "user",
+              "admin"
+            ],
+            "edit": [
+              "admin"
+            ]
+          }
+        },
+        {
+          "name": "firstName",
+          "required": {
+            "roles": [
+              "user"
+            ]
+          },
+          "validations": {
+            "length": {
+              "max": 100
+            }
+          },
+          "permissions": {
+            "view": [
+              "user",
+              "admin"
+            ],
+            "edit": [
+              "user",
+              "admin"
+            ]
+          }
+        },
+        {
+          "name": "lastName",
+          "validations": {
+            "length": {
+              "max": 100
+            }
+          },
+          "permissions": {
+            "view": [
+              "user",
+              "admin"
+            ],
+            "edit": [
+              "user",
+              "admin"
+            ]
+          }
+        },
+        {
+          "name": "studentId",
+          "group": "school",
+          "multivalued": false,
+          "validations": {
+            "pattern": {
+              "regex": "^STU-[0-9]{6}$"
+            }
+          },
+          "permissions": {
+            "view": [
+              "user",
+              "admin"
+            ],
+            "edit": [
+              "admin"
+            ]
+          }
+        },
+        {
+          "name": "phone",
+          "group": "school",
+          "sensitive": true,
+          "validations": {
+            "pattern": {
+              "regex": "^\\+[1-9][0-9]{7,14}$"
+            }
+          },
+          "permissions": {
+            "view": [
+              "admin"
+            ],
+            "edit": [
+              "user",
+              "admin"
+            ]
+          }
+        }
+      ]
+    },
+    "requiredActions": [
+      {
+        "alias": "VERIFY_EMAIL",
+        "enabled": true
+      },
+      {
+        "alias": "UPDATE_PASSWORD",
+        "enabled": true
+      },
+      {
+        "alias": "CONFIGURE_TOTP",
+        "enabled": true
+      },
+      {
+        "alias": "UPDATE_PROFILE",
+        "enabled": true
+      },
+      {
+        "alias": "TERMS_AND_CONDITIONS",
+        "enabled": false
+      }
+    ],
+    "authenticationFlows": [
+      {
+        "alias": "school-browser",
+        "description": "Cookie SSO, else IdP redirect, else password plus conditional OTP",
+        "steps": [
+          {
+            "authenticator": "cookie",
+            "requirement": "alternative"
+          },
+          {
+            "authenticator": "identity-provider-redirector",
+            "requirement": "alternative",
+            "config": {
+              "defaultProvider": ""
+            }
+          },
+          {
+            "subFlow": "school-browser-forms",
+            "requirement": "alternative"
+          }
+        ]
+      },
+      {
+        "alias": "school-browser-forms",
+        "steps": [
+          {
+            "authenticator": "username-password-form",
+            "requirement": "required"
+          },
+          {
+            "authenticator": "otp-form",
+            "requirement": "conditional",
+            "condition": {
+              "type": "user-role",
+              "role": "admin"
+            }
+          }
+        ]
+      }
+    ],
+    "flowBindings": {
+      "browser": "school-browser",
+      "registration": "registration",
+      "directGrant": "direct-grant",
+      "resetCredentials": "reset-credentials",
+      "clientAuthentication": "clients",
+      "firstBrokerLogin": "first-broker-login"
+    },
+    "organizations": {
+      "enabled": true,
+      "membership": "multiple",
+      "invitations": {
+        "enabled": true,
+        "ttl": "72h",
+        "allowedEmailDomainsFromOrg": true
+      },
+      "domainVerification": {
+        "enabled": true,
+        "autoJoinVerifiedDomains": false
+      },
+      "perOrgIdentityProviders": true,
+      "roles": [
+        {
+          "name": "org-owner",
+          "description": "Owns the organization, manages billing and members"
+        },
+        {
+          "name": "org-admin",
+          "description": "Manages members and settings"
+        },
+        {
+          "name": "org-member",
+          "description": "Regular member"
+        }
+      ],
+      "defaultRole": "org-member"
+    },
+    "roles": {
+      "realm": [
+        {
+          "name": "student",
+          "description": "Enrolled student"
+        },
+        {
+          "name": "teacher",
+          "description": "Teaching staff"
+        },
+        {
+          "name": "admin",
+          "description": "School administrator",
+          "composites": {
+            "realm": [
+              "teacher"
+            ],
+            "clients": {
+              "students-svc": [
+                "manage-students"
+              ]
+            }
+          }
+        }
+      ],
+      "defaultRoles": [
+        "student"
+      ]
+    },
+    "groups": [
+      {
+        "name": "staff",
+        "attributes": {
+          "department": [
+            "general"
+          ]
+        },
+        "roles": {
+          "realm": [
+            "teacher"
+          ]
+        },
+        "children": [
+          {
+            "name": "admins",
+            "roles": {
+              "realm": [
+                "admin"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "students",
+        "roles": {
+          "realm": [
+            "student"
+          ]
+        }
+      }
+    ],
+    "defaultGroups": [
+      "/students"
+    ],
+    "clientScopes": [
+      {
+        "name": "profile",
+        "protocol": "openid-connect",
+        "includeInTokenScope": true,
+        "mappers": [
+          {
+            "name": "given-name",
+            "type": "user-attribute",
+            "config": {
+              "attribute": "firstName",
+              "claim": "given_name",
+              "addTo": [
+                "idToken",
+                "userinfo"
+              ]
+            }
+          },
+          {
+            "name": "family-name",
+            "type": "user-attribute",
+            "config": {
+              "attribute": "lastName",
+              "claim": "family_name",
+              "addTo": [
+                "idToken",
+                "userinfo"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "email",
+        "protocol": "openid-connect",
+        "mappers": [
+          {
+            "name": "email",
+            "type": "user-property",
+            "config": {
+              "property": "email",
+              "claim": "email",
+              "addTo": [
+                "idToken",
+                "userinfo"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "roles",
+        "protocol": "openid-connect",
+        "includeInTokenScope": false,
+        "mappers": [
+          {
+            "name": "realm-roles",
+            "type": "realm-role",
+            "config": {
+              "claim": "roles",
+              "multivalued": true,
+              "addTo": [
+                "accessToken"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "groups",
+        "protocol": "openid-connect",
+        "mappers": [
+          {
+            "name": "group-membership",
+            "type": "group-membership",
+            "config": {
+              "claim": "groups",
+              "fullPath": true,
+              "addTo": [
+                "accessToken",
+                "idToken"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "school",
+        "protocol": "openid-connect",
+        "mappers": [
+          {
+            "name": "student-id",
+            "type": "user-attribute",
+            "config": {
+              "attribute": "studentId",
+              "claim": "student_id",
+              "addTo": [
+                "accessToken"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "audience-school-platform",
+        "protocol": "openid-connect",
+        "mappers": [
+          {
+            "name": "aud",
+            "type": "audience",
+            "config": {
+              "audience": "school-platform",
+              "addTo": [
+                "accessToken"
+              ]
+            }
+          }
+        ]
+      },
+      {
+        "name": "organization",
+        "protocol": "openid-connect",
+        "mappers": [
+          {
+            "name": "organization-membership",
+            "type": "organization-membership",
+            "config": {
+              "claim": "organization",
+              "include": [
+                "id",
+                "name",
+                "roles"
+              ],
+              "addTo": [
+                "accessToken",
+                "idToken"
+              ]
+            }
+          }
+        ]
+      }
+    ],
+    "defaultClientScopes": {
+      "default": [
+        "profile",
+        "email",
+        "roles",
+        "organization",
+        "audience-school-platform"
+      ],
+      "optional": [
+        "groups",
+        "school",
+        "offline_access"
+      ]
+    },
+    "clients": [
+      {
+        "clientId": "school-web",
+        "name": "School Web App",
+        "enabled": true,
+        "protocol": "openid-connect",
+        "accessType": "public",
+        "grants": {
+          "authorizationCode": true,
+          "refreshToken": true,
+          "clientCredentials": false,
+          "password": false,
+          "deviceCode": false,
+          "tokenExchange": false
+        },
+        "pkce": "S256",
+        "redirectUris": [
+          "https://app.school.com/callback"
+        ],
+        "postLogoutRedirectUris": [
+          "https://app.school.com/"
+        ],
+        "webOrigins": [
+          "https://app.school.com"
+        ],
+        "scopes": {
+          "default": [
+            "profile",
+            "email",
+            "roles"
+          ],
+          "optional": [
+            "groups",
+            "school"
+          ]
+        },
+        "consent": {
+          "required": false
+        },
+        "overrides": {
+          "accessToken": {
+            "ttl": "10m"
+          },
+          "flowBindings": {}
+        },
+        "theme": "school"
+      },
+      {
+        "clientId": "students-svc",
+        "name": "Students Service",
+        "accessType": "confidential",
+        "authenticator": "client-secret",
+        "secret": "{vault://aws/kingsman/students-svc-secret}",
+        "secretRotation": {
+          "interval": "90d",
+          "gracePeriod": "7d"
+        },
+        "grants": {
+          "clientCredentials": true
+        },
+        "roles": [
+          {
+            "name": "manage-students"
+          },
+          {
+            "name": "view-students"
+          }
+        ],
+        "serviceAccount": {
+          "roles": {
+            "realm": [],
+            "clients": {
+              "kingsman-admin": [
+                "view-users"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "clientId": "partner-erp",
+        "name": "Partner ERP",
+        "accessType": "confidential",
+        "authenticator": "private-key-jwt",
+        "jwksUri": "https://erp.partner.com/.well-known/jwks.json",
+        "grants": {
+          "clientCredentials": true
+        },
+        "policyProfiles": [
+          "strict-confidential"
+        ]
+      }
+    ],
+    "clientPolicies": {
+      "profiles": [
+        {
+          "name": "strict-public",
+          "executors": [
+            {
+              "type": "pkce-enforcer",
+              "config": {
+                "method": "S256"
+              }
+            },
+            {
+              "type": "secure-redirect-uris",
+              "config": {
+                "allowHttp": false,
+                "allowWildcard": false
+              }
+            }
+          ]
+        },
+        {
+          "name": "strict-confidential",
+          "executors": [
+            {
+              "type": "client-authenticator",
+              "config": {
+                "allowed": [
+                  "private-key-jwt",
+                  "tls-client-auth"
+                ]
+              }
+            },
+            {
+              "type": "holder-of-key",
+              "config": {
+                "mode": "dpop"
+              }
+            }
+          ]
+        }
+      ],
+      "policies": [
+        {
+          "name": "all-public-clients",
+          "conditions": [
+            {
+              "type": "client-access-type",
+              "config": {
+                "types": [
+                  "public"
+                ]
+              }
+            }
+          ],
+          "profiles": [
+            "strict-public"
+          ]
+        }
+      ]
+    },
+    "identityProviders": [
+      {
+        "alias": "google",
+        "type": "google",
+        "enabled": true,
+        "displayName": "Sign in with Google",
+        "clientId": "{vault://env/GOOGLE_CLIENT_ID}",
+        "clientSecret": "{vault://aws/kingsman/google-secret}",
+        "trustEmail": true,
+        "syncMode": "import",
+        "firstBrokerLoginFlow": "first-broker-login",
+        "hideOnLogin": false,
+        "mappers": [
+          {
+            "name": "school-domain-to-staff",
+            "type": "claim-to-group",
+            "config": {
+              "claim": "hd",
+              "value": "school.com",
+              "group": "/staff"
+            }
+          }
+        ]
+      },
+      {
+        "alias": "district-saml",
+        "type": "saml",
+        "enabled": false,
+        "config": {
+          "metadataUrl": "https://idp.district.edu/metadata",
+          "nameIdFormat": "email",
+          "wantAssertionsSigned": true,
+          "signingCertificate": "{vault://aws/kingsman/district-cert}"
+        }
+      }
+    ],
+    "userFederation": [
+      {
+        "name": "district-ldap",
+        "type": "ldap",
+        "enabled": false,
+        "priority": 0,
+        "editMode": "read-only",
+        "config": {
+          "connectionUrl": "ldaps://ldap.district.edu:636",
+          "bindDn": "cn=svc-kingsman,dc=district,dc=edu",
+          "bindCredential": "{vault://aws/kingsman/ldap-bind}",
+          "usersDn": "ou=people,dc=district,dc=edu",
+          "usernameAttribute": "uid",
+          "sync": {
+            "full": "24h",
+            "changed": "15m"
+          }
+        },
+        "mappers": [
+          {
+            "name": "email",
+            "type": "user-attribute",
+            "config": {
+              "ldapAttribute": "mail",
+              "userAttribute": "email"
+            }
+          }
+        ]
+      }
+    ],
+    "smtp": {
+      "host": "smtp.sendgrid.net",
+      "port": 587,
+      "starttls": true,
+      "from": "no-reply@school.com",
+      "fromDisplayName": "School Platform",
+      "replyTo": "support@school.com",
+      "auth": {
+        "username": "apikey",
+        "password": "{vault://aws/kingsman/smtp-password}"
+      }
+    },
+    "events": {
+      "user": {
+        "enabled": true,
+        "types": [
+          "LOGIN",
+          "LOGIN_ERROR",
+          "LOGOUT",
+          "REGISTER",
+          "UPDATE_PASSWORD",
+          "RESET_PASSWORD",
+          "CODE_TO_TOKEN",
+          "REFRESH_TOKEN_ERROR",
+          "IDENTITY_PROVIDER_LOGIN"
+        ],
+        "retention": "30d"
+      },
+      "admin": {
+        "enabled": true,
+        "includeRepresentation": false,
+        "retention": "365d"
+      },
+      "listeners": [
+        {
+          "name": "audit",
+          "type": "audit",
+          "config": {
+            "policyRef": "default"
+          }
+        },
+        {
+          "name": "siem",
+          "type": "event-stream",
+          "config": {
+            "topic": "identity.security"
+          }
+        },
+        {
+          "name": "hr-provisioning",
+          "type": "webhook",
+          "config": {
+            "url": "https://hr.school.com/hooks/kingsman",
+            "signingSecret": "{vault://aws/kingsman/webhook-secret}",
+            "events": [
+              "REGISTER",
+              "DELETE_ACCOUNT"
+            ],
+            "retry": {
+              "max": 5,
+              "backoff": "exponential"
+            }
+          }
+        }
+      ],
+      "redaction": {
+        "fields": [
+          "password",
+          "otp",
+          "refresh_token",
+          "client_secret"
+        ],
+        "replacement": "[REDACTED]"
+      }
+    },
+    "observability": {
+      "metrics": {
+        "perClient": true
+      },
+      "health": {
+        "liveness": "/health/live",
+        "readiness": "/health/ready"
+      }
+    },
+    "bootstrap": {
+      "policy": "create-only",
+      "users": [
+        {
+          "username": "admin@school.com",
+          "email": "admin@school.com",
+          "emailVerified": true,
+          "groups": [
+            "/staff/admins"
+          ],
+          "requiredActions": [
+            "UPDATE_PASSWORD",
+            "CONFIGURE_TOTP"
+          ],
+          "credentials": [
+            {
+              "type": "password",
+              "value": "{vault://aws/kingsman/bootstrap-admin}",
+              "temporary": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "status": {
+    "observedGeneration": 7,
+    "phase": "Ready",
+    "lastAppliedAt": "2026-10-10T12:00:00Z",
+    "conditions": [
+      {
+        "type": "Valid",
+        "status": "True"
+      },
+      {
+        "type": "SecretsResolved",
+        "status": "True"
+      },
+      {
+        "type": "Drift",
+        "status": "False",
+        "message": "No out-of-band edits on managed resources"
+      }
+    ],
+    "endpoints": {
+      "issuer": "https://auth.school.com/realms/school-platform",
+      "discovery": "https://auth.school.com/realms/school-platform/.well-known/openid-configuration",
+      "jwks": "https://auth.school.com/realms/school-platform/protocol/openid-connect/certs"
+    }
+  }
+}

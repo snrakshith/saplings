@@ -1,0 +1,23 @@
+Native SDK actual check (requires react-native dependency):
+packages/murph-appui/src/components/disclosure.tsx(2,125): error TS2307: Cannot find module 'react-native' or its corresponding type declarations.
+packages/murph-appui/src/components/disclosure.tsx(8,427): error TS7006: Parameter 'e' implicitly has an 'any' type.
+packages/murph-appui/src/components/disclosure.tsx(10,465): error TS7006: Parameter 'e' implicitly has an 'any' type.
+packages/murph-appui/src/components/extras.tsx(2,41): error TS2307: Cannot find module 'react-native' or its corresponding type declarations.
+packages/murph-appui/src/components/extras.tsx(13,408): error TS2322: Type '{ value: string; onChangeText: Dispatch<SetStateAction<string>>; accessibilityLabel: string; placeholder: string; }' is not assignable to type 'IntrinsicAttributes & InputProps'.
+  Property 'value' does not exist on type 'IntrinsicAttributes & InputProps'.
+packages/murph-appui/src/components/feedback.tsx(2,143): error TS2307: Cannot find module 'react-native' or its corresponding type declarations.
+packages/murph-appui/src/components/feedback.tsx(7,646): error TS7031: Binding element 'pressed' implicitly has an 'any' type.
+packages/murph-appui/src/components/feedback.tsx(9,48): error TS2339: Property 'style' does not exist on type 'BadgeProps'.
+packages/murph-appui/src/components/feedback.tsx(11,51): error TS2339: Property 'style' does not exist on type 'AlertProps'.
+packages/murph-appui/src/components/forms.tsx(2,169): error TS2307: Cannot find module 'react-native' or its corresponding type declarations.
+packages/murph-appui/src/components/forms.tsx(7,71): error TS2339: Property 'style' does not exist on type 'InputProps'.
+packages/murph-appui/src/components/forms.tsx(7,77): error TS2339: Property 'editable' does not exist on type 'InputProps'.
+packages/murph-appui/src/components/forms.tsx(7,154): error TS2339: Property 'nativeID' does not exist on type '{}'.
+packages/murph-appui/src/components/forms.tsx(7,459): error TS2339: Property 'accessibilityLabel' does not exist on type '{}'.
+packages/murph-appui/src/components/forms.tsx(8,69): error TS2322: Type '{ multiline: true; textAlignVertical: string; style: any[]; label?: string | undefined; error?: string | undefined; helperText?: string | undefined; containerStyle?: any; required?: boolean | undefined; }' is not assignable to type 'IntrinsicAttributes & InputProps'.
+  Property 'multiline' does not exist on type 'IntrinsicAttributes & InputProps'.
+packages/murph-appui/src/components/forms.tsx(8,146): error TS2339: Property 'style' does not exist on type 'InputProps'.
+packages/murph-appui/src/components/forms.tsx(20,957): error TS7006: Parameter 'e' implicitly has an 'any' type.
+packages/murph-appui/src/components/primitives.tsx(2,110): error TS2307: Cannot find module 'react-native' or its corresponding type declarations.
+packages/murph-appui/src/components/primitives.tsx(16,63): error TS2339: Property 'style' does not exist on type 'DividerProps'.
+packages/murph-appui/src/core/theme.tsx(2,30): error TS2307: Cannot find module 'react-native' or its corresponding type declarations.

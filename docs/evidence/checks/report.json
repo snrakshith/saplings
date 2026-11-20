@@ -1,0 +1,307 @@
+{
+  "version": "0.17.0",
+  "mode": "preflight",
+  "at": "2026-11-19T15:07:12.318Z",
+  "results": [
+    {
+      "id": "workspace-install",
+      "status": "blocked",
+      "missing": [
+        "file:pnpm-lock.yaml",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "sdk-root-refactor",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "gateway-security-local",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "identity-security-local",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "tenant-export-local",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "saas-gap-audit",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "platform-config",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "ui-core-build",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "ui-web-build",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "ui-native-build",
+      "status": "blocked",
+      "missing": [
+        "package:react-native",
+        "package:react",
+        "package:@types/react",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "vitest-migration",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "architecture-consolidation-local",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "vitest-runtime",
+      "status": "blocked",
+      "missing": [
+        "package:vitest",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "vitest-coverage",
+      "status": "blocked",
+      "missing": [
+        "package:vitest",
+        "package:@vitest/coverage-v8",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "core-build",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "regression",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "catalog",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "blocked",
+      "missing": [
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "adapter-build",
+      "status": "blocked",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "package:@aws-sdk/client-s3",
+        "package:@aws-sdk/client-sesv2",
+        "package:@aws-sdk/client-sns",
+        "package:graphql",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "quality-build",
+      "status": "blocked",
+      "missing": [
+        "package:react",
+        "package:web-vitals",
+        "package:playwright",
+        "package:express",
+        "package:vite",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "validation-compat",
+      "status": "blocked",
+      "missing": [
+        "package:zod",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "postgres-live",
+      "status": "blocked",
+      "missing": [
+        "package:pg",
+        "package:drizzle-orm",
+        "env:TEST_DATABASE_URL",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "valkey-live",
+      "status": "blocked",
+      "missing": [
+        "package:redis",
+        "env:TEST_VALKEY_URL",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "foundation-live",
+      "status": "blocked",
+      "missing": [
+        "package:ws",
+        "package:socket.io",
+        "package:socket.io-client",
+        "package:express",
+        "package:compression",
+        "package:multer",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "provider-live",
+      "status": "blocked",
+      "missing": [
+        "env:SAPLING_PROVIDER_TEST_MODULE",
+        "env:SAPLING_SANDBOX_CONFIRM",
+        "tool:pnpm",
+        "approved sandbox confirmation"
+      ]
+    },
+    {
+      "id": "dependency-audit",
+      "status": "blocked",
+      "missing": [
+        "file:pnpm-lock.yaml",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "react-hooks",
+      "status": "blocked",
+      "missing": [
+        "package:react",
+        "package:react-dom/server",
+        "package:react-test-renderer",
+        "package:@types/react/package.json",
+        "tool:pnpm"
+      ]
+    },
+    {
+      "id": "staging-load",
+      "status": "operator-required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "operator-required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "operator-required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "operator-required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "operator-required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "operator-required"
+    },
+    {
+      "id": "operations-review",
+      "status": "operator-required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "operator-required"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "gateway-integration-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "identity-oidc-conformance",
+      "status": "operator-required"
+    },
+    {
+      "id": "architecture-consolidation-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "ui-native-live",
+      "status": "operator-required"
+    },
+    {
+      "id": "ui-accessibility-live",
+      "status": "operator-required"
+    }
+  ],
+  "note": "Execution results do not automatically close release gates. Review source-bound evidence, target and approval requirements."
+}

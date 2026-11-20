@@ -1,0 +1,13 @@
+{
+  "files": {
+    "examples/platform/GatewayConfig.json": "ba922e68c5787160ac7b7fc245e5b9009053d14cf0ed79eff32d956f3d1a7463",
+    "examples/platform/GatewayConfig.yaml": "057d0045877a615875ab3e2bd388d0bd827b9f07e3b07a9317978093b6942518",
+    "examples/platform/RealmConfig-full.json": "5ca7ddac4cf163102bfcfb2749f08aa4d297f975acf9a3abd598bf93d0864eee"
+  },
+  "yaml": {
+    "name": "default",
+    "services": 1,
+    "upstreams": 1
+  },
+  "status": "YAML syntax validated with Python PyYAML; Node YAML loader still requires pnpm yaml dependency."
+}

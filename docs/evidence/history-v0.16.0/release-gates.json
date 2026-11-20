@@ -1,0 +1,260 @@
+{
+  "version": "0.16.0",
+  "gates": [
+    {
+      "id": "core-build",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/core-build.txt",
+      "sha256": "41bf54b371f042ff45f699414678f9d7d31605af4acb8599eef7539b51ea0d8d",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "regression",
+      "status": "pending",
+      "reason": "Vitest 5 dependency unavailable; previous node:test execution is historical only"
+    },
+    {
+      "id": "catalog",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/catalog.json",
+      "sha256": "6656cba0de6e274212dbe0e30168688584af0cd28b2ab3162bec2b730fd9c0bc",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "adapter-build",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "postgres-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "valkey-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "provider-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "staging-load",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "staging-soak",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "restore-drill",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "dependency-audit",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "scanner-triage",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "independent-security-audit",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "application-authorization",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "operations-review",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "quality-build",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "backend-quality-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "frontend-quality-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "foundation-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "validation-compat",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "technical-evaluation",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/technical-evaluation.json",
+      "sha256": "a5f697aba6f057b57176ce299aa8899c02252e67ba691f5dfaba1f9cebf4bc31",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "recurring-payment-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "workspace-install",
+      "status": "pending",
+      "reason": "pnpm missing; registry EAI_AGAIN; no reviewed pnpm lockfile"
+    },
+    {
+      "id": "react-hooks",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "cashfree-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "saas-gap-audit",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/saas-audit.txt",
+      "sha256": "67b61717e2a4d281ea2340f365d51a0471aea362da8aeb25ebdecedf4cd4a5ca",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "platform-config",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/layout-verification.txt",
+      "sha256": "7351ba5a5f779f4c1c3a66a505e5c10fd953f7db1ccb45fab5ca4767b059a426",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "gateway-integration-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "identity-oidc-conformance",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "ui-core-build",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/quality-local-build.txt",
+      "sha256": "86dff5705fe63ac96ff710c9552a0eda618cb3a21f031caa8b469ed5be228bd0",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "ui-web-build",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "ui-native-build",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "ui-native-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "ui-accessibility-live",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "sdk-root-refactor",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/layout-verification.txt",
+      "sha256": "7351ba5a5f779f4c1c3a66a505e5c10fd953f7db1ccb45fab5ca4767b059a426",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "gateway-security-local",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "identity-security-local",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "tenant-export-local",
+      "status": "pending",
+      "reason": "Current-release runtime, independent or live infrastructure/provider evidence required"
+    },
+    {
+      "id": "vitest-migration",
+      "status": "passed",
+      "sourceHash": "aad756a01d4a743cdb4831c06a1f35e385d3eec8060b68c4480b66f88f35c541",
+      "reviewer": "local direct source/TypeScript validation; not independent",
+      "environment": "local direct Node/TypeScript; offline registry",
+      "evidence": "docs/evidence/vitest-static.json",
+      "sha256": "9350fe1e271e3154d2e2503db3db4931c985ede4dd564eda60e3cee482ece1d6",
+      "at": "2026-11-19T14:23:19.878381+00:00"
+    },
+    {
+      "id": "vitest-runtime",
+      "status": "pending",
+      "reason": "No installed Vitest 5; npm registry EAI_AGAIN; core regression suite not executed on v0.16.0"
+    },
+    {
+      "id": "vitest-coverage",
+      "status": "pending",
+      "reason": "No installed @vitest/coverage-v8; no real coverage output or thresholds"
+    }
+  ]
+}

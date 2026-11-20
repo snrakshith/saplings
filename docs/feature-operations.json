@@ -1,0 +1,1540 @@
+[
+  {
+    "featureId": "SAAS-001",
+    "kind": "local",
+    "actions": [
+      "register"
+    ]
+  },
+  {
+    "featureId": "SAAS-002",
+    "kind": "local",
+    "actions": [
+      "issue",
+      "consume"
+    ]
+  },
+  {
+    "featureId": "SAAS-003",
+    "kind": "local",
+    "actions": [
+      "issue",
+      "consume"
+    ]
+  },
+  {
+    "featureId": "SAAS-004",
+    "kind": "local",
+    "actions": [
+      "issue",
+      "consume"
+    ]
+  },
+  {
+    "featureId": "SAAS-005",
+    "kind": "local",
+    "actions": [
+      "login",
+      "logout"
+    ]
+  },
+  {
+    "featureId": "SAAS-006",
+    "kind": "local",
+    "actions": [
+      "verify",
+      "list",
+      "revoke"
+    ]
+  },
+  {
+    "featureId": "SAAS-007",
+    "kind": "hybrid",
+    "actions": [
+      "verify"
+    ],
+    "note": "JWT verification delegated to configured authentication adapter."
+  },
+  {
+    "featureId": "SAAS-008",
+    "kind": "local",
+    "actions": [
+      "create",
+      "list",
+      "revoke"
+    ]
+  },
+  {
+    "featureId": "SAAS-009",
+    "kind": "hybrid",
+    "actions": [
+      "enroll",
+      "confirm",
+      "challenge",
+      "verify",
+      "revoke"
+    ],
+    "note": "TOTP with encrypted factor, replay prevention and MFA-gated local sessions; external federation MFA separate."
+  },
+  {
+    "featureId": "SAAS-010",
+    "kind": "provider",
+    "actions": [
+      "start",
+      "callback",
+      "metadata"
+    ],
+    "note": "SAML federation identity provider."
+  },
+  {
+    "featureId": "SAAS-011",
+    "kind": "provider",
+    "actions": [
+      "authorize",
+      "callback",
+      "refresh",
+      "revoke"
+    ],
+    "note": "OAuth2/OIDC provider."
+  },
+  {
+    "featureId": "SAAS-012",
+    "kind": "provider",
+    "actions": [
+      "start",
+      "callback"
+    ],
+    "note": "Social identity provider."
+  },
+  {
+    "featureId": "SAAS-013",
+    "kind": "hybrid",
+    "actions": [
+      "register",
+      "revoke"
+    ],
+    "note": "Device records only; hardware attestation requires provider."
+  },
+  {
+    "featureId": "SAAS-014",
+    "kind": "local",
+    "actions": [
+      "create",
+      "revoke"
+    ]
+  },
+  {
+    "featureId": "SAAS-015",
+    "kind": "local",
+    "actions": [
+      "setRole",
+      "check",
+      "assign"
+    ]
+  },
+  {
+    "featureId": "SAAS-016",
+    "kind": "hybrid",
+    "actions": [
+      "check"
+    ],
+    "note": "Rules registered in trusted application code; policy authoring external."
+  },
+  {
+    "featureId": "SAAS-017",
+    "kind": "hybrid",
+    "actions": [
+      "check"
+    ],
+    "note": "Rules registered in trusted application code; policy authoring external."
+  },
+  {
+    "featureId": "SAAS-018",
+    "kind": "local",
+    "actions": [
+      "login"
+    ]
+  },
+  {
+    "featureId": "SAAS-019",
+    "kind": "hybrid",
+    "actions": [
+      "provision"
+    ],
+    "note": "Logical provisioning only; infrastructure provisioning delegated."
+  },
+  {
+    "featureId": "SAAS-020",
+    "kind": "local",
+    "actions": [
+      "context"
+    ]
+  },
+  {
+    "featureId": "SAAS-021",
+    "kind": "hybrid",
+    "actions": [
+      "check"
+    ],
+    "note": "Tenant-scoped storage; database RLS and app authorization still required."
+  },
+  {
+    "featureId": "SAAS-022",
+    "kind": "local",
+    "actions": [
+      "context"
+    ]
+  },
+  {
+    "featureId": "SAAS-023",
+    "kind": "hybrid",
+    "actions": [
+      "get"
+    ],
+    "note": "Physical region routing must be enforced by provider."
+  },
+  {
+    "featureId": "SAAS-024",
+    "kind": "hybrid",
+    "actions": [
+      "request",
+      "approve",
+      "status",
+      "advance"
+    ],
+    "note": "Durable, approved offboarding workflow; configure idempotent legal hold, revoke, export, purge and verification handlers."
+  },
+  {
+    "featureId": "SAAS-025",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-026",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-027",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-028",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-029",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-030",
+    "kind": "local",
+    "actions": [
+      "invite",
+      "accept"
+    ]
+  },
+  {
+    "featureId": "SAAS-031",
+    "kind": "local",
+    "actions": [
+      "switch"
+    ]
+  },
+  {
+    "featureId": "SAAS-032",
+    "kind": "local",
+    "actions": [
+      "set"
+    ]
+  },
+  {
+    "featureId": "SAAS-033",
+    "kind": "hybrid",
+    "actions": [
+      "start",
+      "stop"
+    ],
+    "note": "Restricted local support sessions with recent MFA and audit; application must use verified context and preserve impersonator ID."
+  },
+  {
+    "featureId": "SAAS-034",
+    "kind": "local",
+    "actions": [
+      "create",
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-035",
+    "kind": "local",
+    "actions": [
+      "create",
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-036",
+    "kind": "hybrid",
+    "actions": [
+      "transition",
+      "schedule",
+      "issueDue",
+      "cancelSchedule",
+      "quoteChange"
+    ],
+    "note": "Fixed-day recurring invoice scheduling; application scheduler and verified payment gateway required; proration quote available; actual plan-change posting and jurisdiction tax rules require application policy."
+  },
+  {
+    "featureId": "SAAS-037",
+    "kind": "local",
+    "actions": [
+      "start"
+    ]
+  },
+  {
+    "featureId": "SAAS-038",
+    "kind": "local",
+    "actions": [
+      "meter",
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-039",
+    "kind": "local",
+    "actions": [
+      "set",
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-040",
+    "kind": "local",
+    "actions": [
+      "set",
+      "check"
+    ]
+  },
+  {
+    "featureId": "SAAS-041",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-042",
+    "kind": "hybrid",
+    "actions": [
+      "order"
+    ],
+    "note": "Cashfree preferred; Razorpay or Stripe selectable. Order is not confirmation; use payments.reconcilePayment or verified provider callback."
+  },
+  {
+    "featureId": "SAAS-043",
+    "kind": "provider",
+    "actions": [
+      "attach",
+      "list",
+      "detach"
+    ],
+    "note": "Provider tokenized payment methods; never store raw cards."
+  },
+  {
+    "featureId": "SAAS-044",
+    "kind": "hybrid",
+    "actions": [
+      "calculate"
+    ],
+    "note": "Supplied rate calculation, not jurisdiction tax determination."
+  },
+  {
+    "featureId": "SAAS-045",
+    "kind": "local",
+    "actions": [
+      "create",
+      "redeem"
+    ]
+  },
+  {
+    "featureId": "SAAS-046",
+    "kind": "local",
+    "actions": [
+      "post"
+    ]
+  },
+  {
+    "featureId": "SAAS-047",
+    "kind": "hybrid",
+    "actions": [
+      "refund"
+    ],
+    "note": "Cashfree refund reconciliation via payments.reconcileRefund; other providers require verified provider-specific reconciliation."
+  },
+  {
+    "featureId": "SAAS-048",
+    "kind": "hybrid",
+    "actions": [
+      "enqueue",
+      "chargeDue",
+      "resume",
+      "sweep"
+    ],
+    "note": "Durable retry schedule and idempotent recurring gateway; verify provider payment result."
+  },
+  {
+    "featureId": "SAAS-049",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-050",
+    "kind": "provider",
+    "actions": [
+      "verify",
+      "reconcile"
+    ],
+    "note": "Cashfree signed webhook built in when configured; Razorpay webhook retained; Stripe recurring callback separate."
+  },
+  {
+    "featureId": "SAAS-051",
+    "kind": "local",
+    "actions": [
+      "scan"
+    ]
+  },
+  {
+    "featureId": "SAAS-052",
+    "kind": "local",
+    "actions": [
+      "assess"
+    ]
+  },
+  {
+    "featureId": "SAAS-053",
+    "kind": "hybrid",
+    "actions": [
+      "get",
+      "put",
+      "rotate"
+    ],
+    "note": "Encrypted local vault; external KMS and key rotation policy required."
+  },
+  {
+    "featureId": "SAAS-054",
+    "kind": "hybrid",
+    "actions": [
+      "encrypt",
+      "decrypt"
+    ],
+    "note": "Configure encryption key; storage-wide encryption is infrastructure policy."
+  },
+  {
+    "featureId": "SAAS-055",
+    "kind": "hybrid",
+    "actions": [
+      "verify",
+      "configure"
+    ],
+    "note": "Fixed HTTPS verification and configured certificate control; certificate control plane adapter required for configuration."
+  },
+  {
+    "featureId": "SAAS-056",
+    "kind": "hybrid",
+    "actions": [
+      "policy"
+    ],
+    "note": "Enforced by configured runtime middleware; do not expose policy to clients."
+  },
+  {
+    "featureId": "SAAS-057",
+    "kind": "hybrid",
+    "actions": [
+      "policy"
+    ],
+    "note": "Enforced by configured runtime middleware; do not expose policy to clients."
+  },
+  {
+    "featureId": "SAAS-058",
+    "kind": "hybrid",
+    "actions": [
+      "policy"
+    ],
+    "note": "Enforced by configured runtime middleware; do not expose policy to clients."
+  },
+  {
+    "featureId": "SAAS-059",
+    "kind": "hybrid",
+    "actions": [
+      "policy"
+    ],
+    "note": "Enforced by configured runtime middleware; do not expose policy to clients."
+  },
+  {
+    "featureId": "SAAS-060",
+    "kind": "hybrid",
+    "actions": [
+      "policy"
+    ],
+    "note": "Enforced by configured runtime middleware; do not expose policy to clients."
+  },
+  {
+    "featureId": "SAAS-061",
+    "kind": "local",
+    "actions": [
+      "run"
+    ]
+  },
+  {
+    "featureId": "SAAS-062",
+    "kind": "local",
+    "actions": [
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-063",
+    "kind": "local",
+    "actions": [
+      "record",
+      "history"
+    ]
+  },
+  {
+    "featureId": "SAAS-064",
+    "kind": "local",
+    "actions": [
+      "export"
+    ]
+  },
+  {
+    "featureId": "SAAS-065",
+    "kind": "local",
+    "actions": [
+      "list",
+      "record"
+    ]
+  },
+  {
+    "featureId": "SAAS-066",
+    "kind": "hybrid",
+    "actions": [
+      "policy"
+    ],
+    "note": "Enforced by configured runtime middleware; do not expose policy to clients."
+  },
+  {
+    "featureId": "SAAS-067",
+    "kind": "hybrid",
+    "actions": [
+      "policy"
+    ],
+    "note": "Enforced by configured runtime middleware; do not expose policy to clients."
+  },
+  {
+    "featureId": "SAAS-068",
+    "kind": "local",
+    "actions": [
+      "list",
+      "ack"
+    ]
+  },
+  {
+    "featureId": "SAAS-069",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-070",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-071",
+    "kind": "hybrid",
+    "actions": [
+      "send"
+    ],
+    "note": "email delivery provider required."
+  },
+  {
+    "featureId": "SAAS-072",
+    "kind": "hybrid",
+    "actions": [
+      "enqueue"
+    ],
+    "note": "Worker must register bulk delivery handler."
+  },
+  {
+    "featureId": "SAAS-073",
+    "kind": "hybrid",
+    "actions": [
+      "send"
+    ],
+    "note": "sms delivery provider required."
+  },
+  {
+    "featureId": "SAAS-074",
+    "kind": "hybrid",
+    "actions": [
+      "send"
+    ],
+    "note": "push delivery provider required."
+  },
+  {
+    "featureId": "SAAS-075",
+    "kind": "local",
+    "actions": [
+      "send",
+      "list",
+      "read"
+    ]
+  },
+  {
+    "featureId": "SAAS-076",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-077",
+    "kind": "local",
+    "actions": [
+      "set",
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-078",
+    "kind": "local",
+    "actions": [
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-079",
+    "kind": "hybrid",
+    "actions": [
+      "enqueue"
+    ],
+    "note": "Register delivery handler."
+  },
+  {
+    "featureId": "SAAS-080",
+    "kind": "local",
+    "actions": [
+      "optOut"
+    ]
+  },
+  {
+    "featureId": "SAAS-081",
+    "kind": "hybrid",
+    "actions": [
+      "verify",
+      "reconcile"
+    ],
+    "note": "Signed Sapling callback envelope; vendor-specific adapters can override."
+  },
+  {
+    "featureId": "SAAS-082",
+    "kind": "local",
+    "actions": [
+      "render"
+    ]
+  },
+  {
+    "featureId": "SAAS-083",
+    "kind": "hybrid",
+    "actions": [
+      "upload",
+      "download",
+      "list",
+      "delete"
+    ],
+    "note": "Storage adapter required in production."
+  },
+  {
+    "featureId": "SAAS-084",
+    "kind": "hybrid",
+    "actions": [
+      "upload",
+      "download",
+      "list",
+      "delete"
+    ],
+    "note": "Storage adapter required in production."
+  },
+  {
+    "featureId": "SAAS-085",
+    "kind": "provider",
+    "actions": [
+      "sign"
+    ],
+    "note": "Presigned URL provider; use tenant-scoped object key."
+  },
+  {
+    "featureId": "SAAS-086",
+    "kind": "local",
+    "actions": [
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-087",
+    "kind": "local",
+    "actions": [
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-088",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-089",
+    "kind": "local",
+    "actions": [
+      "import"
+    ]
+  },
+  {
+    "featureId": "SAAS-090",
+    "kind": "local",
+    "actions": [
+      "export"
+    ]
+  },
+  {
+    "featureId": "SAAS-091",
+    "kind": "hybrid",
+    "actions": [
+      "backup",
+      "restore",
+      "status"
+    ],
+    "note": "Bounded encrypted tenant logical backup; physical DB and object-store backup still external."
+  },
+  {
+    "featureId": "SAAS-092",
+    "kind": "provider",
+    "actions": [
+      "plan",
+      "apply",
+      "status"
+    ],
+    "note": "Migration runner executes reviewed migrations outside requests."
+  },
+  {
+    "featureId": "SAAS-093",
+    "kind": "hybrid",
+    "actions": [
+      "search"
+    ],
+    "note": "Bounded cursor-based search and optional database search; dedicated full-text index for scale."
+  },
+  {
+    "featureId": "SAAS-094",
+    "kind": "provider",
+    "actions": [
+      "purge",
+      "configure"
+    ],
+    "note": "CDN provider."
+  },
+  {
+    "featureId": "SAAS-095",
+    "kind": "provider",
+    "actions": [
+      "transform",
+      "status"
+    ],
+    "note": "Media processing worker."
+  },
+  {
+    "featureId": "SAAS-096",
+    "kind": "local",
+    "actions": [
+      "validate"
+    ]
+  },
+  {
+    "featureId": "SAAS-097",
+    "kind": "local",
+    "actions": [
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-098",
+    "kind": "local",
+    "actions": [
+      "archive"
+    ]
+  },
+  {
+    "featureId": "SAAS-099",
+    "kind": "local",
+    "actions": [
+      "mask"
+    ]
+  },
+  {
+    "featureId": "SAAS-100",
+    "kind": "local",
+    "actions": [
+      "track"
+    ]
+  },
+  {
+    "featureId": "SAAS-101",
+    "kind": "local",
+    "actions": [
+      "identify"
+    ]
+  },
+  {
+    "featureId": "SAAS-102",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-103",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-104",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-105",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-106",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-107",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-108",
+    "kind": "hybrid",
+    "actions": [
+      "schedule"
+    ],
+    "note": "Register report worker."
+  },
+  {
+    "featureId": "SAAS-109",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-110",
+    "kind": "local",
+    "actions": [
+      "capture",
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-111",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-112",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-113",
+    "kind": "local",
+    "actions": [
+      "enqueue",
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-114",
+    "kind": "local",
+    "actions": [
+      "enqueue",
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-115",
+    "kind": "local",
+    "actions": [
+      "requeue"
+    ]
+  },
+  {
+    "featureId": "SAAS-116",
+    "kind": "local",
+    "actions": [
+      "list",
+      "requeue"
+    ]
+  },
+  {
+    "featureId": "SAAS-117",
+    "kind": "hybrid",
+    "actions": [
+      "start"
+    ],
+    "note": "Workflow worker required; no arbitrary code evaluation."
+  },
+  {
+    "featureId": "SAAS-118",
+    "kind": "local",
+    "actions": [
+      "request",
+      "decide"
+    ]
+  },
+  {
+    "featureId": "SAAS-119",
+    "kind": "local",
+    "actions": [
+      "evaluate"
+    ]
+  },
+  {
+    "featureId": "SAAS-120",
+    "kind": "hybrid",
+    "actions": [
+      "enqueue"
+    ],
+    "note": "Register event worker."
+  },
+  {
+    "featureId": "SAAS-121",
+    "kind": "hybrid",
+    "actions": [
+      "verify",
+      "dispatch"
+    ],
+    "note": "Timestamp signature, replay inbox and atomic outbox; configure trusted secrets."
+  },
+  {
+    "featureId": "SAAS-122",
+    "kind": "local",
+    "actions": [
+      "record"
+    ]
+  },
+  {
+    "featureId": "SAAS-123",
+    "kind": "hybrid",
+    "actions": [
+      "append"
+    ],
+    "note": "Atomic local append; delivery relay must be configured."
+  },
+  {
+    "featureId": "SAAS-124",
+    "kind": "local",
+    "actions": [
+      "envelope"
+    ]
+  },
+  {
+    "featureId": "SAAS-125",
+    "kind": "hybrid",
+    "actions": [
+      "execute",
+      "schema"
+    ],
+    "note": "Application supplies vetted GraphQL executor and schema."
+  },
+  {
+    "featureId": "SAAS-126",
+    "kind": "hybrid",
+    "actions": [
+      "document"
+    ],
+    "note": "Provide application OpenAPI document in unified config."
+  },
+  {
+    "featureId": "SAAS-127",
+    "kind": "local",
+    "actions": [
+      "generate"
+    ],
+    "note": "Generates TypeScript fetch client from configured OpenAPI operations; not schema-typed."
+  },
+  {
+    "featureId": "SAAS-128",
+    "kind": "local",
+    "actions": [
+      "resolve"
+    ]
+  },
+  {
+    "featureId": "SAAS-129",
+    "kind": "local",
+    "actions": [
+      "page"
+    ]
+  },
+  {
+    "featureId": "SAAS-130",
+    "kind": "local",
+    "actions": [
+      "filter"
+    ]
+  },
+  {
+    "featureId": "SAAS-131",
+    "kind": "local",
+    "actions": [
+      "headers"
+    ]
+  },
+  {
+    "featureId": "SAAS-132",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-133",
+    "kind": "local",
+    "actions": [
+      "check"
+    ]
+  },
+  {
+    "featureId": "SAAS-134",
+    "kind": "local",
+    "actions": [
+      "sign",
+      "verify"
+    ]
+  },
+  {
+    "featureId": "SAAS-135",
+    "kind": "hybrid",
+    "actions": [
+      "enqueue"
+    ],
+    "note": "Configure outbound destinations and signed delivery worker."
+  },
+  {
+    "featureId": "SAAS-136",
+    "kind": "hybrid",
+    "actions": [
+      "emit"
+    ],
+    "note": "Local event bus; durable broker external."
+  },
+  {
+    "featureId": "SAAS-137",
+    "kind": "local",
+    "actions": [
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-138",
+    "kind": "local",
+    "actions": [
+      "envelope"
+    ]
+  },
+  {
+    "featureId": "SAAS-139",
+    "kind": "local",
+    "actions": [
+      "set",
+      "evaluate"
+    ]
+  },
+  {
+    "featureId": "SAAS-140",
+    "kind": "local",
+    "actions": [
+      "set",
+      "evaluate"
+    ]
+  },
+  {
+    "featureId": "SAAS-141",
+    "kind": "local",
+    "actions": [
+      "set",
+      "evaluate"
+    ]
+  },
+  {
+    "featureId": "SAAS-142",
+    "kind": "local",
+    "actions": [
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-143",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-144",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-145",
+    "kind": "hybrid",
+    "actions": [
+      "install",
+      "uninstall",
+      "list"
+    ],
+    "note": "Trusted catalog activation metadata; plugin runtime is application registered."
+  },
+  {
+    "featureId": "SAAS-146",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-147",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-148",
+    "kind": "hybrid",
+    "actions": [
+      "request",
+      "verify",
+      "activate",
+      "remove"
+    ],
+    "note": "DNS TXT challenge and verified activation/removal through configured routing/TLS control plane."
+  },
+  {
+    "featureId": "SAAS-149",
+    "kind": "local",
+    "actions": [
+      "format"
+    ]
+  },
+  {
+    "featureId": "SAAS-150",
+    "kind": "local",
+    "actions": [
+      "format"
+    ]
+  },
+  {
+    "featureId": "SAAS-151",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-152",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-153",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-154",
+    "kind": "local",
+    "actions": [
+      "log"
+    ]
+  },
+  {
+    "featureId": "SAAS-155",
+    "kind": "provider",
+    "actions": [
+      "export",
+      "status"
+    ],
+    "note": "OpenTelemetry tracing provider."
+  },
+  {
+    "featureId": "SAAS-156",
+    "kind": "local",
+    "actions": [
+      "observe",
+      "snapshot"
+    ]
+  },
+  {
+    "featureId": "SAAS-157",
+    "kind": "local",
+    "actions": [
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-158",
+    "kind": "local",
+    "actions": [
+      "get"
+    ]
+  },
+  {
+    "featureId": "SAAS-159",
+    "kind": "local",
+    "actions": [
+      "describe"
+    ],
+    "note": "Executable typed utilities exported; do not expose callbacks over HTTP."
+  },
+  {
+    "featureId": "SAAS-160",
+    "kind": "local",
+    "actions": [
+      "describe"
+    ],
+    "note": "Executable typed utilities exported; do not expose callbacks over HTTP."
+  },
+  {
+    "featureId": "SAAS-161",
+    "kind": "local",
+    "actions": [
+      "describe"
+    ],
+    "note": "Executable typed utilities exported; do not expose callbacks over HTTP."
+  },
+  {
+    "featureId": "SAAS-162",
+    "kind": "local",
+    "actions": [
+      "describe"
+    ],
+    "note": "Executable typed utilities exported; do not expose callbacks over HTTP."
+  },
+  {
+    "featureId": "SAAS-163",
+    "kind": "local",
+    "actions": [
+      "report"
+    ]
+  },
+  {
+    "featureId": "SAAS-164",
+    "kind": "hybrid",
+    "actions": [
+      "record",
+      "list"
+    ],
+    "note": "Alert routing external."
+  },
+  {
+    "featureId": "SAAS-165",
+    "kind": "provider",
+    "actions": [
+      "deploy",
+      "status",
+      "rollback"
+    ],
+    "note": "CI/CD control plane."
+  },
+  {
+    "featureId": "SAAS-166",
+    "kind": "provider",
+    "actions": [
+      "plan",
+      "apply",
+      "destroy"
+    ],
+    "note": "Infrastructure provisioning control plane."
+  },
+  {
+    "featureId": "SAAS-167",
+    "kind": "provider",
+    "actions": [
+      "scale",
+      "status"
+    ],
+    "note": "Kubernetes autoscaler/control plane."
+  },
+  {
+    "featureId": "SAAS-168",
+    "kind": "provider",
+    "actions": [
+      "backup",
+      "restore",
+      "drill"
+    ],
+    "note": "Disaster recovery provider and operational drills."
+  },
+  {
+    "featureId": "SAAS-169",
+    "kind": "local",
+    "actions": [
+      "status"
+    ],
+    "note": "Lifecycle.close() explicitly called by application shutdown hook."
+  },
+  {
+    "featureId": "SAAS-170",
+    "kind": "local",
+    "actions": [
+      "validate"
+    ]
+  },
+  {
+    "featureId": "SAAS-171",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-172",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-173",
+    "kind": "local",
+    "actions": [
+      "create",
+      "assign",
+      "complete",
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-174",
+    "kind": "local",
+    "actions": [
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-175",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-176",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-177",
+    "kind": "local",
+    "actions": [
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-178",
+    "kind": "local",
+    "actions": [
+      "create",
+      "update",
+      "list"
+    ]
+  },
+  {
+    "featureId": "SAAS-179",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-180",
+    "kind": "hybrid",
+    "actions": [
+      "overview"
+    ],
+    "note": "Backend overview; admin UI not part of backend SDK."
+  },
+  {
+    "featureId": "SAAS-181",
+    "kind": "local",
+    "actions": [
+      "create",
+      "get",
+      "list",
+      "update",
+      "delete"
+    ]
+  },
+  {
+    "featureId": "SAAS-182",
+    "kind": "hybrid",
+    "actions": [
+      "transfer"
+    ],
+    "note": "App must validate target ownership and resource-specific permissions."
+  }
+]

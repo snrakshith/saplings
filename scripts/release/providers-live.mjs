@@ -1,0 +1,8 @@
+// Runs an explicitly supplied, trusted sandbox validation module. No default live actions.
+import {pathToFileURL} from 'node:url';import {resolve} from 'node:path';import {readFileSync,writeFileSync} from 'node:fs';
+const file=process.env.SAPLING_PROVIDER_TEST_MODULE;if(!file||process.env.SAPLING_SANDBOX_CONFIRM!=='yes')throw Error('Set SAPLING_PROVIDER_TEST_MODULE and SAPLING_SANDBOX_CONFIRM=yes for approved disposable sandbox only');
+const {checks,environmentId}=await import(pathToFileURL(resolve(file)).href);
+const required=['oidc','saml-broker','social-broker','stripe','razorpay','s3','presign','ses','sns','github-workflow','kubernetes','cloudflare','otlp','media','graphql','domain-tls','physical-backup'];
+if(!environmentId||typeof checks!=='object')throw Error('Sandbox module must export environmentId and checks');
+const results=[];for(const name of required){try{if(typeof checks[name]!=='function')throw Error('Missing check');const result=await checks[name]();if(result?.verified!==true||typeof result.evidenceId!=='string'||!result.evidenceId.trim())throw Error('Missing verification evidence');results.push({name,status:'passed',evidenceId:result.evidenceId});}catch(e){results.push({name,status:'failed',reason:e?.name??'Error'});}}
+const evidence={version:JSON.parse(readFileSync('package.json','utf8')).version,environmentId,mode:'sandbox-operator-supplied',at:new Date().toISOString(),checks:results};console.log(JSON.stringify(evidence,null,2));if(process.env.SAPLING_PROVIDER_OUTPUT)writeFileSync(process.env.SAPLING_PROVIDER_OUTPUT,JSON.stringify(evidence,null,2)+'\n');if(results.some(x=>x.status!=='passed'))process.exitCode=1;

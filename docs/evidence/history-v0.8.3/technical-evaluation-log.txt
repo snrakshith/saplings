@@ -1,0 +1,17 @@
+
+> sapling-unified-sdk-monorepo@0.8.3 technical:evaluate
+> node scripts/technical-evaluation.mjs
+
+{
+  "version": "0.8.3",
+  "features": 182,
+  "scanners": 41,
+  "qualitySuites": 32,
+  "packages": 18,
+  "classification": {
+    "local": 119,
+    "hybrid": 49,
+    "provider": 14
+  },
+  "status": "inventory-verified; not production approval"
+}

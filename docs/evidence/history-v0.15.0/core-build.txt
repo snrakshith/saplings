@@ -1,0 +1,14 @@
+v22.16.0
+Version 5.8.3
+tsc -p packages/utils
+tsc -p packages/validations
+tsc -p packages/realtime
+tsc -p packages/middleware
+tsc -p packages/quality-contracts
+tsc -p packages/catalog
+tsc -p packages/security
+tsc -p packages/identity-platform
+tsc -p packages/gateway
+tsc -p packages/sdk
+tsc -p packages/cli
+PASS: all core and platform packages

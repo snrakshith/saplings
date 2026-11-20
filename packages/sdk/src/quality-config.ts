@@ -1,0 +1,7 @@
+/** Development-only settings. No quality runner is imported by the SDK runtime. */
+export type QualityCategory = 'performance'|'load'|'stress'|'spike'|'soak'|'scalability'|'security'|'concurrency'|'resilience'|'recovery'|'observability'|'contract'|'chaos'|'disaster-recovery'|'kubernetes';
+export type QualityEngine = 'native'|'k6'|'autocannon'|'toxiproxy'|'zap'|'schemathesis'|'testcontainers'|'chaos-mesh'|'kubectl'|'vitest'|'node-test';
+export interface QualityThresholds { maxP95Ms?:number; maxP99Ms?:number; maxErrorRate?:number; minRequestsPerSecond?:number }
+export interface QualityProbe { path:string; statuses?:number[]; headers?:Record<string,string>; }
+export interface QualitySuiteConfig { id:string; category:QualityCategory; engine:QualityEngine; enabled?:boolean; target?:string; probes?:QualityProbe[]; concurrency?:number; requests?:number; durationSeconds?:number; stages?:{concurrency:number;seconds:number}[]; thresholds?:QualityThresholds; timeoutMs?:number; script?:string; namespace?:string; deployment?:string; manifest?:string; replicas?:number; disrupts?:boolean; }
+export interface BackendQualityConfig { enabled?:boolean; environment:'local'|'staging'; allowedOrigins:string[]; targets:Record<string,string>; allowedNamespaces?:string[]; allowedDeployments?:string[]; suites:QualitySuiteConfig[]; outputDir?:string; maxConcurrency?:number; maxDurationSeconds?:number; allowDisruptive?:boolean; }

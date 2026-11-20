@@ -1,0 +1,24 @@
+{
+  "name": "@sapling/adapter-app",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "@sapling/sdk": "workspace:*",
+    "graphql": "^16.11.0",
+    "sharp": "^0.34.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0"
+  },
+  "files": [
+    "dist"
+  ]
+}

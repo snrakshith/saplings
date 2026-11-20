@@ -1,0 +1,6 @@
+tsc -p packages/quality-node-diagnostics
+tsc -p packages/quality-core
+tsc -p packages/backend-quality
+tsc -p packages/frontend-quality/tsconfig.local.json
+tsc -p packages/quality-cli
+PASS: dependency-free quality

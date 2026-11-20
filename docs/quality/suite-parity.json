@@ -1,0 +1,194 @@
+[
+  {
+    "suite": "backend:performance",
+    "source": "Autocannon",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:load",
+    "source": "k6 weighted workload",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:stress",
+    "source": "k6 stages",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:spike",
+    "source": "k6 stages",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:soak",
+    "source": "k6 sustained workload",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:scalability",
+    "source": "k6 + HPA",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:security",
+    "source": "Semgrep / Trivy / ZAP",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:concurrency",
+    "source": "HTTP idempotency checks",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "local test"
+  },
+  {
+    "suite": "backend:resilience",
+    "source": "Toxiproxy latency and cleanup",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:recovery",
+    "source": "kubectl rollout",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:observability",
+    "source": "health and Prometheus",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "local test"
+  },
+  {
+    "suite": "backend:contract",
+    "source": "Schemathesis/custom",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:chaos",
+    "source": "Chaos Mesh",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:disaster-recovery",
+    "source": "operator restore drill",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:kubernetes",
+    "source": "kubectl resources/probes/HPA/PDB",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "backend:profiling",
+    "source": "Node profiler command and diagnostics",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:performance",
+    "source": "Playwright / LHCI",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:rendering",
+    "source": "React Profiler",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:visual",
+    "source": "pixelmatch + PNG",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:accessibility",
+    "source": "axe-core",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:responsive",
+    "source": "viewport checks",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:cross-browser",
+    "source": "Chromium / Firefox / WebKit",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:bundle",
+    "source": "gzip budgets",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "local test"
+  },
+  {
+    "suite": "frontend:memory",
+    "source": "Chromium CDP",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:security",
+    "source": "headers / Semgrep",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:network",
+    "source": "routing / offline",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:seo",
+    "source": "metadata",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:api-integration",
+    "source": "route mocks / selectors",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:observability",
+    "source": "Web Vitals / browser events",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:recovery",
+    "source": "reload state",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:localization",
+    "source": "HTML language",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  },
+  {
+    "suite": "frontend:navigation",
+    "source": "navigation / selector",
+    "sourceParity": "retained or adapted",
+    "liveValidation": "pending or configuration dependent"
+  }
+]

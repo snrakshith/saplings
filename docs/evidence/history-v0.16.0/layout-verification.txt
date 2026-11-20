@@ -1,0 +1,60 @@
+{
+  "version": "0.16.0",
+  "files": 32,
+  "framework": "Vitest 5.0.0",
+  "coverageProvider": "@vitest/coverage-v8 5.0.0",
+  "qualityEngine": "vitest (node-test alias supported)",
+  "mode": "static source verification only",
+  "runtimeExecuted": false
+}
+{
+  "version": "0.16.0",
+  "dossiers": 831,
+  "documents": 2493,
+  "counts": {
+    "saas": 182,
+    "scanner": 41,
+    "quality": 32,
+    "defender": 27,
+    "utilities": 342,
+    "react-hooks": 31,
+    "validation-native": 40,
+    "realtime": 24,
+    "middleware": 28,
+    "instrumentation": 5,
+    "providers": 11,
+    "gateway": 25,
+    "identity-platform": 18,
+    "packages": 24,
+    "validation-compat": 1
+  },
+  "status": "all triplets and source references present; not functional certification"
+}
+{
+  "version": "0.16.0",
+  "flattenedModules": 31,
+  "oldDirectoryAbsent": true,
+  "failures": []
+}
+{
+  "version": "0.16.0",
+  "packages": 24,
+  "newPackages": [
+    "@sapling/ui-core",
+    "@sapling/murphi-ui",
+    "@sapling/murph-appui"
+  ],
+  "webComponentFolders": 39,
+  "nativeMatchingComponents": 38,
+  "pendingNative": [
+    "Slider"
+  ],
+  "result": "source and package layout verified; live platform evidence remains required"
+}
+{
+  "version": "0.16.0",
+  "gateway": 9,
+  "realm": 27,
+  "plugins": 14,
+  "status": "all sample spec keys mapped; not complete implementation"
+}

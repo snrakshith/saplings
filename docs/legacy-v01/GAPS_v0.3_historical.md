@@ -1,0 +1,20 @@
+# v0.4.0 release gates and remaining gaps
+
+This release implements substantially more of the v0.2 backlog and resumes testing. No zero-gap or production-readiness certification is claimed. Every original ID remains registered; 120 local reference, 48 hybrid, 14 provider-required. The latter have concrete integration source, not hosted services. A reference operation is not necessarily a complete product feature.
+
+| Previous gap | v0.3 implementation | Remaining gate |
+|---|---|---|
+| Identity and access | Encrypted TOTP, replay prevention, primary and passwordless MFA gate; OIDC PKCE, nonce, state, refresh/revoke; restricted impersonation and delegation | Identity broker for SAML/social, trusted public auth routes and email delivery, recovery and credential abuse review, live IdP testing |
+| DB persistence | Tenant transaction context, RLS and forced policy, audit trigger, claim indexes, pagination | Apply migration with non-owner runtime role; run real PostgreSQL tests; domain-specific tables, constraints, higher-throughput query/index tuning; no claim RLS protects arbitrary SQL using a trusted connection |
+| Billing | Tokenized Stripe setup adapter, payment/refund request reservations and signed reconciliation, invoice capture | Live sandbox payment/refund, recurring charge/dunning worker, taxation/accounting jurisdiction rules, ambiguous payment reconciliation and finance review |
+| Worker | Built-in delivery/report/event/cleanup handlers, outbox relay, bounded fair scheduling and leases | Deploy trusted worker process with tenant registry, idempotent callbacks, monitored leases, backpressure and load/failure testing; no exactly-once guarantee |
+| Data | Encrypted bounded logical backup/restore; media adapter; vault; DNS ownership | Physical DB/object backup to separate failure domain, restore drill, indexed search, streaming, document ACL, KMS key lifecycle, privacy/data residency and offboarding orchestration |
+| Security scanner | 38 category paths via heuristics/passive HTTP, 2 additional via configured DNS, report-only threat intelligence; imports SARIF/npm/Trivy/Lighthouse/review evidence | Run authorized external scanners, assess actual rule coverage and false positives, tune thresholds; no 200+ vendor parity |
+| Defender | Pre-parse checks, bounded decoding/inspection, fail-closed shared rate state, verified CSRF hook, persisted unauthenticated signals | WAF/edge DDoS, bot/device intelligence, SIEM and retention, real traffic and penetration testing; pattern matching is not a substitute for safe coding |
+| Platform ops | Fixed-target GitHub workflow dispatch, Kubernetes scaling, CDN purge, OTLP export, readiness, Docker/K8s templates | Supply reviewed actual workflows (migration, provisioning, deploy, rollback, physical DR, TLS/domain activation), scoped credentials and real infrastructure; validate completion, not just dispatch; deploy alerts and SLO monitoring |
+| Application extensions | GraphQL executor adapter, OpenAPI client generator, plugin metadata allowlist | Supply application schema/resolvers and trusted plugin implementations; custom domain activation and TLS configuration still need control-plane integration |
+| Quality | Core build, catalog reconciliation, 22 local tests; live PostgreSQL test source and CI | External packages unavailable in this environment; execute adapter builds, DB/Valkey/cloud integration, comprehensive operation tests, load/soak/recovery, independent security review |
+
+## Release gate
+
+Do not deploy the entire SDK as a generic HTTP action router. Enable only configured and validated capabilities; require reviewed routes, authentication and authorization, resource ownership, safe parsing, least-privilege service credentials, signed callbacks, monitored workers, and successful real integration and load tests. Production configuration validation is necessary but not sufficient. No AI fix engine or proprietary scanner parity is included. No hosted third-party control planes or end-user UI are bundled.

@@ -1,0 +1,117 @@
+[
+  {
+    "original": "packages/backend-quality/src/benchmark.ts",
+    "destination": "packages/backend-quality/src/benchmark.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/backend-quality/src/diagnostics.ts",
+    "destination": "packages/quality-node-diagnostics/src/index.ts (re-export)",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/backend-quality/src/http-suites.ts",
+    "destination": "packages/backend-quality/src/http-suites.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/backend-quality/src/index.ts",
+    "destination": "packages/backend-quality/src/index.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/backend-quality/src/k6.ts",
+    "destination": "packages/backend-quality/src/k6.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/backend-quality/src/kubernetes.ts",
+    "destination": "packages/backend-quality/src/kubernetes.ts",
+    "classification": "unchanged"
+  },
+  {
+    "original": "packages/backend-quality/src/toxiproxy.ts",
+    "destination": "packages/backend-quality/src/toxiproxy.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/frontend-quality/src/browser-observability.ts",
+    "destination": "packages/quality-browser-runtime/src/index.ts (re-export)",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/frontend-quality/src/browser.ts",
+    "destination": "packages/frontend-quality/src/browser.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/frontend-quality/src/bundle.ts",
+    "destination": "packages/frontend-quality/src/bundle.ts",
+    "classification": "unchanged"
+  },
+  {
+    "original": "packages/frontend-quality/src/index.ts",
+    "destination": "packages/frontend-quality/src/register.ts + index.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/frontend-quality/src/lighthouse.ts",
+    "destination": "packages/frontend-quality/src/lighthouse.ts",
+    "classification": "unchanged"
+  },
+  {
+    "original": "packages/frontend-quality/src/react.ts",
+    "destination": "packages/quality-browser-runtime/src/react.ts (re-export)",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/quality-cli/src/cli.ts",
+    "destination": "packages/quality-cli/src/cli.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/quality-core/src/config.ts",
+    "destination": "packages/quality-core/src/config.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/quality-core/src/exec.ts",
+    "destination": "packages/quality-core/src/exec.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/quality-core/src/guard.ts",
+    "destination": "packages/quality-core/src/guard.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/quality-core/src/index.ts",
+    "destination": "packages/quality-core/src/index.ts",
+    "classification": "unchanged"
+  },
+  {
+    "original": "packages/quality-core/src/orchestrator.ts",
+    "destination": "packages/quality-core/src/orchestrator.ts",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/quality-core/src/reports.ts",
+    "destination": "packages/quality-core/src/reports.ts",
+    "classification": "unchanged"
+  },
+  {
+    "original": "packages/quality-core/src/results.ts",
+    "destination": "packages/quality-core/src/results.ts",
+    "classification": "unchanged"
+  },
+  {
+    "original": "packages/quality-core/src/types.ts",
+    "destination": "packages/quality-contracts/src/index.ts (re-export in core)",
+    "classification": "adapted / relocated"
+  },
+  {
+    "original": "packages/quality-core/src/validation.ts",
+    "destination": "packages/quality-core/src/validation.ts",
+    "classification": "adapted / relocated"
+  }
+]

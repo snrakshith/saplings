@@ -1,0 +1,12 @@
+
+> sapling-unified-sdk-monorepo@0.7.0 build:quality
+> tsc -p packages/quality-contracts && tsc -p packages/quality-node-diagnostics && tsc -p packages/quality-browser-runtime && tsc -p packages/quality-core && tsc -p packages/backend-quality && tsc -p packages/frontend-quality && tsc -p packages/quality-cli
+
+packages/quality-browser-runtime/src/index.ts(2,45): error TS2307: Cannot find module 'web-vitals' or its corresponding type declarations.
+packages/quality-browser-runtime/src/react.ts(1,53): error TS2307: Cannot find module 'react' or its corresponding type declarations.
+packages/quality-browser-runtime/src/react.ts(6,55): error TS7006: Parameter 'id' implicitly has an 'any' type.
+packages/quality-browser-runtime/src/react.ts(6,58): error TS7006: Parameter 'phase' implicitly has an 'any' type.
+packages/quality-browser-runtime/src/react.ts(6,64): error TS7006: Parameter 'actualDuration' implicitly has an 'any' type.
+packages/quality-browser-runtime/src/react.ts(6,79): error TS7006: Parameter 'baseDuration' implicitly has an 'any' type.
+packages/quality-browser-runtime/src/react.ts(6,92): error TS7006: Parameter 'startTime' implicitly has an 'any' type.
+packages/quality-browser-runtime/src/react.ts(6,102): error TS7006: Parameter 'commitTime' implicitly has an 'any' type.

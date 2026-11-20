@@ -1,0 +1,20 @@
+{
+  "name": "@sapling/quality-core",
+  "version": "0.17.0",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "jiti": "^2.6.0",
+    "@sapling/quality-contracts": "workspace:*"
+  },
+  "files": [
+    "dist"
+  ]
+}
