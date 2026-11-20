@@ -14,8 +14,10 @@ permissions:
 jobs:
   quality:
     if: vars.SAPLING_ENABLE_SCHEDULED_QUALITY == 'true'
-    # Playwright 1.56.1 provides system dependencies for Ubuntu 24.04.
     runs-on: ubuntu-24.04
+    container:
+      # Match the locked Playwright package so the browser and OS libraries are preinstalled.
+      image: mcr.microsoft.com/playwright:v1.56.1-noble
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v7
@@ -27,7 +29,6 @@ jobs:
       - run: pnpm run build
       - run: pnpm run build:quality
       - run: pnpm run build:web
-      - run: pnpm exec playwright install --with-deps chromium firefox webkit
       - name: Tool prerequisites
         run: |
           # Install required engines here or use the dedicated runner image.
