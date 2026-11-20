@@ -1,6 +1,6 @@
 {
   "name": "@saplings/validations",
-  "version": "0.17.1",
+  "version": "0.17.2",
   "type": "module",
   "main": "./compat/index.cjs",
   "types": "./compat/index.d.cts",
