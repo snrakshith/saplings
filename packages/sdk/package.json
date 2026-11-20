@@ -22,7 +22,8 @@
     "@saplings/realtime": "workspace:*",
     "@saplings/middleware": "workspace:*",
     "@saplings/harbor": "workspace:*",
-    "@saplings/kingsman": "workspace:*"
+    "@saplings/kingsman": "workspace:*",
+    "@saplings/observability": "workspace:*"
   },
   "license": "MIT",
   "repository": {

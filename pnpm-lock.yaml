@@ -62,6 +62,9 @@ importers:
       '@saplings/murphi-ui':
         specifier: workspace:*
         version: link:packages/murphi-ui
+      '@saplings/observability':
+        specifier: workspace:*
+        version: link:packages/observability
       '@saplings/quality-browser-runtime':
         specifier: workspace:*
         version: link:packages/quality-browser-runtime
@@ -109,7 +112,7 @@ importers:
         version: 1.8.2
       drizzle-orm:
         specifier: ^0.45.2
-        version: 0.45.4(@types/pg@8.23.1)(pg@8.23.1)
+        version: 0.45.4(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1)
       express:
         specifier: ^5.1.0
         version: 5.3.0
@@ -145,7 +148,7 @@ importers:
         version: 19.3.1(react@19.3.1)
       redis:
         specifier: ^5.0.0
-        version: 5.12.4
+        version: 5.12.4(@opentelemetry/api@1.10.0)
       sharp:
         specifier: ^0.35.5
         version: 0.35.5(@types/node@26.6.6)
@@ -169,7 +172,7 @@ importers:
         version: 7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
       vitest:
         specifier: 5.0.0
-        version: 5.0.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
+        version: 5.0.0(@opentelemetry/api@1.10.0)(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
       web-vitals:
         specifier: ^5.1.0
         version: 5.3.0
@@ -243,7 +246,7 @@ importers:
         version: link:../../packages/security
       drizzle-orm:
         specifier: ^0.45.2
-        version: 0.45.4(@types/pg@8.23.1)(pg@8.23.1)
+        version: 0.45.4(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1)
       express:
         specifier: ^5.1.0
         version: 5.3.0
@@ -252,7 +255,7 @@ importers:
         version: 8.23.1
       redis:
         specifier: ^5.0.0
-        version: 5.12.4
+        version: 5.12.4(@opentelemetry/api@1.10.0)
       tsx:
         specifier: ^4.0.0
         version: 4.23.15
@@ -308,7 +311,7 @@ importers:
         version: link:../sdk
       drizzle-orm:
         specifier: ^0.45.2
-        version: 0.45.4(@types/pg@8.23.1)(pg@8.23.1)
+        version: 0.45.4(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1)
       pg:
         specifier: ^8.0.0
         version: 8.23.1
@@ -333,7 +336,7 @@ importers:
         version: 8.0.0
       vitest:
         specifier: 5.0.0
-        version: 5.0.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
+        version: 5.0.0(@opentelemetry/api@1.10.0)(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
     devDependencies:
       '@types/autocannon':
         specifier: ^7.12.7
@@ -483,6 +486,25 @@ importers:
         specifier: ^19.2.0
         version: 19.3.1(react@19.3.1)
 
+  packages/observability:
+    dependencies:
+      '@opentelemetry/api':
+        specifier: ^1.10.0
+        version: 1.10.0
+    devDependencies:
+      '@opentelemetry/context-async-hooks':
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/sdk-metrics':
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/sdk-trace':
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      '@types/node':
+        specifier: ^26.0.0
+        version: 26.6.6
+
   packages/quality-browser-runtime:
     dependencies:
       react:
@@ -507,7 +529,11 @@ importers:
         specifier: ^2.6.0
         version: 2.7.0
 
-  packages/quality-node-diagnostics: {}
+  packages/quality-node-diagnostics:
+    dependencies:
+      '@saplings/observability':
+        specifier: workspace:*
+        version: link:../observability
 
   packages/realtime:
     devDependencies:
@@ -532,6 +558,9 @@ importers:
       '@saplings/middleware':
         specifier: workspace:*
         version: link:../middleware
+      '@saplings/observability':
+        specifier: workspace:*
+        version: link:../observability
       '@saplings/quality-contracts':
         specifier: workspace:*
         version: link:../quality-contracts
@@ -1232,6 +1261,44 @@ packages:
 
   '@minimistjs/subarg@1.0.0':
     resolution: {integrity: sha512-Q/ONBiM2zNeYUy0mVSO44mWWKYM3UHuEK43PKIOzJCbvUnPoMH1K+gk3cf1kgnCVJFlWmddahQQCmrmBGlk9jQ==}
+
+  '@opentelemetry/api@1.10.0':
+    resolution: {integrity: sha512-lMkyes8iHrG+mk6WH7X70MdCLI2RS0FwNBY1PyQ8UemaijE2m5mv5A0Niy3HtbYTFrgkUEQjFMXmSAk2hQDuPQ==}
+    engines: {node: '>=8.0.0'}
+
+  '@opentelemetry/context-async-hooks@3.1.1':
+    resolution: {integrity: sha512-xOosgbes1+6bHPhVnYCd3EihFN8MpafEQwzmxeZ2zKXwWwV4F4780Pb097E326RZjCHTvUkwOYnXOALTfRfHVg==}
+    engines: {node: '>=22.15.0'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.0.0 <1.11.0'
+
+  '@opentelemetry/core@3.1.1':
+    resolution: {integrity: sha512-6wc9r0zrTsAVOd/5UrZBsrHhXWNfwisolgWxd8o3Eu1HKIz8cAxQjOdGrrJB406ceFiGV+ckTcLdXzB+y/QVTA==}
+    engines: {node: '>=22.15.0'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.10.0 <1.11.0'
+
+  '@opentelemetry/resources@3.1.1':
+    resolution: {integrity: sha512-dSd0FI1rfl+WHeaZxCTCEvwv6vcmUqkOHHTGWMkmyHg+PyL/wLbCqgsGKgI0wOwT0KGy9IMPAvY85hT8IPwApA==}
+    engines: {node: '>=22.15.0'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.10.0 <1.11.0'
+
+  '@opentelemetry/sdk-metrics@3.1.1':
+    resolution: {integrity: sha512-QBDkERTMERMxwtH7hHbE6esoo+5Tdb79MtF9lMh1EIFlij39prkSEWlfSD2flUGGv15b0GQ1X2jj/JqG9gQBTw==}
+    engines: {node: '>=22.15.0'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.10.0 <1.11.0'
+
+  '@opentelemetry/sdk-trace@3.1.1':
+    resolution: {integrity: sha512-DJZXZJu1H3kek9Kh9SqJ46yN3faiNiabnqkEtl9eVnBvs4KuK+ynmk9jOyB0NfWAXWGZlTivCf46uwiXyr2PGA==}
+    engines: {node: '>=22.15.0'}
+    peerDependencies:
+      '@opentelemetry/api': '>=1.10.0 <1.11.0'
+
+  '@opentelemetry/semantic-conventions@1.45.0':
+    resolution: {integrity: sha512-aOP45mbcOKbQVvFWfQmgoOPT8R2iwbbbgl83k4CujGV9BrJhFr3qG55MFpwFs4YLabpuW3HhzUY9eQxPlDqaZw==}
+    engines: {node: '>=14'}
 
   '@oxlint/binding-android-arm-eabi@1.94.0':
     resolution: {integrity: sha512-730FKSBsKg/NawYnpI3gXRroXptOVqY32iYBPLUZaSx0vgYzOeiNtwojZL4gJdzo9wDvHUlstShmGRHrWcbRYg==}
@@ -4528,6 +4595,38 @@ snapshots:
     dependencies:
       minimist: 1.2.8
 
+  '@opentelemetry/api@1.10.0': {}
+
+  '@opentelemetry/context-async-hooks@3.1.1(@opentelemetry/api@1.10.0)':
+    dependencies:
+      '@opentelemetry/api': 1.10.0
+
+  '@opentelemetry/core@3.1.1(@opentelemetry/api@1.10.0)':
+    dependencies:
+      '@opentelemetry/api': 1.10.0
+      '@opentelemetry/semantic-conventions': 1.45.0
+
+  '@opentelemetry/resources@3.1.1(@opentelemetry/api@1.10.0)':
+    dependencies:
+      '@opentelemetry/api': 1.10.0
+      '@opentelemetry/core': 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/semantic-conventions': 1.45.0
+
+  '@opentelemetry/sdk-metrics@3.1.1(@opentelemetry/api@1.10.0)':
+    dependencies:
+      '@opentelemetry/api': 1.10.0
+      '@opentelemetry/core': 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/resources': 3.1.1(@opentelemetry/api@1.10.0)
+
+  '@opentelemetry/sdk-trace@3.1.1(@opentelemetry/api@1.10.0)':
+    dependencies:
+      '@opentelemetry/api': 1.10.0
+      '@opentelemetry/core': 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/resources': 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/semantic-conventions': 1.45.0
+
+  '@opentelemetry/semantic-conventions@1.45.0': {}
+
   '@oxlint/binding-android-arm-eabi@1.94.0':
     optional: true
 
@@ -4676,25 +4775,27 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.3.0
 
-  '@redis/bloom@5.12.4(@redis/client@5.12.4)':
+  '@redis/bloom@5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.4
+      '@redis/client': 5.12.4(@opentelemetry/api@1.10.0)
 
-  '@redis/client@5.12.4':
+  '@redis/client@5.12.4(@opentelemetry/api@1.10.0)':
     dependencies:
       cluster-key-slot: 1.1.2
+    optionalDependencies:
+      '@opentelemetry/api': 1.10.0
 
-  '@redis/json@5.12.4(@redis/client@5.12.4)':
+  '@redis/json@5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.4
+      '@redis/client': 5.12.4(@opentelemetry/api@1.10.0)
 
-  '@redis/search@5.12.4(@redis/client@5.12.4)':
+  '@redis/search@5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.4
+      '@redis/client': 5.12.4(@opentelemetry/api@1.10.0)
 
-  '@redis/time-series@5.12.4(@redis/client@5.12.4)':
+  '@redis/time-series@5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))':
     dependencies:
-      '@redis/client': 5.12.4
+      '@redis/client': 5.12.4(@opentelemetry/api@1.10.0)
 
   '@rollup/rollup-android-arm-eabi@4.68.7':
     optional: true
@@ -4951,7 +5052,7 @@ snapshots:
       obug: 2.2.1
       std-env: 4.3.0
       tinyrainbow: 3.2.0
-      vitest: 5.0.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
+      vitest: 5.0.0(@opentelemetry/api@1.10.0)(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
 
   '@vitest/istanbul-lib-coverage@1.0.2': {}
 
@@ -5380,8 +5481,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  drizzle-orm@0.45.4(@types/pg@8.23.1)(pg@8.23.1):
+  drizzle-orm@0.45.4(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1):
     optionalDependencies:
+      '@opentelemetry/api': 1.10.0
       '@types/pg': 8.23.1
       pg: 8.23.1
 
@@ -6447,13 +6549,13 @@ snapshots:
     dependencies:
       minimatch: 5.1.9
 
-  redis@5.12.4:
+  redis@5.12.4(@opentelemetry/api@1.10.0):
     dependencies:
-      '@redis/bloom': 5.12.4(@redis/client@5.12.4)
-      '@redis/client': 5.12.4
-      '@redis/json': 5.12.4(@redis/client@5.12.4)
-      '@redis/search': 5.12.4(@redis/client@5.12.4)
-      '@redis/time-series': 5.12.4(@redis/client@5.12.4)
+      '@redis/bloom': 5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))
+      '@redis/client': 5.12.4(@opentelemetry/api@1.10.0)
+      '@redis/json': 5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))
+      '@redis/search': 5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))
+      '@redis/time-series': 5.12.4(@redis/client@5.12.4(@opentelemetry/api@1.10.0))
     transitivePeerDependencies:
       - '@node-rs/xxhash'
       - '@opentelemetry/api'
@@ -6966,7 +7068,7 @@ snapshots:
       tsx: 4.23.15
       yaml: 2.9.1
 
-  vitest@5.0.0(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)):
+  vitest@5.0.0(@opentelemetry/api@1.10.0)(@types/node@26.6.6)(@vitest/coverage-v8@5.0.0)(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)):
     dependencies:
       '@types/chai': 5.2.3
       '@vitest/mocker': 5.0.0(vite@7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1))
@@ -6983,6 +7085,7 @@ snapshots:
       vite: 7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
       why-is-node-running: 2.3.0
     optionalDependencies:
+      '@opentelemetry/api': 1.10.0
       '@types/node': 26.6.6
       '@vitest/coverage-v8': 5.0.0(vitest@5.0.0)
     transitivePeerDependencies:

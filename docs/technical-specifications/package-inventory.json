@@ -148,6 +148,15 @@
     "source": "packages/murphi-ui"
   },
   {
+    "package": "@saplings/observability",
+    "version": "0.0.0",
+    "dependencies": {
+      "@opentelemetry/api": "^1.10.0"
+    },
+    "peerDependencies": {},
+    "source": "packages/observability"
+  },
+  {
     "package": "@saplings/quality-browser-runtime",
     "version": "0.17.0",
     "dependencies": {
@@ -178,7 +187,9 @@
   {
     "package": "@saplings/quality-node-diagnostics",
     "version": "0.17.0",
-    "dependencies": {},
+    "dependencies": {
+      "@saplings/observability": "workspace:*"
+    },
     "peerDependencies": {},
     "source": "packages/quality-node-diagnostics"
   },
@@ -202,7 +213,8 @@
       "@saplings/realtime": "workspace:*",
       "@saplings/middleware": "workspace:*",
       "@saplings/harbor": "workspace:*",
-      "@saplings/kingsman": "workspace:*"
+      "@saplings/kingsman": "workspace:*",
+      "@saplings/observability": "workspace:*"
     },
     "peerDependencies": {},
     "source": "packages/sdk"

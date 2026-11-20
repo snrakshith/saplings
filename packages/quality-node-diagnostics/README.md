@@ -1,6 +1,6 @@
 # @saplings/quality-node-diagnostics
 
-Collect process and event-loop metrics in a Node.js service.
+Collect process and event-loop metrics in a Node.js service. The implementation is shared with [@saplings/observability](https://www.npmjs.com/package/@saplings/observability), which also provides correlated JSON logs and OpenTelemetry helpers.
 
 ## Install
 

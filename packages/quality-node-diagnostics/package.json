@@ -15,7 +15,9 @@
     "README.md",
     "CHANGELOG.md"
   ],
-  "dependencies": {},
+  "dependencies": {
+    "@saplings/observability": "workspace:*"
+  },
   "license": "MIT",
   "repository": {
     "type": "git",

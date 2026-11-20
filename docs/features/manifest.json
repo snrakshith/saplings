@@ -14,11 +14,11 @@
     "providers": 11,
     "harbor": 27,
     "kingsman": 45,
-    "packages": 23,
+    "packages": 24,
     "validation-compat": 1
   },
-  "total": 859,
-  "documents": 2577,
+  "total": 860,
+  "documents": 2580,
   "features": [
     {
       "group": "saas",
@@ -12610,6 +12610,20 @@
       "owner": "Package maintainer",
       "priority": "P0/P1",
       "acceptance": "Build and pack @saplings/murphi-ui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+    },
+    {
+      "group": "packages",
+      "id": "saplings-observability",
+      "name": "@saplings/observability",
+      "directory": "docs/features/packages/saplings-observability",
+      "status": "Workspace package retained; full installed-workspace release gate open",
+      "source": [
+        "packages/observability/package.json",
+        "packages/observability/src"
+      ],
+      "owner": "Package maintainer",
+      "priority": "P0/P1",
+      "acceptance": "Build and pack @saplings/observability from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",

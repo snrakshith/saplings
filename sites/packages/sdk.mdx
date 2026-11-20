@@ -52,6 +52,10 @@ For HTTP requests, derive the actor from a verified session or an authentication
 
 `SaplingConfig` starts with `app.id` and `app.environment`. Supply infrastructure through `providers`, application policies through `services` and `access`, and verified context through `hooks.resolveRequestContext` or `providers.authentication`. The published `.d.ts` files and [SDK source](https://github.com/snrakshith/saplings/tree/main/packages/sdk/src) describe the remaining service methods.
 
+## Log and trace SDK operations
+
+Use [@saplings/observability](https://www.npmjs.com/package/@saplings/observability) for backend logs, traces, and metrics. Construct it with your service name and pass the returned object as `providers.telemetry` to wire SDK log events to the same sink as your application.
+
 ## Prepare a deployment
 
 - Inject a durable `providers.store` such as [the Drizzle adapter](https://www.npmjs.com/package/@saplings/adapter-drizzle). Apply the database migrations, run with a restricted database role, and verify tenant isolation.

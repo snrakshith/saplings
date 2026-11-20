@@ -11,7 +11,7 @@ const pkgDirs = fs
   .readdirSync('packages')
   .filter((d) => fs.existsSync(`packages/${d}/package.json`));
 req(manifest.version === '0.17.0', 'Unexpected version');
-req(pkgDirs.length === 23, 'Workspace package count changed');
+req(pkgDirs.length === 24, 'Workspace package count changed');
 const names = pkgDirs.map((d) => JSON.parse(read(`packages/${d}/package.json`)));
 req(
   names.every((m) => m.name.startsWith('@saplings/')),
