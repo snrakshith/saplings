@@ -1,5 +1,24 @@
 # @saplings/cli
 
+## 0.18.0
+
+### Minor Changes
+
+- 886be53: Publish onboarding guides, API summaries, and examples in each npm package.
+  
+  Use the single sapling executable for catalog, scan, doctor, and quality commands. Install @saplings/cli and replace sapling-quality with sapling quality. Replace sapling-quality-legacy with sapling quality legacy.
+
+### Patch Changes
+
+- Updated dependencies [886be53]
+- Updated dependencies [886be53]
+  - @saplings/sdk@0.17.2
+  - @saplings/backend-quality@0.18.0
+  - @saplings/catalog@0.17.2
+  - @saplings/frontend-quality@0.17.2
+  - @saplings/quality-core@0.17.2
+  - @saplings/security@0.17.2
+
 ## 0.17.1
 
 ### Patch Changes

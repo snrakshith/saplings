@@ -1,5 +1,13 @@
 # @saplings/quality-browser-runtime
 
+## 0.17.2
+
+### Patch Changes
+
+- 886be53: Publish onboarding guides, API summaries, and examples in each npm package.
+  
+  Use the single sapling executable for catalog, scan, doctor, and quality commands. Install @saplings/cli and replace sapling-quality with sapling quality. Replace sapling-quality-legacy with sapling quality legacy.
+
 ## 0.17.1
 
 ### Patch Changes
