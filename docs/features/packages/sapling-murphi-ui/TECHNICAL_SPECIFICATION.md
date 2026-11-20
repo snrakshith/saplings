@@ -1,4 +1,4 @@
-# sapling-murphi-ui — @sapling/murphi-ui
+# sapling-murphi-ui — @saplings/murphi-ui
 
 Release: 0.17.0 · Technical specification
 
@@ -12,7 +12,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ## Public contract / current implementation
 ```json
 {
-  "name": "@sapling/murphi-ui",
+  "name": "@saplings/murphi-ui",
   "version": "0.17.0",
   "exports": {
     ".": {
@@ -29,7 +29,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
     }
   },
   "dependencies": {
-    "@sapling/ui-core": "workspace:*",
+    "@saplings/ui-core": "workspace:*",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0"
   },
@@ -41,7 +41,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ```
 
 ## Configuration and dependencies
-Dependencies: @sapling/ui-core, @emotion/react, @emotion/styled. Peer dependencies: react, react-dom.
+Dependencies: @saplings/ui-core, @emotion/react, @emotion/styled. Peer dependencies: react, react-dom.
 
 ## Execution, persistence and consistency
 Compile types and code, enforce package export map, verify dependency graph and clean consuming application; keep dev-only quality out of runtime.
@@ -56,7 +56,7 @@ Validate before side effects; reject invalid or unauthorized input. Return typed
 Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## Verification design
-Build and pack @sapling/murphi-ui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/murphi-ui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Deployment and compatibility
 Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the public contract, add type checks, execute relevant integration tests and collect release-source-bound evidence before promotion.

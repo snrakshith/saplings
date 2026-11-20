@@ -11,10 +11,10 @@
   "dependencies": {
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "@sapling/quality-browser-runtime": "workspace:*",
+    "@saplings/quality-browser-runtime": "workspace:*",
     "@saplings/hooks": "workspace:*",
-    "@sapling/murphi-ui": "workspace:*",
-    "@sapling/ui-core": "workspace:*"
+    "@saplings/murphi-ui": "workspace:*",
+    "@saplings/ui-core": "workspace:*"
   },
   "devDependencies": {
     "@types/react": "^19.2.0",

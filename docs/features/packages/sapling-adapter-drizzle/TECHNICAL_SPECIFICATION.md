@@ -1,4 +1,4 @@
-# sapling-adapter-drizzle — @sapling/adapter-drizzle
+# sapling-adapter-drizzle — @saplings/adapter-drizzle
 
 Release: 0.17.0 · Technical specification
 
@@ -12,10 +12,10 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ## Public contract / current implementation
 ```json
 {
-  "name": "@sapling/adapter-drizzle",
+  "name": "@saplings/adapter-drizzle",
   "version": "0.17.0",
   "dependencies": {
-    "@sapling/sdk": "workspace:*",
+    "@saplings/sdk": "workspace:*",
     "drizzle-orm": "^0.44.0",
     "pg": "^8.0.0"
   }
@@ -23,7 +23,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ```
 
 ## Configuration and dependencies
-Dependencies: @sapling/sdk, drizzle-orm, pg. Peer dependencies: none.
+Dependencies: @saplings/sdk, drizzle-orm, pg. Peer dependencies: none.
 
 ## Execution, persistence and consistency
 Compile types and code, enforce package export map, verify dependency graph and clean consuming application; keep dev-only quality out of runtime.
@@ -38,7 +38,7 @@ Validate before side effects; reject invalid or unauthorized input. Return typed
 Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## Verification design
-Build and pack @sapling/adapter-drizzle from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/adapter-drizzle from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Deployment and compatibility
 Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the public contract, add type checks, execute relevant integration tests and collect release-source-bound evidence before promotion.

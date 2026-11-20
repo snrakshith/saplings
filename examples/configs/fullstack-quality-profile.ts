@@ -1,4 +1,4 @@
-import {defineQualityConfig} from '@sapling/quality-contracts';
+import {defineQualityConfig} from '@saplings/quality-contracts';
 export default defineQualityConfig({
  name:'sapling-example-fullstack',environment:(process.env.QUALITY_ENV as 'local'|'ci'|'staging'|'production')??'local',
  outputDir:process.env.QUALITY_RUN_DIR??'quality-results',

@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "@emotion/styled";
 import { XloxTheme } from "../../theme/types.js";
-import {buttonAppearance} from "@sapling/ui-core";
+import {buttonAppearance} from "@saplings/ui-core";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: "primary" | "secondary" | "outlined" | "text";

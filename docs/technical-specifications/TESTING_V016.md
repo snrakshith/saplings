@@ -4,7 +4,7 @@
 
 Move the established 24-package Node.js/TypeScript SDK's **test harness** from built-in `node:test` to **Vitest 5.0.0** while retaining all test assertions and isolation checks. This changes development/test tooling, not runtime SDK APIs or SaaS feature IDs. Vitest supports typed spies/mocks (`vi`), table-driven parameterized tests (`test.each`), fake timers, multi-worker isolation and V8 coverage. Its current v5 release requires Node >=22.12.0 and Vite >=6.4.0; the monorepo targets Node >=22 and uses Vite 7. Vitest's own docs: https://vitest.dev/guide/ and https://vitest.dev/guide/coverage .
 
-**No SDK production module imports Vitest.** The root monorepo uses it as a dev dependency. `@sapling/backend-quality` explicitly depends on Vitest because its authorized operator test engine executes it as a separate tool; normal runtime packages do not inherit this dependency. `@vitest/coverage-v8` is test-only.
+**No SDK production module imports Vitest.** The root monorepo uses it as a dev dependency. `@saplings/backend-quality` explicitly depends on Vitest because its authorized operator test engine executes it as a separate tool; normal runtime packages do not inherit this dependency. `@vitest/coverage-v8` is test-only.
 
 ## Migrated tests
 

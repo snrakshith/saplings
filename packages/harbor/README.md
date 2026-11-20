@@ -1,11 +1,11 @@
-> **v0.17.0 package identity:** `@sapling/harbor` is a reusable library, not a deployed platform on its own. Previous package name deprecated; update imports.
+> **v0.17.0 package identity:** `@saplings/harbor` is a reusable library, not a deployed platform on its own. Previous package name deprecated; update imports.
 
-# @sapling/harbor
+# @saplings/harbor
 
 Kong-inspired **config-driven HTTP gateway core** for Node 22 and TypeScript, retaining the uploaded GatewayConfig JSON/YAML structure (`gateway.sapling.dev/v1alpha1`). Supports route/service/upstream definitions, scoped plugin pipeline, host/method/prefix routing, weighted selection, active healthchecks, breaker, safe retries, JWT/ACL hooks, bounded input/output and TLS listener with SNI.
 
 ```ts
-import {Gateway,loadGatewayConfig} from '@sapling/harbor';
+import {Gateway,loadGatewayConfig} from '@saplings/harbor';
 const config=await loadGatewayConfig('./GatewayConfig.json');
 const gateway=new Gateway(config,{verifyJwt:yourIssuerVerifier,rateLimit:yourDistributedLimiter,threatIp:yourTrustedFeed,resolveSecret:yourVaultResolver});
 // Production: provide real certificates and call listenTls(); or explicit trusted TLS ingress.

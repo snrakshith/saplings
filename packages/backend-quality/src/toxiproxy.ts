@@ -1,4 +1,4 @@
-import {assertTargetAllowed,result,skipped,type RunContext,type SuiteResult,type CheckResult} from '@sapling/quality-core';
+import {assertTargetAllowed,result,skipped,type RunContext,type SuiteResult,type CheckResult} from '@saplings/quality-core';
 /** Injects latency into an existing Toxiproxy proxy, verifies the probe and removes the toxic in finally. */
 export async function runToxiproxy(ctx:RunContext):Promise<SuiteResult>{
  const started=Date.now(),cfg=ctx.config.backend!,options=cfg.resilience;

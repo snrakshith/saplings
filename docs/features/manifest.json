@@ -12432,7 +12432,7 @@
     {
       "group": "packages",
       "id": "sapling-adapter-app",
-      "name": "@sapling/adapter-app",
+      "name": "@saplings/adapter-app",
       "directory": "docs/features/packages/sapling-adapter-app",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12441,12 +12441,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/adapter-app from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/adapter-app from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-adapter-aws",
-      "name": "@sapling/adapter-aws",
+      "name": "@saplings/adapter-aws",
       "directory": "docs/features/packages/sapling-adapter-aws",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12455,12 +12455,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/adapter-aws from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/adapter-aws from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-adapter-drizzle",
-      "name": "@sapling/adapter-drizzle",
+      "name": "@saplings/adapter-drizzle",
       "directory": "docs/features/packages/sapling-adapter-drizzle",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12469,12 +12469,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/adapter-drizzle from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/adapter-drizzle from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-backend-quality",
-      "name": "@sapling/backend-quality",
+      "name": "@saplings/backend-quality",
       "directory": "docs/features/packages/sapling-backend-quality",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12483,12 +12483,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/backend-quality from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/backend-quality from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-catalog",
-      "name": "@sapling/catalog",
+      "name": "@saplings/catalog",
       "directory": "docs/features/packages/sapling-catalog",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12497,12 +12497,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/catalog from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/catalog from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-cli",
-      "name": "@sapling/cli",
+      "name": "@saplings/cli",
       "directory": "docs/features/packages/sapling-cli",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12511,12 +12511,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/cli from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/cli from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-frontend-quality",
-      "name": "@sapling/frontend-quality",
+      "name": "@saplings/frontend-quality",
       "directory": "docs/features/packages/sapling-frontend-quality",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12525,12 +12525,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/frontend-quality from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/frontend-quality from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-harbor",
-      "name": "@sapling/harbor",
+      "name": "@saplings/harbor",
       "directory": "docs/features/packages/sapling-harbor",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12539,7 +12539,7 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/harbor from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/harbor from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
@@ -12558,7 +12558,7 @@
     {
       "group": "packages",
       "id": "sapling-kingsman",
-      "name": "@sapling/kingsman",
+      "name": "@saplings/kingsman",
       "directory": "docs/features/packages/sapling-kingsman",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12567,12 +12567,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/kingsman from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/kingsman from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-middleware",
-      "name": "@sapling/middleware",
+      "name": "@saplings/middleware",
       "directory": "docs/features/packages/sapling-middleware",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12581,12 +12581,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/middleware from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/middleware from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-murph-appui",
-      "name": "@sapling/murph-appui",
+      "name": "@saplings/murph-appui",
       "directory": "docs/features/packages/sapling-murph-appui",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12595,12 +12595,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/murph-appui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/murph-appui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-murphi-ui",
-      "name": "@sapling/murphi-ui",
+      "name": "@saplings/murphi-ui",
       "directory": "docs/features/packages/sapling-murphi-ui",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12609,12 +12609,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/murphi-ui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/murphi-ui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-quality-browser-runtime",
-      "name": "@sapling/quality-browser-runtime",
+      "name": "@saplings/quality-browser-runtime",
       "directory": "docs/features/packages/sapling-quality-browser-runtime",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12623,12 +12623,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/quality-browser-runtime from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/quality-browser-runtime from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-quality-cli",
-      "name": "@sapling/quality-cli",
+      "name": "@saplings/quality-cli",
       "directory": "docs/features/packages/sapling-quality-cli",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12637,12 +12637,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/quality-cli from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/quality-cli from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-quality-contracts",
-      "name": "@sapling/quality-contracts",
+      "name": "@saplings/quality-contracts",
       "directory": "docs/features/packages/sapling-quality-contracts",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12651,12 +12651,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/quality-contracts from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/quality-contracts from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-quality-core",
-      "name": "@sapling/quality-core",
+      "name": "@saplings/quality-core",
       "directory": "docs/features/packages/sapling-quality-core",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12665,12 +12665,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-quality-node-diagnostics",
-      "name": "@sapling/quality-node-diagnostics",
+      "name": "@saplings/quality-node-diagnostics",
       "directory": "docs/features/packages/sapling-quality-node-diagnostics",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12679,12 +12679,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/quality-node-diagnostics from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/quality-node-diagnostics from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-realtime",
-      "name": "@sapling/realtime",
+      "name": "@saplings/realtime",
       "directory": "docs/features/packages/sapling-realtime",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12693,12 +12693,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/realtime from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/realtime from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-sdk",
-      "name": "@sapling/sdk",
+      "name": "@saplings/sdk",
       "directory": "docs/features/packages/sapling-sdk",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12707,12 +12707,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/sdk from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/sdk from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-security",
-      "name": "@sapling/security",
+      "name": "@saplings/security",
       "directory": "docs/features/packages/sapling-security",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12721,12 +12721,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/security from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/security from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-ui-core",
-      "name": "@sapling/ui-core",
+      "name": "@saplings/ui-core",
       "directory": "docs/features/packages/sapling-ui-core",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12735,12 +12735,12 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/ui-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/ui-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",
       "id": "sapling-utils",
-      "name": "@sapling/utils",
+      "name": "@saplings/utils",
       "directory": "docs/features/packages/sapling-utils",
       "status": "Workspace package retained; full installed-workspace release gate open",
       "source": [
@@ -12749,7 +12749,7 @@
       ],
       "owner": "Package maintainer",
       "priority": "P0/P1",
-      "acceptance": "Build and pack @sapling/utils from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
+      "acceptance": "Build and pack @saplings/utils from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code."
     },
     {
       "group": "packages",

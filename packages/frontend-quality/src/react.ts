@@ -1,1 +1,1 @@
-export * from '@sapling/quality-browser-runtime/react';
+export * from '@saplings/quality-browser-runtime/react';

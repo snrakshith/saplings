@@ -1,4 +1,4 @@
-# sapling-quality-core — @sapling/quality-core
+# sapling-quality-core — @saplings/quality-core
 
 Release: 0.17.0 · Technical specification
 
@@ -12,7 +12,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ## Public contract / current implementation
 ```json
 {
-  "name": "@sapling/quality-core",
+  "name": "@saplings/quality-core",
   "version": "0.17.0",
   "exports": {
     ".": {
@@ -22,13 +22,13 @@ Workspace package retained; full installed-workspace release gate open. Package-
   },
   "dependencies": {
     "jiti": "^2.6.0",
-    "@sapling/quality-contracts": "workspace:*"
+    "@saplings/quality-contracts": "workspace:*"
   }
 }
 ```
 
 ## Configuration and dependencies
-Dependencies: jiti, @sapling/quality-contracts. Peer dependencies: none.
+Dependencies: jiti, @saplings/quality-contracts. Peer dependencies: none.
 
 ## Execution, persistence and consistency
 Compile types and code, enforce package export map, verify dependency graph and clean consuming application; keep dev-only quality out of runtime.
@@ -43,7 +43,7 @@ Validate before side effects; reject invalid or unauthorized input. Return typed
 Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## Verification design
-Build and pack @sapling/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Deployment and compatibility
 Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the public contract, add type checks, execute relevant integration tests and collect release-source-bound evidence before promotion.

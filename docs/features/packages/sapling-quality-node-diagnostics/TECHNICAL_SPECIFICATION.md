@@ -1,4 +1,4 @@
-# sapling-quality-node-diagnostics — @sapling/quality-node-diagnostics
+# sapling-quality-node-diagnostics — @saplings/quality-node-diagnostics
 
 Release: 0.17.0 · Technical specification
 
@@ -12,7 +12,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ## Public contract / current implementation
 ```json
 {
-  "name": "@sapling/quality-node-diagnostics",
+  "name": "@saplings/quality-node-diagnostics",
   "version": "0.17.0",
   "exports": {
     ".": {
@@ -40,7 +40,7 @@ Validate before side effects; reject invalid or unauthorized input. Return typed
 Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## Verification design
-Build and pack @sapling/quality-node-diagnostics from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/quality-node-diagnostics from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Deployment and compatibility
 Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the public contract, add type checks, execute relevant integration tests and collect release-source-bound evidence before promotion.

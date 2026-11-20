@@ -1,6 +1,6 @@
 import React from 'react';
 import {ActivityIndicator,Pressable,Text as RNText,View,type PressableProps,type StyleProp,type ViewStyle,type TextStyle,type ViewProps} from 'react-native';
-import {getSemanticColors,spacingPx,toNativeTypography,buttonAppearance,controlMetrics,clampProgress,type ButtonVariant,type ComponentSize,type SemanticTone} from '@sapling/ui-core';
+import {getSemanticColors,spacingPx,toNativeTypography,buttonAppearance,controlMetrics,clampProgress,type ButtonVariant,type ComponentSize,type SemanticTone} from '@saplings/ui-core';
 import {useAppTheme} from '../core/theme.js';
 import {Box,Typography} from './primitives.js';
 export interface ButtonProps extends Omit<PressableProps,'children'|'style'> {children:string;startIcon?:React.ReactNode;variant?:ButtonVariant;size?:ComponentSize;loading?:boolean;fullWidth?:boolean;style?:StyleProp<ViewStyle>;accessibilityLabel?:string;}

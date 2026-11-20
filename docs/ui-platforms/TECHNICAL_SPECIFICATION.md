@@ -4,8 +4,8 @@
 
 ```mermaid
 flowchart TB
-  A["@sapling/ui-core · TypeScript tokens"] --> B["@sapling/murphi-ui · React/Emotion web"]
-  A --> C["@sapling/murph-appui · React Native"]
+  A["@saplings/ui-core · TypeScript tokens"] --> B["@saplings/murphi-ui · React/Emotion web"]
+  A --> C["@saplings/murph-appui · React Native"]
   B --> D["apps/web · Vite reference"]
   C --> E["examples/ui-platforms/native · sample App"]
   A --> F["Backend/Node consumers of pure tokens"]
@@ -15,24 +15,24 @@ The **SDK backend does not import either React UI package**. The shared tokens c
 
 ## Source inputs
 
-- `murphui.zip`: `src/components/*` (39 directories, original React/Emotion implementations) migrated to `packages/murphi-ui/src/components/*`; `src/theme/{colors,palette,typography,spacing,breakpoints,types}.ts` moved to `@sapling/ui-core`, and web `theme/*` now re-exports core instead of maintaining a second palette.
+- `murphui.zip`: `src/components/*` (39 directories, original React/Emotion implementations) migrated to `packages/murphi-ui/src/components/*`; `src/theme/{colors,palette,typography,spacing,breakpoints,types}.ts` moved to `@saplings/ui-core`, and web `theme/*` now re-exports core instead of maintaining a second palette.
 - `xlox-ui-main.zip`: package structure and `core/components/lib/icons/stories` organization applied to all three packages. No Xlox component code directly copied; original Xlox source contains a single Bold component implementation and full MIT license.
 - Source provenance, missing Murphi license notice and rights verification appear in `PROVENANCE.md`.
 
-## Shared tokens (`@sapling/ui-core`)
+## Shared tokens (`@saplings/ui-core`)
 
 `createTheme(mode, overrides)` returns the Murphi-compatible `XloxTheme` shape with `colors`, `typography`, `spacing`, `breakpoints`, `shadows`, `shape`, `direction`, and `density`. `lightPalette`/`darkPalette` and all `colors` are derived from the uploaded files. Available helpers: `spacingPx`, `toNativeTypography`, `getSemanticColors`, `cssVariables`, `cssVariableText`, `currentBreakpoint`, `resolveResponsive`. Numeric spacing is 8 units of CSS px / native density-independent pixels per factor, multiplied by 0.75 in compact mode. Legacy `spacing(factor)` returns a CSS string; native never renders this value directly.
 
 Color overrides accept six-digit hex strings only. Themed SSR output has no browser globals; CSS-variable serialization validates selectors. The shared package is pure ESM with NodeNext declarations and no runtime peers. Web and mobile each supply a theme-provider context.
 
-## Web (`@sapling/murphi-ui`)
+## Web (`@saplings/murphi-ui`)
 
 - `src/components` is the uploaded Murphi React/Emotion library (component implementation source), refactored for TypeScript NodeNext `.js` module paths and common design tokens. `theme-provider.tsx` supplies `MurphiThemeProvider`, `useTheme`, and `XloxThemeProvider` alias (backwards compatibility).
 - `src/core` re-exports `ui-core`, `src/lib` uses Murphi class and responsive helpers, `src/icons` accepts icon slots without embedding font assets, `src/stories` reserved for Storybook examples. `components/index.ts` re-exports the source components, including `ToastProvider/useToast` (not a standalone `Toast` export).
 - The original Button's styling-only properties are not forwarded to HTML attributes. Input and Button use the shared theme typography font family.
 - `@emotion/react`, `@emotion/styled` are web package dependencies; React and React DOM are peers. Web renders SSR without needing document for components that are not mounted portals. Dialog and overlay focus/scroll behavior require browser tests.
 
-## Native (`@sapling/murph-appui`)
+## Native (`@saplings/murph-appui`)
 
 - `src/core/theme.tsx` uses React context plus native `useColorScheme()` for system light/dark selection and `createTheme()` from ui-core.
 - `src/components/{primitives,forms,feedback,disclosure,extras}.tsx` implement native screen primitives, form components, accessible state and labels, modal/selection overlays, alerts, progress, text and list/table patterns. Native `Slider` intentionally omitted: use a supported `@react-native-community/slider` integration or a11y-verified custom implementation rather than a pretend native slider.
@@ -43,13 +43,13 @@ Color overrides accept six-digit hex strings only. Themed SSR output has no brow
 
 ```tsx
 // Web
-import {MurphiThemeProvider,Button,Card,Typography} from '@sapling/murphi-ui';
+import {MurphiThemeProvider,Button,Card,Typography} from '@saplings/murphi-ui';
 export function WebHome(){return <MurphiThemeProvider><Card><Typography variant="h5">School</Typography><Button onClick={()=>{}}>Open</Button></Card></MurphiThemeProvider>}
 ```
 
 ```tsx
 // React Native
-import {MurphAppThemeProvider,Button,Card,Typography} from '@sapling/murph-appui';
+import {MurphAppThemeProvider,Button,Card,Typography} from '@saplings/murph-appui';
 export default function MobileHome(){return <MurphAppThemeProvider><Card><Typography variant="h5">School</Typography><Button onPress={()=>{}}>Open</Button></Card></MurphAppThemeProvider>}
 ```
 

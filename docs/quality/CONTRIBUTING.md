@@ -2,7 +2,7 @@
 
 ## Design principles
 
-1. Prefer TypeScript and reuse `@sapling/quality-core` for safety, execution and reporting.
+1. Prefer TypeScript and reuse `@saplings/quality-core` for safety, execution and reporting.
 2. Do not reinvent a mature workload/security/browser engine; implement an adapter and normalize its real output.
 3. Keep `SuiteResult.status` honest. Missing dependencies are never successful tests.
 4. Expose realistic application-specific assertion hooks rather than pretend every app shares the same expected behavior.

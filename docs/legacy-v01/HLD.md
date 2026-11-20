@@ -3,7 +3,7 @@
 ```mermaid
 flowchart TB
   A[Node.js / Express application] --> CFG[Single sapling.config.ts]
-  CFG --> SDK[@sapling/sdk Composition Root]
+  CFG --> SDK[@saplings/sdk Composition Root]
   SDK --> TEN[Tenancy + Context]
   SDK --> IAM[Auth Adapter + RBAC / ABAC]
   SDK --> CORE[Resources + Audit + Metering + Flags + Jobs]
@@ -25,8 +25,8 @@ flowchart TB
 - All modules receive a trusted `ActorContext` containing a tenant ID and actor ID. The store partitions on tenant ID, and permission gates check context.
 - One configuration controls each module and references all master feature IDs. An adapter-only feature switch does not magically implement that service.
 - Scanner is CLI/CI/scheduled work; defender is runtime middleware. HTTP middleware is not an appropriate location for S3 uploads, invoices or scheduled jobs.
-- `@sapling/catalog` is a public architectural contract: stable IDs, category, module, coverage classification.
-- `@sapling/security` owns detection and scanner primitives, not identity or storage.
+- `@saplings/catalog` is a public architectural contract: stable IDs, category, module, coverage classification.
+- `@saplings/security` owns detection and scanner primitives, not identity or storage.
 - SDK service facades own business logic and call provider interfaces. Official AWS SDK and Postgres/Drizzle libraries are used only by optional adapters.
 
 ### Deployment paths

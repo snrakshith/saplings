@@ -2,7 +2,7 @@ import path from 'node:path';
 import {stat,readdir} from 'node:fs/promises';
 import {readFile} from 'node:fs/promises';
 import {gzipSync} from 'node:zlib';
-import {result,skipped,metrics,type RunContext,type SuiteResult,type CheckResult} from '@sapling/quality-core';
+import {result,skipped,metrics,type RunContext,type SuiteResult,type CheckResult} from '@saplings/quality-core';
 async function files(dir:string):Promise<string[]>{
  const entries=await readdir(dir,{withFileTypes:true});return (await Promise.all(entries.map(async e=>{const full=path.join(dir,e.name);return e.isDirectory()?files(full):e.isFile()?[full]:[];}))).flat();
 }

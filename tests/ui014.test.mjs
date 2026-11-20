@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import React from 'react';
 import {renderToStaticMarkup} from 'react-dom/server';
-import {createTheme,colors,spacingPx,cssVariables,cssVariableText,toNativeTypography,currentBreakpoint,resolveResponsive,getSemanticColors,buttonAppearance,controlMetrics,clampProgress} from '@sapling/ui-core';
-import * as web from '@sapling/murphi-ui';
+import {createTheme,colors,spacingPx,cssVariables,cssVariableText,toNativeTypography,currentBreakpoint,resolveResponsive,getSemanticColors,buttonAppearance,controlMetrics,clampProgress} from '@saplings/ui-core';
+import * as web from '@saplings/murphi-ui';
 
 test('Murphi full color families and shared light/dark semantics',()=>{
  assert.ok(Object.keys(colors).length>=20);

@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {Modal as RNModal,Pressable,ScrollView,View,Image,type ViewProps,type ImageProps,type ViewStyle,type StyleProp} from 'react-native';
-import {spacingPx} from '@sapling/ui-core';
+import {spacingPx} from '@saplings/ui-core';
 import {useAppTheme} from '../core/theme.js';
 import {Box,Typography,Stack,Card} from './primitives.js';
 import {Button} from './feedback.js';

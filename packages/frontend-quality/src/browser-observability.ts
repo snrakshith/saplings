@@ -1,1 +1,1 @@
-export * from '@sapling/quality-browser-runtime';
+export * from '@saplings/quality-browser-runtime';

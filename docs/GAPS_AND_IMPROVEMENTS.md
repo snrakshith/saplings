@@ -16,7 +16,7 @@
 
 > **v0.14.0 current:** See [UI platform P0/P1/P2 backlog](ui-platforms/GAPS_AND_IMPROVEMENTS.md), [source rights](ui-platforms/PROVENANCE.md) and [component matrix](ui-platforms/COMPONENT_PARITY.md). Existing SaaS/payment/gateway/identity gaps remain open.
 
-> **v0.13.0:** Two new packages (`@sapling/harbor`, `@sapling/kingsman`) and typed optional `sapling.gateway` / `sapling.identityPlatform` integrations. See [platform specs](platforms/CONFIG_COVERAGE.md) and their detailed product/technical/gap documents. Existing production gates remain open; both platforms require real infrastructure/conformance testing.
+> **v0.13.0:** Two new packages (`@saplings/harbor`, `@saplings/kingsman`) and typed optional `sapling.gateway` / `sapling.identityPlatform` integrations. See [platform specs](platforms/CONFIG_COVERAGE.md) and their detailed product/technical/gap documents. Existing production gates remain open; both platforms require real infrastructure/conformance testing.
 
 # v0.12.0 — reviewed 182 SaaS dossiers, not gap-free production
 

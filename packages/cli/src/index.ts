@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 import {promises as fs} from 'node:fs';
-import {runScan,generateSarif} from '@sapling/security';
-import {coverageSummary,saasFeatures,securityScanners} from '@sapling/catalog';
+import {runScan,generateSarif} from '@saplings/security';
+import {coverageSummary,saasFeatures,securityScanners} from '@saplings/catalog';
 function arg(name:string){const i=process.argv.indexOf(name);return i<0?undefined:process.argv[i+1];}
 const command=process.argv[2]??'help';
 async function main() {
  if(command==='quality') {
-  const name='@sapling/quality-cli';
-  let quality:any;try{quality=await import(name);}catch{throw Error('Install @sapling/quality-cli as a development dependency; or use sapling-quality directly.');}
+  const name='@saplings/quality-cli';
+  let quality:any;try{quality=await import(name);}catch{throw Error('Install @saplings/quality-cli as a development dependency; or use sapling-quality directly.');}
   await quality.main(process.argv.slice(3));return;
  }
  if(command==='catalog') {

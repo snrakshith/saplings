@@ -1,4 +1,4 @@
-# sapling-murph-appui — @sapling/murph-appui
+# sapling-murph-appui — @saplings/murph-appui
 
 Release: 0.17.0 · Technical specification
 
@@ -12,7 +12,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ## Public contract / current implementation
 ```json
 {
-  "name": "@sapling/murph-appui",
+  "name": "@saplings/murph-appui",
   "version": "0.17.0",
   "exports": {
     ".": {
@@ -31,7 +31,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
     }
   },
   "dependencies": {
-    "@sapling/ui-core": "workspace:*"
+    "@saplings/ui-core": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19.3.0",
@@ -41,7 +41,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ```
 
 ## Configuration and dependencies
-Dependencies: @sapling/ui-core. Peer dependencies: react, react-native.
+Dependencies: @saplings/ui-core. Peer dependencies: react, react-native.
 
 ## Execution, persistence and consistency
 Compile types and code, enforce package export map, verify dependency graph and clean consuming application; keep dev-only quality out of runtime.
@@ -56,7 +56,7 @@ Validate before side effects; reject invalid or unauthorized input. Return typed
 Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## Verification design
-Build and pack @sapling/murph-appui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/murph-appui from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Deployment and compatibility
 Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the public contract, add type checks, execute relevant integration tests and collect release-source-bound evidence before promotion.

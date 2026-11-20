@@ -1,11 +1,11 @@
-> **v0.17.0 package identity:** `@sapling/kingsman` is a reusable library, not a deployed platform on its own. Previous package name deprecated; update imports.
+> **v0.17.0 package identity:** `@saplings/kingsman` is a reusable library, not a deployed platform on its own. Previous package name deprecated; update imports.
 
-# @sapling/kingsman
+# @saplings/kingsman
 
 Keycloak-inspired **multi-tenant realm and organization identity core** for Node 22. Loads uploaded RealmConfig JSON (`identity.sapling.dev/v1alpha1`), exposes user/profile, email verification, password reset, session, client, organization invitation, one-time OAuth Authorization Code + PKCE S256, rotating refresh tokens, RS256 access/ID JWT, JWKS and HTTP OIDC endpoints.
 
 ```ts
-import {IdentityPlatform,loadRealmConfig,createIdentityHttpHandler} from '@sapling/kingsman';
+import {IdentityPlatform,loadRealmConfig,createIdentityHttpHandler} from '@saplings/kingsman';
 const config=await loadRealmConfig('./RealmConfig-full.json');
 const realm=new IdentityPlatform(config,{store:yourDurableStore,passwordHasher:yourArgon2id,signingKey:yourPersistedRSA,resolveSecret:yourVaultResolver,sendAction:yourSafeMailQueue,breachedPassword:yourBreachChecker});
 const handler=createIdentityHttpHandler(realm,{authenticateBrowser:yourVerifiedBrowserSession});

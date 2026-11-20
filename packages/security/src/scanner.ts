@@ -4,7 +4,7 @@ import {resolveMx,resolveTxt} from 'node:dns/promises';
 import {ThreatIntelligenceAdapter} from './threat-intelligence.js';
 import {EvidenceReportAdapter} from './evidence-adapters.js';
 import type {EvidenceReport} from './evidence-adapters.js';
-import {securityScanners} from '@sapling/catalog';
+import {securityScanners} from '@saplings/catalog';
 
 export interface Finding {
   id:string; scannerId:string; checkId:string; severity:'info'|'low'|'medium'|'high'|'critical';

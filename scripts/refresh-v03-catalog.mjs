@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-import {createSapling} from '@sapling/sdk';
+import {createSapling} from '@saplings/sdk';
 const sdk=createSapling({app:{id:'catalog',environment:'development'}});
 const manifest=sdk.featureManifest().sort((a,b)=>a.featureId.localeCompare(b.featureId));
 const original=JSON.parse(fs.readFileSync('docs/saas-features.json'));

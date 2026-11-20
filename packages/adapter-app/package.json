@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/adapter-app",
+  "name": "@saplings/adapter-app",
   "version": "0.17.0",
   "type": "module",
   "main": "dist/index.js",
@@ -11,7 +11,7 @@
     }
   },
   "dependencies": {
-    "@sapling/sdk": "workspace:*",
+    "@saplings/sdk": "workspace:*",
     "graphql": "^16.11.0",
     "sharp": "^0.34.0"
   },
@@ -19,6 +19,17 @@
     "@types/node": "^22.0.0"
   },
   "files": [
-    "dist"
-  ]
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/adapter-app"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

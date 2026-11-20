@@ -1,1 +1,1 @@
-export * from '@sapling/ui-core';
+export * from '@saplings/ui-core';

@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/quality-contracts",
+  "name": "@saplings/quality-contracts",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -11,6 +11,17 @@
     }
   },
   "files": [
-    "dist"
-  ]
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/quality-contracts"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

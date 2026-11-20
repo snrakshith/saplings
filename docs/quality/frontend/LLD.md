@@ -47,8 +47,8 @@ Initialize `onLCP`, `onINP`, `onCLS` handlers from `web-vitals`; capture errors 
 ## Example React integration
 
 ```tsx
-import {SaplingProfiler} from '@sapling/frontend-quality/react';
-import {startFrontendObservability} from '@sapling/frontend-quality/browser';
+import {SaplingProfiler} from '@saplings/frontend-quality/react';
+import {startFrontendObservability} from '@saplings/frontend-quality/browser';
 startFrontendObservability({endpoint:'/telemetry',sampleRate:0.1});
 export function App(){return <SaplingProfiler id="root"><main>App</main></SaplingProfiler>;}
 ```

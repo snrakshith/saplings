@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/frontend-quality",
+  "name": "@saplings/frontend-quality",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -23,12 +23,12 @@
     }
   },
   "dependencies": {
-    "@sapling/quality-core": "workspace:*",
+    "@saplings/quality-core": "workspace:*",
     "playwright": "1.56.1",
     "@axe-core/playwright": "^4.10.2",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
-    "@sapling/quality-browser-runtime": "workspace:*"
+    "@saplings/quality-browser-runtime": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=18"
@@ -44,6 +44,17 @@
     "@types/react": "^19.2.0"
   },
   "files": [
-    "dist"
-  ]
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/frontend-quality"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

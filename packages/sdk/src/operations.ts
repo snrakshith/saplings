@@ -1,5 +1,5 @@
 import {randomBytes,randomUUID,timingSafeEqual} from 'node:crypto';
-import {GatewayTlsPolicy} from '@sapling/harbor';
+import {GatewayTlsPolicy} from '@saplings/harbor';
 import {resolveTxt} from 'node:dns/promises';
 import type {SaplingSDK} from './index.js';
 import type {ActorContext,FeatureAdapter,JsonRecord} from './types.js';

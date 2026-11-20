@@ -1,7 +1,9 @@
+Reusable packages are released under the `@saplings` npm organization. See the [Changesets release guide](.changeset/README.md) for npm setup and versioning.
+
 > **v0.17.0 — Harbor + Kingsman (reusable packages)**
 >
-> - `@sapling/harbor` replaces `@sapling/gateway` (edge routing, ingress policy, API key/JWT verification, HTTP response helpers and configured TLS probe).
-> - `@sapling/kingsman` replaces `@sapling/identity-platform` and now owns legacy SaaS accounts, RBAC/ABAC checks, API keys, TOTP, membership proof and scoped impersonation.
+> - `@saplings/harbor` replaces `@sapling/gateway` (edge routing, ingress policy, API key/JWT verification, HTTP response helpers and configured TLS probe).
+> - `@saplings/kingsman` replaces `@sapling/identity-platform` and now owns legacy SaaS accounts, RBAC/ABAC checks, API keys, TOTP, membership proof and scoped impersonation.
 > - `sapling.harbor` / `sapling.kingsman` replace platform accessor names; legacy `sapling.gateway` / `sapling.identityPlatform` and config keys remain deprecated aliases temporarily.
 > - All 182 catalog IDs/actions remain, with [explicit ownership map](docs/architecture/FEATURE_OWNERSHIP_V017.md). The source move is **not** complete federation, bot protection or production certification.
 > - Vitest 5 test suite remains configured. Runtime Vitest and V8 coverage require a real installed dependency/lockfile; source-level smoke checks are separately documented.
@@ -52,7 +54,7 @@ pnpm run release:preflight
 
 # Historical v0.14.0 — Web and Mobile Murphi UI
 
-The SDK now contains **24 workspace packages**, adding `@sapling/ui-core` (shared tokens), `@sapling/murphi-ui` (React/Emotion web, 39 Murphi source component directories) and `@sapling/murph-appui` (React Native, 38 matching component names). See [cross-platform UI documentation](docs/ui-platforms/README.md), [component matrix](docs/ui-platforms/COMPONENT_PARITY.md) and [source provenance](docs/ui-platforms/PROVENANCE.md). The existing 182 SaaS IDs, gateway, identity platform, scanner/defender and quality packages remain intact.
+The SDK now contains **24 workspace packages**, adding `@saplings/ui-core` (shared tokens), `@saplings/murphi-ui` (React/Emotion web, 39 Murphi source component directories) and `@saplings/murph-appui` (React Native, 38 matching component names). See [cross-platform UI documentation](docs/ui-platforms/README.md), [component matrix](docs/ui-platforms/COMPONENT_PARITY.md) and [source provenance](docs/ui-platforms/PROVENANCE.md). The existing 182 SaaS IDs, gateway, identity platform, scanner/defender and quality packages remain intact.
 
 ```bash
 corepack enable
@@ -64,13 +66,13 @@ pnpm run test:ui
 pnpm run build:web
 ```
 
-**Release qualification:** `@sapling/ui-core` and the adapted Murphi web source compile with local available dependencies; real React Native 0.88/React 19.3 typecheck, Metro, iOS/Android UI and accessibility testing require a full native environment. No fabricated lockfile. Source licensing for Murphi must be confirmed before redistribution; user-provided archive did not include its standalone LICENSE.
+**Release qualification:** `@saplings/ui-core` and the adapted Murphi web source compile with local available dependencies; real React Native 0.88/React 19.3 typecheck, Metro, iOS/Android UI and accessibility testing require a full native environment. No fabricated lockfile. Source licensing for Murphi must be confirmed before redistribution; user-provided archive did not include its standalone LICENSE.
 
 ---
 
 # v0.13.0 — Gateway and Identity Platform
 
-Added **`@sapling/harbor`** and **`@sapling/kingsman`** as separate TypeScript packages. They use the uploaded `GatewayConfig.json`, `GatewayConfig.yaml` and `RealmConfig-full(1).json`, preserved in `examples/platform/`. Existing 19 packages and 182 SaaS feature IDs remain unchanged; total workspace library packages: **21**.
+Added **`@saplings/harbor`** and **`@saplings/kingsman`** as separate TypeScript packages. They use the uploaded `GatewayConfig.json`, `GatewayConfig.yaml` and `RealmConfig-full(1).json`, preserved in `examples/platform/`. Existing 19 packages and 182 SaaS feature IDs remain unchanged; total workspace library packages: **21**.
 
 ```ts
 const sapling=createSapling({app:{id:'school-platform',environment:'development'},platforms:{gateway:{config:gatewayConfig,dependencies:gatewayDeps},identity:{config:realmConfig,dependencies:identityDeps}}});
@@ -119,7 +121,7 @@ pnpm run quality -- list
 Registry access was blocked when this archive was prepared. No lockfile was fabricated. The full pnpm install, hook typecheck/runtime tests, and previous live production gates require a connected environment. Docker builds require a reviewed lockfile.
 
 ```ts
-import {createSapling, defineSaplingConfig} from '@sapling/sdk';
+import {createSapling, defineSaplingConfig} from '@saplings/sdk';
 const sapling = createSapling(defineSaplingConfig({app:{id:'my-app',environment:'development'}}));
 // Typed public services: sapling.domains, sapling.providerWorkflows, sapling.billing, etc.
 // Configure policies before calling trusted domain APIs.
@@ -153,7 +155,7 @@ pnpm --filter @sapling/example-express run dev
 ```
 
 ```ts
-import { createSapling, defineSaplingConfig } from '@sapling/sdk';
+import { createSapling, defineSaplingConfig } from '@saplings/sdk';
 const sdk = createSapling(defineSaplingConfig({
   app: { id: 'orders', environment: 'development' },
   security: { scanner: { root: './src' }, defender: { mode: 'block' } },
@@ -185,7 +187,7 @@ See [release validation](docs/RELEASE_VALIDATION.md), [audit brief](docs/INDEPEN
 
 ## v0.5.0 — Backend Quality
 
-Separate `@sapling/backend-quality` development package in this monorepo; all 15 backend categories ship together. No frontend tooling. One `sapling.config.ts` controls both runtime and quality settings. Run `pnpm run verify:build`, `pnpm test`, `pnpm run quality -- list` and see [Backend Quality](docs/BACKEND_QUALITY.md). External tools require authorized staging and installation. Prior v0.5.0 results are historical; see current evidence for v0.5.0.
+Separate `@saplings/backend-quality` development package in this monorepo; all 15 backend categories ship together. No frontend tooling. One `sapling.config.ts` controls both runtime and quality settings. Run `pnpm run verify:build`, `pnpm test`, `pnpm run quality -- list` and see [Backend Quality](docs/BACKEND_QUALITY.md). External tools require authorized staging and installation. Prior v0.5.0 results are historical; see current evidence for v0.5.0.
 
 ## v0.8.2 release verification
 

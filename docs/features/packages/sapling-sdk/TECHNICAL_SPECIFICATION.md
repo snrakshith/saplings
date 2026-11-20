@@ -1,4 +1,4 @@
-# sapling-sdk — @sapling/sdk
+# sapling-sdk — @saplings/sdk
 
 Release: 0.17.0 · Technical specification
 
@@ -12,7 +12,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ## Public contract / current implementation
 ```json
 {
-  "name": "@sapling/sdk",
+  "name": "@saplings/sdk",
   "version": "0.17.0",
   "exports": {
     ".": {
@@ -21,19 +21,19 @@ Workspace package retained; full installed-workspace release gate open. Package-
     }
   },
   "dependencies": {
-    "@sapling/catalog": "workspace:*",
-    "@sapling/security": "workspace:*",
-    "@sapling/quality-contracts": "workspace:*",
-    "@sapling/realtime": "workspace:*",
-    "@sapling/middleware": "workspace:*",
-    "@sapling/harbor": "workspace:*",
-    "@sapling/kingsman": "workspace:*"
+    "@saplings/catalog": "workspace:*",
+    "@saplings/security": "workspace:*",
+    "@saplings/quality-contracts": "workspace:*",
+    "@saplings/realtime": "workspace:*",
+    "@saplings/middleware": "workspace:*",
+    "@saplings/harbor": "workspace:*",
+    "@saplings/kingsman": "workspace:*"
   }
 }
 ```
 
 ## Configuration and dependencies
-Dependencies: @sapling/catalog, @sapling/security, @sapling/quality-contracts, @sapling/realtime, @sapling/middleware, @sapling/harbor, @sapling/kingsman. Peer dependencies: none.
+Dependencies: @saplings/catalog, @saplings/security, @saplings/quality-contracts, @saplings/realtime, @saplings/middleware, @saplings/harbor, @saplings/kingsman. Peer dependencies: none.
 
 ## Execution, persistence and consistency
 Compile types and code, enforce package export map, verify dependency graph and clean consuming application; keep dev-only quality out of runtime.
@@ -48,7 +48,7 @@ Validate before side effects; reject invalid or unauthorized input. Return typed
 Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## Verification design
-Build and pack @sapling/sdk from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/sdk from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Deployment and compatibility
 Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the public contract, add type checks, execute relevant integration tests and collect release-source-bound evidence before promotion.

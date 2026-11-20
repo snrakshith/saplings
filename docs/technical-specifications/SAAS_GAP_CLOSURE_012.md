@@ -39,7 +39,7 @@ All 182 dossiers are **audited**; none are marked independently production-appro
 ## Developer quick start
 
 ```ts
-import {createSapling, defineSaplingConfig} from '@sapling/sdk';
+import {createSapling, defineSaplingConfig} from '@saplings/sdk';
 import {z} from '@saplings/validations/native';
 const config=defineSaplingConfig({
   app:{id:'app',environment:'development'},

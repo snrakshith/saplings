@@ -10,7 +10,7 @@
 - A configurable runtime defender with rate limiting, threat signals, alert de-duplication and monitor/block policy.
 - A per-feature adapter dispatch mechanism for all 182 feature IDs (no fake implementation of unconfigured capabilities).
 - Reference SDK services for tenant-scoped records, permission checks, hashed API keys, audit, flags/variants, usage/quotas, jobs, events, object storage, provider-backed notifications/payments, and webhook signatures.
-- Optional `@sapling/adapter-drizzle` and `@sapling/adapter-aws` source code (require independent setup, not integration-tested here).
+- Optional `@saplings/adapter-drizzle` and `@saplings/adapter-aws` source code (require independent setup, not integration-tested here).
 
 > **Important distinction:** A feature can be included in the master checklist without being fully implemented. `native` means demonstrable reference behavior, `adapter` means provider contract/integration requirement, and `planned` means scoped only. This package does **not** implement all 182 features or the vendor's 200+ individual security checks. It *does* preserve and map the complete intended feature categories.
 
@@ -32,7 +32,7 @@ For environment without package registry access, run `tsc -p packages/catalog`, 
 ## One config (`sapling.config.ts`)
 
 ```ts
-import { defineSaplingConfig } from '@sapling/sdk';
+import { defineSaplingConfig } from '@saplings/sdk';
 
 export default defineSaplingConfig({
   app: { id: 'my-saas', environment: 'development' },
@@ -56,7 +56,7 @@ export default defineSaplingConfig({
 ```
 
 ```ts
-import { createSapling } from '@sapling/sdk';
+import { createSapling } from '@saplings/sdk';
 import config from './sapling.config.js';
 const sapling = createSapling(config);
 app.use(sapling.middleware()); // async Express-compatible middleware

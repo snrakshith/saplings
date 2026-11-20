@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import {QualityOrchestrator,loadQualityConfig,BACKEND_SUITES,FRONTEND_SUITES,type ExecutionProfile,type SuiteId} from '@sapling/quality-core';
-import {registerBackend} from '@sapling/backend-quality';
-import {registerFrontend} from '@sapling/frontend-quality/register';
-import {execFileSafe,suiteIds} from '@sapling/quality-core';
+import {QualityOrchestrator,loadQualityConfig,BACKEND_SUITES,FRONTEND_SUITES,type ExecutionProfile,type SuiteId} from '@saplings/quality-core';
+import {registerBackend} from '@saplings/backend-quality';
+import {registerFrontend} from '@saplings/frontend-quality/register';
+import {execFileSafe,suiteIds} from '@saplings/quality-core';
 import {pathToFileURL} from 'node:url';
 import {realpathSync,existsSync} from 'node:fs';
 import {readFile} from 'node:fs/promises';
@@ -46,7 +46,7 @@ export async function main(args=process.argv.slice(2)){
   console.log(`${missing} optional engine checks unavailable. This does not invalidate unconfigured suites.`);return;
  }
  if(command==='report'){const file=value(args,'--file');if(!file||!existsSync(file))throw Error('Use report --file <report.json>');console.log(await readFile(file,'utf8'));return;}
- if(command==='legacy'){const {cliMain}=await import('@sapling/backend-quality');await cliMain(args.slice(1));return;}
+ if(command==='legacy'){const {cliMain}=await import('@saplings/backend-quality');await cliMain(args.slice(1));return;}
  if(command!=='run')throw new Error(`Unknown command '${command}'`);
  const config=await loadQualityConfig(value(args,'--config')??'sapling.config.ts');
  const profile=(value(args,'--profile')??'pr') as ExecutionProfile;

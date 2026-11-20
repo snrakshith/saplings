@@ -10,10 +10,10 @@
 
 | Package | Purpose |
 |---|---|
-| `@sapling/quality-core` | Config loading, typed contracts, policies, subprocess runner, orchestration, thresholds, JSON/HTML/JUnit reports |
-| `@sapling/backend-quality` | 16 backend categories, k6, Autocannon, OpenAPI/security, Toxiproxy, Node diagnostics, K8s/chaos integration |
-| `@sapling/frontend-quality` | 16 frontend categories, Playwright, axe-core, screenshots, browser metrics, gzip bundle budget, React Profiler, Web Vitals |
-| `@sapling/quality-cli` | Unified command line (`sapling-quality list / doctor / run`) |
+| `@saplings/quality-core` | Config loading, typed contracts, policies, subprocess runner, orchestration, thresholds, JSON/HTML/JUnit reports |
+| `@saplings/backend-quality` | 16 backend categories, k6, Autocannon, OpenAPI/security, Toxiproxy, Node diagnostics, K8s/chaos integration |
+| `@saplings/frontend-quality` | 16 frontend categories, Playwright, axe-core, screenshots, browser metrics, gzip bundle budget, React Profiler, Web Vitals |
+| `@saplings/quality-cli` | Unified command line (`sapling-quality list / doctor / run`) |
 | `apps/api` | Sample Express API: health, readiness, Prometheus metrics, idempotent order endpoint |
 | `apps/web` | Sample React/Vite app: responsive views, navigation, browser telemetry and React profiling |
 

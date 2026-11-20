@@ -1,6 +1,6 @@
 # @saplings/hooks — React-specific reusable hooks
 
-28 named hooks, divided into four source modules (`state.ts`, `async.ts`, `browser.ts`, `storage.ts`). React 18.2 or 19 is a peer. Native React state/effects/external-store APIs are used; no backend imports, no React Query dependency, no fake React runtime. `@sapling/utils/hooks` remains framework-agnostic primitives. Import from `@saplings/hooks` only in React client components.
+28 named hooks, divided into four source modules (`state.ts`, `async.ts`, `browser.ts`, `storage.ts`). React 18.2 or 19 is a peer. Native React state/effects/external-store APIs are used; no backend imports, no React Query dependency, no fake React runtime. `@saplings/utils/hooks` remains framework-agnostic primitives. Import from `@saplings/hooks` only in React client components.
 
 | Hook | Purpose |
 |---|---|

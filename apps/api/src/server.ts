@@ -1,6 +1,6 @@
 import express from 'express';
 import {randomUUID} from 'node:crypto';
-import {createNodeDiagnostics} from '@sapling/quality-node-diagnostics';
+import {createNodeDiagnostics} from '@saplings/quality-node-diagnostics';
 const app=express(),orders=new Map<string,{id:string;quantity:number}>(),diagnostics=createNodeDiagnostics();
 const PORT=Number(process.env.PORT??3000);
 app.disable('x-powered-by');app.use(express.json({limit:'1mb'}));

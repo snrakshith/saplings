@@ -1,6 +1,6 @@
 import sharp from 'sharp';
 import {graphql,printSchema,parse,visit,validate,specifiedRules,type GraphQLSchema} from 'graphql';
-import type {ImageTransformer,OperationsSettings} from '@sapling/sdk';
+import type {ImageTransformer,OperationsSettings} from '@saplings/sdk';
 export class SharpTransformer implements ImageTransformer {
  async transform(input:Uint8Array,settings:{width:number;height:number;format:'webp'|'png'|'jpeg'}){return sharp(input,{limitInputPixels:20_000_000,animated:false,failOn:'error'}).rotate().resize(settings.width,settings.height,{fit:'inside',withoutEnlargement:true}).toFormat(settings.format).toBuffer();}
 }

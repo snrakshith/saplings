@@ -1,4 +1,4 @@
-# sapling-frontend-quality — @sapling/frontend-quality
+# sapling-frontend-quality — @saplings/frontend-quality
 
 Release: 0.17.0 · Technical specification
 
@@ -12,7 +12,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ## Public contract / current implementation
 ```json
 {
-  "name": "@sapling/frontend-quality",
+  "name": "@saplings/frontend-quality",
   "version": "0.17.0",
   "exports": {
     ".": {
@@ -33,12 +33,12 @@ Workspace package retained; full installed-workspace release gate open. Package-
     }
   },
   "dependencies": {
-    "@sapling/quality-core": "workspace:*",
+    "@saplings/quality-core": "workspace:*",
     "playwright": "1.56.1",
     "@axe-core/playwright": "^4.10.2",
     "pixelmatch": "^7.1.0",
     "pngjs": "^7.0.0",
-    "@sapling/quality-browser-runtime": "workspace:*"
+    "@saplings/quality-browser-runtime": "workspace:*"
   },
   "peerDependencies": {
     "react": ">=18"
@@ -47,7 +47,7 @@ Workspace package retained; full installed-workspace release gate open. Package-
 ```
 
 ## Configuration and dependencies
-Dependencies: @sapling/quality-core, playwright, @axe-core/playwright, pixelmatch, pngjs, @sapling/quality-browser-runtime. Peer dependencies: react.
+Dependencies: @saplings/quality-core, playwright, @axe-core/playwright, pixelmatch, pngjs, @saplings/quality-browser-runtime. Peer dependencies: react.
 
 ## Execution, persistence and consistency
 Compile types and code, enforce package export map, verify dependency graph and clean consuming application; keep dev-only quality out of runtime.
@@ -62,7 +62,7 @@ Validate before side effects; reject invalid or unauthorized input. Return typed
 Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## Verification design
-Build and pack @sapling/frontend-quality from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/frontend-quality from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Deployment and compatibility
 Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the public contract, add type checks, execute relevant integration tests and collect release-source-bound evidence before promotion.

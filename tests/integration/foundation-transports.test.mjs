@@ -1,8 +1,8 @@
 // Run after installing ws, socket.io, socket.io-client, express, compression and multer.
 // No skipped tests: missing engines fail this explicit integration suite.
 import {test} from 'vitest';import assert from 'node:assert/strict';import {createServer} from 'node:http';import {once} from 'node:events';
-import {RealtimeHub,attachWebSocket,attachSocketIO} from '@sapling/realtime';
-import {compressionMiddleware,uploadSingle,errorHandler} from '@sapling/middleware';
+import {RealtimeHub,attachWebSocket,attachSocketIO} from '@saplings/realtime';
+import {compressionMiddleware,uploadSingle,errorHandler} from '@saplings/middleware';
 import WebSocket from 'ws';import {io as socketClient} from 'socket.io-client';import express from 'express';
 const principal={tenantId:'t',userId:'u'};const options={enabled:true,allowNoOrigin:true,authenticate:()=>principal,authorize:(_p,channel)=>channel==='events'};
 const listen=async s=>{s.listen(0,'127.0.0.1');await once(s,'listening');return 'http://127.0.0.1:'+s.address().port;};

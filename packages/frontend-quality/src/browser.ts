@@ -4,7 +4,7 @@ import {chromium,firefox,webkit,type Browser, type Page} from 'playwright';
 import AxeBuilder from '@axe-core/playwright';
 import {PNG} from 'pngjs';
 import pixelmatch from 'pixelmatch';
-import {assertTargetAllowed,execFileSafe,result,skipped,metrics,thresholdChecks,type FrontendSuite,type CheckResult,type RunContext,type SuiteResult} from '@sapling/quality-core';
+import {assertTargetAllowed,execFileSafe,result,skipped,metrics,thresholdChecks,type FrontendSuite,type CheckResult,type RunContext,type SuiteResult} from '@saplings/quality-core';
 const engines={chromium,firefox,webkit};
 const safeName=(s:string)=>s.replace(/[^\w.-]+/g,'_').slice(0,100);
 const DEFAULT_VIEWPORTS=[{name:'mobile',width:390,height:844},{name:'tablet',width:768,height:1024},{name:'desktop',width:1440,height:900}];

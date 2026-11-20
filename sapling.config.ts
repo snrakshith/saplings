@@ -1,4 +1,4 @@
-import {defineSaplingConfig} from '@sapling/sdk';
+import {defineSaplingConfig} from '@saplings/sdk';
 import quality from './examples/configs/fullstack-quality-profile.ts';
 
 // Demo configuration; replace targets and credentials for your own application.

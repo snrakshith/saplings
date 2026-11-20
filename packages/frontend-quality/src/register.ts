@@ -1,4 +1,4 @@
-import {execFileSafe,result,skipped,FRONTEND_SUITES,type QualityOrchestrator,type FrontendSuite,type SuiteResult,type RunContext} from '@sapling/quality-core';
+import {execFileSafe,result,skipped,FRONTEND_SUITES,type QualityOrchestrator,type FrontendSuite,type SuiteResult,type RunContext} from '@saplings/quality-core';
 import {runBundle} from './bundle.js';
 import {runLighthouse} from './lighthouse.js';
 export {runBundle,runLighthouse};

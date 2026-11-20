@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import {View,TextInput,Pressable,Switch as RNSwitch,Modal as RNModal,ScrollView,type TextInputProps,type StyleProp,type ViewStyle,type ViewProps,type SwitchProps} from 'react-native';
-import {spacingPx} from '@sapling/ui-core';
+import {spacingPx} from '@saplings/ui-core';
 import {useAppTheme} from '../core/theme.js';
 import {Typography,Stack,Box} from './primitives.js';
 export interface InputProps extends TextInputProps {label?:string;error?:string;helperText?:string;containerStyle?:StyleProp<ViewStyle>;required?:boolean;}

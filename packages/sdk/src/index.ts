@@ -1,9 +1,9 @@
 import type {FeatureId,FeatureAction} from './feature-types.js';
 export type * from './feature-types.js';
-import {RealtimeHub} from '@sapling/realtime';
-import {Gateway,GatewayError,GatewayTransactionalBanStore,GatewayTransactionalRateLimitStore,GatewayHttpPolicies} from '@sapling/harbor';
-import {IdentityPlatform} from '@sapling/kingsman';
-import {createMiddleware,errorHandler} from '@sapling/middleware';
+import {RealtimeHub} from '@saplings/realtime';
+import {Gateway,GatewayError,GatewayTransactionalBanStore,GatewayTransactionalRateLimitStore,GatewayHttpPolicies} from '@saplings/harbor';
+import {IdentityPlatform} from '@saplings/kingsman';
+import {createMiddleware,errorHandler} from '@saplings/middleware';
 import {randomUUID} from 'node:crypto';
 export * from './providers.js';
 export * from './recurring.js';
@@ -15,10 +15,10 @@ import {WorkerRuntime} from './worker.js';
 import {SaasServicesRegistry} from './registry.js';
 export * from './reliability.js';
 export {EnvelopeCrypto,validateRecord} from './data.js';
-import {Defender} from '@sapling/security';
-import type {HttpRequest,HttpResponse,HttpNext} from '@sapling/security';
-import {runScan} from '@sapling/security';
-import {saasFeatures,securityScanners} from '@sapling/catalog';
+import {Defender} from '@saplings/security';
+import type {HttpRequest,HttpResponse,HttpNext} from '@saplings/security';
+import {runScan} from '@saplings/security';
+import {saasFeatures,securityScanners} from '@saplings/catalog';
 import {resolveSaplingConfig,defineSaplingConfig} from './config.js';
 import type {ActorContext,SaplingConfig,ResolvedConfig,Store} from './types.js';
 import {SaplingError} from './types.js';
@@ -44,14 +44,14 @@ export {defineSaplingConfig,resolveSaplingConfig,SaplingError,InMemoryStore,InMe
 export {RazorpayAdapter} from './integrations.js';
 export * from './cashfree.js';
 export * from './stripe-payment.js';
-export {Defender,runScan} from '@sapling/security';
-export {Gateway,GatewayError,GatewayHttpPolicies} from '@sapling/harbor';
-export {IdentityPlatform as Kingsman} from '@sapling/kingsman';
-export {Gateway as Harbor} from '@sapling/harbor';
-export {IdentityPlatform,MemoryIdentityStore,IdentityError,createIdentityHttpHandler} from '@sapling/kingsman';
-export {saasFeatures,securityScanners,coverageSummary} from '@sapling/catalog';
+export {Defender,runScan} from '@saplings/security';
+export {Gateway,GatewayError,GatewayHttpPolicies} from '@saplings/harbor';
+export {IdentityPlatform as Kingsman} from '@saplings/kingsman';
+export {Gateway as Harbor} from '@saplings/harbor';
+export {IdentityPlatform,MemoryIdentityStore,IdentityError,createIdentityHttpHandler} from '@saplings/kingsman';
+export {saasFeatures,securityScanners,coverageSummary} from '@saplings/catalog';
 export type * from './types.js';
-export type {DefenderConfig,ThreatEvent,ScanOptions,ScanResult} from '@sapling/security';
+export type {DefenderConfig,ThreatEvent,ScanOptions,ScanResult} from '@saplings/security';
 
 export class SaplingSDK {
  readonly config:ResolvedConfig;
@@ -129,10 +129,10 @@ export class SaplingSDK {
   this.access=new AccessService(this.store,this.config.access);
   this.identity=new IdentityService(this.store,this.access,this.audit,this.config.auth.apiKeys.defaultTtlDays);
   const selectedKingsman=config.platforms?.kingsman??config.platforms?.identity;
-  if(selectedKingsman){const {config:realm,dependencies={}}=selectedKingsman;if(realm.metadata.environment==='production'&&this.store instanceof InMemoryStore&&!dependencies.store)throw new SaplingError('INSECURE_CONFIG','Production realms require a persistent store');this.kingsman=new IdentityPlatform(realm,{...dependencies,store:dependencies.store??(this.store.transaction?this.store as unknown as import('@sapling/kingsman').IdentityStore:undefined)});}
+  if(selectedKingsman){const {config:realm,dependencies={}}=selectedKingsman;if(realm.metadata.environment==='production'&&this.store instanceof InMemoryStore&&!dependencies.store)throw new SaplingError('INSECURE_CONFIG','Production realms require a persistent store');this.kingsman=new IdentityPlatform(realm,{...dependencies,store:dependencies.store??(this.store.transaction?this.store as unknown as import('@saplings/kingsman').IdentityStore:undefined)});}
   const selectedHarbor=config.platforms?.harbor??config.platforms?.gateway;
-  if(selectedHarbor){const {config:gw,dependencies={}}=selectedHarbor;const verification=dependencies.verifyJwt??(this.kingsman?async (token:string,policy:{realmRef:string;audiences:string[];algorithms?:string[];clockSkewMs?:number})=>{if(policy.realmRef!==this.kingsman!.realm||policy.algorithms?.some(a=>a!=='RS256'))throw new GatewayError('INVALID_REALM','Gateway realm/alg mismatch',401);return this.kingsman!.verifyAccessToken(token,{audiences:policy.audiences,clockSkewMs:policy.clockSkewMs});}:undefined);const shared=this.store.transaction?this.store as unknown as import('@sapling/harbor').GatewayStateStore:undefined;
-   const keyVerifier=dependencies.verifyApiKey??(dependencies.keyTenantForRequest?async(key:string,context:import('@sapling/harbor').GatewayContext)=>{const tenantId=await dependencies.keyTenantForRequest!(context);if(!tenantId)return undefined;const verified=await this.identity.verifyApiKey(tenantId,key);return verified?{sub:verified.id,tenantId,scopes:verified.scopes}:undefined;}:undefined);
+  if(selectedHarbor){const {config:gw,dependencies={}}=selectedHarbor;const verification=dependencies.verifyJwt??(this.kingsman?async (token:string,policy:{realmRef:string;audiences:string[];algorithms?:string[];clockSkewMs?:number})=>{if(policy.realmRef!==this.kingsman!.realm||policy.algorithms?.some(a=>a!=='RS256'))throw new GatewayError('INVALID_REALM','Gateway realm/alg mismatch',401);return this.kingsman!.verifyAccessToken(token,{audiences:policy.audiences,clockSkewMs:policy.clockSkewMs});}:undefined);const shared=this.store.transaction?this.store as unknown as import('@saplings/harbor').GatewayStateStore:undefined;
+   const keyVerifier=dependencies.verifyApiKey??(dependencies.keyTenantForRequest?async(key:string,context:import('@saplings/harbor').GatewayContext)=>{const tenantId=await dependencies.keyTenantForRequest!(context);if(!tenantId)return undefined;const verified=await this.identity.verifyApiKey(tenantId,key);return verified?{sub:verified.id,tenantId,scopes:verified.scopes}:undefined;}:undefined);
    this.harbor=new Gateway(gw,{...dependencies,verifyJwt:verification,verifyApiKey:keyVerifier,
     rateLimit:dependencies.rateLimit??(shared?new GatewayTransactionalRateLimitStore(shared):undefined),
     ddosBans:dependencies.ddosBans??(shared?new GatewayTransactionalBanStore(shared):undefined)});}

@@ -1,4 +1,4 @@
-// Browser-safe root: Node-only utilities are available from @sapling/utils/server.
+// Browser-safe root: Node-only utilities are available from @saplings/utils/server.
 export * from './es-toolkit.js';
 export * as fp from './fp.js';
 export * as iterators from './iterators.js';

@@ -1,6 +1,6 @@
-import { defineSaplingConfig, JwksAuthenticationAdapter, ValkeyRateState } from '@sapling/sdk';
-import { DrizzleStore } from '@sapling/adapter-drizzle';
-import { S3StorageAdapter, S3PresignAdapter, AwsNotificationsAdapter } from '@sapling/adapter-aws';
+import { defineSaplingConfig, JwksAuthenticationAdapter, ValkeyRateState } from '@saplings/sdk';
+import { DrizzleStore } from '@saplings/adapter-drizzle';
+import { S3StorageAdapter, S3PresignAdapter, AwsNotificationsAdapter } from '@saplings/adapter-aws';
 import { S3Client } from '@aws-sdk/client-s3';
 import { SESv2Client } from '@aws-sdk/client-sesv2';
 import { SNSClient } from '@aws-sdk/client-sns';

@@ -1,9 +1,9 @@
 [
   {
-    "package": "@sapling/adapter-app",
+    "package": "@saplings/adapter-app",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/sdk": "workspace:*",
+      "@saplings/sdk": "workspace:*",
       "graphql": "^16.11.0",
       "sharp": "^0.34.0"
     },
@@ -11,10 +11,10 @@
     "source": "packages/adapter-app"
   },
   {
-    "package": "@sapling/adapter-aws",
+    "package": "@saplings/adapter-aws",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/sdk": "workspace:*",
+      "@saplings/sdk": "workspace:*",
       "@aws-sdk/client-s3": "^3.0.0",
       "@aws-sdk/client-sesv2": "^3.0.0",
       "@aws-sdk/client-sns": "^3.0.0",
@@ -24,10 +24,10 @@
     "source": "packages/adapter-aws"
   },
   {
-    "package": "@sapling/adapter-drizzle",
+    "package": "@saplings/adapter-drizzle",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/sdk": "workspace:*",
+      "@saplings/sdk": "workspace:*",
       "drizzle-orm": "^0.44.0",
       "pg": "^8.0.0"
     },
@@ -35,47 +35,47 @@
     "source": "packages/adapter-drizzle"
   },
   {
-    "package": "@sapling/backend-quality",
+    "package": "@saplings/backend-quality",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/quality-core": "workspace:*",
+      "@saplings/quality-core": "workspace:*",
       "autocannon": "^8.0.0",
-      "@sapling/quality-node-diagnostics": "workspace:*",
+      "@saplings/quality-node-diagnostics": "workspace:*",
       "vitest": "5.0.0"
     },
     "peerDependencies": {
-      "@sapling/sdk": "workspace:*"
+      "@saplings/sdk": "workspace:*"
     },
     "source": "packages/backend-quality"
   },
   {
-    "package": "@sapling/catalog",
+    "package": "@saplings/catalog",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {},
     "source": "packages/catalog"
   },
   {
-    "package": "@sapling/cli",
+    "package": "@saplings/cli",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/catalog": "workspace:*",
-      "@sapling/security": "workspace:*",
-      "@sapling/sdk": "workspace:*"
+      "@saplings/catalog": "workspace:*",
+      "@saplings/security": "workspace:*",
+      "@saplings/sdk": "workspace:*"
     },
     "peerDependencies": {},
     "source": "packages/cli"
   },
   {
-    "package": "@sapling/frontend-quality",
+    "package": "@saplings/frontend-quality",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/quality-core": "workspace:*",
+      "@saplings/quality-core": "workspace:*",
       "playwright": "1.56.1",
       "@axe-core/playwright": "^4.10.2",
       "pixelmatch": "^7.1.0",
       "pngjs": "^7.0.0",
-      "@sapling/quality-browser-runtime": "workspace:*"
+      "@saplings/quality-browser-runtime": "workspace:*"
     },
     "peerDependencies": {
       "react": ">=18"
@@ -83,7 +83,7 @@
     "source": "packages/frontend-quality"
   },
   {
-    "package": "@sapling/harbor",
+    "package": "@saplings/harbor",
     "version": "0.17.0",
     "dependencies": {
       "yaml": "^2.8.1"
@@ -101,14 +101,14 @@
     "source": "packages/hooks"
   },
   {
-    "package": "@sapling/kingsman",
+    "package": "@saplings/kingsman",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {},
     "source": "packages/kingsman"
   },
   {
-    "package": "@sapling/middleware",
+    "package": "@saplings/middleware",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {
@@ -118,10 +118,10 @@
     "source": "packages/middleware"
   },
   {
-    "package": "@sapling/murph-appui",
+    "package": "@saplings/murph-appui",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/ui-core": "workspace:*"
+      "@saplings/ui-core": "workspace:*"
     },
     "peerDependencies": {
       "react": "^19.3.0",
@@ -130,10 +130,10 @@
     "source": "packages/murph-appui"
   },
   {
-    "package": "@sapling/murphi-ui",
+    "package": "@saplings/murphi-ui",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/ui-core": "workspace:*",
+      "@saplings/ui-core": "workspace:*",
       "@emotion/react": "^11.13.3",
       "@emotion/styled": "^11.13.0"
     },
@@ -144,7 +144,7 @@
     "source": "packages/murphi-ui"
   },
   {
-    "package": "@sapling/quality-browser-runtime",
+    "package": "@saplings/quality-browser-runtime",
     "version": "0.17.0",
     "dependencies": {
       "web-vitals": "^5.1.0"
@@ -155,43 +155,43 @@
     "source": "packages/quality-browser-runtime"
   },
   {
-    "package": "@sapling/quality-cli",
+    "package": "@saplings/quality-cli",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/quality-core": "workspace:*",
-      "@sapling/backend-quality": "workspace:*",
-      "@sapling/frontend-quality": "workspace:*",
+      "@saplings/quality-core": "workspace:*",
+      "@saplings/backend-quality": "workspace:*",
+      "@saplings/frontend-quality": "workspace:*",
       "playwright": "1.56.1"
     },
     "peerDependencies": {},
     "source": "packages/quality-cli"
   },
   {
-    "package": "@sapling/quality-contracts",
+    "package": "@saplings/quality-contracts",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {},
     "source": "packages/quality-contracts"
   },
   {
-    "package": "@sapling/quality-core",
+    "package": "@saplings/quality-core",
     "version": "0.17.0",
     "dependencies": {
       "jiti": "^2.6.0",
-      "@sapling/quality-contracts": "workspace:*"
+      "@saplings/quality-contracts": "workspace:*"
     },
     "peerDependencies": {},
     "source": "packages/quality-core"
   },
   {
-    "package": "@sapling/quality-node-diagnostics",
+    "package": "@saplings/quality-node-diagnostics",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {},
     "source": "packages/quality-node-diagnostics"
   },
   {
-    "package": "@sapling/realtime",
+    "package": "@saplings/realtime",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {
@@ -201,38 +201,38 @@
     "source": "packages/realtime"
   },
   {
-    "package": "@sapling/sdk",
+    "package": "@saplings/sdk",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/catalog": "workspace:*",
-      "@sapling/security": "workspace:*",
-      "@sapling/quality-contracts": "workspace:*",
-      "@sapling/realtime": "workspace:*",
-      "@sapling/middleware": "workspace:*",
-      "@sapling/harbor": "workspace:*",
-      "@sapling/kingsman": "workspace:*"
+      "@saplings/catalog": "workspace:*",
+      "@saplings/security": "workspace:*",
+      "@saplings/quality-contracts": "workspace:*",
+      "@saplings/realtime": "workspace:*",
+      "@saplings/middleware": "workspace:*",
+      "@saplings/harbor": "workspace:*",
+      "@saplings/kingsman": "workspace:*"
     },
     "peerDependencies": {},
     "source": "packages/sdk"
   },
   {
-    "package": "@sapling/security",
+    "package": "@saplings/security",
     "version": "0.17.0",
     "dependencies": {
-      "@sapling/catalog": "workspace:*"
+      "@saplings/catalog": "workspace:*"
     },
     "peerDependencies": {},
     "source": "packages/security"
   },
   {
-    "package": "@sapling/ui-core",
+    "package": "@saplings/ui-core",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {},
     "source": "packages/ui-core"
   },
   {
-    "package": "@sapling/utils",
+    "package": "@saplings/utils",
     "version": "0.17.0",
     "dependencies": {},
     "peerDependencies": {},

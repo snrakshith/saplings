@@ -5,7 +5,7 @@ Gateway state adapter: `packages/harbor/src/state.ts` (durable atomic `GatewayTr
 # Sapling API Gateway — Technical Specification v0.13.0
 
 ## Package
-`@sapling/harbor` — independent Node 22 TypeScript workspace with `Gateway`, `validateGatewayConfig`, `loadGatewayConfig`, `MemoryRateLimitStore` and structural adapter types.
+`@saplings/harbor` — independent Node 22 TypeScript workspace with `Gateway`, `validateGatewayConfig`, `loadGatewayConfig`, `MemoryRateLimitStore` and structural adapter types.
 
 ## Source configuration
 - Full: `examples/platform/GatewayConfig.json` (original upload, unchanged).
@@ -38,8 +38,8 @@ I --> J[Client]
 
 ## Public SDK integration
 ```ts
-import {createSapling} from '@sapling/sdk';
-import {loadGatewayConfig,MemoryRateLimitStore} from '@sapling/harbor';
+import {createSapling} from '@saplings/sdk';
+import {loadGatewayConfig,MemoryRateLimitStore} from '@saplings/harbor';
 const cfg=await loadGatewayConfig('examples/platform/GatewayConfig.json');
 const sapling=createSapling({app:{id:'school',environment:'development'},platforms:{gateway:{config:cfg,dependencies:{rateLimit:new MemoryRateLimitStore(),verifyJwt:yourVerifier,threatIp:yourVerifiedFeed}}}});
 const port=await sapling.gateway!.listen(); // loopback development only

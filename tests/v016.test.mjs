@@ -1,6 +1,6 @@
 import {afterEach, describe, expect, test, vi} from 'vitest';
 import {createHmac} from 'node:crypto';
-import {CashfreeAdapter, resolveSaplingConfig} from '@sapling/sdk';
+import {CashfreeAdapter, resolveSaplingConfig} from '@saplings/sdk';
 import {parseVitestReport} from '../packages/backend-quality/dist/engines/vitest-runner.js';
 
 const app={id:'vitest-migration',environment:'test'};

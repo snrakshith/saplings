@@ -13,7 +13,7 @@ Offer one installable, TypeScript-first backend SDK to cover reusable SaaS appli
 
 ## Requirements and acceptance criteria
 
-1. One `@sapling/sdk` entry point and one typed `sapling.config.ts`.
+1. One `@saplings/sdk` entry point and one typed `sapling.config.ts`.
 2. Config identifies environment, tenancy, auth, access, security, billing, storage, notifications, payments, audit, analytics, flags, jobs, telemetry, provider adapters and per-feature overrides.
 3. 182 enumerated SaaS capabilities with stable IDs (`SAAS-001..SAAS-182`); current catalog is broader than the original approximate 100-feature discussion.
 4. 41 enumerated scanner categories (`SCAN-01..SCAN-41`), with explicit run-status and no equivalence claim to vendor 200+ checks.

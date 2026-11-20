@@ -26,7 +26,7 @@ node packages/cli/dist/index.js scan --path packages/sdk/src --format sarif > re
 ```ts
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool } from 'pg';
-import { DrizzleStore } from '@sapling/adapter-drizzle';
+import { DrizzleStore } from '@saplings/adapter-drizzle';
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 const store = new DrizzleStore(drizzle(pool));
 // pass providers: { store, storage: configuredS3Adapter }

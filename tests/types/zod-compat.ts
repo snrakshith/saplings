@@ -2,7 +2,7 @@ import {z,ZodError} from '@saplings/validations';
 import {z as original} from 'zod';
 import * as v3 from '@saplings/validations/v3';
 import * as mini from '@saplings/validations/mini';
-import {validate} from '@sapling/middleware';
+import {validate} from '@saplings/middleware';
 const schema=z.object({name:z.string(), age:z.coerce.number(),active:z.boolean().default(true)});
 type Out=z.infer<typeof schema>;const ok:Out={name:'A',age:10,active:true};
 // @ts-expect-error incorrect output

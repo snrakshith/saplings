@@ -1,6 +1,6 @@
-import {defineSaplingConfig} from '@sapling/sdk';
+import {defineSaplingConfig} from '@saplings/sdk';
 import {backendQualityProfile} from './quality-profile.ts';
-import type {HttpRequest} from '@sapling/security';
+import type {HttpRequest} from '@saplings/security';
 
 /** Demonstration ONLY. Replace the resolver with verified JWT/OIDC/service auth. */
 export default defineSaplingConfig({

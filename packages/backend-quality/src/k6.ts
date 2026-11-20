@@ -1,6 +1,6 @@
 import path from 'node:path';
 import {writeFile,readFile} from 'node:fs/promises';
-import {execFileSafe,assertWorkloadLimit,thresholdChecks,metrics,result,type BackendSuite,type RunContext,type SuiteResult,type WorkloadProfile} from '@sapling/quality-core';
+import {execFileSafe,assertWorkloadLimit,thresholdChecks,metrics,result,type BackendSuite,type RunContext,type SuiteResult,type WorkloadProfile} from '@saplings/quality-core';
 const defaults:Record<string,WorkloadProfile>={
  load:{vus:10,duration:'30s'},stress:{stages:[{duration:'15s',target:10},{duration:'20s',target:40},{duration:'15s',target:0}]},
  spike:{stages:[{duration:'5s',target:5},{duration:'10s',target:50},{duration:'10s',target:5}]},

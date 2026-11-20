@@ -1,5 +1,5 @@
 import express from 'express';
-import {createSapling,SaplingError} from '@sapling/sdk';
+import {createSapling,SaplingError} from '@saplings/sdk';
 import devConfig from '../sapling.config.js';
 import {pathToFileURL} from 'node:url';
 const configPath=process.env.SAPLING_CONFIG_PATH;

@@ -1,6 +1,6 @@
 # Product Requirements Document — Backend Quality
 
-**Product:** `@sapling/backend-quality` | **Status:** Initial implementation | **Owner:** Sapling platform engineering
+**Product:** `@saplings/backend-quality` | **Status:** Initial implementation | **Owner:** Sapling platform engineering
 
 ## 1. Problem
 

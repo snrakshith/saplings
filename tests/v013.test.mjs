@@ -1,8 +1,8 @@
 import {test} from 'vitest';import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';import {createHash,randomBytes,scryptSync,timingSafeEqual,generateKeyPairSync} from 'node:crypto';import {createServer,request as httpRequest} from 'node:http';
-import {Gateway,GatewayError,MemoryRateLimitStore,loadGatewayConfig,validateGatewayConfig} from '@sapling/harbor';
-import {IdentityPlatform,IdentityError,MemoryIdentityStore,createIdentityHttpHandler,loadRealmConfig,validateRealmConfig} from '@sapling/kingsman';
-import {createSapling} from '@sapling/sdk';
+import {Gateway,GatewayError,MemoryRateLimitStore,loadGatewayConfig,validateGatewayConfig} from '@saplings/harbor';
+import {IdentityPlatform,IdentityError,MemoryIdentityStore,createIdentityHttpHandler,loadRealmConfig,validateRealmConfig} from '@saplings/kingsman';
+import {createSapling} from '@saplings/sdk';
 const gatewayFixture=JSON.parse(readFileSync('examples/platform/GatewayConfig.json','utf8'));
 const realmFixture=JSON.parse(readFileSync('examples/platform/RealmConfig-full.json','utf8'));
 const gc=()=>{const x=structuredClone(gatewayFixture);x.metadata.environment='test';return x;};

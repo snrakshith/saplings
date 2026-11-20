@@ -1,9 +1,9 @@
 import {test} from 'vitest';import assert from 'node:assert/strict';import {createServer} from 'node:http';import {once} from 'node:events';
-import {setPath,debounce,nanoid,date,storage,permissions,fp,iterators} from '@sapling/utils';import {randomId,safeEqual,resolveWithin} from '@sapling/utils/server';
+import {setPath,debounce,nanoid,date,storage,permissions,fp,iterators} from '@saplings/utils';import {randomId,safeEqual,resolveWithin} from '@saplings/utils/server';
 import {z,ValidationError} from '@saplings/validations/native';
-import {RealtimeHub,LocalBroker,RedisBroker} from '@sapling/realtime';
-import {createMiddleware,validate,errorHandler,requireAuth,requestTimeout,idempotentJson,MemoryIdempotencyStore,publicJsonCache,MemoryCache} from '@sapling/middleware';
-import {createSapling,TenantIdempotencyStore,InMemoryStore,defineSaplingConfig} from '@sapling/sdk';
+import {RealtimeHub,LocalBroker,RedisBroker} from '@saplings/realtime';
+import {createMiddleware,validate,errorHandler,requireAuth,requestTimeout,idempotentJson,MemoryIdempotencyStore,publicJsonCache,MemoryCache} from '@saplings/middleware';
+import {createSapling,TenantIdempotencyStore,InMemoryStore,defineSaplingConfig} from '@saplings/sdk';
 const principal={tenantId:'tenant-a',userId:'user-a'};const other={tenantId:'tenant-b',userId:'user-b'};
 const policy={enabled:true,allowNoOrigin:true,authenticate:req=>req.headers.authorization==='Bearer a'?principal:undefined,authorize:(_p,c)=>c==='updates',heartbeatMs:1000,sessionTtlMs:10000};
 const wait=ms=>new Promise(r=>setTimeout(r,ms));

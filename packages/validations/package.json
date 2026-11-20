@@ -619,7 +619,8 @@
     "dist",
     "compat",
     "README.md",
-    "scripts"
+    "scripts",
+    "CHANGELOG.md"
   ],
   "dependencies": {
     "zod": "4.6.7"
@@ -631,5 +632,15 @@
   "sideEffects": [
     "./compat/compile.mjs",
     "./compat/compile.cjs"
-  ]
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/validations"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

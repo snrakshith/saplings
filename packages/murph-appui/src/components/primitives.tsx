@@ -1,6 +1,6 @@
 import React from 'react';
 import {View,Text as RNText,type ViewProps,type TextProps,type ViewStyle,type TextStyle,type StyleProp} from 'react-native';
-import {getSemanticColors,spacingPx,toNativeTypography,type ThemeTypography} from '@sapling/ui-core';
+import {getSemanticColors,spacingPx,toNativeTypography,type ThemeTypography} from '@saplings/ui-core';
 import {useAppTheme} from '../core/theme.js';
 export type TextVariant=Exclude<keyof ThemeTypography,'fontFamily'>;
 export interface BoxProps extends ViewProps {children?:React.ReactNode;padding?:number;gap?:number;radius?:number;background?:'surface'|'background'|'primary'|'transparent';style?:StyleProp<ViewStyle>}

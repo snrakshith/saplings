@@ -1,6 +1,6 @@
 # Build verification — Sapling Unified SDK v0.17.0
 
-**Development candidate only.** The SDK contains 24 packages and 182 SaaS IDs. `@sapling/harbor` and `@sapling/kingsman` are reusable libraries, not separate deployed services.
+**Development candidate only.** The SDK contains 24 packages and 182 SaaS IDs. `@saplings/harbor` and `@saplings/kingsman` are reusable libraries, not separate deployed services.
 
 ## Local execution and source evidence
 

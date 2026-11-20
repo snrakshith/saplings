@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "express": "^5.1.0",
-    "@sapling/quality-node-diagnostics": "workspace:*"
+    "@saplings/quality-node-diagnostics": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",

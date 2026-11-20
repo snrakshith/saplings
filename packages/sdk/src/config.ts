@@ -1,9 +1,9 @@
-import {LocalBroker,MemoryEventJournal,MemoryConnectionAdmission,MemoryHierarchicalAdmission} from '@sapling/realtime';
+import {LocalBroker,MemoryEventJournal,MemoryConnectionAdmission,MemoryHierarchicalAdmission} from '@saplings/realtime';
 import type {SaplingConfig,ResolvedConfig} from './types.js';
 import {InMemoryStore} from './store.js';
 import {InMemoryStorage} from './storage.js';
 import {SaplingError} from './types.js';
-import {saasFeatures,securityScanners} from '@sapling/catalog';
+import {saasFeatures,securityScanners} from '@saplings/catalog';
 /** Single strongly typed configuration entry point. No unknown keys are silently activated. */
 export function defineSaplingConfig<T extends SaplingConfig>(config:T):T{return config;}
 export function resolveSaplingConfig(config:SaplingConfig):ResolvedConfig {

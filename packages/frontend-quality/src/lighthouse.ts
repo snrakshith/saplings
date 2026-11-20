@@ -1,4 +1,4 @@
-import {execFileSafe,skipped,result,type RunContext,type SuiteResult} from '@sapling/quality-core';
+import {execFileSafe,skipped,result,type RunContext,type SuiteResult} from '@saplings/quality-core';
 export async function runLighthouse(ctx:RunContext):Promise<SuiteResult>{
  const config=ctx.config.frontend!.lighthouserc;
  if(!config)return skipped('frontend:performance','Lighthouse CI','Configure frontend.lighthouserc to run Lighthouse CI alongside browser measurements');

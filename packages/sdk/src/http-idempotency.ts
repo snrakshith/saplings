@@ -1,5 +1,5 @@
 import type {Store} from './types.js';
-import type {IdempotencyStore,IdempotencyResult} from '@sapling/middleware';
+import type {IdempotencyStore,IdempotencyResult} from '@saplings/middleware';
 /** Tenant-bound reservation storage. Claim/complete are atomic, but business side effects still need transactional outbox/reconciliation. */
 export class TenantIdempotencyStore implements IdempotencyStore {
  constructor(private store:Store,private tenantId:string){if(!tenantId||tenantId.startsWith('__sapling_')||!store.transaction)throw Error('Tenant and transactional store required');}

@@ -1,9 +1,9 @@
-# sapling-quality-core — @sapling/quality-core
+# sapling-quality-core — @saplings/quality-core
 
 Release: 0.17.0 · Product specification
 
 ## Purpose and users
-Maintain @sapling/quality-core as an independently consumable workspace package in the unified platform.
+Maintain @saplings/quality-core as an independently consumable workspace package in the unified platform.
 
 **Primary consumer:** SDK/platform maintainer.
 
@@ -22,7 +22,7 @@ Package entry points: ..
 4. Owner reviews evidence and uses the documented recovery path when a prerequisite or operation fails.
 
 ## Acceptance
-Build and pack @sapling/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Scope and non-goals
 Package-level compilation or registration is not per-feature functional completeness; see feature dossiers and release blockers.

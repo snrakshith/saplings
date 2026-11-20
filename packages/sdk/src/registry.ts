@@ -1,5 +1,5 @@
 import {BusinessWorkflows} from './business-workflows.js';
-import {KingsmanMembership} from '@sapling/kingsman';
+import {KingsmanMembership} from '@saplings/kingsman';
 import {quotePlanChange} from './billing-policy.js';
 import {ProviderWorkflow} from './provider-workflow.js';
 import {GovernanceService} from './governance.js';

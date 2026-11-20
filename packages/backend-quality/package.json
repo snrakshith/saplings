@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/backend-quality",
+  "name": "@saplings/backend-quality",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -23,10 +23,11 @@
     "README.md",
     "examples",
     "docker",
-    "helm"
+    "helm",
+    "CHANGELOG.md"
   ],
   "peerDependencies": {
-    "@sapling/sdk": "workspace:*"
+    "@saplings/sdk": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
@@ -36,14 +37,24 @@
     "build": "tsc -p ."
   },
   "dependencies": {
-    "@sapling/quality-core": "workspace:*",
+    "@saplings/quality-core": "workspace:*",
     "autocannon": "^8.0.0",
-    "@sapling/quality-node-diagnostics": "workspace:*",
+    "@saplings/quality-node-diagnostics": "workspace:*",
     "vitest": "5.0.0"
   },
   "peerDependenciesMeta": {
-    "@sapling/sdk": {
+    "@saplings/sdk": {
       "optional": true
     }
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/backend-quality"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

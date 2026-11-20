@@ -9,11 +9,11 @@
     "worker": "tsx src/worker.ts"
   },
   "dependencies": {
-    "@sapling/sdk": "workspace:*",
-    "@sapling/security": "workspace:*",
+    "@saplings/sdk": "workspace:*",
+    "@saplings/security": "workspace:*",
     "express": "^5.1.0",
-    "@sapling/adapter-drizzle": "workspace:*",
-    "@sapling/adapter-aws": "workspace:*",
+    "@saplings/adapter-drizzle": "workspace:*",
+    "@saplings/adapter-aws": "workspace:*",
     "redis": "^5.0.0",
     "pg": "^8.0.0",
     "drizzle-orm": "^0.44.0",
@@ -22,7 +22,7 @@
   "devDependencies": {
     "@types/express": "^5.0.0",
     "@types/node": "^22.0.0",
-    "@sapling/backend-quality": "workspace:*"
+    "@saplings/backend-quality": "workspace:*"
   },
   "files": [
     "src",

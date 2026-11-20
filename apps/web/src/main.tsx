@@ -1,9 +1,9 @@
 import React from 'react';
 import {useCounter} from '@saplings/hooks';
-import {MurphiThemeProvider,Card,Button,Typography,Stack,Box,Badge} from '@sapling/murphi-ui';
+import {MurphiThemeProvider,Card,Button,Typography,Stack,Box,Badge} from '@saplings/murphi-ui';
 import {createRoot} from 'react-dom/client';
-import {SaplingProfiler} from '@sapling/quality-browser-runtime/react';
-import {startFrontendObservability} from '@sapling/quality-browser-runtime';
+import {SaplingProfiler} from '@saplings/quality-browser-runtime/react';
+import {startFrontendObservability} from '@saplings/quality-browser-runtime';
 import './style.css';
 startFrontendObservability({endpoint:import.meta.env.VITE_TELEMETRY_URL||undefined});
 const title=location.pathname==='/login'?'Sign in':location.pathname==='/dashboard'?'Dashboard':'Sapling Quality';

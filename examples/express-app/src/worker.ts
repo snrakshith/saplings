@@ -1,5 +1,5 @@
 import {pathToFileURL} from 'node:url';
-import {createSapling,type ActorContext} from '@sapling/sdk';
+import {createSapling,type ActorContext} from '@saplings/sdk';
 const path=process.env.SAPLING_CONFIG_PATH;
 if(!path)throw Error('SAPLING_CONFIG_PATH required; supply trusted worker configuration');
 const config=await import(pathToFileURL(path).href);

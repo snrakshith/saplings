@@ -1,3 +1,3 @@
-/** @deprecated IAM authorization lives in @sapling/kingsman. */
-export {AccessService} from '@sapling/kingsman';
-export type {Role,AbacRule} from '@sapling/kingsman';
+/** @deprecated IAM authorization lives in @saplings/kingsman. */
+export {AccessService} from '@saplings/kingsman';
+export type {Role,AbacRule} from '@saplings/kingsman';

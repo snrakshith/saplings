@@ -1,4 +1,4 @@
-import {execFileSafe,runExternal,result,skipped,type RunContext,type SuiteResult,type CheckResult} from '@sapling/quality-core';
+import {execFileSafe,runExternal,result,skipped,type RunContext,type SuiteResult,type CheckResult} from '@saplings/quality-core';
 import {runK6} from './k6.js';
 function args(ctx:RunContext,...rest:string[]):string[]{const k=ctx.config.backend!.kubernetes!;return [...(k.context?['--context',k.context]:[]),'--namespace',k.namespace,...rest];}
 async function kubectl(ctx:RunContext,...part:string[]){return execFileSafe('kubectl',args(ctx,...part),{timeoutMs:ctx.config.safety?.timeoutMs??300000});}

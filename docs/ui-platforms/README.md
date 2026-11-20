@@ -8,8 +8,8 @@ Three new packages; **24 workspace packages total**. User-provided Murphi source
 - [Detailed gaps and acceptance criteria](GAPS_AND_IMPROVEMENTS.md)
 - [Source attribution and redistribution caveats](PROVENANCE.md)
 
-Web usage: `import {MurphiThemeProvider,Button} from '@sapling/murphi-ui'`.
+Web usage: `import {MurphiThemeProvider,Button} from '@saplings/murphi-ui'`.
 
-Native usage: `import {MurphAppThemeProvider,Button} from '@sapling/murph-appui'`.
+Native usage: `import {MurphAppThemeProvider,Button} from '@saplings/murph-appui'`.
 
-The shared package `@sapling/ui-core` exports the palette, theme and responsive helpers. React Native uses actual RN primitives, **not React DOM/Emotion**. Native device execution and fully installed React19/RN0.88 conformance are not verified by the local source check.
+The shared package `@saplings/ui-core` exports the palette, theme and responsive helpers. React Native uses actual RN primitives, **not React DOM/Emotion**. Native device execution and fully installed React19/RN0.88 conformance are not verified by the local source check.

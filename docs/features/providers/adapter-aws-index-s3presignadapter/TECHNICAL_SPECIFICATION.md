@@ -12,7 +12,7 @@ Source implementation exists; dedicated parity proof pending. Source declaration
 ## Public contract / current implementation
 ```typescript
 export class S3PresignAdapter implements FeatureAdapter {
-constructor(private client:S3Client,private bucket:string,private authorize?:(ctx:import('@sapling/sdk').ActorContext,key:string)=>Promise<boolean>|boolean)
+constructor(private client:S3Client,private bucket:string,private authorize?:(ctx:import('@saplings/sdk').ActorContext,key:string)=>Promise<boolean>|boolean)
 async execute(request:Parameters<FeatureAdapter['execute']>[0])
 }
 ```

@@ -6,9 +6,9 @@ Deliver reusable React web and React Native UI systems with a single shared desi
 
 Three and only three new workspace packages:
 
-1. `@sapling/ui-core` — shared theme colors, 23 color families/11 shades, light/dark palettes, density, spacing, typography, breakpoint mapping, token validation, semantics and style adapters; **no React/DOM/native rendering imports**.
-2. `@sapling/murphi-ui` — web React + Emotion implementation directly adapted from all **39 source component folders** in Murphi; default theme provider, SSR-compatible rendering, typed component props and exports, source-compatible names.
-3. `@sapling/murph-appui` — native React/React Native components using `View`, `Pressable`, `TextInput`, `Modal`, `Image`, `ActivityIndicator`, etc., sharing ui-core. **38 of 39** corresponding named components have a native implementation or approximation; native Slider requires an approved dedicated native control.
+1. `@saplings/ui-core` — shared theme colors, 23 color families/11 shades, light/dark palettes, density, spacing, typography, breakpoint mapping, token validation, semantics and style adapters; **no React/DOM/native rendering imports**.
+2. `@saplings/murphi-ui` — web React + Emotion implementation directly adapted from all **39 source component folders** in Murphi; default theme provider, SSR-compatible rendering, typed component props and exports, source-compatible names.
+3. `@saplings/murph-appui` — native React/React Native components using `View`, `Pressable`, `TextInput`, `Modal`, `Image`, `ActivityIndicator`, etc., sharing ui-core. **38 of 39** corresponding named components have a native implementation or approximation; native Slider requires an approved dedicated native control.
 
 ## Personas and workflows
 

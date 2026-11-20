@@ -43,7 +43,7 @@ SDK source moved to root; no additional feature-specific implementation claimed 
 **Evidence:** `scripts/verify-sdk-root-refactor.mjs` checks all 31 moved modules; `tests/v015.test.mjs` covers direct platform and tenant-export hardening; `docs/technical-specifications/PRODUCTION_READINESS_015.md` separates code and live acceptance. Provider, authorization, restore and full regression gates are not automatically closed.
 ## v0.17.0 architectural ownership
 
-**Authoritative package:** `@sapling/kingsman`. **Implementation path:** Kingsman legacy account/role/MFA lifecycle. **Status:** implemented-delegate; live validation pending.
+**Authoritative package:** `@saplings/kingsman`. **Implementation path:** Kingsman legacy account/role/MFA lifecycle. **Status:** implemented-delegate; live validation pending.
 
 No migration of existing user or session records. Old SDK public classes remain compatibility re-exports.
 

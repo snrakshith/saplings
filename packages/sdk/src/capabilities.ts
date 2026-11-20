@@ -1,4 +1,4 @@
-import {saasFeatures} from '@sapling/catalog';
+import {saasFeatures} from '@saplings/catalog';
 import type {ActorContext,JsonRecord,FeatureSettings,FeatureAdapter} from './types.js';
 import {SaplingError} from './types.js';
 import {AccessService} from './access.js';

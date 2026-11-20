@@ -1,6 +1,6 @@
 import type {Store} from './types.js';
 import {atomic,hash} from './primitives.js';
-import type {RateState} from '@sapling/security';
+import type {RateState} from '@saplings/security';
 /** Distributed if backed by a transactional shared database. Prefer a Valkey implementation at high RPS. */
 export class StoreRateState implements RateState {
  constructor(private store:Store,private shards=128){}

@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/quality-core",
+  "name": "@saplings/quality-core",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -12,9 +12,20 @@
   },
   "dependencies": {
     "jiti": "^2.6.0",
-    "@sapling/quality-contracts": "workspace:*"
+    "@saplings/quality-contracts": "workspace:*"
   },
   "files": [
-    "dist"
-  ]
+    "dist",
+    "CHANGELOG.md"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/quality-core"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

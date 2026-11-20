@@ -33,7 +33,7 @@ Legacy config input `expanded` remains accepted for migration; the resolver norm
 ## Type-safe catalog invocation
 
 ```ts
-import {createSapling, defineSaplingConfig, type ActorContext, type FeatureId, type FeatureAction} from '@sapling/sdk';
+import {createSapling, defineSaplingConfig, type ActorContext, type FeatureId, type FeatureAction} from '@saplings/sdk';
 const config = defineSaplingConfig({app:{id:'app',environment:'development'},services:{domainPolicies:{documents:{read:['title'],write:['title'],authorize:(ctx,action,row)=>ctx.actorId === row.ownerId && action === 'read'}}}});
 const sapling = createSapling(config);
 async function example(ctx: ActorContext) {
@@ -69,7 +69,7 @@ pnpm --filter @sapling/example-web run dev
 pnpm run release:preflight
 ```
 
-For external consumers after publishing the packages: `pnpm add @sapling/sdk` on the backend, `pnpm add @saplings/hooks react` in React applications. Do not use the workspace specifier in an external consumer. Run `pnpm pack` in the individual package to inspect output before publication. This archive contains source, not published packages.
+For external consumers after publishing the packages: `pnpm add @saplings/sdk` on the backend, `pnpm add @saplings/hooks react` in React applications. Do not use the workspace specifier in an external consumer. Run `pnpm pack` in the individual package to inspect output before publication. This archive contains source, not published packages.
 
 ## Verification and limits
 

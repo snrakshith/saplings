@@ -1,7 +1,7 @@
 import React,{createContext,useContext,useMemo,useState} from 'react';
 import {useColorScheme} from 'react-native';
-import {createTheme,type ColorMode,type DesignOverrides,type XloxTheme} from '@sapling/ui-core';
-export * from '@sapling/ui-core';
+import {createTheme,type ColorMode,type DesignOverrides,type XloxTheme} from '@saplings/ui-core';
+export * from '@saplings/ui-core';
 export interface AppThemeContext {theme:XloxTheme;mode:ColorMode;setMode:(mode:ColorMode)=>void;toggleTheme:()=>void;}
 const Context=createContext<AppThemeContext|undefined>(undefined);
 export interface MurphAppThemeProviderProps {children:React.ReactNode;defaultMode?:ColorMode|'system';overrides?:DesignOverrides;}

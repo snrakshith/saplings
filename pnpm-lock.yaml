@@ -20,75 +20,78 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.0.0
         version: 3.1173.0
-      '@sapling/adapter-app':
+      '@changesets/cli':
+        specifier: 3.0.3
+        version: 3.0.3
+      '@saplings/adapter-app':
         specifier: workspace:*
         version: link:packages/adapter-app
-      '@sapling/adapter-aws':
+      '@saplings/adapter-aws':
         specifier: workspace:*
         version: link:packages/adapter-aws
-      '@sapling/adapter-drizzle':
+      '@saplings/adapter-drizzle':
         specifier: workspace:*
         version: link:packages/adapter-drizzle
-      '@sapling/backend-quality':
+      '@saplings/backend-quality':
         specifier: workspace:*
         version: link:packages/backend-quality
-      '@sapling/catalog':
+      '@saplings/catalog':
         specifier: workspace:*
         version: link:packages/catalog
-      '@sapling/cli':
+      '@saplings/cli':
         specifier: workspace:*
         version: link:packages/cli
-      '@sapling/frontend-quality':
+      '@saplings/frontend-quality':
         specifier: workspace:*
         version: link:packages/frontend-quality
-      '@sapling/harbor':
+      '@saplings/harbor':
         specifier: workspace:*
         version: link:packages/harbor
-      '@sapling/kingsman':
-        specifier: workspace:*
-        version: link:packages/kingsman
-      '@sapling/middleware':
-        specifier: workspace:*
-        version: link:packages/middleware
-      '@sapling/murph-appui':
-        specifier: workspace:*
-        version: link:packages/murph-appui
-      '@sapling/murphi-ui':
-        specifier: workspace:*
-        version: link:packages/murphi-ui
-      '@sapling/quality-browser-runtime':
-        specifier: workspace:*
-        version: link:packages/quality-browser-runtime
-      '@sapling/quality-cli':
-        specifier: workspace:*
-        version: link:packages/quality-cli
-      '@sapling/quality-contracts':
-        specifier: workspace:*
-        version: link:packages/quality-contracts
-      '@sapling/quality-core':
-        specifier: workspace:*
-        version: link:packages/quality-core
-      '@sapling/quality-node-diagnostics':
-        specifier: workspace:*
-        version: link:packages/quality-node-diagnostics
-      '@sapling/realtime':
-        specifier: workspace:*
-        version: link:packages/realtime
-      '@sapling/sdk':
-        specifier: workspace:*
-        version: link:packages/sdk
-      '@sapling/security':
-        specifier: workspace:*
-        version: link:packages/security
-      '@sapling/ui-core':
-        specifier: workspace:*
-        version: link:packages/ui-core
-      '@sapling/utils':
-        specifier: workspace:*
-        version: link:packages/utils
       '@saplings/hooks':
         specifier: workspace:*
         version: link:packages/hooks
+      '@saplings/kingsman':
+        specifier: workspace:*
+        version: link:packages/kingsman
+      '@saplings/middleware':
+        specifier: workspace:*
+        version: link:packages/middleware
+      '@saplings/murph-appui':
+        specifier: workspace:*
+        version: link:packages/murph-appui
+      '@saplings/murphi-ui':
+        specifier: workspace:*
+        version: link:packages/murphi-ui
+      '@saplings/quality-browser-runtime':
+        specifier: workspace:*
+        version: link:packages/quality-browser-runtime
+      '@saplings/quality-cli':
+        specifier: workspace:*
+        version: link:packages/quality-cli
+      '@saplings/quality-contracts':
+        specifier: workspace:*
+        version: link:packages/quality-contracts
+      '@saplings/quality-core':
+        specifier: workspace:*
+        version: link:packages/quality-core
+      '@saplings/quality-node-diagnostics':
+        specifier: workspace:*
+        version: link:packages/quality-node-diagnostics
+      '@saplings/realtime':
+        specifier: workspace:*
+        version: link:packages/realtime
+      '@saplings/sdk':
+        specifier: workspace:*
+        version: link:packages/sdk
+      '@saplings/security':
+        specifier: workspace:*
+        version: link:packages/security
+      '@saplings/ui-core':
+        specifier: workspace:*
+        version: link:packages/ui-core
+      '@saplings/utils':
+        specifier: workspace:*
+        version: link:packages/utils
       '@saplings/validations':
         specifier: workspace:*
         version: link:packages/validations
@@ -176,7 +179,7 @@ importers:
 
   apps/api:
     dependencies:
-      '@sapling/quality-node-diagnostics':
+      '@saplings/quality-node-diagnostics':
         specifier: workspace:*
         version: link:../../packages/quality-node-diagnostics
       express:
@@ -192,18 +195,18 @@ importers:
 
   apps/web:
     dependencies:
-      '@sapling/murphi-ui':
-        specifier: workspace:*
-        version: link:../../packages/murphi-ui
-      '@sapling/quality-browser-runtime':
-        specifier: workspace:*
-        version: link:../../packages/quality-browser-runtime
-      '@sapling/ui-core':
-        specifier: workspace:*
-        version: link:../../packages/ui-core
       '@saplings/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
+      '@saplings/murphi-ui':
+        specifier: workspace:*
+        version: link:../../packages/murphi-ui
+      '@saplings/quality-browser-runtime':
+        specifier: workspace:*
+        version: link:../../packages/quality-browser-runtime
+      '@saplings/ui-core':
+        specifier: workspace:*
+        version: link:../../packages/ui-core
       react:
         specifier: ^19.3.0
         version: 19.3.1
@@ -223,16 +226,16 @@ importers:
 
   examples/express-app:
     dependencies:
-      '@sapling/adapter-aws':
+      '@saplings/adapter-aws':
         specifier: workspace:*
         version: link:../../packages/adapter-aws
-      '@sapling/adapter-drizzle':
+      '@saplings/adapter-drizzle':
         specifier: workspace:*
         version: link:../../packages/adapter-drizzle
-      '@sapling/sdk':
+      '@saplings/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
-      '@sapling/security':
+      '@saplings/security':
         specifier: workspace:*
         version: link:../../packages/security
       drizzle-orm:
@@ -251,7 +254,7 @@ importers:
         specifier: ^4.0.0
         version: 4.23.15
     devDependencies:
-      '@sapling/backend-quality':
+      '@saplings/backend-quality':
         specifier: workspace:*
         version: link:../../packages/backend-quality
       '@types/express':
@@ -263,7 +266,7 @@ importers:
 
   packages/adapter-app:
     dependencies:
-      '@sapling/sdk':
+      '@saplings/sdk':
         specifier: workspace:*
         version: link:../sdk
       graphql:
@@ -291,13 +294,13 @@ importers:
       '@aws-sdk/s3-request-presigner':
         specifier: ^3.0.0
         version: 3.1173.0
-      '@sapling/sdk':
+      '@saplings/sdk':
         specifier: workspace:*
         version: link:../sdk
 
   packages/adapter-drizzle:
     dependencies:
-      '@sapling/sdk':
+      '@saplings/sdk':
         specifier: workspace:*
         version: link:../sdk
       drizzle-orm:
@@ -313,13 +316,13 @@ importers:
 
   packages/backend-quality:
     dependencies:
-      '@sapling/quality-core':
+      '@saplings/quality-core':
         specifier: workspace:*
         version: link:../quality-core
-      '@sapling/quality-node-diagnostics':
+      '@saplings/quality-node-diagnostics':
         specifier: workspace:*
         version: link:../quality-node-diagnostics
-      '@sapling/sdk':
+      '@saplings/sdk':
         specifier: workspace:*
         version: link:../sdk
       autocannon:
@@ -340,13 +343,13 @@ importers:
 
   packages/cli:
     dependencies:
-      '@sapling/catalog':
+      '@saplings/catalog':
         specifier: workspace:*
         version: link:../catalog
-      '@sapling/sdk':
+      '@saplings/sdk':
         specifier: workspace:*
         version: link:../sdk
-      '@sapling/security':
+      '@saplings/security':
         specifier: workspace:*
         version: link:../security
 
@@ -355,10 +358,10 @@ importers:
       '@axe-core/playwright':
         specifier: ^4.10.2
         version: 4.14.0(playwright-core@1.56.1)
-      '@sapling/quality-browser-runtime':
+      '@saplings/quality-browser-runtime':
         specifier: workspace:*
         version: link:../quality-browser-runtime
-      '@sapling/quality-core':
+      '@saplings/quality-core':
         specifier: workspace:*
         version: link:../quality-core
       pixelmatch:
@@ -426,7 +429,7 @@ importers:
 
   packages/murph-appui:
     dependencies:
-      '@sapling/ui-core':
+      '@saplings/ui-core':
         specifier: workspace:*
         version: link:../ui-core
     devDependencies:
@@ -448,7 +451,7 @@ importers:
       '@emotion/styled':
         specifier: ^11.13.0
         version: 11.14.1(@emotion/react@11.14.0(@types/react@19.3.0)(react@19.3.1))(@types/react@19.3.0)(react@19.3.1)
-      '@sapling/ui-core':
+      '@saplings/ui-core':
         specifier: workspace:*
         version: link:../ui-core
     devDependencies:
@@ -480,13 +483,13 @@ importers:
 
   packages/quality-cli:
     dependencies:
-      '@sapling/backend-quality':
+      '@saplings/backend-quality':
         specifier: workspace:*
         version: link:../backend-quality
-      '@sapling/frontend-quality':
+      '@saplings/frontend-quality':
         specifier: workspace:*
         version: link:../frontend-quality
-      '@sapling/quality-core':
+      '@saplings/quality-core':
         specifier: workspace:*
         version: link:../quality-core
       playwright:
@@ -497,7 +500,7 @@ importers:
 
   packages/quality-core:
     dependencies:
-      '@sapling/quality-contracts':
+      '@saplings/quality-contracts':
         specifier: workspace:*
         version: link:../quality-contracts
       jiti:
@@ -517,31 +520,31 @@ importers:
 
   packages/sdk:
     dependencies:
-      '@sapling/catalog':
+      '@saplings/catalog':
         specifier: workspace:*
         version: link:../catalog
-      '@sapling/harbor':
+      '@saplings/harbor':
         specifier: workspace:*
         version: link:../harbor
-      '@sapling/kingsman':
+      '@saplings/kingsman':
         specifier: workspace:*
         version: link:../kingsman
-      '@sapling/middleware':
+      '@saplings/middleware':
         specifier: workspace:*
         version: link:../middleware
-      '@sapling/quality-contracts':
+      '@saplings/quality-contracts':
         specifier: workspace:*
         version: link:../quality-contracts
-      '@sapling/realtime':
+      '@saplings/realtime':
         specifier: workspace:*
         version: link:../realtime
-      '@sapling/security':
+      '@saplings/security':
         specifier: workspace:*
         version: link:../security
 
   packages/security:
     dependencies:
-      '@sapling/catalog':
+      '@saplings/catalog':
         specifier: workspace:*
         version: link:../catalog
 
@@ -727,6 +730,75 @@ packages:
   '@bcoe/v8-coverage@1.0.2':
     resolution: {integrity: sha512-6zABk/ECA/QYSCQ1NGiVwwbQerUCZ+TQbp64Q3AgmfNvurHH0j8TtXa1qbShXA6qqkpAj4V5W8pP6mLe1mcMqA==}
     engines: {node: '>=18'}
+
+  '@changesets/apply-release-plan@8.1.1':
+    resolution: {integrity: sha512-nk2Hbq3M9NeHMdaIRBDvawKrQJzXB9sGyBUE5yWnIKtvdcNCPj75zBekJYr0gTT2ecJH3eFeTrc8eisPImcv0Q==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/assemble-release-plan@7.0.0':
+    resolution: {integrity: sha512-oEW8BxdA604kGGtDSCiHr5w9Tv4UWe9I2k61IBNZzCOE1kbYaJj4v+lFQNgcEZFkUc2pV/+hASErGDvpJOZCTg==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/changelog-git@1.0.0':
+    resolution: {integrity: sha512-3Dst2Ime2Op5nd4XmWJLPIgp11ZFqJqSkVug9izK6TDcIV4YlhPS4ECbEVR+eGI0bk0r1ItogD4j2Oli87bJrA==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/cli@3.0.3':
+    resolution: {integrity: sha512-L1i67bMfkK6iC/kDejuNO4pFgTRcWIObsD6Qof2woP1I4M8tj17DGlcpRaTzTv1DYSP5EMwWdEtR8X0Pj5Jg3Q==}
+    engines: {node: ^22.11 || ^24 || >=26, npm: '>=10.9.0', pnpm: '>=10.0.0', yarn: '>=4.5.2'}
+    hasBin: true
+
+  '@changesets/config@4.0.1':
+    resolution: {integrity: sha512-PxpxSQLQSLDjceAgRq+4FWlU+HflDIw03mmPVipxoQx9xrXFUjmqTy3SE+n/2t+DqPdpPiLWVr5NRiLZvjyLwg==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/errors@1.0.0':
+    resolution: {integrity: sha512-ElN/mEzn6zmETgjwf5MclCMa9ef59sAR0lfO8VSYIsiRvbC2FbLB/92EoYw10Sl0kGixxHFiJZUSv7dA+YpR8g==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/format@0.1.3':
+    resolution: {integrity: sha512-zTZrJbfY81+/MsXsey6i3jQjpApz4PqRQ+nouHGDJhCa5sKCExwR9mZFQ/67lMsqZDNy2G2v3wTbzOmZ56EtaQ==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/get-dependents-graph@3.0.0':
+    resolution: {integrity: sha512-ji/t5wFA1zREKXRUePE6Qi+Qu2UgxCeSSGQrphezwvQZrp49B7sJ+8+wvM0tA7zPeSxYKCojDy3WWgrl+s+awg==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/git@4.0.1':
+    resolution: {integrity: sha512-6vWpIAC4LkpmlqaIu37ViT5enyd9+uBwAiGqCGhASvkSHBgx4PrtTGXWTMFYpDmZbjgyonyVgMciPrW4MqtJsA==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/parse@1.0.0':
+    resolution: {integrity: sha512-P0iaMb9p9CRYZiTgAllEIF9AUMQHIy1G72tKlcIqJp61icZSsKQNiOPdxAMZG8m/DvZwt/oz5xEbTpike//dWg==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/pre@3.0.0':
+    resolution: {integrity: sha512-Zm/6YliV/a2oeWTqHJf6KxLrQwgcK1i/BRDl2m0EKZvbnxV5fG9QRhwJJGshjsZTUTS6dkfURQ2K6aAvgNw/3Q==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/read@1.0.1':
+    resolution: {integrity: sha512-nzvSC6RcTiWf/dsuwZFXpLzGGsRHYCL68U3uHV7srsulU93aVWY7u2GEJiDZ+4GIIElfaW5EqtKC0UHroY+LTQ==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/should-skip-package@1.0.0':
+    resolution: {integrity: sha512-pwqoJmbONn1XgXmZXPEExgAaT+HdZLjALFTDgIm+PnS5KeO2nLtzA2/Q+4aMFY14kFMuXKG30MObhvDzWgzDgg==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/types@7.0.0':
+    resolution: {integrity: sha512-c5GoiQyt3pxiXjrWSNoP8/GRf4kG+VnKzovx1OQM8dYYALlSwgedmkPmJ+ZqGxqwg9D3Bkj85Uo4KLd5BN3A0w==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@changesets/write@1.0.1':
+    resolution: {integrity: sha512-q/ThtP9gcnEP6xlv7LrY26C2mHqdGBti/MmOVngt/M/oIGYkssmQGxPK9WzBNt2juVcH/vml2WQ+ra8LXYOTaA==}
+    engines: {node: ^22.11 || ^24 || >=26}
+
+  '@clack/core@1.6.0':
+    resolution: {integrity: sha512-4GZynIB2IIe431odxesswvWTCP6orvqd6e2b07b3VFWBQRqUqIHc/EPIZwFoKS692QBp+ooPuXKaJV8g4kXuYA==}
+    engines: {node: '>= 20.12.0'}
+
+  '@clack/prompts@1.9.0':
+    resolution: {integrity: sha512-tEj8X2No2A1c9NDnZECxiiJ8TP3vmFlN9tLlLeSaMqVW4tUmVG2R4qpv/eP4zymWxnymYLkLcIYVV0VcWj3RCQ==}
+    engines: {node: '>= 20.12.0'}
 
   '@colors/colors@1.5.0':
     resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
@@ -1138,12 +1210,28 @@ packages:
   '@js-sdsl/ordered-map@4.4.2':
     resolution: {integrity: sha512-iUKgm52T8HOE/makSxjqoWhe95ZJA1/G1sYsGev2JDKUSS14KAgg1LHb+Ba+IPow0xflbnSkOsZcO08C7w1gYw==}
 
+  '@manypkg/find-root@3.1.0':
+    resolution: {integrity: sha512-BcSqCyKhBVZ5YkSzOiheMCV41kqAFptW6xGqYSTjkVTl9XQpr+pqHhwgGCOHQtjDCv7Is6EFyA14Sm5GVbVABA==}
+    engines: {node: '>=20.0.0'}
+
+  '@manypkg/get-packages@3.1.0':
+    resolution: {integrity: sha512-0TbBVyvPrP7xGYBI/cP8UP+yl/z+HtbTttAD7FMAJgn/kXOTwh5/60TsqP9ZYY710forNfyV0N8P/IE/ujGZJg==}
+    engines: {node: '>=20.0.0'}
+
+  '@manypkg/tools@2.1.2':
+    resolution: {integrity: sha512-6QEf6yqFbETdwGITKq57aYoPfX/3K8XFNwsAlx0C1M7o8cb79sv1M3w+tWuWvIcSbNqrLF7OD7YpZMVVz335hQ==}
+    engines: {node: '>=20.0.0'}
+
   '@minimistjs/subarg@1.0.0':
     resolution: {integrity: sha512-Q/ONBiM2zNeYUy0mVSO44mWWKYM3UHuEK43PKIOzJCbvUnPoMH1K+gk3cf1kgnCVJFlWmddahQQCmrmBGlk9jQ==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
     engines: {node: '>=14'}
+
+  '@pnpm/deps.graph-sequencer@1100.0.1':
+    resolution: {integrity: sha512-pOr5+q1fLYKwFN3LAJuGZEnfXDcQ73zqgDHMtGy+K+uIoUqyY+6MeDCWFwfu+4EFuq76I5EPFofoNAI+Bmmq4A==}
+    engines: {node: '>=22.13'}
 
   '@protobufjs/aspromise@1.1.2':
     resolution: {integrity: sha512-j+gKExEuLmKwvz3OgROXtrJ2UG2x8Ch2YZUxahh+s1F2HZ+wAceUNLkvy6zKCPVRkU++ZWQrdxsUeQXmcg4uoQ==}
@@ -1754,6 +1842,10 @@ packages:
     resolution: {integrity: sha512-/Nf7TyzTx6S3yRJObOAV7956r8cr2+Oj8AC5dt8wSP3BQAoeX58NoHyCU8P8zGkNXStjTSi6fzO6F0pBdcYbEg==}
     engines: {node: '>= 0.8'}
 
+  cac@7.1.0:
+    resolution: {integrity: sha512-LMDU/U2yA4IPIY8KT0NsNPWEYZvAMkbgyspxJ6btJaYV+WMDOHAZCmB0lsTObiHaRS1V/ztKAl7+TSkTqXyeoA==}
+    engines: {node: '>=20.19.0'}
+
   call-bind-apply-helpers@1.0.2:
     resolution: {integrity: sha512-Sp1ablJ0ivDkSzjcaJdxEunN5/XvksFJ2sMBFfq6x0ryhQV/2b/KwFe21cMpmHtPOSij8K99/wSfoEuTObmuMQ==}
     engines: {node: '>= 0.4'}
@@ -2152,6 +2244,15 @@ packages:
   fast-fifo@1.3.2:
     resolution: {integrity: sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==}
 
+  fast-string-truncated-width@3.0.3:
+    resolution: {integrity: sha512-0jjjIEL6+0jag3l2XWWizO64/aZVtpiGE3t0Zgqxv0DPuxiMjvB3M24fCyhZUO4KomJQPj3LTSUnDP3GpdwC0g==}
+
+  fast-string-width@3.0.2:
+    resolution: {integrity: sha512-gX8LrtNEI5hq8DVUfRQMbr5lpaS4nMIWV+7XEbXk2b8kiQIizgnlr12B4dA3ZEx3308ze0O4Q1R+cHts8kyUJg==}
+
+  fast-wrap-ansi@0.2.2:
+    resolution: {integrity: sha512-7F2Fl+TjRSenLqlU3UjSH0iyqopqoZIu7eZVpEirP2g1GtWa2G/ecEmBdgz31+Mxr+ELclgg6sokpSFIQiZ02Q==}
+
   fb-dotslash@0.5.8:
     resolution: {integrity: sha512-XHYLKk9J4BupDxi9bSEhkfss0m+Vr9ChTrjhf9l2iw3jB5C7BnY4GVPoMcqbrTutsKJso6yj2nAB6BI/F2oZaA==}
     engines: {node: '>=20'}
@@ -2314,6 +2415,10 @@ packages:
     resolution: {integrity: sha512-vK9P5/iUfdl95AI+JVyUuIcVtd4ofvtrOr3HNtM2yxC9bnMbEdp3x01OhQNnjb8IJYi38VlTE3mBXwcfvywuSw==}
     engines: {node: '>= 14'}
 
+  human-id@4.2.2:
+    resolution: {integrity: sha512-Z+8unD6em/MJwyrkWQ2M3wygRGI1+MztbutiNwk1DCuEPXOZRWGjtcMPZYP1exY9iNZMhd7ZOSMQSo9WYtiQRw==}
+    hasBin: true
+
   hyperid@3.3.0:
     resolution: {integrity: sha512-7qhCVT4MJIoEsNcbhglhdmBKb09QtcmJNiIQGq7js/Khf5FtQQ9bzcAuloeqBeee7XD7JqDeve9KNlQya5tSGQ==}
 
@@ -2327,6 +2432,9 @@ packages:
   import-fresh@3.3.1:
     resolution: {integrity: sha512-TR3KfrTZTYLPB6jUjfx6MF9WcWrHL9su5TObK4ZkYgBdWKPOFoSoQIdEuTuR82pmtxH2spWG9h6etwfr1pLBqQ==}
     engines: {node: '>=6'}
+
+  import-meta-resolve@4.2.0:
+    resolution: {integrity: sha512-Iqv2fzaTQN28s/FwZAoFq0ZSs/7hMAHJVX+w8PZl3cY19Pxk6jFFalxQoIfW2826i/fDLXv8IiEZRIT0lDuWcg==}
 
   inherits@2.0.4:
     resolution: {integrity: sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==}
@@ -2394,6 +2502,9 @@ packages:
     resolution: {integrity: sha512-AC/7JofJvZGrrneWNaEnJeOLUx+JlGt7tNa0wZiRPT4MY1wmfKjt2+6O2p2uz2+skll8OZZmJMNqeke7kKbNgQ==}
     hasBin: true
 
+  jju@1.4.0:
+    resolution: {integrity: sha512-8wb9Yw966OSxApiCt0K3yNJL8pnNeIv+OEq2YMidz4FKP6nonSRoOXc80iXY4JaN2FC11B9qsNmDsm+ZOfMROA==}
+
   js-tokens@10.0.0:
     resolution: {integrity: sha512-lM/UBzQmfJRo9ABXbPWemivdCW8V2G8FHaHdypQaIy523snUjog0W71ayWXTjiR+ixeMyVHN2XcpnTd/liPg/Q==}
 
@@ -2415,6 +2526,12 @@ packages:
     resolution: {integrity: sha512-XmOWe7eyHYH14cLdVPoyg+GOH3rYX++KpzrylJwSW98t3Nk+U8XOl8FWKOgwtzdb8lXGf6zYwDUzeHMWfxasyg==}
     engines: {node: '>=6'}
     hasBin: true
+
+  jsonc-parser@3.3.1:
+    resolution: {integrity: sha512-HUgH65KyejrUFPvHFPbqOY0rsFip3Bo5wb4ngvdi1EpCYWUQDC5V+Y7mZws+DLkr4M//zQJoanu1SP+87Dv1oQ==}
+
+  launch-editor@2.14.2:
+    resolution: {integrity: sha512-NHJEb30MGBCkmZXLZwz25t37QR4aY03ZzPYUJXOJaOa92uWwExI9SBQUuIznBYc1xkD7cJNGX7oc3Nl3sq2kQQ==}
 
   lazystream@1.0.1:
     resolution: {integrity: sha512-b94GiNHQNy6JNTrt5w6zNyffMrNkXZb3KTkCZJb2V1xaEGCk093vkZ2jk3tpaeP33/OiXC+WvK9AxUebnf5nbw==}
@@ -2676,6 +2793,9 @@ packages:
 
   package-json-from-dist@1.0.1:
     resolution: {integrity: sha512-UEZIS3/by4OC8vL3P2dTXRETpebLI2NiI5vIrjaD/5UtrkFX/tNbwjTSRAGC/+7CAo2pIcBaRgWmcBBHcsaCIw==}
+
+  package-manager-detector@1.9.0:
+    resolution: {integrity: sha512-zAMfbta9nPA8AKkA4WdmNAT8R8s6Dk0/xwPsqNnRidMFcLo1YkLuPDTgs2f64XdzS8vbLNnoJ+uUIkgbz7oRHA==}
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
@@ -3029,6 +3149,10 @@ packages:
     resolution: {integrity: sha512-bzyZ1e88w9O1iNJbKnOlvYTrWPDl46O1bG0D3XInv+9tkPrxrN8jUUTiFlDkkmKWgn1M6CfIA13SuGqOa9Korw==}
     engines: {node: '>=14'}
 
+  sisteransi@2.0.0:
+    resolution: {integrity: sha512-2WCqLdt12eN6ehLI50S2/ZxoowXU3DD1KVPRyVP0WEsFahrGZZmCdq1K59qjJljMRIDTwx1D9YaRK+hDneBUMg==}
+    engines: {node: '>=20'}
+
   socket.io-adapter@2.5.8:
     resolution: {integrity: sha512-6Oy52pbg+kvdCVvjcN+FnY7BvxZ7cIHNScbvztT/It5d0vbwoJoVZmF2gjJmnV0/4WlXRfG15zc45ySk9Ah8bw==}
 
@@ -3178,6 +3302,10 @@ packages:
 
   tinyexec@1.3.0:
     resolution: {integrity: sha512-QKAl9m8gWWGHV8jZcPeym6j+XULi6tOf1mT83WYJ4Lk2ytW/uwAWkrP0uFsdoYMdueVJ0qs26wZ+23xeB4ibNQ==}
+    engines: {node: '>=18'}
+
+  tinyexec@1.3.1:
+    resolution: {integrity: sha512-GCvB3aoys96IuDFBMcTB46JOR6mdMtAToqwiW8JlWhsoh1mhHi/xn9ss/Dg7N555GiJyEt2qzoG/NHCwM6h1EA==}
     engines: {node: '>=18'}
 
   tinyglobby@0.2.17:
@@ -3766,6 +3894,123 @@ snapshots:
 
   '@bcoe/v8-coverage@1.0.2': {}
 
+  '@changesets/apply-release-plan@8.1.1':
+    dependencies:
+      '@changesets/config': 4.0.1
+      '@changesets/format': 0.1.3
+      '@changesets/git': 4.0.1
+      '@changesets/should-skip-package': 1.0.0
+      '@changesets/types': 7.0.0
+      import-meta-resolve: 4.2.0
+      jsonc-parser: 3.3.1
+      semver: 7.8.6
+
+  '@changesets/assemble-release-plan@7.0.0':
+    dependencies:
+      '@changesets/errors': 1.0.0
+      '@changesets/get-dependents-graph': 3.0.0
+      '@changesets/should-skip-package': 1.0.0
+      '@changesets/types': 7.0.0
+      semver: 7.8.6
+
+  '@changesets/changelog-git@1.0.0':
+    dependencies:
+      '@changesets/types': 7.0.0
+
+  '@changesets/cli@3.0.3':
+    dependencies:
+      '@changesets/apply-release-plan': 8.1.1
+      '@changesets/assemble-release-plan': 7.0.0
+      '@changesets/changelog-git': 1.0.0
+      '@changesets/config': 4.0.1
+      '@changesets/errors': 1.0.0
+      '@changesets/get-dependents-graph': 3.0.0
+      '@changesets/git': 4.0.1
+      '@changesets/pre': 3.0.0
+      '@changesets/read': 1.0.1
+      '@changesets/should-skip-package': 1.0.0
+      '@changesets/types': 7.0.0
+      '@changesets/write': 1.0.1
+      '@clack/prompts': 1.9.0
+      '@manypkg/get-packages': 3.1.0
+      '@pnpm/deps.graph-sequencer': 1100.0.1
+      cac: 7.1.0
+      import-meta-resolve: 4.2.0
+      launch-editor: 2.14.2
+      package-manager-detector: 1.9.0
+      semver: 7.8.6
+      tinyexec: 1.3.1
+
+  '@changesets/config@4.0.1':
+    dependencies:
+      '@changesets/get-dependents-graph': 3.0.0
+      '@changesets/should-skip-package': 1.0.0
+      '@changesets/types': 7.0.0
+      '@manypkg/get-packages': 3.1.0
+      picomatch: 4.0.7
+
+  '@changesets/errors@1.0.0': {}
+
+  '@changesets/format@0.1.3':
+    dependencies:
+      package-manager-detector: 1.9.0
+      tinyexec: 1.3.1
+
+  '@changesets/get-dependents-graph@3.0.0':
+    dependencies:
+      '@changesets/types': 7.0.0
+      semver: 7.8.6
+
+  '@changesets/git@4.0.1':
+    dependencies:
+      '@changesets/errors': 1.0.0
+      '@changesets/types': 7.0.0
+      '@manypkg/get-packages': 3.1.0
+      picomatch: 4.0.7
+      tinyexec: 1.3.1
+
+  '@changesets/parse@1.0.0':
+    dependencies:
+      '@changesets/types': 7.0.0
+      yaml: 2.9.1
+
+  '@changesets/pre@3.0.0':
+    dependencies:
+      '@changesets/errors': 1.0.0
+      '@changesets/types': 7.0.0
+      '@manypkg/get-packages': 3.1.0
+
+  '@changesets/read@1.0.1':
+    dependencies:
+      '@changesets/git': 4.0.1
+      '@changesets/parse': 1.0.0
+      '@changesets/types': 7.0.0
+
+  '@changesets/should-skip-package@1.0.0':
+    dependencies:
+      '@changesets/types': 7.0.0
+
+  '@changesets/types@7.0.0': {}
+
+  '@changesets/write@1.0.1':
+    dependencies:
+      '@changesets/format': 0.1.3
+      '@changesets/types': 7.0.0
+      human-id: 4.2.2
+
+  '@clack/core@1.6.0':
+    dependencies:
+      fast-string-width: 3.0.2
+      fast-wrap-ansi: 0.2.2
+      sisteransi: 2.0.0
+
+  '@clack/prompts@1.9.0':
+    dependencies:
+      '@clack/core': 1.6.0
+      fast-string-width: 3.0.2
+      fast-wrap-ansi: 0.2.2
+      sisteransi: 2.0.0
+
   '@colors/colors@1.5.0':
     optional: true
 
@@ -4102,12 +4347,29 @@ snapshots:
 
   '@js-sdsl/ordered-map@4.4.2': {}
 
+  '@manypkg/find-root@3.1.0':
+    dependencies:
+      '@manypkg/tools': 2.1.2
+
+  '@manypkg/get-packages@3.1.0':
+    dependencies:
+      '@manypkg/find-root': 3.1.0
+      '@manypkg/tools': 2.1.2
+
+  '@manypkg/tools@2.1.2':
+    dependencies:
+      jju: 1.4.0
+      tinyglobby: 0.2.17
+      yaml: 2.9.1
+
   '@minimistjs/subarg@1.0.0':
     dependencies:
       minimist: 1.2.8
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
+
+  '@pnpm/deps.graph-sequencer@1100.0.1': {}
 
   '@protobufjs/aspromise@1.1.2': {}
 
@@ -4711,6 +4973,8 @@ snapshots:
 
   bytes@3.1.2: {}
 
+  cac@7.1.0: {}
+
   call-bind-apply-helpers@1.0.2:
     dependencies:
       es-errors: 1.3.0
@@ -5071,6 +5335,16 @@ snapshots:
 
   fast-fifo@1.3.2: {}
 
+  fast-string-truncated-width@3.0.3: {}
+
+  fast-string-width@3.0.2:
+    dependencies:
+      fast-string-truncated-width: 3.0.3
+
+  fast-wrap-ansi@0.2.2:
+    dependencies:
+      fast-string-width: 3.0.2
+
   fb-dotslash@0.5.8: {}
 
   fb-watchman@2.0.4:
@@ -5233,6 +5507,8 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  human-id@4.2.2: {}
+
   hyperid@3.3.0:
     dependencies:
       buffer: 5.7.1
@@ -5249,6 +5525,8 @@ snapshots:
     dependencies:
       parent-module: 1.0.1
       resolve-from: 4.0.0
+
+  import-meta-resolve@4.2.0: {}
 
   inherits@2.0.4: {}
 
@@ -5315,6 +5593,8 @@ snapshots:
 
   jiti@2.7.0: {}
 
+  jju@1.4.0: {}
+
   js-tokens@10.0.0: {}
 
   js-tokens@4.0.0: {}
@@ -5326,6 +5606,13 @@ snapshots:
   json-parse-even-better-errors@2.3.1: {}
 
   json5@2.2.3: {}
+
+  jsonc-parser@3.3.1: {}
+
+  launch-editor@2.14.2:
+    dependencies:
+      picocolors: 1.1.1
+      shell-quote: 1.12.0
 
   lazystream@1.0.1:
     dependencies:
@@ -5645,6 +5932,8 @@ snapshots:
       is-wsl: 2.2.0
 
   package-json-from-dist@1.0.1: {}
+
+  package-manager-detector@1.9.0: {}
 
   pako@1.0.11: {}
 
@@ -6125,6 +6414,8 @@ snapshots:
 
   signal-exit@4.1.0: {}
 
+  sisteransi@2.0.0: {}
+
   socket.io-adapter@2.5.8:
     dependencies:
       debug: 4.4.3
@@ -6346,6 +6637,8 @@ snapshots:
   tinybench@6.1.4: {}
 
   tinyexec@1.3.0: {}
+
+  tinyexec@1.3.1: {}
 
   tinyglobby@0.2.17:
     dependencies:

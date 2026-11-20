@@ -1,4 +1,4 @@
-# sapling-quality-core — @sapling/quality-core
+# sapling-quality-core — @saplings/quality-core
 
 Release: 0.17.0 · Engineering backlog · **OPEN until evidence proves closure**
 
@@ -16,12 +16,12 @@ Package-level compilation or registration is not per-feature functional complete
 - [ ] Build/typecheck results, package/bundle size, dependency audit, consumer test results.
 
 ## P1 — acceptance tests (do not close with inventory or mock evidence alone)
-- [ ] Build and pack @sapling/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+- [ ] Build and pack @saplings/quality-core from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 - [ ] Add feature-specific unit and integration fixtures; where applicable include restart, concurrent requests, dependency outage and rollback scenarios. Record expected versus actual outputs and persistent state.
 - [ ] Run against a representative staging environment when browser, DB, broker, external provider or engine behavior is required; retain redacted evidence and reviewed source hash.
 
 ## P2 — operability and release
-- [ ] Document exact configuration, permissions, dependencies, recovery and upgrade/rollback steps. Dependencies: jiti, @sapling/quality-contracts. Peer dependencies: none.
+- [ ] Document exact configuration, permissions, dependencies, recovery and upgrade/rollback steps. Dependencies: jiti, @saplings/quality-contracts. Peer dependencies: none.
 - [ ] Define and approve relevant SLO/limits and alert owner with a representative workload; verify resource ceilings, error rates and recovery before production.
 - [ ] Obtain code owner review and required independent security/operations approval. No feature is approved merely because its ID exists.
 

@@ -1,6 +1,6 @@
 import {eq,and,gt,asc,sql,or} from 'drizzle-orm';
 import {pgTable,text,jsonb,primaryKey,timestamp} from 'drizzle-orm/pg-core';
-import type {Store} from '@sapling/sdk';
+import type {Store} from '@saplings/sdk';
 import type {NodePgDatabase} from 'drizzle-orm/node-postgres';
 export const saplingRecords=pgTable('sapling_records',{tenantId:text('tenant_id').notNull(),collection:text('collection').notNull(),id:text('id').notNull(),body:jsonb('body').$type<Record<string,unknown>>().notNull(),updatedAt:timestamp('updated_at',{withTimezone:true}).defaultNow().notNull()},t=>[primaryKey({columns:[t.tenantId,t.collection,t.id]})]);
 /** Use a non-owner, non-BYPASSRLS DB role. Every operation is tenant-scoped in its own transaction or the supplied transaction. */

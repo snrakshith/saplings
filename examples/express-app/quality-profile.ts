@@ -1,4 +1,4 @@
-import type {BackendQualityConfig} from '@sapling/sdk';
+import type {BackendQualityConfig} from '@saplings/sdk';
 /** All 15 categories available in one package. Full profile only for dedicated staging. */
 export function backendQualityProfile():BackendQualityConfig {
  const origin=process.env.QUALITY_ORIGIN??'http://127.0.0.1:3000';const environment=process.env.QUALITY_STAGING==='yes'?'staging':'local';const namespace=process.env.QUALITY_NAMESPACE??'sapling-quality';const deployment=process.env.QUALITY_DEPLOYMENT??'sapling-api';const path=process.env.QUALITY_HEALTH_PATH??'/health';

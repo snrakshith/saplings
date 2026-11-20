@@ -1,7 +1,7 @@
 # Sapling Multi-Tenant Identity Platform — Product Specification v0.13.0
 
 ## Vision and source
-A realm-scoped identity and access platform inspired by Keycloak's tenant/realm/client model, built independently as `@sapling/kingsman`. The uploaded `RealmConfig-full(1).json` is the authoritative desired-state specification. This is a limited OIDC/identity core, **not Keycloak protocol or administration parity**.
+A realm-scoped identity and access platform inspired by Keycloak's tenant/realm/client model, built independently as `@saplings/kingsman`. The uploaded `RealmConfig-full(1).json` is the authoritative desired-state specification. This is a limited OIDC/identity core, **not Keycloak protocol or administration parity**.
 
 ## Personas
 **Realm/platform owner:** create and configure realm, clients, token/session policies, signing keys and external integrations. **Tenant/org administrator:** manage organization and invitations. **User:** register, verify email, sign in, reset password, use PKCE login and organization membership. **Backend developer:** validate RS256 access tokens, check roles and scopes, and connect identity to API gateway. **SRE/security:** rotate/revoke secrets, monitor attacks, approve production deployment and review immutable security events.

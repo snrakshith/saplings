@@ -1,6 +1,6 @@
-import {createSapling,defineSaplingConfig,type SaplingConfig} from '@sapling/sdk';
-import {Gateway,MemoryRateLimitStore,type GatewayConfig,type GatewayDependencies} from '@sapling/harbor';
-import {IdentityPlatform,type RealmConfig,type IdentityDependencies} from '@sapling/kingsman';
+import {createSapling,defineSaplingConfig,type SaplingConfig} from '@saplings/sdk';
+import {Gateway,MemoryRateLimitStore,type GatewayConfig,type GatewayDependencies} from '@saplings/harbor';
+import {IdentityPlatform,type RealmConfig,type IdentityDependencies} from '@saplings/kingsman';
 declare const gateway:GatewayConfig, realm:RealmConfig;
 const cfg=defineSaplingConfig({app:{id:'platform',environment:'test'},platforms:{gateway:{config:gateway,dependencies:{rateLimit:new MemoryRateLimitStore()}},identity:{config:realm,dependencies:{}}}});
 const sapling=createSapling(cfg);const optionalGateway:Gateway|undefined=sapling.gateway;const optionalIdentity:IdentityPlatform|undefined=sapling.identityPlatform;

@@ -74,7 +74,7 @@ Authoritative sources: original sapling-quality-platform.zip (v0.1.0) and unifie
 
 ## Integration choices and gaps
 
-- Canonical shared types in `@sapling/quality-contracts`; the SDK imports only types. `quality-core` orchestrates and reports. `backend-quality` retains v0.5 native runner and original 16-suite registry; `frontend-quality` retains the original 16-suite registry. The CLI delegates to the new quality CLI. Legacy backend API remains available via `sapling quality legacy run ...`.
+- Canonical shared types in `@saplings/quality-contracts`; the SDK imports only types. `quality-core` orchestrates and reports. `backend-quality` retains v0.5 native runner and original 16-suite registry; `frontend-quality` retains the original 16-suite registry. The CLI delegates to the new quality CLI. Legacy backend API remains available via `sapling quality legacy run ...`.
 - Optional Node diagnostics and browser/React telemetry are independent packages, not bundled with the application SDK; use runtime instrumentation only if explicitly desired. Browser package root telemetry export and old subpaths are preserved.
 - Original API/web demos, Docker/Helm/Kubernetes manifests, custom suite examples and workflows are integrated. They are demonstration infrastructure, not production deployment certification.
 - Existing configuration shape remains supported by legacy runner. New canonical root `sapling.config.ts` has `quality` with `backend` and `frontend`. A frontend-only application can use a standalone quality config without SDK.

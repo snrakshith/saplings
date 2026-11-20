@@ -1,2 +1,2 @@
 export * from './theme-provider.js';
-export * from '@sapling/ui-core';
+export * from '@saplings/ui-core';

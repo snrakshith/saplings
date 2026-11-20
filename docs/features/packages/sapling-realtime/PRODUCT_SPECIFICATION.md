@@ -1,9 +1,9 @@
-# sapling-realtime — @sapling/realtime
+# sapling-realtime — @saplings/realtime
 
 Release: 0.17.0 · Product specification
 
 ## Purpose and users
-Maintain @sapling/realtime as an independently consumable workspace package in the unified platform.
+Maintain @saplings/realtime as an independently consumable workspace package in the unified platform.
 
 **Primary consumer:** SDK/platform maintainer.
 
@@ -22,7 +22,7 @@ Package entry points: ..
 4. Owner reviews evidence and uses the documented recovery path when a prerequisite or operation fails.
 
 ## Acceptance
-Build and pack @sapling/realtime from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/realtime from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Scope and non-goals
 Package-level compilation or registration is not per-feature functional completeness; see feature dossiers and release blockers.

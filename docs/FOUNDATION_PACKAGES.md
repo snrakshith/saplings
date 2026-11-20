@@ -10,11 +10,11 @@ The SDK v0.6.0 monorepo is the base; all 182 SaaS mappings, 41 scanner categorie
 
 | Package | Purpose | Dependencies |
 |---|---|---|
-| `@sapling/utils` | Shared browser/server utilities | Native APIs only; Node-only helpers via `/server` |
+| `@saplings/utils` | Shared browser/server utilities | Native APIs only; Node-only helpers via `/server` |
 | `@saplings/validations` | Typed runtime parsing and validation | None |
-| `@sapling/realtime` | Tenant-aware realtime hub | Native Node; optional `ws` and `socket.io`, injected Redis/Valkey client |
-| `@sapling/middleware` | Express-compatible HTTP utilities | Validation types; optional `compression` and `multer` |
-| `@sapling/sdk` | Existing SDK and composition | New middleware/realtime packages; no quality engines |
+| `@saplings/realtime` | Tenant-aware realtime hub | Native Node; optional `ws` and `socket.io`, injected Redis/Valkey client |
+| `@saplings/middleware` | Express-compatible HTTP utilities | Validation types; optional `compression` and `multer` |
+| `@saplings/sdk` | Existing SDK and composition | New middleware/realtime packages; no quality engines |
 
 ```mermaid
 flowchart TD
@@ -37,9 +37,9 @@ flowchart TD
 `es-toolkit-expanded.zip` from the user's Library is the authoritative input. All ten original modules are present under `packages/utils/src/`. Original README is retained. See `UTILITIES_SOURCE_PARITY.json` for original/current hashes and `UTILITIES_CATALOG.md` for exported names. The original clone archive is an earlier version; no duplicate copy of its overlapping functions is introduced. Changes to imported files: TypeScript narrowing and iterator types, unsafe object path rejection, own-property checks, debounce flush arguments and abort listener cleanup, cookie decoding/removal fixes, policy path own-property resolution. `id.ts` adds native CSPRNG `nanoid`; it is not the npm nanoid package. The original hooks module is framework-agnostic, not a React hook library. The original permissions module is a policy helper; server-side Sapling SDK access checks remain authoritative. Original date behavior uses native Date/Intl; DST/calendar correctness depends on the specific function and timezone. No secret storage in localStorage or client-readable cookies.
 
 ```ts
-import { chunk, nanoid, date, storage, permissions } from '@sapling/utils';
-import { sha256, collectStream } from '@sapling/utils/server';
-import { map } from '@sapling/utils/fp';
+import { chunk, nanoid, date, storage, permissions } from '@saplings/utils';
+import { sha256, collectStream } from '@saplings/utils/server';
+import { map } from '@saplings/utils/fp';
 const ids = chunk([nanoid(), nanoid()], 1);
 const prefs = storage.localStore({ namespace: 'my-app' });
 // Only in a browser; never store tokens or secrets here.
@@ -71,7 +71,7 @@ Supported: primitive schemas, literal, string enum, arrays/tuples/objects/record
 ## SDK configuration and middleware integration
 
 ```ts
-import { defineSaplingConfig } from '@sapling/sdk';
+import { defineSaplingConfig } from '@saplings/sdk';
 export default defineSaplingConfig({
   app: { id: 'my-saas', environment: 'development' },
   middleware: {
@@ -87,8 +87,8 @@ export default defineSaplingConfig({
 
 ```ts
 import express from 'express';
-import { createSapling } from '@sapling/sdk';
-import { validate, requireAuth, authorize, requestTimeout } from '@sapling/middleware';
+import { createSapling } from '@saplings/sdk';
+import { validate, requireAuth, authorize, requestTimeout } from '@saplings/middleware';
 import { z } from '@saplings/validations/native';
 import config from './sapling.config.js';
 const app = express();
@@ -111,8 +111,8 @@ The example returns validated input for demonstration only. Replace with actual 
 `publicJsonCache` caches explicitly public anonymous GETs, and refuses auth/cookies. It is application-level caching, not HTTP CDN caching. Use a bounded store with explicit vary keys, separate stores per application/environment. `idempotentJson` scopes to tenant, user, operation and key; detects conflicts, blocks in-progress duplicates and replays completed results. Use `TenantIdempotencyStore` with the SDK's transaction-capable store for persistence:
 
 ```ts
-import { TenantIdempotencyStore } from '@sapling/sdk';
-import { idempotentJson } from '@sapling/middleware';
+import { TenantIdempotencyStore } from '@saplings/sdk';
+import { idempotentJson } from '@saplings/middleware';
 const createOrder = idempotentJson(
   req => new TenantIdempotencyStore(sdk.store, req.sapling!.tenantId!),
   'orders:create', async req => ({ status: 201, body: await createOrderInApplication(req) })
@@ -124,7 +124,7 @@ const createOrder = idempotentJson(
 ## Realtime
 
 ```ts
-import { RedisBroker, attachWebSocket, attachSocketIO } from '@sapling/realtime';
+import { RedisBroker, attachWebSocket, attachSocketIO } from '@saplings/realtime';
 // Configure independently connected node-redis compatible clients:
 const broker = new RedisBroker(publisher, subscriber);
 // in sapling.config.ts:

@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/kingsman",
+  "name": "@saplings/kingsman",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -12,11 +12,22 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "sideEffects": false,
   "devDependencies": {
     "@types/node": "^22.0.0",
     "typescript": "^5.9.3"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/kingsman"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

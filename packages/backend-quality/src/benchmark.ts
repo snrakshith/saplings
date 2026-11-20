@@ -1,4 +1,4 @@
-import {assertWorkloadLimit,result,metrics,thresholdChecks,evaluateChecks,type RunContext,type SuiteResult} from '@sapling/quality-core';
+import {assertWorkloadLimit,result,metrics,thresholdChecks,evaluateChecks,type RunContext,type SuiteResult} from '@saplings/quality-core';
 export async function runBenchmark(ctx:RunContext):Promise<SuiteResult>{
  const started=Date.now(),cfg=ctx.config.backend!;const bench=cfg.benchmark??{};
  const url=new URL(bench.path??cfg.endpoints[0]!.path,cfg.baseUrl).href;

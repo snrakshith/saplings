@@ -1,4 +1,4 @@
-import {execFileSafe,runExternal,result,skipped,metrics,evaluateChecks,thresholdChecks,type BackendSuite,type CheckResult,type RunContext,type SuiteResult} from '@sapling/quality-core';
+import {execFileSafe,runExternal,result,skipped,metrics,evaluateChecks,thresholdChecks,type BackendSuite,type CheckResult,type RunContext,type SuiteResult} from '@saplings/quality-core';
 async function get(url:string,options?:RequestInit,timeoutMs=15000):Promise<Response>{return fetch(url,{...options,redirect:'error',signal:AbortSignal.timeout(timeoutMs)});}
 async function externalSuite(ctx:RunContext,name:BackendSuite,defaultCommand?:{command:string;args:string[]},engine='external'):Promise<SuiteResult>{
  const started=Date.now(),spec=ctx.config.backend!.custom?.[name]??defaultCommand;

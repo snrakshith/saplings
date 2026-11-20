@@ -12,7 +12,7 @@
 
 > **v0.14.0:** Web UI shared-token build and SSR smoke checks passed locally. Native official RN0.88/React19.3 compile, Metro, Android/iOS device acceptance, browser accessibility and source-licensing approvals are still pending. See [detailed UI gaps](../ui-platforms/GAPS_AND_IMPROVEMENTS.md). No previous release gate is considered passed solely due to this version bump.
 
-> **v0.13.0:** Two new packages (`@sapling/harbor`, `@sapling/kingsman`) and typed optional `sapling.gateway` / `sapling.identityPlatform` integrations. See [platform specs](../platforms/CONFIG_COVERAGE.md) and their detailed product/technical/gap documents. Existing production gates remain open; both platforms require real infrastructure/conformance testing.
+> **v0.13.0:** Two new packages (`@saplings/harbor`, `@saplings/kingsman`) and typed optional `sapling.gateway` / `sapling.identityPlatform` integrations. See [platform specs](../platforms/CONFIG_COVERAGE.md) and their detailed product/technical/gap documents. Existing production gates remain open; both platforms require real infrastructure/conformance testing.
 
 # v0.12.0 — release blockers
 

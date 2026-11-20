@@ -4,7 +4,7 @@
 
 ## Scope and provenance
 
-This is a backend-only integration into the existing v0.4 SDK monorepo. It reconstructs the recovered Nov 8 backend-quality scope (15 categories, all phases delivered together), not a byte-for-byte merge of the unavailable standalone quality ZIP. No frontend package is added. `@sapling/sdk` retains all 182 SaaS IDs and 41 scanner categories. `@sapling/backend-quality` is a separate development dependency and is never imported by SDK runtime code; the SDK exports the shared configuration types only. `@sapling/cli` loads quality dynamically if installed. All categories ship in one package; approval and infrastructure requirements control execution, not feature editions.
+This is a backend-only integration into the existing v0.4 SDK monorepo. It reconstructs the recovered Nov 8 backend-quality scope (15 categories, all phases delivered together), not a byte-for-byte merge of the unavailable standalone quality ZIP. No frontend package is added. `@saplings/sdk` retains all 182 SaaS IDs and 41 scanner categories. `@saplings/backend-quality` is a separate development dependency and is never imported by SDK runtime code; the SDK exports the shared configuration types only. `@saplings/cli` loads quality dynamically if installed. All categories ship in one package; approval and infrastructure requirements control execution, not feature editions.
 
 ## Category/engine matrix
 
@@ -39,14 +39,14 @@ pnpm run quality -- run performance --config examples/express-app/sapling.config
 pnpm run quality -- report
 ```
 
-Start the authorized local app first; use Node 22.18+ or the root npm quality script (Node 22.16 with type stripping). External package consumers install `@sapling/sdk` as a runtime dependency and `@sapling/backend-quality` and optionally `@sapling/cli` as dev dependencies. `sapling quality list` or `sapling-quality list` works with published workspace packages; this ZIP does not publish them. TypeScript configs with non-erasable constructs require `node --import tsx` or compilation first. Config modules are trusted executable code and must not initialize production resources on import.
+Start the authorized local app first; use Node 22.18+ or the root npm quality script (Node 22.16 with type stripping). External package consumers install `@saplings/sdk` as a runtime dependency and `@saplings/backend-quality` and optionally `@saplings/cli` as dev dependencies. `sapling quality list` or `sapling-quality list` works with published workspace packages; this ZIP does not publish them. TypeScript configs with non-erasable constructs require `node --import tsx` or compilation first. Config modules are trusted executable code and must not initialize production resources on import.
 
 ## One configuration
 
 `examples/express-app/sapling.config.ts` imports the typed 15-category example from `quality-profile.ts`. The runtime and quality tool share the same config entry point. `quality` fields: environment (local/staging only), allowedOrigins, targets, allowedNamespaces, allowedDeployments, suites, maxConcurrency, maxDurationSeconds, outputDir, allowDisruptive. Suites declare id, category, engine, target, probes (relative GET paths/statuses/headers), requests, concurrency, durationSeconds, stages, thresholds, timeoutMs, script or approved namespace/deployment. Native runner samples latency with bounded request count and concurrency; errors include unexpected status or network failure. The native runner uses step changes rather than k6 ramp stages. Use workload-specific data and tenants; a health endpoint is not a real production traffic model.
 
 ```ts
-import {defineSaplingConfig} from '@sapling/sdk';
+import {defineSaplingConfig} from '@saplings/sdk';
 export default defineSaplingConfig({
  app:{id:'example',environment:'development'},
  quality:{environment:'local',allowedOrigins:['http://127.0.0.1:3000'],

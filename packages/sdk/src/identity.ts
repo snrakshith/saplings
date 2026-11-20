@@ -1,3 +1,3 @@
-/** @deprecated API key authority lives in @sapling/kingsman. */
-export {IdentityService} from '@sapling/kingsman';
-export type {StoredApiKey} from '@sapling/kingsman';
+/** @deprecated API key authority lives in @saplings/kingsman. */
+export {IdentityService} from '@saplings/kingsman';
+export type {StoredApiKey} from '@saplings/kingsman';

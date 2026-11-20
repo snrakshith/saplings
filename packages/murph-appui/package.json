@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/murph-appui",
+  "name": "@saplings/murph-appui",
   "version": "0.17.0",
   "description": "Murphi design language rendered as React Native components",
   "type": "module",
@@ -11,7 +11,8 @@
     "dist",
     "src",
     "README.md",
-    "ATTRIBUTION.md"
+    "ATTRIBUTION.md",
+    "CHANGELOG.md"
   ],
   "exports": {
     ".": {
@@ -34,7 +35,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@sapling/ui-core": "workspace:*"
+    "@saplings/ui-core": "workspace:*"
   },
   "peerDependencies": {
     "react": "^19.3.0",
@@ -44,5 +45,15 @@
     "react": "^19.3.0",
     "@types/react": "^19.3.0",
     "react-native": "^0.88.1"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/murph-appui"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

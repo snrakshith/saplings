@@ -1,12 +1,12 @@
 import {getSignedUrl} from '@aws-sdk/s3-request-presigner';
-import type {FeatureAdapter} from '@sapling/sdk';
+import type {FeatureAdapter} from '@saplings/sdk';
 /** AWS production-provider sketches using official SDK commands. Review IAM, encryption, limits,
  *  provider quotas, failures/retries and integration-test with real AWS before deployment. */
 import {S3Client,PutObjectCommand,GetObjectCommand,DeleteObjectCommand,ListObjectsV2Command} from '@aws-sdk/client-s3';
 import {SESv2Client,SendEmailCommand} from '@aws-sdk/client-sesv2';
 import {SNSClient,PublishCommand} from '@aws-sdk/client-sns';
-import type {StorageAdapter,NotificationAdapter} from '@sapling/sdk';
-import {SaplingError} from '@sapling/sdk';
+import type {StorageAdapter,NotificationAdapter} from '@saplings/sdk';
+import {SaplingError} from '@saplings/sdk';
 function safeSegment(s:string){return Buffer.from(s,'utf8').toString('base64url');}
 function objectPath(tenantId:string,key:string){
  if(!tenantId||!key||key.startsWith('/')||key.includes('\\')||key.split('/').some(x=>x==='..'||x==='.'||!x))
@@ -61,6 +61,6 @@ export class AwsNotificationsAdapter implements NotificationAdapter {
 
 /** SAAS-085: configure this explicit capability adapter with tenant-scoped S3 keys. */
 export class S3PresignAdapter implements FeatureAdapter {
- constructor(private client:S3Client,private bucket:string,private authorize?:(ctx:import('@sapling/sdk').ActorContext,key:string)=>Promise<boolean>|boolean){}
+ constructor(private client:S3Client,private bucket:string,private authorize?:(ctx:import('@saplings/sdk').ActorContext,key:string)=>Promise<boolean>|boolean){}
  async execute(request:Parameters<FeatureAdapter['execute']>[0]){if(request.featureId!=='SAAS-085'||request.action!=='sign')throw new SaplingError('UNKNOWN_ACTION','Unsupported operation');const key=request.input.key,expires=request.input.expiresIn??300;if(typeof key!=='string'||typeof expires!=='number'||!Number.isInteger(expires)||expires<1||expires>900)throw new SaplingError('INVALID_INPUT','Invalid key or expiry');if(this.authorize&&!await this.authorize(request.ctx,key))throw new SaplingError('FORBIDDEN','Object access denied',403);const url=await getSignedUrl(this.client,new GetObjectCommand({Bucket:this.bucket,Key:objectPath(request.ctx.tenantId,key)}),{expiresIn:expires});return {url,expiresIn:expires};}
 }

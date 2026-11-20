@@ -45,7 +45,7 @@
 ## Example app integration
 
 ```ts
-import {createNodeDiagnostics} from '@sapling/backend-quality/diagnostics';
+import {createNodeDiagnostics} from '@saplings/backend-quality/diagnostics';
 const diagnostics=createNodeDiagnostics();
 const snapshot=diagnostics.snapshot();
 console.log(snapshot.heapUsedMb, snapshot.eventLoopLagP95Ms);

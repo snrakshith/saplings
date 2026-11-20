@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/utils",
+  "name": "@saplings/utils",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -57,10 +57,21 @@
   "files": [
     "dist",
     "README.md",
-    "ORIGINAL_README.md"
+    "ORIGINAL_README.md",
+    "CHANGELOG.md"
   ],
   "dependencies": {},
   "engines": {
     "node": ">=22"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/utils"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

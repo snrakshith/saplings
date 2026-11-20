@@ -1,6 +1,6 @@
 # @saplings/hooks
 
-Typed reusable React hooks (React 18.2+ or 19). Independently installable; not a dependency of `@sapling/sdk`.
+Typed reusable React hooks (React 18.2+ or 19). Independently installable; not a dependency of `@saplings/sdk`.
 
 ```bash
 pnpm add @saplings/hooks react

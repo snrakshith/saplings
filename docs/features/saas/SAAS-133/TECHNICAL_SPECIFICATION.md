@@ -45,12 +45,12 @@ Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the p
 
 Related shared implementation path hardened; feature-specific acceptance still open.
 
-- The **separate** `@sapling/harbor` now has distributed transactional rate/ban store adapters, API-key authentication, optional bot challenge driver and actual verified TLS-proxy ingress checks. This does **not** automatically protect application routes: configure the gateway/plugins, durable storage, upstream scopes and driver integrations (`tests/v015.test.mjs`).
+- The **separate** `@saplings/harbor` now has distributed transactional rate/ban store adapters, API-key authentication, optional bot challenge driver and actual verified TLS-proxy ingress checks. This does **not** automatically protect application routes: configure the gateway/plugins, durable storage, upstream scopes and driver integrations (`tests/v015.test.mjs`).
 
 **Evidence:** `scripts/verify-sdk-root-refactor.mjs` checks all 31 moved modules; `tests/v015.test.mjs` covers direct platform and tenant-export hardening; `docs/technical-specifications/PRODUCTION_READINESS_015.md` separates code and live acceptance. Provider, authorization, restore and full regression gates are not automatically closed.
 ## v0.17.0 architectural ownership
 
-**Authoritative package:** `@sapling/harbor`. **Implementation path:** Kingsman AccessService authorization consumed at HTTP boundary. **Status:** partial/shared enforcement.
+**Authoritative package:** `@saplings/harbor`. **Implementation path:** Kingsman AccessService authorization consumed at HTTP boundary. **Status:** partial/shared enforcement.
 
 Harbor authenticates/limits ingress; SDK does not drop application-level RBAC, CSRF, business quotas or authorization.
 

@@ -1,6 +1,6 @@
 import {test} from 'vitest';import assert from 'node:assert/strict';
-import {createSapling,InMemoryStore} from '@sapling/sdk';
-import {saasFeatures} from '@sapling/catalog';
+import {createSapling,InMemoryStore} from '@saplings/sdk';
+import {saasFeatures} from '@saplings/catalog';
 const ctx={tenantId:'tenant',actorId:'owner',permissions:['*']},other={...ctx,tenantId:'other'},app={id:'v012',environment:'test'};
 const make=(services={},store=new InMemoryStore())=>createSapling({app,services,providers:{store}});
 test('catalog contract enforces disabled, scope, authorization and unknown actions for all 182 IDs',async()=>{assert.equal(saasFeatures.length,182);const disabled=Object.fromEntries(saasFeatures.map(f=>[f.id,{enabled:false}]));const sdk=createSapling({app,features:disabled});for(const f of saasFeatures){const action=sdk.featureManifest().find(x=>x.featureId===f.id).actions[0];await assert.rejects(sdk.capabilities.invoke(ctx,f.id,action,{}),{code:'FEATURE_DISABLED'});}const fresh=make();for(const f of saasFeatures){const action=fresh.featureManifest().find(x=>x.featureId===f.id).actions[0];await assert.rejects(fresh.capabilities.invoke({tenantId:'tenant',actorId:'unprivileged',permissions:[]},f.id,action,{}),{code:'FORBIDDEN'});await assert.rejects(fresh.capabilities.invoke(ctx,f.id,'unknown-action',{}),{code:'UNKNOWN_ACTION'});} });

@@ -1,11 +1,11 @@
 {
-  "name": "@sapling/adapter-drizzle",
+  "name": "@saplings/adapter-drizzle",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@sapling/sdk": "workspace:*",
+    "@saplings/sdk": "workspace:*",
     "drizzle-orm": "^0.44.0",
     "pg": "^8.0.0"
   },
@@ -14,6 +14,17 @@
   },
   "files": [
     "dist",
-    "migrations"
-  ]
+    "migrations",
+    "CHANGELOG.md"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/adapter-drizzle"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

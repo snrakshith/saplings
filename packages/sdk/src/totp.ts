@@ -1,2 +1,2 @@
-/** @deprecated Import TOTP helpers from @sapling/kingsman. */
-export * from '@sapling/kingsman';
+/** @deprecated Import TOTP helpers from @saplings/kingsman. */
+export * from '@saplings/kingsman';

@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/murphi-ui",
+  "name": "@saplings/murphi-ui",
   "version": "0.17.0",
   "description": "Murphi React web component system integrated with Sapling tokens",
   "type": "module",
@@ -7,7 +7,8 @@
   "files": [
     "dist",
     "README.md",
-    "ATTRIBUTION.md"
+    "ATTRIBUTION.md",
+    "CHANGELOG.md"
   ],
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -30,7 +31,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@sapling/ui-core": "workspace:*",
+    "@saplings/ui-core": "workspace:*",
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0"
   },
@@ -43,5 +44,15 @@
     "@types/react-dom": "^19.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/murphi-ui"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

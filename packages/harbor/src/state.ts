@@ -1,7 +1,7 @@
 import {createHash} from 'node:crypto';
 import {GatewayError} from './config.js';
 import type {RateLimitStore,GatewayBanStore} from './types.js';
-/** Minimal transactional interface for a persistent gateway control-plane store. Compatible with @sapling/sdk Store. */
+/** Minimal transactional interface for a persistent gateway control-plane store. Compatible with @saplings/sdk Store. */
 export interface GatewayStateStore {
  transaction<T>(namespace:string,execute:(tx:GatewayStateStore)=>Promise<T>):Promise<T>;
  get<T>(namespace:string,collection:string,id:string):Promise<T|undefined>;

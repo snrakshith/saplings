@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/quality-node-diagnostics",
+  "name": "@saplings/quality-node-diagnostics",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -11,7 +11,18 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
-  "dependencies": {}
+  "dependencies": {},
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/quality-node-diagnostics"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

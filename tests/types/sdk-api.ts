@@ -1,4 +1,4 @@
-import {createSapling,defineSaplingConfig,type SaplingSDK,type ActorContext,type FeatureId,type FeatureAction} from '@sapling/sdk';
+import {createSapling,defineSaplingConfig,type SaplingSDK,type ActorContext,type FeatureId,type FeatureAction} from '@saplings/sdk';
 const sapling:SaplingSDK=createSapling(defineSaplingConfig({app:{id:'typed',environment:'test'},services:{domainPolicies:{documents:{read:['title'],write:['title'],authorize:(ctx,action,row)=>ctx.actorId.length>0&&action==='read'&&!!row}}}}));
 const ctx:ActorContext={tenantId:'t',actorId:'a'};
 async function compileOnly(){

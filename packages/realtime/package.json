@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/realtime",
+  "name": "@saplings/realtime",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -13,7 +13,8 @@
   "files": [
     "dist",
     "README.md",
-    "ORIGINAL_README.md"
+    "ORIGINAL_README.md",
+    "CHANGELOG.md"
   ],
   "dependencies": {},
   "engines": {
@@ -34,5 +35,15 @@
   "devDependencies": {
     "ws": "^8.0.0",
     "socket.io": "^4.0.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/realtime"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

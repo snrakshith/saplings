@@ -1,21 +1,32 @@
 {
-  "name": "@sapling/quality-cli",
+  "name": "@saplings/quality-cli",
   "version": "0.17.0",
   "type": "module",
   "bin": {
     "sapling-quality": "./dist/cli.js"
   },
   "dependencies": {
-    "@sapling/quality-core": "workspace:*",
-    "@sapling/backend-quality": "workspace:*",
-    "@sapling/frontend-quality": "workspace:*",
+    "@saplings/quality-core": "workspace:*",
+    "@saplings/backend-quality": "workspace:*",
+    "@saplings/frontend-quality": "workspace:*",
     "playwright": "1.56.1"
   },
   "exports": {
     ".": "./dist/cli.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
-  "devDependencies": {}
+  "devDependencies": {},
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/quality-cli"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

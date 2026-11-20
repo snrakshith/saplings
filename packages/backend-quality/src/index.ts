@@ -1,4 +1,4 @@
-import {type QualityOrchestrator,type BackendSuite,BACKEND_SUITES} from '@sapling/quality-core';
+import {type QualityOrchestrator,type BackendSuite,BACKEND_SUITES} from '@saplings/quality-core';
 import {runK6} from './k6.js';
 import {runObservability,runConcurrency,runContract,runSecurity,runCustomBackend} from './http-suites.js';
 import {runToxiproxy} from './toxiproxy.js';

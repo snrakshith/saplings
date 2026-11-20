@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/quality-browser-runtime",
+  "name": "@saplings/quality-browser-runtime",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -15,7 +15,8 @@
     }
   },
   "files": [
-    "dist"
+    "dist",
+    "CHANGELOG.md"
   ],
   "dependencies": {
     "web-vitals": "^5.1.0"
@@ -30,5 +31,15 @@
   },
   "devDependencies": {
     "@types/react": "^19.2.0"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/quality-browser-runtime"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

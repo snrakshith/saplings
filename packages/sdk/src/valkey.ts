@@ -1,4 +1,4 @@
-import type {RateState} from '@sapling/security';
+import type {RateState} from '@saplings/security';
 /** Compatible with a Valkey/Redis client exposing eval(script,{keys,arguments}). Atomic fixed windows. */
 export interface RedisEvalClient {eval(script:string,options:{keys:string[];arguments:string[]}):Promise<unknown>}
 export class ValkeyRateState implements RateState {

@@ -1,1 +1,1 @@
-export * from '@sapling/quality-contracts';
+export * from '@saplings/quality-contracts';

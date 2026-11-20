@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/security",
+  "name": "@saplings/security",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -12,9 +12,20 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "dependencies": {
-    "@sapling/catalog": "workspace:*"
+    "@saplings/catalog": "workspace:*"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/security"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -1,6 +1,6 @@
 import React,{createContext,useContext,useMemo,useState} from 'react';
 import {ThemeProvider as EmotionThemeProvider} from '@emotion/react';
-import {createTheme,type ColorMode,type DesignOverrides,type XloxTheme} from '@sapling/ui-core';
+import {createTheme,type ColorMode,type DesignOverrides,type XloxTheme} from '@saplings/ui-core';
 export interface MurphiThemeContext {theme:XloxTheme;mode:ColorMode;setMode:(mode:ColorMode)=>void;toggleTheme:()=>void;}
 const Context=createContext<MurphiThemeContext|undefined>(undefined);
 export function useTheme(){const context=useContext(Context);if(!context)throw new Error('useTheme requires MurphiThemeProvider');return context;}

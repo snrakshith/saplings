@@ -6,7 +6,7 @@
 
 > **Current v0.14.0:** 36 required release gates. New `ui-core-build`, `ui-web-build`, `ui-native-build`, `ui-native-live`, `ui-accessibility-live` distinguish local builds from actual RN and browser/device acceptance. See [UI gap checklist](ui-platforms/GAPS_AND_IMPROVEMENTS.md). Previous release evidence is not automatically valid for new source.
 
-> **v0.13.0:** Two new packages (`@sapling/harbor`, `@sapling/kingsman`) and typed optional `sapling.gateway` / `sapling.identityPlatform` integrations. See [platform specs](platforms/CONFIG_COVERAGE.md) and their detailed product/technical/gap documents. Existing production gates remain open; both platforms require real infrastructure/conformance testing.
+> **v0.13.0:** Two new packages (`@saplings/harbor`, `@saplings/kingsman`) and typed optional `sapling.gateway` / `sapling.identityPlatform` integrations. See [platform specs](platforms/CONFIG_COVERAGE.md) and their detailed product/technical/gap documents. Existing production gates remain open; both platforms require real infrastructure/conformance testing.
 
 > **v0.12.0:** 28 release gates, including local `saas-gap-audit` and external `saas-feature-acceptance-live`. Per-feature source review does not replace live acceptance. See [closure assessment](technical-specifications/SAAS_GAP_CLOSURE_012.md).
 

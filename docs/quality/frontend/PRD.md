@@ -1,6 +1,6 @@
 # Product Requirements Document — Frontend Quality
 
-**Product:** `@sapling/frontend-quality` | **Primary targets:** React, TypeScript, browser applications
+**Product:** `@saplings/frontend-quality` | **Primary targets:** React, TypeScript, browser applications
 
 ## 1. Background
 

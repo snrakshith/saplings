@@ -1,4 +1,4 @@
-import type {DefenderConfig, HttpRequest, ScannerAdapter,ScanOptions} from '@sapling/security';
+import type {DefenderConfig, HttpRequest, ScannerAdapter,ScanOptions} from '@saplings/security';
 export type Environment='development'|'test'|'production';
 export interface ActorContext {
  tenantId:string; actorId:string; roles?:string[]; permissions?:string[];
@@ -59,20 +59,20 @@ export interface FeatureSettings {enabled?:boolean;provider?:string;options?:Jso
 export type ServiceConfig={accountPasswordPolicy?:import('./accounts.js').AccountPasswordPolicy;providerWorkflows?:Record<string,import('./provider-workflow.js').ProviderWorkflowDefinition>;domainPolicies?:Record<string,import('./domain-policy.js').DomainPolicy>;retentionPolicies?:Record<string,{days:number;terminalStatuses?:readonly string[]}>;providerOperations?:Record<string,import('./provider-operations.js').OperationDriver>;recurring?:import('./recurring.js').RecurringSettings;offboarding?:import('./offboarding.js').OffboardingSettings;dataCollections?:string[];encryptionKey?:Uint8Array;impersonationScopes?:string[];challengeDelivery?:(message:{tenantId:string;email:string;secret:string;purpose:string})=>Promise<void>;worker?:import('./worker.js').WorkerSettings;operations?:import('./operations.js').OperationsSettings};
 export interface PlatformConfig {
  /** Kong-inspired gateway configuration and infrastructure adapters. */
- harbor?:{config:import('@sapling/harbor').GatewayConfig;dependencies?:import('@sapling/harbor').GatewayDependencies};
+ harbor?:{config:import('@saplings/harbor').GatewayConfig;dependencies?:import('@saplings/harbor').GatewayDependencies};
  /** Keycloak-inspired realm config. Production requires stable keys, a real store, Argon2id and transport integration. */
- kingsman?:{config:import('@sapling/kingsman').RealmConfig;dependencies?:import('@sapling/kingsman').IdentityDependencies};
+ kingsman?:{config:import('@saplings/kingsman').RealmConfig;dependencies?:import('@saplings/kingsman').IdentityDependencies};
  /** @deprecated Use harbor; both names cannot be set. */
- gateway?:{config:import('@sapling/harbor').GatewayConfig;dependencies?:import('@sapling/harbor').GatewayDependencies};
+ gateway?:{config:import('@saplings/harbor').GatewayConfig;dependencies?:import('@saplings/harbor').GatewayDependencies};
  /** @deprecated Use kingsman; both names cannot be set. */
- identity?:{config:import('@sapling/kingsman').RealmConfig;dependencies?:import('@sapling/kingsman').IdentityDependencies};
+ identity?:{config:import('@saplings/kingsman').RealmConfig;dependencies?:import('@saplings/kingsman').IdentityDependencies};
 }
 export interface SaplingConfig {
  app:{id:string;environment:Environment;name?:string};
  platforms?:PlatformConfig;
- realtime?:import('@sapling/realtime').RealtimeConfig;
- middleware?:import('@sapling/middleware').MiddlewareConfig;
- quality?:import('./quality-config.js').BackendQualityConfig | import('@sapling/quality-contracts').QualityConfig;
+ realtime?:import('@saplings/realtime').RealtimeConfig;
+ middleware?:import('@saplings/middleware').MiddlewareConfig;
+ quality?:import('./quality-config.js').BackendQualityConfig | import('@saplings/quality-contracts').QualityConfig;
  /** Service-specific configuration. */
  services?:ServiceConfig;
  /** @deprecated Use services instead. Cannot be combined with services. */
@@ -112,4 +112,4 @@ export interface ResolvedConfig extends SaplingConfig {
  audit:{enabled:boolean};analytics:{enabled:boolean};featureFlags:{enabled:boolean};
  workflows:{enabled:boolean;maxAttempts:number};observability:{enabled:boolean};
 }
-export {SaasIdentityError as SaplingError} from '@sapling/kingsman';
+export {SaasIdentityError as SaplingError} from '@saplings/kingsman';

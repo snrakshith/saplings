@@ -2,7 +2,7 @@
 
 ## Scope
 
-The monorepo remains **24 packages**, not additional servers. The package names change from `@sapling/gateway` → `@sapling/harbor` and `@sapling/identity-platform` → `@sapling/kingsman`. Public SDK names `sapling.harbor` and `sapling.kingsman` replace the old `gateway` and `identityPlatform` accessors. Old instance getters and `platforms.gateway`/`platforms.identity` keys remain temporarily supported to allow migrations; specifying both old and new keys for one package is rejected. The NPM package names are **breaking**: update imports and dependency manifests; old external package names are not shipped or published as aliases.
+The monorepo remains **24 packages**, not additional servers. The package names change from `@sapling/gateway` → `@saplings/harbor` and `@sapling/identity-platform` → `@saplings/kingsman`. Public SDK names `sapling.harbor` and `sapling.kingsman` replace the old `gateway` and `identityPlatform` accessors. Old instance getters and `platforms.gateway`/`platforms.identity` keys remain temporarily supported to allow migrations; specifying both old and new keys for one package is rejected. The NPM package names are **breaking**: update imports and dependency manifests; old external package names are not shipped or published as aliases.
 
 ### Source ownership moved
 
@@ -13,9 +13,9 @@ The monorepo remains **24 packages**, not additional servers. The package names 
 ### Code example
 
 ```ts
-import {createSapling,defineSaplingConfig} from '@sapling/sdk';
-import {Gateway} from '@sapling/harbor';
-import {IdentityPlatform} from '@sapling/kingsman';
+import {createSapling,defineSaplingConfig} from '@saplings/sdk';
+import {Gateway} from '@saplings/harbor';
+import {IdentityPlatform} from '@saplings/kingsman';
 
 const sapling = createSapling(defineSaplingConfig({
   app: {id:'app',environment:'development'},
@@ -35,7 +35,7 @@ sapling.access.has(ctx,'projects:read'); // Kingsman-owned RBAC
 
 ## Security ownership and risks
 
-Harbor owns ingress routing, verified identity/tenant mapping, IP/geo security, traffic limits, CORS/TLS and upstream retries. Kingsman owns subject identity, credentials, token/session revocation, roles/scopes, organization membership proof. SDK **must** retain business resource-level authorization, tenant RLS, CSRF for cookie-authenticated business endpoints, field/row filtering, paid usage quotas and internal retry/bulkhead. `@sapling/security` still owns scanner/defender engines, with edge signals consumed in Harbor by applications. Gateway headers `x-sapling-principal`/`x-sapling-tenant` are **not cryptographic proof**: downstream applications must authenticate the gateway via mTLS/controlled network and must not trust those headers from direct public clients. Durable distributed rate/bans and token state require a production Store/Valkey; local caches aren't adequate.
+Harbor owns ingress routing, verified identity/tenant mapping, IP/geo security, traffic limits, CORS/TLS and upstream retries. Kingsman owns subject identity, credentials, token/session revocation, roles/scopes, organization membership proof. SDK **must** retain business resource-level authorization, tenant RLS, CSRF for cookie-authenticated business endpoints, field/row filtering, paid usage quotas and internal retry/bulkhead. `@saplings/security` still owns scanner/defender engines, with edge signals consumed in Harbor by applications. Gateway headers `x-sapling-principal`/`x-sapling-tenant` are **not cryptographic proof**: downstream applications must authenticate the gateway via mTLS/controlled network and must not trust those headers from direct public clients. Durable distributed rate/bans and token state require a production Store/Valkey; local caches aren't adequate.
 
 These moves do not mean Google/SAML/LDAP federation, WebAuthn, hardware device attestation, WAF, OIDC certification, replay-safe cross-system audit, or real cloud integrations are complete. The old SaaS `Accounts` (scrypt) and new realm `IdentityPlatform` (Argon2id provider) maintain different credential datasets and lifecycles; no automatic merging or migration of user identities is performed. Plan explicit migration and Argon2id rehash workflow before converging them. This is not authorization to deploy both as competing account issuers in production.
 

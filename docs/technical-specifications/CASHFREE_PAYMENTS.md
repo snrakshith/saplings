@@ -9,7 +9,7 @@ This release implements Cashfree Payment Gateway INR checkout (minimum ₹1; int
 ## Typed configuration
 
 ```ts
-import { defineSaplingConfig } from '@sapling/sdk';
+import { defineSaplingConfig } from '@saplings/sdk';
 // `store` is the application's persistent tenant-scoped store; read env via secret manager.
 export default defineSaplingConfig({
   app: { id: 'billing-app', environment: 'development' },

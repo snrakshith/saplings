@@ -1,9 +1,9 @@
-# sapling-adapter-drizzle — @sapling/adapter-drizzle
+# sapling-adapter-drizzle — @saplings/adapter-drizzle
 
 Release: 0.17.0 · Product specification
 
 ## Purpose and users
-Maintain @sapling/adapter-drizzle as an independently consumable workspace package in the unified platform.
+Maintain @saplings/adapter-drizzle as an independently consumable workspace package in the unified platform.
 
 **Primary consumer:** SDK/platform maintainer.
 
@@ -22,7 +22,7 @@ Package entry points: ..
 4. Owner reviews evidence and uses the documented recovery path when a prerequisite or operation fails.
 
 ## Acceptance
-Build and pack @sapling/adapter-drizzle from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
+Build and pack @saplings/adapter-drizzle from a clean frozen pnpm install; run import/type checks for supported entry points and a consumer integration test. Verify no production bundle accidentally includes dev engines or incompatible browser/Node code.
 
 ## Scope and non-goals
 Package-level compilation or registration is not per-feature functional completeness; see feature dossiers and release blockers.

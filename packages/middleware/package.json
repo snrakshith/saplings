@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/middleware",
+  "name": "@saplings/middleware",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -13,7 +13,8 @@
   "files": [
     "dist",
     "README.md",
-    "ORIGINAL_README.md"
+    "ORIGINAL_README.md",
+    "CHANGELOG.md"
   ],
   "dependencies": {},
   "engines": {
@@ -34,5 +35,15 @@
   "devDependencies": {
     "compression": "^1.8.0",
     "multer": "^2.0.2"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/middleware"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

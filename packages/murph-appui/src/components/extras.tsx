@@ -1,6 +1,6 @@
 import React,{useMemo,useState} from 'react';
 import {Pressable,ScrollView,View} from 'react-native';
-import {colors} from '@sapling/ui-core';
+import {colors} from '@saplings/ui-core';
 import {useAppTheme} from '../core/theme.js';
 import {Stack,Box,Typography,Divider} from './primitives.js';
 import {Button,Alert} from './feedback.js';

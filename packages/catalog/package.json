@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/catalog",
+  "name": "@saplings/catalog",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -12,7 +12,18 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
-  "dependencies": {}
+  "dependencies": {},
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/catalog"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
 }

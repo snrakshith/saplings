@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/cli",
+  "name": "@saplings/cli",
   "version": "0.17.0",
   "type": "module",
   "main": "./dist/index.js",
@@ -12,14 +12,25 @@
   },
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "CHANGELOG.md"
   ],
   "dependencies": {
-    "@sapling/catalog": "workspace:*",
-    "@sapling/security": "workspace:*",
-    "@sapling/sdk": "workspace:*"
+    "@saplings/catalog": "workspace:*",
+    "@saplings/security": "workspace:*",
+    "@saplings/sdk": "workspace:*"
   },
   "bin": {
     "sapling": "./dist/index.js"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/snrakshith/sapling.git",
+    "directory": "packages/cli"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

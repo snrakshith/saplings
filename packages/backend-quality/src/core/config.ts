@@ -1,4 +1,4 @@
-import type {BackendQualityConfig,QualitySuiteConfig,QualityCategory,QualityEngine} from '@sapling/sdk';
+import type {BackendQualityConfig,QualitySuiteConfig,QualityCategory,QualityEngine} from '@saplings/sdk';
 export type {BackendQualityConfig,QualitySuiteConfig,QualityCategory,QualityEngine};
 export const categories = ['performance','load','stress','spike','soak','scalability','security','concurrency','resilience','recovery','observability','contract','chaos','disaster-recovery','kubernetes'] as const satisfies readonly QualityCategory[];
 const engines = ['native','k6','autocannon','toxiproxy','zap','schemathesis','testcontainers','chaos-mesh','kubectl','vitest','node-test'];
