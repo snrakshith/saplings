@@ -1,6 +1,17 @@
 import type { SaplingSDK } from './index.js';
 import type { ActorContext, JsonRecord } from './types.js';
-import { atomic, fail, hash, insert, object, read, strings, text, integer } from './primitives.js';
+import {
+  atomic,
+  fail,
+  hash,
+  insert,
+  object,
+  read,
+  strings,
+  text,
+  integer,
+  tenantIsActive,
+} from './primitives.js';
 import type { Row } from './primitives.js';
 import { sleep } from './reliability.js';
 export type JobHandler = (
@@ -107,6 +118,7 @@ export class WorkerRuntime {
   async relay(ctx: ActorContext, limit = 100) {
     const size = integer(limit, 'limit', 1, 500);
     return this.sdk.store.transaction!(ctx.tenantId, async (tx) => {
+      if (!(await tenantIsActive(tx, ctx.tenantId))) return 0;
       let relayed = 0;
       const state = await tx.get<{ id: string; after?: string }>(
         ctx.tenantId,
@@ -177,13 +189,7 @@ export class WorkerRuntime {
           while (index < ordered.length) {
             const ctx = ordered[index++];
             try {
-              const profile = await this.sdk.store.get<Row>(
-                ctx.tenantId,
-                'tenant-profile',
-                'profile',
-              );
-              if (profile && ['offboarding', 'offboarded'].includes(String(profile.status)))
-                continue;
+              if (!(await tenantIsActive(this.sdk.store, ctx.tenantId))) continue;
               await this.relay(ctx);
               for (let n = 0; n < max; n++) {
                 const row = await this.sdk.automation.work(ctx, this.settings.deadlineMs);

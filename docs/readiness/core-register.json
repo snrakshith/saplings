@@ -1,0 +1,4878 @@
+{
+  "baselineCommit": "c50c9b956cb214c8573fe5fe4912bc26fcfe5a9b",
+  "candidateSourceHash": "5da69b45d58eb2b54be2ca1b9a0aacebe264c3b5a7e06b799eaf373c0d58094d",
+  "referenceProfile": {
+    "name": "core-platform",
+    "runtime": "Node.js 26.13.1",
+    "services": [
+      "PostgreSQL",
+      "Valkey",
+      "Harbor",
+      "Kingsman"
+    ],
+    "acceptanceTopology": "Multiple replicas and two isolated tenants in approved production-equivalent staging",
+    "scopeStatus": "core capability candidates awaiting release-owner and deployment review",
+    "evidencePolicy": "The existing gate remains authoritative. Scope classifications never close or waive a gate."
+  },
+  "result": "blocked",
+  "evidence": {
+    "tests": {
+      "unitPassed": 217,
+      "unitSkipped": 1,
+      "postgresPassed": 6,
+      "valkeyPassed": 5,
+      "consolidationPassed": 16,
+      "foundationTransportPassed": 3,
+      "validationCompatibilityPassed": 12,
+      "hooksPassed": 4,
+      "uiPassed": 7
+    },
+    "v8Coverage": {
+      "lines": {
+        "total": 10623,
+        "covered": 5608,
+        "skipped": 0,
+        "pct": 52.79
+      },
+      "statements": {
+        "total": 11873,
+        "covered": 5926,
+        "skipped": 0,
+        "pct": 49.91
+      },
+      "functions": {
+        "total": 3100,
+        "covered": 1137,
+        "skipped": 0,
+        "pct": 36.67
+      },
+      "branches": {
+        "total": 9412,
+        "covered": 4313,
+        "skipped": 0,
+        "pct": 45.82
+      },
+      "branchesTrue": {
+        "total": 0,
+        "covered": 0,
+        "skipped": 0,
+        "pct": 100
+      }
+    },
+    "localLogicalRestore": {
+      "records": 75,
+      "backupMs": 236,
+      "restoreMs": 189
+    },
+    "localLoopback": {
+      "version": "0.17.0",
+      "environment": "local-loopback-in-memory",
+      "requests": 2000,
+      "concurrency": 32,
+      "tenants": 16,
+      "expectedCrossTenantDenials": 100,
+      "crossTenantDenials": 100,
+      "unexpectedErrors": 0,
+      "seconds": 0.628,
+      "requestsPerSecond": 3183.22,
+      "p50Ms": 6.5,
+      "p95Ms": 20.3,
+      "p99Ms": 81.78,
+      "eventLoopP95Ms": 16.92,
+      "at": "2026-11-20T13:02:50.696Z"
+    },
+    "npmConsumer": {
+      "installed": 24,
+      "rootImportsOrCliSmokePassed": 23,
+      "devicePending": [
+        "@saplings/murph-appui"
+      ]
+    },
+    "dependencyAudit": {
+      "critical": 0,
+      "high": 0,
+      "moderate": 6
+    },
+    "localCoreTopology": {
+      "environment": "Test-mode loopback HTTP with two Harbor and SDK instances, independent PostgreSQL and Valkey clients, and Kingsman API keys",
+      "verified": [
+        "authorized reads on both replicas",
+        "tenant-isolated reads",
+        "shared Valkey rate window",
+        "revocation across replicas"
+      ],
+      "pending": [
+        "approved production ingress and TLS trust boundary",
+        "OIDC conformance",
+        "deployment signoff"
+      ]
+    }
+  },
+  "featureDispositions": {
+    "core-candidate": 80,
+    "experimental": 30,
+    "outside-profile": 72
+  },
+  "packages": [
+    {
+      "name": "@saplings/sdk",
+      "version": "0.17.1",
+      "group": "SDK",
+      "ownerRole": "SDK maintainers",
+      "manifest": "packages/sdk/package.json",
+      "internalDependencies": [
+        "@saplings/catalog",
+        "@saplings/harbor",
+        "@saplings/kingsman",
+        "@saplings/middleware",
+        "@saplings/quality-contracts",
+        "@saplings/realtime",
+        "@saplings/security"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "SDK-01",
+        "SDK-02",
+        "SDK-03",
+        "WORK-01",
+        "OPS-01"
+      ],
+      "acceptance": "Exercise public consumer types and run authorization, durable writes, and failure recovery through the reference application."
+    },
+    {
+      "name": "@saplings/harbor",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/harbor/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "EDGE-01",
+        "OPS-01"
+      ],
+      "acceptance": "Verify authenticated upstream identity, replica-shared controls, and failover behind the approved ingress."
+    },
+    {
+      "name": "@saplings/kingsman",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/kingsman/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "ID-01",
+        "SDK-03"
+      ],
+      "acceptance": "Run the supported OIDC conformance profile with durable state, approved signing and password providers, and revocation across replicas."
+    },
+    {
+      "name": "@saplings/security",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/security/package.json",
+      "internalDependencies": [
+        "@saplings/catalog"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "SEC-01",
+        "EDGE-01"
+      ],
+      "acceptance": "Independent review of supported scanner rules, defender configuration, proxy trust, and secret redaction."
+    },
+    {
+      "name": "@saplings/adapter-drizzle",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/adapter-drizzle/package.json",
+      "internalDependencies": [
+        "@saplings/sdk"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "SDK-03",
+        "OPS-02",
+        "SDK-02"
+      ],
+      "acceptance": "Exercise restricted RLS, migrations from the previous release, upgrade rollback and restore role grants."
+    },
+    {
+      "name": "@saplings/realtime",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/realtime/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "EDGE-01",
+        "WORK-01"
+      ],
+      "acceptance": "Verify replay and disconnect recovery with several service replicas and a shared Valkey backend."
+    },
+    {
+      "name": "@saplings/middleware",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/middleware/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "SDK-03",
+        "WORK-01"
+      ],
+      "acceptance": "Verify the public middleware stack with trusted context, authenticated requests, bounded bodies and replay behavior."
+    },
+    {
+      "name": "@saplings/validations",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/validations/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "PKG-01"
+      ],
+      "acceptance": "Keep pin and subpath compatibility for ESM, CommonJS, native and the supported Zod entry points."
+    },
+    {
+      "name": "@saplings/utils",
+      "version": "0.17.1",
+      "group": "Foundation and platform",
+      "ownerRole": "Platform maintainers",
+      "manifest": "packages/utils/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "PKG-01"
+      ],
+      "acceptance": "Exercise browser and server exports with supported targets and file, stream and timestamp failure cases."
+    },
+    {
+      "name": "@saplings/adapter-app",
+      "version": "0.17.1",
+      "group": "Integrations and tools",
+      "ownerRole": "Integration maintainers",
+      "manifest": "packages/adapter-app/package.json",
+      "internalDependencies": [
+        "@saplings/sdk"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "PROV-01",
+        "PKG-01"
+      ],
+      "acceptance": "Validate Sharp native conversion on the supported image and GraphQL registration and resolver authorization in the consuming app."
+    },
+    {
+      "name": "@saplings/adapter-aws",
+      "version": "0.17.1",
+      "group": "Integrations and tools",
+      "ownerRole": "Integration maintainers",
+      "manifest": "packages/adapter-aws/package.json",
+      "internalDependencies": [
+        "@saplings/sdk"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "PROV-01"
+      ],
+      "acceptance": "Validate the approved AWS IAM, storage and notification sandbox before advertising a live profile."
+    },
+    {
+      "name": "@saplings/catalog",
+      "version": "0.17.1",
+      "group": "Integrations and tools",
+      "ownerRole": "Integration maintainers",
+      "manifest": "packages/catalog/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "PKG-01"
+      ],
+      "acceptance": "Keep registered action IDs and implementation states consistent with the SDK and immutable public catalog exports."
+    },
+    {
+      "name": "@saplings/cli",
+      "version": "0.17.1",
+      "group": "Integrations and tools",
+      "ownerRole": "Integration maintainers",
+      "manifest": "packages/cli/package.json",
+      "internalDependencies": [
+        "@saplings/catalog",
+        "@saplings/sdk",
+        "@saplings/security"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed CLI help passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "PKG-01",
+        "SEC-01"
+      ],
+      "acceptance": "Assert installed CLI exits and emits useful output for each supported command and failure case."
+    },
+    {
+      "name": "@saplings/hooks",
+      "version": "0.17.1",
+      "group": "UI and hooks",
+      "ownerRole": "UI maintainers",
+      "manifest": "packages/hooks/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "PKG-01",
+        "UI-01"
+      ],
+      "acceptance": "Run supported React version and renderer checks, including disposal and concurrent state behavior."
+    },
+    {
+      "name": "@saplings/ui-core",
+      "version": "0.17.1",
+      "group": "UI and hooks",
+      "ownerRole": "UI maintainers",
+      "manifest": "packages/ui-core/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "UI-01"
+      ],
+      "acceptance": "Record redistribution rights and verify shared theme and token behavior in web and native consumers."
+    },
+    {
+      "name": "@saplings/murphi-ui",
+      "version": "0.17.1",
+      "group": "UI and hooks",
+      "ownerRole": "UI maintainers",
+      "manifest": "packages/murphi-ui/package.json",
+      "internalDependencies": [
+        "@saplings/ui-core"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "UI-01"
+      ],
+      "acceptance": "Verify accessibility and interactive behavior across the supported browser matrix and retain license evidence."
+    },
+    {
+      "name": "@saplings/murph-appui",
+      "version": "0.17.1",
+      "group": "UI and hooks",
+      "ownerRole": "UI maintainers",
+      "manifest": "packages/murph-appui/package.json",
+      "internalDependencies": [
+        "@saplings/ui-core"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed; native execution requires a device or emulator",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "UI-01"
+      ],
+      "acceptance": "Verify the packaged build on a supported React Native device or emulator with keyboard and screen-reader flows."
+    },
+    {
+      "name": "@saplings/quality-contracts",
+      "version": "0.17.1",
+      "group": "Quality tooling",
+      "ownerRole": "Quality maintainers",
+      "manifest": "packages/quality-contracts/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "QUAL-01"
+      ],
+      "acceptance": "Validate public report and config shapes against supported consumers and backward compatibility."
+    },
+    {
+      "name": "@saplings/quality-core",
+      "version": "0.17.1",
+      "group": "Quality tooling",
+      "ownerRole": "Quality maintainers",
+      "manifest": "packages/quality-core/package.json",
+      "internalDependencies": [
+        "@saplings/quality-contracts"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "QUAL-01"
+      ],
+      "acceptance": "Validate orchestration, skip semantics, bounded subprocess cleanup and report integrity."
+    },
+    {
+      "name": "@saplings/quality-cli",
+      "version": "0.17.1",
+      "group": "Quality tooling",
+      "ownerRole": "Quality maintainers",
+      "manifest": "packages/quality-cli/package.json",
+      "internalDependencies": [
+        "@saplings/backend-quality",
+        "@saplings/frontend-quality",
+        "@saplings/quality-core"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed CLI help passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "QUAL-01",
+        "PKG-01"
+      ],
+      "acceptance": "Run installed CLI against the approved reference app and verify exit codes, JSON and artifact paths."
+    },
+    {
+      "name": "@saplings/quality-browser-runtime",
+      "version": "0.17.1",
+      "group": "Quality tooling",
+      "ownerRole": "Quality maintainers",
+      "manifest": "packages/quality-browser-runtime/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "QUAL-01",
+        "UI-01"
+      ],
+      "acceptance": "Check web telemetry on supported browsers with consent, redaction and navigation lifecycle behavior."
+    },
+    {
+      "name": "@saplings/quality-node-diagnostics",
+      "version": "0.17.1",
+      "group": "Quality tooling",
+      "ownerRole": "Quality maintainers",
+      "manifest": "packages/quality-node-diagnostics/package.json",
+      "internalDependencies": [],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "QUAL-01",
+        "OPS-01"
+      ],
+      "acceptance": "Check real telemetry under load, event-loop pressure and shutdown without leaked handles."
+    },
+    {
+      "name": "@saplings/backend-quality",
+      "version": "0.17.1",
+      "group": "Quality tooling",
+      "ownerRole": "Quality maintainers",
+      "manifest": "packages/backend-quality/package.json",
+      "internalDependencies": [
+        "@saplings/quality-core",
+        "@saplings/quality-node-diagnostics",
+        "@saplings/sdk"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "QUAL-01",
+        "OPS-01"
+      ],
+      "acceptance": "Run failure and recovery suites against the production-equivalent topology and verify measured assertions."
+    },
+    {
+      "name": "@saplings/frontend-quality",
+      "version": "0.17.1",
+      "group": "Quality tooling",
+      "ownerRole": "Quality maintainers",
+      "manifest": "packages/frontend-quality/package.json",
+      "internalDependencies": [
+        "@saplings/quality-browser-runtime",
+        "@saplings/quality-core"
+      ],
+      "candidateTarball": "verified exports, declarations and compiled JavaScript",
+      "publishedConsumer": "installed public root import passed",
+      "coverage": {
+        "lines": {
+          "covered": 0,
+          "total": 0
+        },
+        "branches": {
+          "covered": 0,
+          "total": 0
+        }
+      },
+      "acceptanceStatus": "blocked",
+      "gapIds": [
+        "QUAL-01",
+        "UI-01"
+      ],
+      "acceptance": "Run configured browser quality suites on the exact deployed candidate and retain the reports."
+    }
+  ],
+  "features": [
+    {
+      "id": "SAAS-001",
+      "name": "User registration",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "register"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-001",
+      "acceptance": "Register same email with mixed case concurrently; exactly one account, no password in result, generic duplicate response.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-002",
+      "name": "Passwordless authentication",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "issue",
+        "consume"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-002",
+      "acceptance": "Consume expired, replayed, wrong-tenant and wrong-purpose challenges; only one valid session.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-003",
+      "name": "Email verification",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "issue",
+        "consume"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-003",
+      "acceptance": "Verify email twice and with a reset token; no unintended account verification.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-004",
+      "name": "Password reset",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "issue",
+        "consume"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-004",
+      "acceptance": "Race two reset attempts; old credentials and sessions no longer work; prevent enumeration.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-005",
+      "name": "Login and logout",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "login",
+        "logout"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-005",
+      "acceptance": "Login with wrong password, locked account and MFA; logout revokes session on every replica.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-006",
+      "name": "Session management",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "verify",
+        "list",
+        "revoke"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-006",
+      "acceptance": "Expired/revoked session rejected on every replica; no other user's session listed.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-007",
+      "name": "JWT validation",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "verify"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman realm verifier or explicit external adapter",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-007",
+      "acceptance": "Reject wrong issuer/audience, unsigned, expired, rotated and tenant-mismatched tokens.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-008",
+      "name": "API key lifecycle",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "create",
+        "list",
+        "revoke"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman API-key service",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-008",
+      "acceptance": "Plain key returned once; expired/revoked keys cannot authenticate; cross-tenant listing denied.",
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-009",
+      "name": "MFA and step-up auth",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "enroll",
+        "confirm",
+        "challenge",
+        "verify",
+        "revoke"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-009",
+      "acceptance": "Replay same TOTP concurrently; reject unenrolled/revoked factor and stale step-up.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-010",
+      "name": "SSO and SAML",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "start",
+        "callback",
+        "metadata"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "provider-required (NOT moved as working code)",
+      "documentedLimits": "partial/provider-needed",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-010",
+      "acceptance": "Validate signed assertion and relay state; reject replay, wrong issuer, wrong tenant and stale metadata.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-011",
+      "name": "OAuth2 and OIDC",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "authorize",
+        "callback",
+        "refresh",
+        "revoke"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "provider-required (NOT moved as working code)",
+      "documentedLimits": "partial/provider-needed",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-011",
+      "acceptance": "Exercise PKCE/state/nonce and refresh rotation; reject mismatched issuer and token reuse.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-012",
+      "name": "Social login",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "start",
+        "callback"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "provider-required (NOT moved as working code)",
+      "documentedLimits": "partial/provider-needed",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-012",
+      "acceptance": "Two identities with same unverified email cannot link; unlink preserves account recovery.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-013",
+      "name": "Device trust",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "register",
+        "revoke"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK device record (hardware attestation missing)",
+      "documentedLimits": "partial/provider-needed",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-013",
+      "acceptance": "Unattested device remains pending; copied device ID fails trust decision.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-014",
+      "name": "Service accounts",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "create",
+        "revoke"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman API-key service",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-014",
+      "acceptance": "Revoke service credential; verify old token cannot access tenant or broader scope.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-015",
+      "name": "Role-based authorization",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "setRole",
+        "check",
+        "assign"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-015",
+      "acceptance": "Non-admin cannot grant wildcard or elevate own role; role changes affect current sessions.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-016",
+      "name": "Attribute-based authorization",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "check"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-016",
+      "acceptance": "Missing/stale attributes deny; policy update invalidates old decision; cross-tenant ABAC denied.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-017",
+      "name": "Permission policies",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "check"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-017",
+      "acceptance": "Conflicting allow/deny and malformed policies evaluated deterministically; default deny.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-018",
+      "name": "Account lockout",
+      "category": "Identity & access",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Identity engineer",
+      "actions": [
+        "login"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-018",
+      "acceptance": "Concurrent failed attempts enforce threshold; legitimate unlock does not reset unrelated accounts.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-019",
+      "name": "Tenant provisioning",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "provision"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-019",
+      "acceptance": "Crash between DB and provider steps; retry uses same tenant and no orphan infrastructure.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-020",
+      "name": "Tenant identification",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "context"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-020",
+      "acceptance": "Spoofed tenant header, unknown host and stale membership never change context.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-021",
+      "name": "Tenant isolation",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "check"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-021",
+      "acceptance": "Two tenant sessions attempt same ID, join, export, and raw SQL; none leaks data.",
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-022",
+      "name": "Tenant context propagation",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "context"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-022",
+      "acceptance": "Interleaved concurrent requests/jobs retain independent context and never reuse another tenant.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-023",
+      "name": "Tenant data residency",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "get"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-023",
+      "acceptance": "Write/read/backup in permitted region only; fail closed for unavailable region.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-024",
+      "name": "Tenant offboarding",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "request",
+        "approve",
+        "status",
+        "advance"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-024",
+      "acceptance": "Retry every checkpoint after crash; hold prevents purge; no new jobs or sessions after freeze.",
+      "localEvidence": "Offboarding regression and direct freeze integration",
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-025",
+      "name": "Organizations",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-025",
+      "acceptance": "Create duplicate org and delete with active memberships; block cross-tenant access and cascade only explicitly.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-026",
+      "name": "Workspaces",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-026",
+      "acceptance": "Workspace moved or deleted while active project exists; enforce owner and membership invariants.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-027",
+      "name": "Projects",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-027",
+      "acceptance": "Create project under unauthorized workspace; update immutable fields and duplicate names denied.",
+      "localEvidence": "Direct resource regression across two SDK instances",
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-028",
+      "name": "Teams",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-028",
+      "acceptance": "Remove team with assigned permissions; stale authorization no longer grants access.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-029",
+      "name": "Membership management",
+      "category": "Tenancy & organization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-029",
+      "acceptance": "Concurrent membership create deduplicates; removing last owner or escalating role rejected.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-030",
+      "name": "User invitations",
+      "category": "Tenancy & organization",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "invite",
+        "accept"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-030",
+      "acceptance": "Wrong identity, expired and reused invitation rejected; concurrent accept one membership.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-031",
+      "name": "Organization switching",
+      "category": "Tenancy & organization",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "switch"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "KingsmanMembership on existing SDK membership rows",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-031",
+      "acceptance": "Switch to unrelated org denied; old tenant token cannot read new tenant data.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-032",
+      "name": "Custom roles",
+      "category": "Tenancy & organization",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "set"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-032",
+      "acceptance": "Unprivileged actor cannot create role with broader scopes; deletion of in-use role controlled.",
+      "localEvidence": null,
+      "gapId": "ID-01"
+    },
+    {
+      "id": "SAAS-033",
+      "name": "Impersonation controls",
+      "category": "Tenancy & organization",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Backend / data engineer",
+      "actions": [
+        "start",
+        "stop"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman-owned scoped impersonation service",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-033",
+      "acceptance": "Impersonation cannot mutate billing or impersonate nested users; stop invalidates token.",
+      "localEvidence": null,
+      "gapId": "SDK-03"
+    },
+    {
+      "id": "SAAS-034",
+      "name": "Plans and tiers",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "create",
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-034",
+      "acceptance": "Changing price does not retroactively alter existing invoice or plan revision.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-035",
+      "name": "Subscriptions",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "create",
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-035",
+      "acceptance": "Duplicate create under retry; cross-tenant plan reference denied; no double subscription.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-036",
+      "name": "Subscription lifecycle",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "transition",
+        "schedule",
+        "issueDue",
+        "cancelSchedule",
+        "quoteChange"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-036",
+      "acceptance": "Upgrade/downgrade midcycle and cancel during renewal; exact rounding and no double invoices.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-037",
+      "name": "Free trials",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "start"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-037",
+      "acceptance": "Repeated signup cannot reset trial; concurrent expiration/upgrade produces one transition.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-038",
+      "name": "Usage metering",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "meter",
+        "get"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-038",
+      "acceptance": "Replay metering event and submit around billing boundary; totals stable.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-039",
+      "name": "Quotas",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "set",
+        "get"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-039",
+      "acceptance": "100 concurrent reservations exceed quota by zero; failed work releases only its reservation.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-040",
+      "name": "Entitlements",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "set",
+        "check"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-040",
+      "acceptance": "Downgrade invalidates cached entitlement; unknown flag defaults deny.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-041",
+      "name": "Invoices",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "create",
+        "get",
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-041",
+      "acceptance": "Concurrent invoice creation unique; issued invoice cannot be mutated silently.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-042",
+      "name": "Payment collection",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "order"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-042",
+      "acceptance": "Sandbox hosted checkout with success/failure/timeout, signature and amount mismatch, duplicate order; ensure invoice paid only after verified capture.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-043",
+      "name": "Payment methods",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "attach",
+        "list",
+        "detach"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-043",
+      "acceptance": "Attempt another customer token, revoke method and verify recurring mandate status against sandbox.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-044",
+      "name": "Tax calculation",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "calculate"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-044",
+      "acceptance": "Test inclusive/exclusive tax, discounts, exemptions and tax-rate transitions with finance-approved fixtures.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-045",
+      "name": "Coupons and discounts",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "create",
+        "redeem"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-045",
+      "acceptance": "Concurrent final redemption only one; expired/ineligible coupon denied.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-046",
+      "name": "Credits and wallets",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "post"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-046",
+      "acceptance": "Concurrent debit cannot overdraw; replay and reversal preserve balanced ledger.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-047",
+      "name": "Refunds",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "refund"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-047",
+      "acceptance": "Refund partial/full, pending->success/failure, duplicate and timeout; amounts reconcile and no over-refund.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-048",
+      "name": "Dunning and retries",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "enqueue",
+        "chargeDue",
+        "resume",
+        "sweep"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-048",
+      "acceptance": "Expired/revoked mandate never charged; timeout and retry same invoice cannot double charge.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-049",
+      "name": "Revenue metrics",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-049",
+      "acceptance": "Reconcile known payment/refund fixture to provider settlement and accounting period.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-050",
+      "name": "Webhooks for billing",
+      "category": "Billing & monetization",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Billing / finance engineer",
+      "actions": [
+        "verify",
+        "reconcile"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-050",
+      "acceptance": "Tampered raw JSON, stale signature, wrong tenant, duplicate/out-of-order event, pending refund and provider outage.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-051",
+      "name": "Security scanner",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "scan"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-051",
+      "acceptance": "Run seeded safe/vulnerable fixtures across 41 categories; skipped/failed never treated as clean.",
+      "localEvidence": null,
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-052",
+      "name": "Runtime threat defender",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "assess"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-052",
+      "acceptance": "Exercise legitimate and malicious staging fixtures, proxy trust, rate limit multi-replica and alert delivery.",
+      "localEvidence": null,
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-053",
+      "name": "Secrets management",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "get",
+        "put",
+        "rotate"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-053",
+      "acceptance": "Rotate keys and recover old ciphertext; unauthorized read and log leakage denied.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-054",
+      "name": "Encryption at rest",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "encrypt",
+        "decrypt"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-054",
+      "acceptance": "Tamper ciphertext and swap tenant context; decryption fails; key rotation tested.",
+      "localEvidence": null,
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-055",
+      "name": "Encryption in transit",
+      "category": "Security & governance",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "verify",
+        "configure"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "GatewayTlsPolicy behind SDK Operations TLS facade",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-055",
+      "acceptance": "Expired/invalid cert, spoofed forwarded headers and plaintext internal connection rejected.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-056",
+      "name": "HTTP security headers",
+      "category": "Security & governance",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "policy"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "documentedLimits": "partial/shared enforcement",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-056",
+      "acceptance": "Test actual HTTPS responses, redirects and errors; verify headers and no conflicting values.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-057",
+      "name": "CORS policy",
+      "category": "Security & governance",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "policy"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "documentedLimits": "partial/shared enforcement",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-057",
+      "acceptance": "Untrusted origin/preflight denied; allowed origin gets correct Vary and headers.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-058",
+      "name": "CSRF controls",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "policy"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-058",
+      "acceptance": "Cross-origin cookie POST fails; valid same-origin token succeeds; rotate session invalidates old token.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-059",
+      "name": "Rate limiting",
+      "category": "Security & governance",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "policy"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "documentedLimits": "partial/shared enforcement",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-059",
+      "acceptance": "Burst across replicas enforces limits; dependency outage fails closed; reset tested.",
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-060",
+      "name": "Abuse detection",
+      "category": "Security & governance",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "policy"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "documentedLimits": "partial/shared enforcement",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-060",
+      "acceptance": "Normal high-volume tenant allowed under policy; abusive fixture blocked without broad false positives.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-061",
+      "name": "Data retention",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "run"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-061",
+      "acceptance": "Held records survive expiry; retry sweep does not skip eligible rows; evidence counts match.",
+      "localEvidence": null,
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-062",
+      "name": "Data deletion",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-062",
+      "acceptance": "Delete request cannot purge held data; repeated deletion idempotent and cross-tenant denied.",
+      "localEvidence": null,
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-063",
+      "name": "Consent management",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "record",
+        "history"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-063",
+      "acceptance": "Withdrawal prevents future tracking/delivery; history immutable and data minimized.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-064",
+      "name": "Privacy export",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "export"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-064",
+      "acceptance": "Other user's data excluded; huge export bounded; link expires and deletion audited.",
+      "localEvidence": null,
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-065",
+      "name": "Audit trail",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "list",
+        "record"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-065",
+      "acceptance": "Attempt edit/delete as app role denied; actor/tenant/correlation reconstruct transaction.",
+      "localEvidence": "PostgreSQL append-only audit integration",
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-066",
+      "name": "IP allowlists",
+      "category": "Security & governance",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "policy"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "documentedLimits": "partial/shared enforcement",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-066",
+      "acceptance": "Allowlisted source works through verified proxy; spoofed header and IPv6 boundaries tested.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-067",
+      "name": "IP denylists",
+      "category": "Security & governance",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "policy"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Harbor edge plugin and SDK defender policy view",
+      "documentedLimits": "partial/shared enforcement",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-067",
+      "acceptance": "Denied source blocked; expired entry and allow/deny precedence deterministic.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-068",
+      "name": "Security incident alerts",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "list",
+        "ack"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-068",
+      "acceptance": "Repeated signal deduplicates alerts; acknowledgement cannot suppress unrelated incidents.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-069",
+      "name": "Vulnerability management",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-069",
+      "acceptance": "False positive review expires on source change; reopened finding and duplicate IDs handled.",
+      "localEvidence": null,
+      "gapId": "SEC-01"
+    },
+    {
+      "id": "SAAS-070",
+      "name": "Compliance evidence",
+      "category": "Security & governance",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Security / governance engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-070",
+      "acceptance": "Tampered artifact rejected; access and evidence expiration tracked.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-071",
+      "name": "Transactional email",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "send"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-071",
+      "acceptance": "Sandbox send, failure/retry, duplicate and suppressed recipient; no secret/PII logs.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-072",
+      "name": "Bulk email",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "enqueue"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-072",
+      "acceptance": "Partial provider batch failure retries only failed recipients; unsubscribe honored before send.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-073",
+      "name": "SMS",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "send"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-073",
+      "acceptance": "Sandbox valid/invalid phone and provider throttling; opt-out and duplicate suppression.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-074",
+      "name": "Push notifications",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "send"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-074",
+      "acceptance": "Invalid token removed, wrong tenant token denied; retries do not multiply sends.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-075",
+      "name": "In-app notifications",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "send",
+        "list",
+        "read"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-075",
+      "acceptance": "Other user cannot read/mark notification; repeated mark read is idempotent.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-076",
+      "name": "Notification templates",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-076",
+      "acceptance": "Missing/unsafe variables and invalid locale rejected; published revision immutable.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-077",
+      "name": "User notification preferences",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "set",
+        "get"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-077",
+      "acceptance": "Changing preference blocks only eligible category; concurrent changes preserve last approved state.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-078",
+      "name": "Delivery tracking",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-078",
+      "acceptance": "Out-of-order callback cannot regress delivered status; recipient history tenant scoped.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-079",
+      "name": "Notification retries",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "enqueue"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-079",
+      "acceptance": "Retry transient only; permanent failure DLQ and no duplicate delivered message.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-080",
+      "name": "Notification opt-out",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "optOut"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-080",
+      "acceptance": "Replay signed unsubscribe safe; wrong tenant and altered recipient rejected.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-081",
+      "name": "Webhooks for notifications",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "verify",
+        "reconcile"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-081",
+      "acceptance": "Tampered, stale, replayed and unknown provider callback cannot alter delivery record.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-082",
+      "name": "Multilingual notifications",
+      "category": "Communications",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Integration engineer",
+      "actions": [
+        "render"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-082",
+      "acceptance": "Missing translations fall back deterministically; unsafe HTML variables escaped.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-083",
+      "name": "Object storage",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "upload",
+        "download",
+        "list",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-083",
+      "acceptance": "Cross-tenant keys and oversized files denied; version restore and delete semantics verified.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-084",
+      "name": "File uploads",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "upload",
+        "download",
+        "list",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-084",
+      "acceptance": "Reject mismatched MIME, traversal, oversized multipart and unsafe archive fixtures.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-085",
+      "name": "Presigned download URLs",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "sign"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-085",
+      "acceptance": "Wrong owner/prefix and expired URL denied; signed URL cannot read other version.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-086",
+      "name": "File metadata",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "get"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-086",
+      "acceptance": "Untrusted metadata cannot change owner or storage key; update conflicts handled.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-087",
+      "name": "File versions",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "get"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-087",
+      "acceptance": "Concurrent writes retain versions; deleted/held version remains according to policy.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-088",
+      "name": "Document management",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-088",
+      "acceptance": "Create invalid blob reference; cross-tenant share and delete denied; revision conflict.",
+      "localEvidence": null,
+      "gapId": "SDK-02"
+    },
+    {
+      "id": "SAAS-089",
+      "name": "Import pipelines",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "import"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-089",
+      "acceptance": "Retry partial import no duplicates; invalid rows quarantined and progress recoverable.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-090",
+      "name": "Data export",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "export"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-090",
+      "acceptance": "Export only visible fields; cancellation and large datasets bounded.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-091",
+      "name": "Backup and restore",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "backup",
+        "restore",
+        "status"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-091",
+      "acceptance": "Restore tenant and full system in isolated environment; measure RTO/RPO and integrity.",
+      "localEvidence": "Disposable logical restore with identical record digest",
+      "gapId": "OPS-02"
+    },
+    {
+      "id": "SAAS-092",
+      "name": "Data migrations",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "plan",
+        "apply",
+        "status"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-092",
+      "acceptance": "Concurrent migration only one runner; interruption safe; schema downgrade tested where supported.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-093",
+      "name": "Full-text search",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "search"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-093",
+      "acceptance": "Live Postgres explain plan confirms index and RLS; no cross-tenant results.",
+      "localEvidence": "Tenant-scoped PostgreSQL indexed text search",
+      "gapId": "SDK-02"
+    },
+    {
+      "id": "SAAS-094",
+      "name": "CDN integration",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "purge",
+        "configure"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-094",
+      "acceptance": "Purge permitted tenant paths only; verify origin response and cache invalidation in sandbox.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-095",
+      "name": "Media processing",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "transform",
+        "status"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-095",
+      "acceptance": "Malformed and huge image rejected; retry deterministic output; tenant isolation.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-096",
+      "name": "Data validation",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "validate"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-096",
+      "acceptance": "Invalid nested types and unsafe keys rejected; schema changes compatibility-tested.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-097",
+      "name": "Soft delete",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-097",
+      "acceptance": "Deleted item invisible except approved restore; held item not hard-deleted.",
+      "localEvidence": null,
+      "gapId": "SDK-02"
+    },
+    {
+      "id": "SAAS-098",
+      "name": "Data archival",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "archive"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-098",
+      "acceptance": "Archive and restore with verified checksum; held objects retained and access scoped.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-099",
+      "name": "Data masking",
+      "category": "Data & content",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Storage / database engineer",
+      "actions": [
+        "mask"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-099",
+      "acceptance": "Privileged role sees approved field; default views and errors contain no sensitive values.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-100",
+      "name": "Product events",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "track"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-100",
+      "acceptance": "Replay batch no double count; unknown tenant/user/event and consent withdrawal handled.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-101",
+      "name": "User identification",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "identify"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-101",
+      "acceptance": "Merge same anonymous ID only within tenant; conflicting identity rejected.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-102",
+      "name": "Group analytics",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-102",
+      "acceptance": "Known group fixture totals reconcile; unauthorized group and tenant excluded.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-103",
+      "name": "Funnels",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-103",
+      "acceptance": "Fixture with repeated/out-of-order events yields expected funnel counts.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-104",
+      "name": "Retention analysis",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-104",
+      "acceptance": "Fixture with DST and late data produces expected cohort retention.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-105",
+      "name": "Cohort analysis",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-105",
+      "acceptance": "Same input and reference time produce same cohort; membership updates audited.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-106",
+      "name": "Dashboards",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-106",
+      "acceptance": "Unauthorized edit denied; invalid expensive query rejected; concurrent revision conflict.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-107",
+      "name": "Reports",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-107",
+      "acceptance": "Report fixture totals match; large range rejected or queued; export redacted.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-108",
+      "name": "Scheduled reports",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "schedule"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-108",
+      "acceptance": "DST/missed schedule runs once; revoked recipient no longer receives report.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-109",
+      "name": "Custom metrics",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-109",
+      "acceptance": "Counter/gauge semantics match fixture; high-cardinality labels bounded.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-110",
+      "name": "Error tracking",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "capture",
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-110",
+      "acceptance": "Sensitive stack/input redacted; repeated event dedups group; source map access restricted.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-111",
+      "name": "Experiment analytics",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-111",
+      "acceptance": "Fixture assignment/exposure conversion matches; variant changes do not corrupt history.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-112",
+      "name": "Usage analytics",
+      "category": "Analytics & insights",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Analytics engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-112",
+      "acceptance": "Duplicate usage events and late windows produce correct totals.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-113",
+      "name": "Background jobs",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "enqueue",
+        "list"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-113",
+      "acceptance": "Worker dies after claim; lease recovery executes at most one committed local effect.",
+      "localEvidence": "PostgreSQL job lease integration",
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-114",
+      "name": "Scheduled jobs",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "enqueue",
+        "list"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-114",
+      "acceptance": "Concurrent schedulers and DST transition produce defined one-run behavior.",
+      "localEvidence": null,
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-115",
+      "name": "Job retries",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "requeue"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-115",
+      "acceptance": "Transient succeeds after retry; permanent/exhausted job goes DLQ once.",
+      "localEvidence": "PostgreSQL job lease integration",
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-116",
+      "name": "Dead-letter queue",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "list",
+        "requeue"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-116",
+      "acceptance": "Requeue unauthorized or completed job denied; replay preserves identity and audit.",
+      "localEvidence": null,
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-117",
+      "name": "Workflow orchestration",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "start"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-117",
+      "acceptance": "Fail after external effect; reconcile rather than duplicate; terminal and compensation states audited.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-118",
+      "name": "Approval workflows",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "request",
+        "decide"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-118",
+      "acceptance": "Concurrent approve/reject only one terminal state; requestor cannot approve prohibited action.",
+      "localEvidence": null,
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-119",
+      "name": "Business rules",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "evaluate"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-119",
+      "acceptance": "Invalid expression rejected; missing fields and conflicting rules deterministic.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-120",
+      "name": "Event-driven automation",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "enqueue"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-120",
+      "acceptance": "Crash/replay of event does not duplicate local effect; poison event isolated.",
+      "localEvidence": null,
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-121",
+      "name": "Webhook triggers",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "verify",
+        "dispatch"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-121",
+      "acceptance": "Duplicate delivery and tampered/expired signature denied; crash after enqueue no loss.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-122",
+      "name": "Idempotency",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "record"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-122",
+      "acceptance": "Parallel same-key commits once; conflicting input 409; rollback leaves no partial effect.",
+      "localEvidence": "PostgreSQL concurrent transactional HTTP replay",
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-123",
+      "name": "Outbox pattern",
+      "category": "Workflows & automation",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Workflow engineer",
+      "actions": [
+        "append"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-123",
+      "acceptance": "Kill relay after publish before ack; duplicate delivery tolerated and no lost event.",
+      "localEvidence": "Atomic outbox regression",
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-124",
+      "name": "REST API patterns",
+      "category": "APIs & developer tools",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "envelope"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-124",
+      "acceptance": "Contract tests compare success/errors to OpenAPI; internal exception sanitized.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-125",
+      "name": "GraphQL APIs",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "execute",
+        "schema"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-125",
+      "acceptance": "Cross-tenant nested resolver denied; query complexity and introspection policy enforced.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-126",
+      "name": "OpenAPI specification",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "document"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-126",
+      "acceptance": "Spec validator and route contract tests fail on incompatible change or missing auth.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-127",
+      "name": "SDK clients",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "generate"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-127",
+      "acceptance": "Type test rejects invalid DTO; mocked 4xx/5xx/abort paths return typed results.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-128",
+      "name": "API versioning",
+      "category": "APIs & developer tools",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "resolve"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-128",
+      "acceptance": "Unknown version fails explicitly; legacy supported route retains contract.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-129",
+      "name": "API pagination",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "page"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-129",
+      "acceptance": "Concurrent inserts/deletes do not leak or duplicate rows beyond documented semantics.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-130",
+      "name": "API filtering",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "filter"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-130",
+      "acceptance": "Unknown operator/SQL payload rejected; tenant filter cannot be overridden.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-131",
+      "name": "API rate-limit headers",
+      "category": "APIs & developer tools",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "headers"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-131",
+      "acceptance": "429 carries correct retry time; multiple replicas return consistent headers.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-132",
+      "name": "Developer portal",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-132",
+      "acceptance": "User sees own projects/keys only; unsafe HTML and unauthorized portal edit denied.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-133",
+      "name": "API key scopes",
+      "category": "APIs & developer tools",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "check"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "Kingsman AccessService authorization consumed at HTTP boundary",
+      "documentedLimits": "partial/shared enforcement",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-133",
+      "acceptance": "Key with read scope cannot mutate; revoked key rejected across replicas.",
+      "localEvidence": "Two loopback Harbor and SDK instances with Kingsman API keys, PostgreSQL, and shared Valkey",
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-134",
+      "name": "Webhook signing",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "sign",
+        "verify"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-134",
+      "acceptance": "Tampered bytes, expired/replayed signature and wrong secret rejected.",
+      "localEvidence": null,
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-135",
+      "name": "Webhook delivery",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "enqueue"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-135",
+      "acceptance": "Private network destination blocked; receiver timeout/retry and duplicate event tolerated.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-136",
+      "name": "Event bus",
+      "category": "APIs & developer tools",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "emit"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-136",
+      "acceptance": "Restart node after event; consumer recovers checkpoint; duplicate delivery tolerated.",
+      "localEvidence": "Valkey pub/sub and replay integrations",
+      "gapId": "WORK-01"
+    },
+    {
+      "id": "SAAS-137",
+      "name": "Correlation IDs",
+      "category": "APIs & developer tools",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "get"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-137",
+      "acceptance": "Concurrent requests retain distinct IDs; invalid/oversized header replaced.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-138",
+      "name": "Error envelope",
+      "category": "APIs & developer tools",
+      "package": "@saplings/harbor",
+      "reviewOwnerRole": "SDK / API engineer",
+      "actions": [
+        "envelope"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "GatewayHttpPolicies SDK binding",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/harbor/src",
+      "dossier": "docs/features/saas/SAAS-138",
+      "acceptance": "Known failure maps correct status; unexpected exception sanitized with correlation ID.",
+      "localEvidence": null,
+      "gapId": "EDGE-01"
+    },
+    {
+      "id": "SAAS-139",
+      "name": "Feature flags",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "set",
+        "evaluate"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-139",
+      "acceptance": "Missing flag disabled; permission denied for other tenant; change invalidates cache.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-140",
+      "name": "Percentage rollouts",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "set",
+        "evaluate"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-140",
+      "acceptance": "Same subject remains in bucket; boundary percentages and rollout rollback verified.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-141",
+      "name": "A/B experiments",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "set",
+        "evaluate"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-141",
+      "acceptance": "Variant assignment stable; duplicate exposure dedup; paused experiment stops new assignments.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-142",
+      "name": "Environment configuration",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "get"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-142",
+      "acceptance": "Missing required production env fails startup; sensitive config never exposed.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-143",
+      "name": "Tenant configuration",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-143",
+      "acceptance": "Concurrent update conflicts; other tenant settings inaccessible.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-144",
+      "name": "Remote configuration",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-144",
+      "acceptance": "Client receives approved revision only; rollback and stale config policy tested.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-145",
+      "name": "Plugins",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "install",
+        "uninstall",
+        "list"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-145",
+      "acceptance": "Untrusted plugin cannot execute; failed activation rollback preserves configuration.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-146",
+      "name": "Custom integrations",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-146",
+      "acceptance": "Rotate/revoke integration; other tenant cannot use credentials; failure visible.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-147",
+      "name": "White labeling",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-147",
+      "acceptance": "Other tenant brand inaccessible; unsafe HTML/assets rejected; fallback theme works.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-148",
+      "name": "Custom domains",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "request",
+        "verify",
+        "activate",
+        "remove"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-148",
+      "acceptance": "Wrong TXT record denied; domain reassignment and certificate renewal tested in sandbox.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-149",
+      "name": "Localization",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "format"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-149",
+      "acceptance": "Fixtures for Indian/other locale, pluralization and invalid locale; no crash.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-150",
+      "name": "Timezone handling",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "format"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-150",
+      "acceptance": "DST gap/fold and invalid timezone fixtures produce documented behavior.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-151",
+      "name": "Theme configuration",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-151",
+      "acceptance": "Invalid token/CSS rejected; theme updates isolated by tenant and accessibility tested.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-152",
+      "name": "App branding",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-152",
+      "acceptance": "Unsafe or cross-tenant asset rejected; cache invalidation updates public brand.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-153",
+      "name": "Maintenance mode",
+      "category": "Product configuration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Platform engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-153",
+      "acceptance": "Maintenance blocks intended mutation, allows health and authorized recovery; expiry restores.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-154",
+      "name": "Structured logging",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "log"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-154",
+      "acceptance": "Secret-bearing input never logged; sink outage doesn't leak or block unboundedly.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-155",
+      "name": "Distributed tracing",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "export",
+        "status"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-155",
+      "acceptance": "Multi-service trace correlates request/job; exporter outage bounded and no sensitive attributes.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-156",
+      "name": "Request metrics",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "observe",
+        "snapshot"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-156",
+      "acceptance": "Known request mix yields expected counts/latencies; label cardinality bounded.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-157",
+      "name": "Application health",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "get"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-157",
+      "acceptance": "Dependency failure does not cause restart storm; public health contains no secrets.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-158",
+      "name": "Readiness checks",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "get"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-158",
+      "acceptance": "Unavailable required dependency makes instance unready; restore recovers within policy.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-159",
+      "name": "Circuit breaker",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "describe"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-159",
+      "acceptance": "Failure burst opens breaker, one probe half-open, success restores; no cross-provider bleed.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-160",
+      "name": "Retry with backoff",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "describe"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-160",
+      "acceptance": "Nonretryable not retried; maximum deadline and jitter bounds verified.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-161",
+      "name": "Timeouts",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "describe"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-161",
+      "acceptance": "Timeout returns bounded response; ignored cancellation cannot commit stale lease.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-162",
+      "name": "Bulkheads",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "describe"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-162",
+      "acceptance": "Saturated tenant/provider cannot starve unrelated traffic; queue stays bounded.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-163",
+      "name": "SLO and SLI",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "report"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-163",
+      "acceptance": "Known traffic fixture yields correct availability/error budget; alert triggers threshold.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-164",
+      "name": "Alerting",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "record",
+        "list"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-164",
+      "acceptance": "Duplicate alert dedup, route to correct team, retry delivery and audit.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-165",
+      "name": "Deployment pipelines",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "deploy",
+        "status",
+        "rollback"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-165",
+      "acceptance": "Failed rollout restores previous revision; stale callback cannot mark newer release ready.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-166",
+      "name": "Environment provisioning",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "plan",
+        "apply",
+        "destroy"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-166",
+      "acceptance": "Plan diff approved; interrupted apply reconciled; destroy requires explicit confirmation.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-167",
+      "name": "Horizontal scaling",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "scale",
+        "status"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-167",
+      "acceptance": "Staging ramp scales within limits and returns baseline; missing metrics fail safely.",
+      "localEvidence": null,
+      "gapId": "PROV-01"
+    },
+    {
+      "id": "SAAS-168",
+      "name": "Disaster recovery",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "backup",
+        "restore",
+        "drill"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK capability adapter or provider placeholder",
+      "documentedLimits": "provider-needed",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-168",
+      "acceptance": "Isolated restore drill verifies DB/blob consistency and measured recovery objectives.",
+      "localEvidence": null,
+      "gapId": "OPS-02"
+    },
+    {
+      "id": "SAAS-169",
+      "name": "Graceful shutdown",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "status"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-169",
+      "acceptance": "SIGTERM during active work no new claims; unfinished jobs recover via lease.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-170",
+      "name": "Configuration validation",
+      "category": "Operations & reliability",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "SRE / platform engineer",
+      "actions": [
+        "validate"
+      ],
+      "profile": "core-candidate",
+      "evidenceStatus": "blocked",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-170",
+      "acceptance": "Malformed feature/provider config rejected; missing secrets and conflicting aliases fail.",
+      "localEvidence": null,
+      "gapId": "OPS-01"
+    },
+    {
+      "id": "SAAS-171",
+      "name": "Comments",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-171",
+      "acceptance": "Other tenant/unauthorized parent denied; unsafe markup sanitized and audit retained.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-172",
+      "name": "Activity feeds",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-172",
+      "acceptance": "Replay event dedup; users see only authorized resource activity.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-173",
+      "name": "Task assignments",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "assign",
+        "complete",
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-173",
+      "acceptance": "Assign outside tenant denied; concurrent completion terminal once.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-174",
+      "name": "Approval history",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-174",
+      "acceptance": "Non-participant cannot view; decisions append-only and ordered.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-175",
+      "name": "Shared resources",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-175",
+      "acceptance": "Revoked share loses access immediately; cross-tenant share requires explicit policy.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-176",
+      "name": "Contacts and accounts",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-176",
+      "acceptance": "Duplicate normalized contact handled; cross-tenant and unauthorized field read denied.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-177",
+      "name": "User directories",
+      "category": "Business & collaboration",
+      "package": "@saplings/kingsman",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "Kingsman legacy account/role/MFA lifecycle",
+      "documentedLimits": "implemented-delegate; live validation pending",
+      "source": "packages/kingsman/src",
+      "dossier": "docs/features/saas/SAAS-177",
+      "acceptance": "Other tenant not listed; private fields redacted; deleted user removed.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-178",
+      "name": "Helpdesk tickets",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "update",
+        "list"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-178",
+      "acceptance": "Requester cannot edit agent-only status; concurrent close and reopen follow policy.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-179",
+      "name": "Feedback collection",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-179",
+      "acceptance": "Anonymous rate limit and unsafe payload; other tenant cannot read feedback.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-180",
+      "name": "Admin console",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "overview"
+      ],
+      "profile": "experimental",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-180",
+      "acceptance": "Non-admin denied; dashboard reflects current tenant only, no secret config.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-181",
+      "name": "Usage policies",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "create",
+        "get",
+        "list",
+        "update",
+        "delete"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK local binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-181",
+      "acceptance": "Expired policy and conflicting limits fail deterministic; unauthorized edit denied.",
+      "localEvidence": null,
+      "gapId": null
+    },
+    {
+      "id": "SAAS-182",
+      "name": "Data ownership transitions",
+      "category": "Business & collaboration",
+      "package": "@saplings/sdk",
+      "reviewOwnerRole": "Application engineer",
+      "actions": [
+        "transfer"
+      ],
+      "profile": "outside-profile",
+      "evidenceStatus": "outside-profile",
+      "implementation": "SDK hybrid binding",
+      "documentedLimits": "existing-implementation; feature-specific acceptance pending",
+      "source": "packages/sdk/src/registry.ts",
+      "dossier": "docs/features/saas/SAAS-182",
+      "acceptance": "Transfer to nonmember denied; concurrent transfer single winner and audit records both owners.",
+      "localEvidence": null,
+      "gapId": null
+    }
+  ],
+  "backlog": [
+    {
+      "id": "SDK-01",
+      "priority": "P0",
+      "ownerRole": "SDK maintainers",
+      "status": "verified-locally",
+      "finding": "Direct resources and durable job admission lacked a transaction-scoped tenant freeze check.",
+      "remediation": "Apply the same tenant lifecycle policy inside resource, job and outbox transactions.",
+      "acceptance": "Two SDK instances with independent pools reject writes and claims for an offboarding tenant, preserve pending work, and resume after reactivation. Repeat in staging.",
+      "source": "tests/integration/postgres.test.mjs"
+    },
+    {
+      "id": "SDK-02",
+      "priority": "P1",
+      "ownerRole": "SDK maintainers",
+      "status": "open",
+      "finding": "ResourceService.list reads a whole collection before applying filters, authorization and pagination.",
+      "remediation": "Design bounded pagination that preserves row authorization and documented sort and offset behavior.",
+      "acceptance": "Bound reads across a representative tenant and verify stable order, filtering and pagination under concurrent writes.",
+      "source": "packages/sdk/src/resources.ts"
+    },
+    {
+      "id": "SDK-03",
+      "priority": "P0",
+      "ownerRole": "Application and database owners",
+      "status": "blocked",
+      "finding": "The consuming application authorization and its restricted database role have no staging signoff.",
+      "remediation": "Review trusted actor context, tenant isolation, per-object policies and runtime role grants in the actual consuming app.",
+      "acceptance": "Authorization matrix passes through public application entry points for two tenants and multiple roles, with build-bound application reviewer signoff.",
+      "source": "docs/INDEPENDENT_SECURITY_AUDIT.md"
+    },
+    {
+      "id": "ID-01",
+      "priority": "P0",
+      "ownerRole": "Identity maintainers",
+      "status": "blocked",
+      "finding": "Durable OIDC, session revocation, signing rotation and account migration lack approved staging evidence.",
+      "remediation": "Select and document the supported account store, provision approved password and signing providers, and rehearse upgrades and rollback.",
+      "acceptance": "Conformance profile, revocation and rotation succeed across replicas. If credentials migrate, verify data, permissions and rollback with approved fixtures.",
+      "source": "docs/platforms/kingsman/GAPS_AND_IMPROVEMENTS.md"
+    },
+    {
+      "id": "EDGE-01",
+      "priority": "P0",
+      "ownerRole": "Platform maintainers",
+      "status": "blocked",
+      "finding": "The actual Harbor-to-application identity boundary, replica-shared limits and recovery remain unverified.",
+      "remediation": "Use authenticated upstream transport and durable state in the reference topology. Review which identity headers the application accepts.",
+      "acceptance": "Approved reference ingress verifies trusted identity, non-acceptance of unexpected identity, replica-wide controls, rotation and recovery.",
+      "source": "docs/platforms/harbor/GAPS_AND_IMPROVEMENTS.md"
+    },
+    {
+      "id": "WORK-01",
+      "priority": "P1",
+      "ownerRole": "SDK and integration maintainers",
+      "status": "open",
+      "finding": "Provider delivery can succeed before a worker records completion. Worker delivery remains at least once.",
+      "remediation": "Require documented idempotency or reconciliation contracts for every supported handler with an external side effect.",
+      "acceptance": "Restart a worker between delivery and acknowledgement in staging. Confirm replay converges without duplicated business effects and failed work is observable.",
+      "source": "packages/sdk/src/worker.ts"
+    },
+    {
+      "id": "OPS-01",
+      "priority": "P0",
+      "ownerRole": "Operations owners",
+      "status": "blocked",
+      "finding": "No approved production-equivalent staging topology, workload, alert routes or SLO decisions were provided.",
+      "remediation": "Provision multiple replicas and two isolated tenants in approved staging. Set workload, safety limits, latency and error budgets before load.",
+      "acceptance": "Run upgrades, dependency outage, load and soak against approved targets. Record latency, throughput, resource use, alert delivery and rollback.",
+      "source": "docs/RELEASE_VALIDATION.md"
+    },
+    {
+      "id": "OPS-02",
+      "priority": "P0",
+      "ownerRole": "Database and operations owners",
+      "status": "blocked",
+      "finding": "Disposable logical restore is verified. Deployment backups, point-in-time recovery, roles and recovery objectives remain open.",
+      "remediation": "Exercise backup and recovery in a separate staging failure domain. Document restore order and permission recovery.",
+      "acceptance": "Verify business invariants, runtime role isolation and the agreed recovery time and data loss targets after restoration.",
+      "source": "deploy/operations/postgres-restore-drill.sh"
+    },
+    {
+      "id": "SEC-01",
+      "priority": "P0",
+      "ownerRole": "Independent security reviewer",
+      "status": "blocked",
+      "finding": "Local scan and dependency audit are available. Independent review and disposition of moderate advisories remain open.",
+      "remediation": "Record dependency, image and source review and obtain independent signoff for the actual deployment.",
+      "acceptance": "Zero unresolved critical or high findings and documented residual-risk acceptance bound to the exact candidate.",
+      "source": "docs/INDEPENDENT_SECURITY_AUDIT.md"
+    },
+    {
+      "id": "PKG-01",
+      "priority": "P1",
+      "ownerRole": "Package maintainers",
+      "status": "open",
+      "finding": "Published install and entry-point smoke tests pass. Full supported consumer and upgrade matrices have gaps.",
+      "remediation": "Test the documented runtime, module and peer combinations against release tarballs. Add regressions for any incompatibility.",
+      "acceptance": "Required interfaces resolve in clean consumers with recorded versions and the previous supported version upgrades successfully.",
+      "source": "scripts/release/verify-npm-packages.mjs"
+    },
+    {
+      "id": "UI-01",
+      "priority": "P1",
+      "ownerRole": "UI and licensing owners",
+      "status": "blocked",
+      "finding": "Authoritative Murphi redistribution evidence and native device and accessibility signoff are open.",
+      "remediation": "Confirm rights and retain authoritative notices. Run approved device and browser accessibility checks for the supported UI profile.",
+      "acceptance": "Signed rights record and test results for supported web and native platforms.",
+      "source": "docs/ui-platforms/PROVENANCE.md"
+    },
+    {
+      "id": "QUAL-01",
+      "priority": "P1",
+      "ownerRole": "Quality and operations maintainers",
+      "status": "blocked",
+      "finding": "Local and CI checks exist. Full supported quality profiles lack staging deployment evidence.",
+      "remediation": "Run the quality CLI against approved staging and retain reports, budgets and required engine output.",
+      "acceptance": "Configured suites report accurate pass, fail and skip outcomes. Required runs meet approved budgets and produce artifacts.",
+      "source": "docs/QUALITY_INTEGRATION.md"
+    },
+    {
+      "id": "PROV-01",
+      "priority": "P1",
+      "ownerRole": "Provider integration owners",
+      "status": "outside-profile",
+      "finding": "AWS and Cashfree and other external integrations are outside the first core deployment milestone.",
+      "remediation": "Define sandbox targets and a provider-specific rollout when support expands.",
+      "acceptance": "Verify permitted success, failure, retry, reconciliation and isolation cases with approved accounts and scoped permissions.",
+      "source": "docs/PROVIDER_MATRIX.md"
+    }
+  ],
+  "gates": [
+    {
+      "id": "core-build",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": "Package builds and types"
+    },
+    {
+      "id": "regression",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Vitest unit and focused regressions"
+    },
+    {
+      "id": "catalog",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": "Inventory and static consolidation checks"
+    },
+    {
+      "id": "adapter-build",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Drizzle, AWS and app adapter compilation"
+    },
+    {
+      "id": "postgres-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "6 tests in disposable PostgreSQL with restricted roles, including two SDK instances"
+    },
+    {
+      "id": "valkey-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "5 tests in disposable Valkey"
+    },
+    {
+      "id": "provider-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "outside-first-profile-review",
+      "localEvidence": null
+    },
+    {
+      "id": "staging-load",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "staging-soak",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "restore-drill",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Disposable logical restore with matching record digest"
+    },
+    {
+      "id": "dependency-audit",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "High threshold passed with 6 moderate advisories"
+    },
+    {
+      "id": "scanner-triage",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "CI-reviewed source scan passed"
+    },
+    {
+      "id": "independent-security-audit",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "application-authorization",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "operations-review",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "quality-build",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "All quality packages built"
+    },
+    {
+      "id": "backend-quality-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "frontend-quality-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "foundation-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "3 transport tests on local processes"
+    },
+    {
+      "id": "validation-compat",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "12 Zod compatibility cases"
+    },
+    {
+      "id": "technical-evaluation",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "recurring-payment-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "outside-first-profile-review",
+      "localEvidence": null
+    },
+    {
+      "id": "tenant-offboarding-drill",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "workspace-install",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Frozen install"
+    },
+    {
+      "id": "react-hooks",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "4 hooks integration cases"
+    },
+    {
+      "id": "cashfree-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "outside-first-profile-review",
+      "localEvidence": null
+    },
+    {
+      "id": "saas-gap-audit",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "saas-feature-acceptance-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "platform-config",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": "Platform type contracts passed"
+    },
+    {
+      "id": "gateway-integration-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Two loopback Harbor and SDK instances exercised tenant isolation, shared rate limiting and API-key revocation. Production-equivalent staging is pending."
+    },
+    {
+      "id": "identity-oidc-conformance",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "ui-core-build",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": "Shared UI compiled"
+    },
+    {
+      "id": "ui-web-build",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Web UI compiled and focused UI suite passed"
+    },
+    {
+      "id": "ui-native-build",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Native UI compiled"
+    },
+    {
+      "id": "ui-native-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "ui-accessibility-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": null
+    },
+    {
+      "id": "sdk-root-refactor",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": "Layout verifier passed"
+    },
+    {
+      "id": "gateway-security-local",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Consolidation and platform fixtures"
+    },
+    {
+      "id": "identity-security-local",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Consolidation and platform fixtures"
+    },
+    {
+      "id": "tenant-export-local",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Existing Vitest regression ran"
+    },
+    {
+      "id": "vitest-migration",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": "Static migration verifier passed"
+    },
+    {
+      "id": "vitest-runtime",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "217 passing tests and one skip"
+    },
+    {
+      "id": "vitest-coverage",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Native V8 report generated"
+    },
+    {
+      "id": "architecture-consolidation-local",
+      "officialStatus": "blocked",
+      "reason": "wrong source/version",
+      "scopeReview": "required-review",
+      "localEvidence": "16 consolidation scenarios passed"
+    },
+    {
+      "id": "architecture-consolidation-live",
+      "officialStatus": "blocked",
+      "reason": "not passed",
+      "scopeReview": "required-review",
+      "localEvidence": "Two loopback Harbor and SDK instances exercised tenant isolation, shared rate limiting and API-key revocation. Production-equivalent staging is pending."
+    }
+  ]
+}

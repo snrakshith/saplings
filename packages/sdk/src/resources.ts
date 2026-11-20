@@ -1,4 +1,4 @@
-import { atomic, object } from './primitives.js';
+import { atomic, object, requireActiveTenant } from './primitives.js';
 import { randomUUID } from 'node:crypto';
 import type { ActorContext, Store, JsonRecord, ResourceRecord } from './types.js';
 import { SaplingError } from './types.js';
@@ -17,6 +17,7 @@ export class ResourceService {
       if (Object.hasOwn(data, field))
         throw new SaplingError('FORBIDDEN', `Immutable resource field: ${field}`, 403);
     return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
       await this.access.requireService(ctx, `${this.collection}:write`, data, tx);
       const at = new Date().toISOString();
       const record: ResourceRecord = { ...data, id: randomUUID(), createdAt: at, updatedAt: at };
@@ -59,6 +60,7 @@ export class ResourceService {
   }
   async update(ctx: ActorContext, id: string, changes: JsonRecord): Promise<ResourceRecord> {
     return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
       const previous = await tx.get<ResourceRecord>(ctx.tenantId, this.collection, id);
       if (!previous)
         throw new SaplingError('NOT_FOUND', `${this.collection} resource not found`, 404);
@@ -90,6 +92,7 @@ export class ResourceService {
   }
   async delete(ctx: ActorContext, id: string): Promise<boolean> {
     return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
       if (
         (await tx.get<{ active: boolean }>(ctx.tenantId, 'legal-holds', 'current'))?.active === true
       )

@@ -31,12 +31,13 @@ function verifyPackage(archive, manifest) {
   const files = new Set(
     execFileSync('tar', ['-tzf', archive], { encoding: 'utf8' }).trim().split('\n'),
   );
-  const packed = JSON.parse(
-    execFileSync('tar', ['-xOzf', archive, 'package/package.json'], { encoding: 'utf8' }),
-  );
+  const readArchiveJson = (file) =>
+    JSON.parse(execFileSync('tar', ['-xOzf', archive, file], { encoding: 'utf8' }));
+  const packed = readArchiveJson('package/package.json');
   assert.equal(packed.name, name);
   assert.equal(packed.version, version, name);
   assert.ok(files.has('package/LICENSE'), `${name} is missing its license`);
+  assert.ok(files.has('package/README.md'), `${name} is missing its README`);
   assert.ok(
     [...files].some((file) => /^package\/dist\/.+\.[cm]?js$/.test(file)),
     `${name} is missing compiled JavaScript`,
@@ -46,10 +47,26 @@ function verifyPackage(archive, manifest) {
     `${name} is missing compiled TypeScript declarations`,
   );
 
+  for (const file of files) {
+    const rawTypeScript = /\.[cm]?tsx?$/.test(file) && !/\.d\.[cm]?ts$/.test(file);
+    assert.ok(
+      !file.startsWith('package/src/') && !rawTypeScript,
+      `${name} ships a source file at ${file}`,
+    );
+    if (file.endsWith('.map')) {
+      const { sourcesContent } = readArchiveJson(file);
+      assert.ok(
+        !sourcesContent?.some((source) => source != null),
+        `${name} embeds source code in ${file}`,
+      );
+    }
+  }
+
   const bin = typeof packed.bin === 'string' ? [packed.bin] : Object.values(packed.bin ?? {});
   const targets = [
     packed.main,
     packed.module,
+    packed['react-native'],
     packed.types,
     ...bin,
     ...exportTargets(packed.exports),

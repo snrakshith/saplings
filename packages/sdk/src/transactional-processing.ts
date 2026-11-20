@@ -1,6 +1,6 @@
 import type { ActorContext, JsonRecord, Store } from './types.js';
 import type { EventJournal, RealtimeEvent } from '@saplings/realtime';
-import { atomic, fail, hash, integer, scope, text } from './primitives.js';
+import { atomic, fail, hash, integer, scope, text, requireActiveTenant } from './primitives.js';
 /** Canonical, bounded JSON; no getters, functions, non-finite numbers, undefined or cyclic values. */
 function canonical(value: unknown, maxBytes = 1_000_000) {
   let nodes = 0;
@@ -67,9 +67,7 @@ export async function transactionalHttpOperation(
     fingerprint = hash(raw),
     id = hash(JSON.stringify([ctx.actorId, operation, method, key]));
   return atomic(store, ctx.tenantId, async (tx) => {
-    const profile = await tx.get<{ status: string }>(ctx.tenantId, 'tenant-profile', 'profile');
-    if (profile && profile.status !== 'active')
-      return fail('Tenant is not active', 'TENANT_FROZEN', 403);
+    await requireActiveTenant(tx, ctx.tenantId);
     const previous = await tx.get<{
       id: string;
       fingerprint: string;
@@ -147,9 +145,7 @@ export class TransactionalEventConsumer {
       prev = event.id;
     }
     return atomic(this.store, ctx.tenantId, async (tx) => {
-      const profile = await tx.get<{ status: string }>(ctx.tenantId, 'tenant-profile', 'profile');
-      if (profile && profile.status !== 'active')
-        return fail('Tenant is not active', 'TENANT_FROZEN', 403);
+      await requireActiveTenant(tx, ctx.tenantId);
       const current = await tx.get<{ id: string; cursor: string }>(ctx.tenantId, collection, id);
       if ((current?.cursor ?? '0') !== cursor)
         return { processed: 0, cursor: current?.cursor ?? '0', contended: true };

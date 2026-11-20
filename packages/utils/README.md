@@ -1,3 +1,28 @@
-# Sapling utils — v0.8.0
+# @saplings/utils
 
-See the monorepo's docs/FOUNDATION_PACKAGES.md for integration, limitations and API examples. This package is independently installable and contains no quality testing engines.
+Use typed helpers for collection transforms, dates, identifiers, i18n, and permissions.
+
+## Install
+
+```bash
+npm install @saplings/utils
+```
+
+## Quick start
+
+```ts
+import { chunk, groupBy, nanoid, unique } from '@saplings/utils';
+
+const ids = unique(['draft', 'draft', 'published']);
+console.log(chunk(ids, 1));
+console.log(groupBy([{ status: 'draft' }, { status: 'published' }], (item) => item.status));
+console.log(nanoid());
+```
+
+## API and integration
+
+- `chunk(items, size)` splits a list. `unique(items)` deduplicates using JavaScript set semantics. `groupBy(items, keyOf)` groups records by their derived key.
+- The root exports named functions and namespaces such as `fp`, `date`, and `permissions`. Check the manifest for supported subpaths before deep-importing.
+- Keep server-only helpers in Node.js entry points. Use `@saplings/hooks` for the React hooks library.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/UTILITIES_CATALOG.md) for configuration and operational details.

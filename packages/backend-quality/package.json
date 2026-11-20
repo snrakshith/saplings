@@ -14,9 +14,6 @@
       "default": "./dist/diagnostics.js"
     }
   },
-  "bin": {
-    "sapling-quality-legacy": "./dist/cli.js"
-  },
   "files": [
     "dist",
     "assets",

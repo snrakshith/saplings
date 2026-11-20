@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import {
   QualityOrchestrator,
   loadQualityConfig,
@@ -7,22 +6,20 @@ import {
   type ExecutionProfile,
   type SuiteId,
 } from '@saplings/quality-core';
-import { registerBackend } from '@saplings/backend-quality';
+import { cliMain, registerBackend } from '@saplings/backend-quality';
 import { registerFrontend } from '@saplings/frontend-quality/register';
 import { execFileSafe, suiteIds } from '@saplings/quality-core';
-import { pathToFileURL } from 'node:url';
-import { realpathSync, existsSync } from 'node:fs';
-import { readFile } from 'node:fs/promises';
+import { existsSync, promises as fs } from 'node:fs';
 const HELP = `Sapling Quality Platform — unified React + Node.js quality CLI
 
 Usage:
-  sapling-quality report --file quality-results/<run>/report.json
-  sapling-quality legacy run --config examples/express-app/sapling.config.ts
-  sapling-quality list
-  sapling-quality doctor
-  sapling-quality run --config sapling.config.ts --profile pr
-  sapling-quality run --config sapling.config.ts --suite frontend:visual
-  sapling-quality run --config sapling.config.ts --scope fullstack --profile release
+  sapling quality report --file quality-results/<run>/report.json
+  sapling quality legacy run --config examples/express-app/sapling.config.ts
+  sapling quality list
+  sapling quality doctor
+  sapling quality run --config sapling.config.ts --profile pr
+  sapling quality run --config sapling.config.ts --suite frontend:visual
+  sapling quality run --config sapling.config.ts --scope fullstack --profile release
 
 Options:
   --config FILE          Config in TypeScript / JS / JSON (default sapling.config.ts)
@@ -41,11 +38,9 @@ function value(args: string[], flag: string): string | undefined {
   const i = args.indexOf(flag);
   return i < 0 ? undefined : args[i + 1];
 }
-export async function main(args = process.argv.slice(2)) {
+async function main(args: string[]) {
+  if (args[0] === '--') args = args.slice(1);
   const command = args[0] ?? 'help';
-  const orchestrator = new QualityOrchestrator();
-  registerBackend(orchestrator);
-  registerFrontend(orchestrator);
   if (['help', '--help', '-h'].includes(command)) {
     console.log(HELP);
     return;
@@ -78,12 +73,14 @@ export async function main(args = process.argv.slice(2)) {
       }
     }
     try {
-      const { chromium } = await import(String('playwright'));
+      const { chromium } = await import('playwright');
       const browser = await chromium.launch();
       await browser.close();
       console.log('OK Playwright Chromium');
     } catch {
-      console.log('MISSING Playwright Chromium: run pnpm exec playwright install chromium');
+      console.log(
+        'MISSING Playwright Chromium: run npm exec playwright@1.56.1 -- install chromium',
+      );
       missing++;
     }
     console.log(
@@ -94,11 +91,10 @@ export async function main(args = process.argv.slice(2)) {
   if (command === 'report') {
     const file = value(args, '--file');
     if (!file || !existsSync(file)) throw Error('Use report --file <report.json>');
-    console.log(await readFile(file, 'utf8'));
+    console.log(await fs.readFile(file, 'utf8'));
     return;
   }
   if (command === 'legacy') {
-    const { cliMain } = await import('@saplings/backend-quality');
     await cliMain(args.slice(1));
     return;
   }
@@ -116,6 +112,9 @@ export async function main(args = process.argv.slice(2)) {
     : (config.profiles?.[profile] ?? suiteIds(config));
   const suites = candidates.filter((id) => scope === 'fullstack' || id.startsWith(`${scope}:`));
   if (!suites.length) throw new Error('No suites selected for this profile and scope');
+  const orchestrator = new QualityOrchestrator();
+  registerBackend(orchestrator);
+  registerFrontend(orchestrator);
   const run = await orchestrator.run(config, {
     profile,
     suites,
@@ -137,8 +136,11 @@ export async function main(args = process.argv.slice(2)) {
   if (run.summary.failed > 0) process.exitCode = 1;
   else if (run.summary.skipped > 0) process.exitCode = 1; // fail closed; skippable suites must not be silently green
 }
-if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href)
-  main().catch((error) => {
+export async function runQualityCli(args: string[]) {
+  try {
+    await main(args);
+  } catch (error) {
     console.error('Sapling Quality:', error instanceof Error ? error.message : error);
     process.exitCode = 2;
-  });
+  }
+}

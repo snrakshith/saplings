@@ -1,0 +1,28 @@
+---
+title: "@saplings/ui-core"
+description: "Share theme tokens, spacing, typography, and responsive decisions across web and React Native."
+---
+
+## Install
+
+```bash
+npm install @saplings/ui-core
+```
+
+## Quick start
+
+```ts
+import { createTheme, getSemanticColors, spacingPx } from '@saplings/ui-core';
+
+const theme = createTheme('dark', { primary: '#2563eb', density: 'compact' });
+const colors = getSemanticColors(theme);
+console.log({ surface: colors.surface, padding: spacingPx(2, 'compact') });
+```
+
+## API and integration
+
+- `createTheme(mode, options?)` creates a theme. `getSemanticColors(theme)` resolves semantic surface, text, and accent colors.
+- `spacingPx` and `toNativeTypography` return numeric styles for native apps. Use responsive helpers and `cssVariables` in web renderers.
+- Use semantic tokens in components so palette and density changes apply consistently. This package has no React peer.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/ui-platforms/TECHNICAL_SPECIFICATION.md) for configuration and operational details.

@@ -1,0 +1,28 @@
+---
+title: "@saplings/security"
+description: "Apply runtime request policies and collect local source scan evidence for your own application."
+---
+
+## Install
+
+```bash
+npm install --save-dev @saplings/security
+```
+
+## Quick start
+
+```ts
+import { generateSarif, runScan } from '@saplings/security';
+
+const report = await runScan({ root: './src' });
+console.log(JSON.stringify(generateSarif(report), null, 2));
+console.error('Not executed:', report.notExecutedScannerIds);
+```
+
+## API and integration
+
+- `runScan(options?)` returns findings plus execution and coverage metadata. Preserve JSON when you need complete coverage details. Use `generateSarif(report)` for SARIF consumers.
+- `Defender` provides runtime policy middleware for server applications. Configure alerts, rate state, and trusted request context for your infrastructure.
+- Review scanner results and unexecuted checks as part of your verification process.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/SECURITY_DESIGN.md) for configuration and operational details.

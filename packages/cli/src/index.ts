@@ -9,16 +9,8 @@ function arg(name: string) {
 const command = process.argv[2] ?? 'help';
 async function main() {
   if (command === 'quality') {
-    const name = '@saplings/quality-cli';
-    let quality: any;
-    try {
-      quality = await import(name);
-    } catch {
-      throw Error(
-        'Install @saplings/quality-cli as a development dependency; or use sapling-quality directly.',
-      );
-    }
-    await quality.main(process.argv.slice(3));
+    const { runQualityCli } = await import('./quality.js');
+    await runQualityCli(process.argv.slice(3));
     return;
   }
   if (command === 'catalog') {
@@ -77,7 +69,7 @@ async function main() {
     return;
   }
   console.log(
-    'Sapling CLI\n  catalog                         Print master feature/scanner catalog\n  scan --path . [--url URL --allow-host hostname] [--format sarif|json] [--reports FILE] [--dns-config FILE] [--threat-intel FILE] [--require-all]\n  quality [command]               Run full-stack quality (dev package)\n  doctor                          Display production-readiness warnings',
+    'Sapling CLI\n  catalog                         Print master feature/scanner catalog\n  scan --path . [--url URL --allow-host hostname] [--format sarif|json] [--reports FILE] [--dns-config FILE] [--threat-intel FILE] [--require-all]\n  quality [command]               Run full-stack quality checks\n  doctor                          Display production-readiness warnings',
   );
 }
 main().catch((error) => {

@@ -1,0 +1,41 @@
+# @saplings/adapter-drizzle
+
+Use PostgreSQL as the SDK store through Drizzle and node-postgres.
+
+## Install
+
+```bash
+npm install @saplings/sdk @saplings/adapter-drizzle drizzle-orm pg
+npm install --save-dev @types/pg
+```
+
+## Quick start
+
+```ts
+import { DrizzleStore } from '@saplings/adapter-drizzle';
+import { createSapling } from '@saplings/sdk';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { Pool } from 'pg';
+
+const connectionString = process.env.DATABASE_URL;
+if (!connectionString) throw new Error('Set DATABASE_URL');
+
+const pool = new Pool({ connectionString });
+const sdk = createSapling({
+  app: { id: 'my-app', environment: 'development' },
+  providers: { store: new DrizzleStore(drizzle(pool)) },
+});
+try {
+  console.log(await sdk.readiness());
+} finally {
+  await pool.end();
+}
+```
+
+## API and integration
+
+- Apply the SQL files in this package's `migrations/` in order with a migration role before starting the app.
+- Use a non-owner application role without `BYPASSRLS`. Test cross-tenant reads and writes with the same role your service uses.
+- `DrizzleStore` implements the SDK `Store` interface. Call `transaction(tenantId, work)` for tenant-scoped operations that must commit together. Use the callback's transaction store inside `work`.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/RELEASE_VALIDATION.md) for configuration and operational details.

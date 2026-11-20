@@ -13,6 +13,7 @@ jobs:
           node-version-file: .node-version
       - run: pnpm install --frozen-lockfile
       - run: pnpm run format:check
+      - run: pnpm run docs:site:check
       - run: pnpm run lint
   typecheck:
     runs-on: ubuntu-latest

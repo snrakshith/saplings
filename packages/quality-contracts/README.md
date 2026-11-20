@@ -1,0 +1,34 @@
+# @saplings/quality-contracts
+
+Define typed configuration, suite IDs, execution profiles, and report shapes for the quality tools.
+
+## Install
+
+```bash
+npm install --save-dev @saplings/quality-contracts
+```
+
+## Quick start
+
+```ts
+import { defineQualityConfig, type RunReport } from '@saplings/quality-contracts';
+
+export default defineQualityConfig({
+  name: 'my-web-app',
+  environment: 'local',
+  frontend: { baseUrl: 'http://127.0.0.1:5173', routes: ['/'] },
+  profiles: { pr: ['frontend:accessibility'] },
+});
+
+export function passed(report: RunReport) {
+  return report.summary.failed === 0 && report.summary.skipped === 0;
+}
+```
+
+## API and integration
+
+- `defineQualityConfig<T extends QualityConfig>(config: T): T` keeps the inferred configuration type.
+- `SuiteId`, `SuiteResult`, and `RunReport` are shared by the CLI and adapters. `BACKEND_SUITES` and `FRONTEND_SUITES` list suite names.
+- Use `@saplings/quality-core` for runtime validation and orchestration or `@saplings/cli` to run the config.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/quality/README.md) for configuration and operational details.

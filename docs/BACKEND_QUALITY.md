@@ -39,7 +39,7 @@ pnpm run quality -- run performance --config examples/express-app/sapling.config
 pnpm run quality -- report
 ```
 
-Start the authorized local app first; use Node 22.18+ or the root npm quality script (Node 22.16 with type stripping). External package consumers install `@saplings/sdk` as a runtime dependency and `@saplings/backend-quality` and optionally `@saplings/cli` as dev dependencies. `sapling quality list` or `sapling-quality list` works with published workspace packages; this ZIP does not publish them. TypeScript configs with non-erasable constructs require `node --import tsx` or compilation first. Config modules are trusted executable code and must not initialize production resources on import.
+Start the local app using Node.js 26. External package consumers can install `@saplings/cli` as a development dependency. Use `sapling quality list` for unified suites or `sapling quality legacy list` for the older backend runner. TypeScript configs with non-erasable constructs require `node --import tsx` or compilation first. Config modules are trusted executable code and must not initialize production resources on import.
 
 ## One configuration
 

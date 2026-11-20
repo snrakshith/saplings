@@ -1,3 +1,39 @@
-# Sapling realtime — v0.8.0
+# @saplings/realtime
 
-See the monorepo's docs/FOUNDATION_PACKAGES.md for integration, limitations and API examples. This package is independently installable and contains no quality testing engines.
+Broker tenant-scoped application events over SSE, WebSocket, or Socket.IO.
+
+## Install
+
+```bash
+npm install @saplings/realtime
+```
+
+## Quick start
+
+```ts
+import { LocalBroker, RealtimeHub } from '@saplings/realtime';
+
+const principal = { tenantId: 'demo', userId: 'user' };
+const hub = new RealtimeHub({
+  broker: new LocalBroker(),
+  authenticate: async () => principal, // Local fixture. Verify a token in your service.
+  authorize: (actor, channel) => actor.tenantId === 'demo' && channel === 'projects',
+});
+
+const connection = hub.connect(principal, console.log, () => {});
+try {
+  await connection.subscribe('projects');
+  await hub.publish(principal, 'projects', { id: 'p1', type: 'created' });
+} finally {
+  await connection.close();
+  await hub.close();
+}
+```
+
+## API and integration
+
+- Authenticate at the transport boundary and authorize subscription and publication per tenant and channel.
+- `LocalBroker` is process-local. Use `RedisBroker` with separately connected publish and subscribe clients for multiple processes.
+- Configure a journal for replay and resynchronize on `ReplayGapError`. Apply connection and payload limits at the service boundary.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/FOUNDATION_PACKAGES.md) for configuration and operational details.

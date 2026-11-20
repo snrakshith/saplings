@@ -11,14 +11,14 @@ const pkgDirs = fs
   .readdirSync('packages')
   .filter((d) => fs.existsSync(`packages/${d}/package.json`));
 req(manifest.version === '0.17.0', 'Unexpected version');
-req(pkgDirs.length === 24, 'Workspace package count changed');
+req(pkgDirs.length === 23, 'Workspace package count changed');
 const names = pkgDirs.map((d) => JSON.parse(read(`packages/${d}/package.json`)));
 req(
   names.every((m) => m.name.startsWith('@saplings/')),
   'Reusable packages must use the @saplings scope',
 );
 const all = new Set(names.map((m) => m.name));
-req(all.size === 24, 'Duplicate package name');
+req(all.size === pkgDirs.length, 'Duplicate package name');
 for (const n of ['@saplings/harbor', '@saplings/kingsman', '@saplings/sdk'])
   req(all.has(n), `Missing ${n}`);
 for (const n of [
@@ -26,8 +26,16 @@ for (const n of [
   '@sapling/identity-platform',
   '@saplings/gateway',
   '@saplings/identity-platform',
+  '@saplings/quality-cli',
 ])
   req(!all.has(n), 'Old package name is still published: ' + n);
+req(
+  names
+    .filter((m) => m.bin)
+    .map((m) => m.name)
+    .join(',') === '@saplings/cli',
+  'Only @saplings/cli should publish an executable',
+);
 for (const m of names)
   for (const [dependency, version] of Object.entries(m.dependencies ?? {}))
     if (all.has(dependency))

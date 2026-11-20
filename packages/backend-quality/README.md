@@ -1,2 +1,28 @@
-# @saplings/backend-quality v0.5.0
-Development-only backend quality orchestration. See ../../docs/BACKEND_QUALITY.md for full configuration, profiles and limitations. All 15 categories ship together; engines may need installation and application-specific tests. No automatic traffic at SDK initialization. Use Node.js 26 (native type stripping) or a compiled config / `node --import tsx` for TypeScript config imports.
+# @saplings/backend-quality
+
+Register backend quality suites for HTTP contracts, performance, observability, and infrastructure with the quality runner.
+
+## Install
+
+```bash
+npm install --save-dev @saplings/backend-quality @saplings/quality-core
+```
+
+## Quick start
+
+```ts
+import { registerBackend } from '@saplings/backend-quality';
+import { QualityOrchestrator } from '@saplings/quality-core';
+
+const runner = new QualityOrchestrator();
+registerBackend(runner);
+console.log(runner.list());
+```
+
+## API and integration
+
+- `registerBackend(orchestrator)` attaches backend suite adapters. Run suites against the test application you configure with `QualityConfig.backend`.
+- Install `@saplings/cli` for `sapling quality run`. Legacy backend configuration can use `sapling quality legacy run`.
+- `@saplings/backend-quality/diagnostics` exposes `createNodeDiagnostics` for a controlled metrics endpoint. The npm package includes example runner assets. Install any native engines required by the suites you select.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/BACKEND_QUALITY.md) for configuration and operational details.

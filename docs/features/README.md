@@ -2,7 +2,7 @@
 
 Each dossier has three files: product specification, technical specification and detailed gaps/improvements. Scope: all catalog IDs, all scanner categories, quality suites, defender signals/controls, package-level contracts and public foundation/adapter declarations. A generated dossier is not implementation completion. Review owner, acceptance and source references before closing a task.
 
-**860 dossiers / 2580 feature documents.**
+**859 dossiers / 2577 feature documents.**
 
 ## saas (182)
 
@@ -904,7 +904,7 @@ Each dossier has three files: product specification, technical specification and
 | kingsman-types-tokenset — TokenSet (kingsman/types) | [Product](kingsman/kingsman-types-tokenset/PRODUCT_SPECIFICATION.md) | [Technical](kingsman/kingsman-types-tokenset/TECHNICAL_SPECIFICATION.md) | [Gaps](kingsman/kingsman-types-tokenset/GAPS_AND_IMPROVEMENTS.md) |
 | kingsman-types-authprincipal — AuthPrincipal (kingsman/types) | [Product](kingsman/kingsman-types-authprincipal/PRODUCT_SPECIFICATION.md) | [Technical](kingsman/kingsman-types-authprincipal/TECHNICAL_SPECIFICATION.md) | [Gaps](kingsman/kingsman-types-authprincipal/GAPS_AND_IMPROVEMENTS.md) |
 
-## packages (24)
+## packages (23)
 
 | ID / name | Product | Technical | Gaps |
 |---|---|---|---|
@@ -922,7 +922,6 @@ Each dossier has three files: product specification, technical specification and
 | sapling-murph-appui — @saplings/murph-appui | [Product](packages/sapling-murph-appui/PRODUCT_SPECIFICATION.md) | [Technical](packages/sapling-murph-appui/TECHNICAL_SPECIFICATION.md) | [Gaps](packages/sapling-murph-appui/GAPS_AND_IMPROVEMENTS.md) |
 | sapling-murphi-ui — @saplings/murphi-ui | [Product](packages/sapling-murphi-ui/PRODUCT_SPECIFICATION.md) | [Technical](packages/sapling-murphi-ui/TECHNICAL_SPECIFICATION.md) | [Gaps](packages/sapling-murphi-ui/GAPS_AND_IMPROVEMENTS.md) |
 | sapling-quality-browser-runtime — @saplings/quality-browser-runtime | [Product](packages/sapling-quality-browser-runtime/PRODUCT_SPECIFICATION.md) | [Technical](packages/sapling-quality-browser-runtime/TECHNICAL_SPECIFICATION.md) | [Gaps](packages/sapling-quality-browser-runtime/GAPS_AND_IMPROVEMENTS.md) |
-| sapling-quality-cli — @saplings/quality-cli | [Product](packages/sapling-quality-cli/PRODUCT_SPECIFICATION.md) | [Technical](packages/sapling-quality-cli/TECHNICAL_SPECIFICATION.md) | [Gaps](packages/sapling-quality-cli/GAPS_AND_IMPROVEMENTS.md) |
 | sapling-quality-contracts — @saplings/quality-contracts | [Product](packages/sapling-quality-contracts/PRODUCT_SPECIFICATION.md) | [Technical](packages/sapling-quality-contracts/TECHNICAL_SPECIFICATION.md) | [Gaps](packages/sapling-quality-contracts/GAPS_AND_IMPROVEMENTS.md) |
 | sapling-quality-core — @saplings/quality-core | [Product](packages/sapling-quality-core/PRODUCT_SPECIFICATION.md) | [Technical](packages/sapling-quality-core/TECHNICAL_SPECIFICATION.md) | [Gaps](packages/sapling-quality-core/GAPS_AND_IMPROVEMENTS.md) |
 | sapling-quality-node-diagnostics — @saplings/quality-node-diagnostics | [Product](packages/sapling-quality-node-diagnostics/PRODUCT_SPECIFICATION.md) | [Technical](packages/sapling-quality-node-diagnostics/TECHNICAL_SPECIFICATION.md) | [Gaps](packages/sapling-quality-node-diagnostics/GAPS_AND_IMPROVEMENTS.md) |

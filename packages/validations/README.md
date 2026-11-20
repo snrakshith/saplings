@@ -1,7 +1,32 @@
-# @saplings/validations v0.8.0
+# @saplings/validations
 
-Default exports delegate directly to pinned upstream Zod 4.6.7 (MIT). No reimplemented semantics or hidden fallback. Install dependencies before using the compatibility entry points. `@saplings/validations/native` retains the independent v0.7 parser, including its stricter coercion and complexity limits. Native is ESM only.
+Use Zod-compatible schemas through the Saplings package, or opt into the independent native parser.
 
-Use `import { z } from "@saplings/validations"` or `/v3` for the upstream v3 compatibility API. Other public entry points: `/v4`, `/mini`, `/v4-mini`, `/v4/mini`, `/v4/core`, `/locales`, `/v4/locales`, `/compile`. All 63 named locale files have `.js` and `.cjs` mirrors. Undocumented/internal paths and custom source-export conditions are not part of the compatibility guarantee. Third-party packages hardcoding `zod` still need Zod.
+## Install
 
-See docs/technical-specifications/VALIDATIONS.md. The upstream dependency could not be installed in the release sandbox; execute `pnpm run test:validation:compat` and `pnpm run typecheck:validation:compat` after installing.
+```bash
+npm install @saplings/validations
+```
+
+## Quick start
+
+```ts
+import { z } from '@saplings/validations';
+
+const Project = z.object({ name: z.string().min(1).max(80) });
+type Project = z.infer<typeof Project>;
+
+const parsed = Project.safeParse({ name: 'My project' });
+if (parsed.success) {
+  const project: Project = parsed.data;
+  console.log(project.name);
+}
+```
+
+## API and integration
+
+- The root delegates to the pinned upstream Zod v4 dependency. Use `/v3` for the v3-compatible API and `/mini` or `/v4/mini` for the mini entry point.
+- Use `safeParse` for untrusted values and `safeParseAsync` when a schema performs asynchronous checks. Handle the reported issues at the input boundary.
+- `/native` is an independent ESM parser with its own semantics and limits. Upstream packages importing `zod` directly resolve Zod through their own dependency.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/technical-specifications/VALIDATIONS.md) for configuration and operational details.

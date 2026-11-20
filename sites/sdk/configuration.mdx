@@ -1,0 +1,26 @@
+---
+title: 'Configure the SDK'
+description: 'Connect authentication, persistence, and application policies to the SDK.'
+---
+
+## Configuration sections
+
+| Key | What to provide |
+| --- | --- |
+| `app` | A stable service ID and `development`, `test`, or `production`. |
+| `providers.store` | A durable `Store` with transactions for tenant mutations. |
+| `providers.authentication` | A verifier that returns a trusted tenant, user, roles, and permissions. |
+| `hooks.resolveRequestContext` | An alternative for applications that already validate sessions in their web framework. |
+| `access` | Application defaults and service authorization behavior. |
+| `services` | Application-owned resource policy, workflows, readiness probes, and other service configuration. |
+| `storage` and `providers.storage` | Object access policy and an implementation such as the [AWS adapter](/packages/adapter-aws). |
+| `platforms` | Optional [Harbor](/packages/harbor) and [Kingsman](/packages/kingsman) configuration. |
+
+## HTTP request flow
+
+1. Attach `sdk.defender.preflight()` before bounded parsing. Handle signature verification on webhook routes with the raw body.
+2. Attach `sdk.middleware()` after parsing. Configure it to derive the tenant context from credentials your server verifies.
+3. Map the verified context into `ActorContext` for your handlers. The middleware exposes the actor as `req.sapling.userId`. The SDK methods take `ActorContext.actorId`.
+4. Authorize each application action before accessing records. Validate input, then translate `SaplingError` into your application's HTTP response.
+
+Read [deployment guidance](/sdk/deployment) and [configuration types](https://github.com/snrakshith/saplings/blob/main/packages/sdk/src/types.ts) when wiring a provider.

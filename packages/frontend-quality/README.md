@@ -1,0 +1,28 @@
+# @saplings/frontend-quality
+
+Register browser and bundle suites for React web projects using Playwright, axe, and quality profiles.
+
+## Install
+
+```bash
+npm install --save-dev @saplings/frontend-quality @saplings/quality-core
+```
+
+## Quick start
+
+```ts
+import { registerFrontend } from '@saplings/frontend-quality/register';
+import { QualityOrchestrator } from '@saplings/quality-core';
+
+const runner = new QualityOrchestrator();
+registerFrontend(runner);
+console.log(runner.list());
+```
+
+## API and integration
+
+- Provide `frontend.baseUrl` and `frontend.routes` in your quality config. Start the web app before running browser suites.
+- Install Chromium with `npm exec playwright@1.56.1 -- install chromium`. Install Firefox or WebKit when your profile selects them.
+- `/browser` and `/react` provide instrumentation entry points. Keep runner code in Node. Review baseline changes before committing them.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/quality/frontend/GETTING_STARTED.md) for configuration and operational details.

@@ -1,0 +1,18 @@
+---
+title: 'Deploy an SDK service'
+description: 'Prepare persistence, worker processes, and readiness verification.'
+---
+
+## Set up persistence and provider access
+
+Use the [Drizzle adapter](/packages/adapter-drizzle) or implement a durable SDK store. Apply migrations with a dedicated role and run the app with a restricted role. Run tenant isolation tests through the runtime role with data in two separate tenants.
+
+Use a shared limiter or broker for multiple replicas when your security and realtime setup needs one. Configure provider credentials through your runtime's secret store. Verify payment, notification, and storage error handling against the providers you enable.
+
+## Run background work
+
+Register handlers with `sdk.automation.register` and start the worker with `sdk.worker.run`. Supply a server-managed tenant context source and an abort signal. Test retries and repeated deliveries, and make side effects idempotent.
+
+## Verify readiness
+
+Call `sdk.readiness()` from your readiness endpoint and interpret its status and failed checks in the deployment. Verify recovery, shutdown, tenant isolation, and provider credentials in staging. Run the project's [release validation steps](https://github.com/snrakshith/saplings/blob/main/docs/RELEASE_VALIDATION.md) for the release you deploy.

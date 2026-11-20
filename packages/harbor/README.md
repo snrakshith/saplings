@@ -1,15 +1,42 @@
-> **v0.17.0 package identity:** `@saplings/harbor` is a reusable library, not a deployed platform on its own. Previous package name deprecated; update imports.
-
 # @saplings/harbor
 
-Kong-inspired **config-driven HTTP gateway core** for Node.js 26 and TypeScript, retaining the uploaded GatewayConfig JSON/YAML structure (`gateway.sapling.dev/v1alpha1`). Supports route/service/upstream definitions, scoped plugin pipeline, host/method/prefix routing, weighted selection, active healthchecks, breaker, safe retries, JWT/ACL hooks, bounded input/output and TLS listener with SNI.
+Run a config-driven HTTP gateway core. Harbor provides routing, upstream selection, health checks, plugin hooks, and TLS configuration.
 
-```ts
-import {Gateway,loadGatewayConfig} from '@saplings/harbor';
-const config=await loadGatewayConfig('./GatewayConfig.json');
-const gateway=new Gateway(config,{verifyJwt:yourIssuerVerifier,rateLimit:yourDistributedLimiter,threatIp:yourTrustedFeed,resolveSecret:yourVaultResolver});
-// Production: provide real certificates and call listenTls(); or explicit trusted TLS ingress.
-const port=await gateway.listen(0,'127.0.0.1');
+## Install
+
+```bash
+npm install @saplings/harbor
 ```
 
-`loadGatewayConfig('.yaml')` uses the declared `yaml` dependency. Store secrets as vault references and inject a trusted resolver. Do not use the volatile limiter in production. See `docs/platforms/gateway/{PRODUCT_SPECIFICATION,TECHNICAL_SPECIFICATION,GAPS_AND_IMPROVEMENTS}.md` in the monorepo and `docs/platforms/CONFIG_COVERAGE.md`. Incomplete provider/edge plugins explicitly fail closed or are documented as partial; this is not Kong certification.
+## Quick start
+
+Start your API on port 3000, then start the gateway. It prints a local port and forwards requests on the configured path to the API.
+
+```ts
+import { Gateway } from '@saplings/harbor';
+
+const gateway = new Gateway({
+  apiVersion: 'gateway.sapling.dev/v1alpha1',
+  kind: 'GatewayConfig',
+  metadata: { name: 'local-api', environment: 'development' },
+  spec: {
+    upstreams: [{ name: 'api', targets: [{ target: '127.0.0.1:3000' }] }],
+    services: [{
+      name: 'api',
+      upstream: 'api',
+      routes: [{ name: 'api', paths: ['/api'] }],
+    }],
+  },
+});
+const port = await gateway.listen(0, '127.0.0.1');
+console.log('Listening on', port);
+process.once('SIGINT', () => void gateway.close());
+```
+
+## API and integration
+
+- Use the [sample GatewayConfig](https://github.com/snrakshith/saplings/blob/main/examples/platform/GatewayConfig.json). Adjust upstreams and plugin dependencies for an isolated development environment.
+- `loadGatewayConfig(file)` reads JSON or YAML. `new Gateway(config, deps?)` accepts verifier, limiter, and secret-resolution adapters. `listenTls` configures the TLS listener.
+- Managed production deployments need durable shared rate state where required, certificate handling, trusted identity checks, and the configured provider hooks.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/platforms/harbor/TECHNICAL_SPECIFICATION.md) for configuration and operational details.

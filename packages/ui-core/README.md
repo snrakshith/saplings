@@ -1,13 +1,27 @@
 # @saplings/ui-core
 
-Murphi design foundations shared by web React and React Native UI. No platform rendering code, React, DOM or Emotion imports.
+Share theme tokens, spacing, typography, and responsive decisions across web and React Native.
 
-Exports: `createTheme`, `colors`, `lightPalette`, `darkPalette`, `spacing`, `spacingPx`, `typography`, `toNativeTypography`, `breakpoints`, `currentBreakpoint`, `resolveResponsive`, `getSemanticColors`, `cssVariables`, `cssVariableText`, semantic size/variant types, and responsive token helpers. All colors and typography are derived from the uploaded Murphi UI source.
+## Install
 
-```ts
-import {createTheme,spacingPx,getSemanticColors} from '@saplings/ui-core';
-const theme=createTheme('dark',{primary:'#2563eb',density:'compact'});
-console.log(getSemanticColors(theme).surface,spacingPx(2,'compact'));
+```bash
+npm install @saplings/ui-core
 ```
 
-Do not place secret/tenant data in shared tokens. RN native typography uses point/pixel sizes rather than rem/CSS. `createTheme` is pure and may run on Node, web and native.
+## Quick start
+
+```ts
+import { createTheme, getSemanticColors, spacingPx } from '@saplings/ui-core';
+
+const theme = createTheme('dark', { primary: '#2563eb', density: 'compact' });
+const colors = getSemanticColors(theme);
+console.log({ surface: colors.surface, padding: spacingPx(2, 'compact') });
+```
+
+## API and integration
+
+- `createTheme(mode, options?)` creates a theme. `getSemanticColors(theme)` resolves semantic surface, text, and accent colors.
+- `spacingPx` and `toNativeTypography` return numeric styles for native apps. Use responsive helpers and `cssVariables` in web renderers.
+- Use semantic tokens in components so palette and density changes apply consistently. This package has no React peer.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/ui-platforms/TECHNICAL_SPECIFICATION.md) for configuration and operational details.

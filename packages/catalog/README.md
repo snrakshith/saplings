@@ -1,0 +1,26 @@
+# @saplings/catalog
+
+Read the SaaS feature and scanner catalogs as data for dashboards, documentation, or validation.
+
+## Install
+
+```bash
+npm install @saplings/catalog
+```
+
+## Quick start
+
+```ts
+import { coverageSummary, saasFeatures, securityScanners } from '@saplings/catalog';
+
+const firstFeature = saasFeatures.find(({ id }) => id === 'SAAS-001');
+console.log(firstFeature?.name, securityScanners.length);
+console.log(coverageSummary());
+```
+
+## API and integration
+
+- `saasFeatures` and `securityScanners` contain typed records keyed by stable IDs. Look up an ID and handle missing entries.
+- `coverageSummary()` aggregates delivery categories from the catalog. A catalog entry describes a capability or scanner category. Consult the SDK manifest and deployment evidence for execution support.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/MASTER_FEATURE_CHECKLIST.md) for configuration and operational details.

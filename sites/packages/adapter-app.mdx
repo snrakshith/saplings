@@ -1,0 +1,28 @@
+---
+title: "@saplings/adapter-app"
+description: "Run bounded GraphQL operations and image transforms for the Node.js SDK."
+---
+
+## Install
+
+```bash
+npm install @saplings/adapter-app graphql
+```
+
+## Quick start
+
+```ts
+import { buildSchema } from 'graphql';
+import { graphqlExecutor } from '@saplings/adapter-app';
+
+const schema = buildSchema('type Query { version: String }');
+const executor = graphqlExecutor(schema, 6, 150);
+console.log(executor.schema);
+```
+
+## API and integration
+
+- `graphqlExecutor(schema, maxDepth?, maxNodes?)` builds a GraphQL execution adapter for `services.operations.graphql`. Attach resolvers to the schema and enforce actor and tenant authorization in them.
+- `new SharpTransformer().transform(bytes, { width, height, format })` returns encoded PNG, JPEG, or WebP bytes. Feed the transformer bounded uploads and test the native Sharp binary in the deployment image.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/technical-specifications/ENGINEERING_090.md) for configuration and operational details.

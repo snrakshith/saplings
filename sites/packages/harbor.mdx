@@ -1,0 +1,43 @@
+---
+title: "@saplings/harbor"
+description: "Run a config-driven HTTP gateway core. Harbor provides routing, upstream selection, health checks, plugin hooks, and TLS configuration."
+---
+
+## Install
+
+```bash
+npm install @saplings/harbor
+```
+
+## Quick start
+
+Start your API on port 3000, then start the gateway. It prints a local port and forwards requests on the configured path to the API.
+
+```ts
+import { Gateway } from '@saplings/harbor';
+
+const gateway = new Gateway({
+  apiVersion: 'gateway.sapling.dev/v1alpha1',
+  kind: 'GatewayConfig',
+  metadata: { name: 'local-api', environment: 'development' },
+  spec: {
+    upstreams: [{ name: 'api', targets: [{ target: '127.0.0.1:3000' }] }],
+    services: [{
+      name: 'api',
+      upstream: 'api',
+      routes: [{ name: 'api', paths: ['/api'] }],
+    }],
+  },
+});
+const port = await gateway.listen(0, '127.0.0.1');
+console.log('Listening on', port);
+process.once('SIGINT', () => void gateway.close());
+```
+
+## API and integration
+
+- Use the [sample GatewayConfig](https://github.com/snrakshith/saplings/blob/main/examples/platform/GatewayConfig.json). Adjust upstreams and plugin dependencies for an isolated development environment.
+- `loadGatewayConfig(file)` reads JSON or YAML. `new Gateway(config, deps?)` accepts verifier, limiter, and secret-resolution adapters. `listenTls` configures the TLS listener.
+- Managed production deployments need durable shared rate state where required, certificate handling, trusted identity checks, and the configured provider hooks.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/platforms/harbor/TECHNICAL_SPECIFICATION.md) for configuration and operational details.

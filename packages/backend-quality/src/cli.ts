@@ -1,11 +1,9 @@
-#!/usr/bin/env node
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 import { readFile } from 'node:fs/promises';
 import { categories } from './core/config.js';
 import { runQuality } from './core/runner.js';
 import { writeReports } from './reporters/index.js';
-import { realpathSync } from 'node:fs';
 export async function main(args = process.argv.slice(2)) {
   const command = args[0] ?? 'help';
   const arg = (k: string) => {
@@ -22,9 +20,9 @@ export async function main(args = process.argv.slice(2)) {
     );
     return;
   }
-  if (command === 'help') {
+  if (['help', '--help', '-h'].includes(command)) {
     console.log(
-      'sapling-quality run [category|suite] --config sapling.config.ts [--output dir] | list | report',
+      'sapling quality legacy run [category|suite] --config sapling.config.ts [--output dir] | list | report',
     );
     return;
   }
@@ -44,11 +42,3 @@ export async function main(args = process.argv.slice(2)) {
   console.log(JSON.stringify(report, null, 2));
   if (!report.passed) process.exitCode = 1;
 }
-if (
-  process.argv[1] &&
-  import.meta.url === pathToFileURL(realpathSync(resolve(process.argv[1]))).href
-)
-  main().catch((e) => {
-    console.error(e.message);
-    process.exitCode = 1;
-  });

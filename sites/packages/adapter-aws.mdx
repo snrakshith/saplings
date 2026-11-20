@@ -1,0 +1,36 @@
+---
+title: "@saplings/adapter-aws"
+description: "Connect SDK object storage and notifications to AWS S3, SES, and SNS."
+---
+
+## Install
+
+```bash
+npm install @saplings/sdk @saplings/adapter-aws @aws-sdk/client-s3
+```
+
+## Quick start
+
+```ts
+import { S3Client } from '@aws-sdk/client-s3';
+import { S3StorageAdapter } from '@saplings/adapter-aws';
+import { createSapling } from '@saplings/sdk';
+
+const bucket = process.env.SAPLING_BUCKET;
+if (!bucket) throw new Error('Set SAPLING_BUCKET');
+
+const client = new S3Client({ region: process.env.AWS_REGION ?? 'us-east-1' });
+const sdk = createSapling({
+  app: { id: 'uploads', environment: 'development' },
+  storage: { enabled: true, provider: 'custom' },
+  providers: { storage: new S3StorageAdapter(client, bucket) },
+});
+```
+
+## API and integration
+
+- `S3StorageAdapter(client, bucket, encryptionKeyId?, maxDownloadBytes?)` implements `put`, `get`, `list`, and `delete` using tenant-scoped object keys.
+- `AwsNotificationsAdapter(ses, sns, fromEmail)` supports email and SMS. Install the matching AWS client packages for clients you instantiate.
+- `S3PresignAdapter(client, bucket, authorize?)` implements the `SAAS-085/sign` capability. Supply an application object-access policy before issuing signed URLs. Configure an IAM role, encryption, and bucket permissions in AWS.
+
+Read the [integration guide](https://github.com/snrakshith/saplings/blob/main/docs/PROVIDER_MATRIX.md) for configuration and operational details.

@@ -50,6 +50,13 @@ export function scope(ctx: ActorContext) {
   text(ctx.actorId, 'actorId', 200);
   if (ctx.tenantId.startsWith('__sapling_')) fail('Reserved tenant namespace', 'FORBIDDEN', 403);
 }
+export async function tenantIsActive(store: Store, tenantId: string): Promise<boolean> {
+  const profile = await store.get<{ status: string }>(tenantId, 'tenant-profile', 'profile');
+  return !profile || profile.status === 'active';
+}
+export async function requireActiveTenant(store: Store, tenantId: string): Promise<void> {
+  if (!(await tenantIsActive(store, tenantId))) fail('Tenant is not active', 'TENANT_FROZEN', 403);
+}
 export function hash(s: string) {
   return createHash('sha256').update(s).digest('hex') as string;
 }

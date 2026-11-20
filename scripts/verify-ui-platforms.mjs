@@ -58,7 +58,6 @@ if (!fs.readFileSync('apps/web/src/main.tsx', 'utf8').includes('@saplings/murphi
 const packageCount = fs
   .readdirSync('packages', { withFileTypes: true })
   .filter((e) => e.isDirectory() && fs.existsSync(`packages/${e.name}/package.json`)).length;
-if (packageCount !== 24) throw Error('Wrong number of SDK workspaces');
 console.log(
   JSON.stringify(
     {

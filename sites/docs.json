@@ -1,0 +1,65 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Saplings",
+  "description": "Build, test, and operate multi-tenant applications with Saplings.",
+  "colors": {
+    "primary": "#0E7557",
+    "light": "#64DBA9",
+    "dark": "#09553D"
+  },
+  "navigation": {
+    "groups": [
+      {
+        "group": "Get started",
+        "pages": ["index", "quickstart"]
+      },
+      {
+        "group": "SDK and operations",
+        "pages": ["packages/sdk", "sdk/configuration", "sdk/deployment", "quality", "repository"]
+      },
+      {
+        "group": "CLI and catalog",
+        "pages": ["packages/cli", "packages/catalog"]
+      },
+      {
+        "group": "Server and adapters",
+        "pages": [
+          "packages/adapter-app",
+          "packages/adapter-aws",
+          "packages/adapter-drizzle",
+          "packages/harbor",
+          "packages/kingsman",
+          "packages/middleware",
+          "packages/realtime",
+          "packages/security"
+        ]
+      },
+      {
+        "group": "UI and shared utilities",
+        "pages": [
+          "packages/hooks",
+          "packages/murphi-ui",
+          "packages/murph-appui",
+          "packages/ui-core",
+          "packages/utils",
+          "packages/validations"
+        ]
+      },
+      {
+        "group": "Quality libraries",
+        "pages": [
+          "packages/backend-quality",
+          "packages/frontend-quality",
+          "packages/quality-browser-runtime",
+          "packages/quality-contracts",
+          "packages/quality-core",
+          "packages/quality-node-diagnostics"
+        ]
+      }
+    ]
+  },
+  "navbar": {
+    "links": [{ "label": "GitHub", "href": "https://github.com/snrakshith/saplings" }]
+  }
+}
