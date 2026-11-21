@@ -1,4 +1,4 @@
-# Master feature checklist — v0.16.0
+# Master feature checklist — v0.17.0
 
 All 182 original SaaS IDs and 41 original scanner IDs retained. The registry includes 119 local reference mappings, 49 hybrid mappings and 14 provider-required mappings. A mapped ID is not proof of feature completion. Local means executable reference operations or an exported utility; hybrid means limited local behavior plus application/provider work; provider-required means an adapter must be configured (concrete adapter source is included for every provider-only ID; live provider validation is not complete).
 
@@ -191,48 +191,48 @@ All 182 original SaaS IDs and 41 original scanner IDs retained. The registry inc
 
 | ID | Category | Execution |
 |---|---|---|
-| SCAN-01 | SQL Injection Scanner | static |
-| SCAN-02 | Cross-Site Scripting (XSS) Scanner | static |
+| SCAN-01 | SQL Injection Scanner | external |
+| SCAN-02 | Cross-Site Scripting (XSS) Scanner | external |
 | SCAN-03 | Security Headers Scanner | passive-http |
-| SCAN-04 | API Key Exposure Scanner | static |
-| SCAN-05 | SSL/TLS Security Scanner | static + passive-http |
-| SCAN-06 | CORS Misconfiguration Scanner | static + passive-http |
-| SCAN-07 | CSRF Protection Scanner | static |
-| SCAN-08 | Cookie & Session Security Scanner | static + passive-http |
-| SCAN-09 | Authentication Flow Scanner | static |
-| SCAN-10 | DNS & Email Security Scanner | static + dns (configured) |
-| SCAN-11 | Open Redirect Scanner | static |
-| SCAN-12 | GraphQL Security Scanner | static |
-| SCAN-13 | JWT Security Audit | static |
-| SCAN-14 | Tech Stack & CVE Scanner | static |
+| SCAN-04 | API Key Exposure Scanner | external |
+| SCAN-05 | SSL/TLS Security Scanner | passive-http |
+| SCAN-06 | CORS Misconfiguration Scanner | passive-http |
+| SCAN-07 | CSRF Protection Scanner | external |
+| SCAN-08 | Cookie & Session Security Scanner | passive-http |
+| SCAN-09 | Authentication Flow Scanner | external |
+| SCAN-10 | DNS & Email Security Scanner | dns (configured) |
+| SCAN-11 | Open Redirect Scanner | external |
+| SCAN-12 | GraphQL Security Scanner | external |
+| SCAN-13 | JWT Security Audit | external |
+| SCAN-14 | Tech Stack & CVE Scanner | external |
 | SCAN-15 | Threat Intelligence Scanner | offline IOC feed (configured) |
-| SCAN-16 | Legal Compliance Scanner | static |
-| SCAN-17 | DDoS Protection Scanner | static |
-| SCAN-18 | File Upload Security Scanner | static |
-| SCAN-19 | Audit Logging & Monitoring Scanner | static |
-| SCAN-20 | Mobile API Rate Limiting Scanner | static |
+| SCAN-16 | Legal Compliance Scanner | external |
+| SCAN-17 | DDoS Protection Scanner | external |
+| SCAN-18 | File Upload Security Scanner | external |
+| SCAN-19 | Audit Logging & Monitoring Scanner | external |
+| SCAN-20 | Mobile API Rate Limiting Scanner | external |
 | SCAN-21 | Domain Hijacking Detection | dns (configured) |
-| SCAN-22 | Debug Endpoints Scanner | static |
-| SCAN-23 | Input Validation Scanner | static |
-| SCAN-24 | Vercel Hosting Security Scanner | static |
-| SCAN-25 | Netlify Hosting Security Scanner | static |
-| SCAN-26 | Cloudflare Security Scanner | static |
-| SCAN-27 | Dependency Vulnerability Scanner | static |
-| SCAN-28 | Supabase Security Scanner | static |
-| SCAN-29 | Firebase Security Scanner | static |
-| SCAN-30 | GitHub Repository Security Scanner | static |
-| SCAN-31 | Browser Storage & Session Token Scanner | static |
-| SCAN-32 | Source Code SAST Scanner | static |
-| SCAN-33 | Webhook Signature Verification Scanner | static |
-| SCAN-34 | IDOR & Broken Access Control Scanner | static |
-| SCAN-35 | Tenant Isolation Scanner | static |
-| SCAN-36 | SEO Scanner | static |
-| SCAN-37 | AEO Scanner (AI Visibility) | static |
+| SCAN-22 | Debug Endpoints Scanner | external |
+| SCAN-23 | Input Validation Scanner | external |
+| SCAN-24 | Vercel Hosting Security Scanner | external |
+| SCAN-25 | Netlify Hosting Security Scanner | external |
+| SCAN-26 | Cloudflare Security Scanner | external |
+| SCAN-27 | Dependency Vulnerability Scanner | external |
+| SCAN-28 | Supabase Security Scanner | external |
+| SCAN-29 | Firebase Security Scanner | external |
+| SCAN-30 | GitHub Repository Security Scanner | external |
+| SCAN-31 | Browser Storage & Session Token Scanner | external |
+| SCAN-32 | Source Code SAST Scanner | external |
+| SCAN-33 | Webhook Signature Verification Scanner | external |
+| SCAN-34 | IDOR & Broken Access Control Scanner | external |
+| SCAN-35 | Tenant Isolation Scanner | external |
+| SCAN-36 | SEO Scanner | external |
+| SCAN-37 | AEO Scanner (AI Visibility) | external |
 | SCAN-38 | Uptime Monitoring & Status Pages | passive-http |
-| SCAN-39 | Performance & Core Web Vitals Scanner | static |
-| SCAN-40 | Accessibility Scanner (WCAG) | static |
+| SCAN-39 | Performance & Core Web Vitals Scanner | external |
+| SCAN-40 | Accessibility Scanner (WCAG) | external |
 | SCAN-41 | Domain Watchtower | dns (configured) |
 
-Static/passive categories: 38; configured DNS adds 2 categories. SCAN-15 has a configured offline IOC feed; live feed sourcing and efficacy validation remain required. All categories support evidence import; an evidence import is not a scanner implementation. The original vendor 200+ check inventory is not reproduced. No scan result establishes the absence of vulnerabilities.
+Static/passive categories: 5; configured DNS adds 3 categories. SCAN-15 has a configured offline IOC feed; live feed sourcing and efficacy validation remain required. All categories support evidence import; an evidence import is not a scanner implementation. The original vendor 200+ check inventory is not reproduced. No scan result establishes the absence of vulnerabilities.
 
 See GAPS_AND_IMPROVEMENTS.md for release gates.

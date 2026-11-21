@@ -53,7 +53,7 @@
     "actions": [
       "verify"
     ],
-    "note": "JWT verification delegated to configured authentication adapter."
+    "note": "JWT verification delegated to configured Kingsman realm or authentication adapter; audience required."
   },
   {
     "featureId": "SAAS-008",

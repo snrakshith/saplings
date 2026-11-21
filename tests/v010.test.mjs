@@ -39,7 +39,7 @@ test('new config and legacy config normalize without merging ambiguous policies'
 test('typed catalog action inventory matches all runtime registrations', () => {
   const s = createSapling({ app });
   const text = readFileSync(
-    new URL('../packages/sdk/src/feature-types.ts', import.meta.url),
+    new URL('../packages/sdk/src/capabilities/feature-types.ts', import.meta.url),
     'utf8',
   );
   const map = Object.fromEntries(

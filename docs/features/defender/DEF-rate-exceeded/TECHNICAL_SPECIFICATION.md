@@ -9,7 +9,7 @@ Current control path present; effectiveness not certified. Bounded runtime heuri
 - `packages/security/src/defender.ts`
 - `packages/security/src/policy.ts`
 - `packages/sdk/src/index.ts`
-- `packages/sdk/src/security-state.ts`
+- `packages/sdk/src/security/security-state.ts`
 
 ## Public contract / current implementation
 `security.defender` in sapling.config.ts; `Defender.assess`, `Defender.preflight`, and middleware. ```typescript

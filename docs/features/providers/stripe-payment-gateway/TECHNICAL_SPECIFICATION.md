@@ -6,10 +6,10 @@ Release: 0.17.0 · Technical specification
 Reference code present; not production validated. Implemented integration path; live verification and remaining feature-specific engineering open.
 
 ## Source of truth
-- `packages/sdk/src/stripe-payment.ts`
+- `packages/sdk/src/payments/stripe-payment.ts`
 
 ## Public contract / current implementation
-See packages/sdk/src/stripe-payment.ts and package exports. PaymentIntent checkout, read-based capture and refund creation; recurring and tokenized methods separate.
+See packages/sdk/src/payments/stripe-payment.ts and package exports. PaymentIntent checkout, read-based capture and refund creation; recurring and tokenized methods separate.
 
 ## Configuration and dependencies
 Configure provider credentials or relevant installed dependency/approved test environment.

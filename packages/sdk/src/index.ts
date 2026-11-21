@@ -1,5 +1,5 @@
-import type { FeatureId, FeatureAction } from './feature-types.js';
-export type * from './feature-types.js';
+import type { FeatureId, FeatureAction } from './capabilities/feature-types.js';
+export type * from './capabilities/feature-types.js';
 import { RealtimeHub } from '@saplings/realtime';
 import {
   Gateway,
@@ -11,16 +11,16 @@ import {
 import { IdentityPlatform } from '@saplings/kingsman';
 import { createMiddleware, errorHandler } from '@saplings/middleware';
 import { randomUUID } from 'node:crypto';
-export * from './providers.js';
-export * from './recurring.js';
-export * from './offboarding.js';
-import { StoreRateState } from './security-state.js';
-export { StoreRateState } from './security-state.js';
-import { timeout } from './reliability.js';
-import { WorkerRuntime } from './worker.js';
-import { SaasServicesRegistry } from './registry.js';
-export * from './reliability.js';
-export { EnvelopeCrypto, validateRecord } from './data.js';
+export * from './platform/providers.js';
+export * from './billing/recurring.js';
+export * from './tenancy/offboarding.js';
+import { StoreRateState } from './security/security-state.js';
+export { StoreRateState } from './security/security-state.js';
+import { timeout } from './runtime/reliability.js';
+import { WorkerRuntime } from './workflows/worker.js';
+import { SaasServicesRegistry } from './capabilities/registry.js';
+export * from './runtime/reliability.js';
+export { EnvelopeCrypto, validateRecord } from './data/data.js';
 import { Defender } from '@saplings/security';
 import type { HttpRequest, HttpResponse, HttpNext } from '@saplings/security';
 import { runScan } from '@saplings/security';
@@ -28,27 +28,27 @@ import { saasFeatures, securityScanners } from '@saplings/catalog';
 import { resolveSaplingConfig, defineSaplingConfig } from './config.js';
 import type { ActorContext, SaplingConfig, ResolvedConfig, Store } from './types.js';
 import { SaplingError } from './types.js';
-import { InMemoryStore } from './store.js';
-import { InMemoryStorage, StorageService } from './storage.js';
-import { AuditService } from './audit.js';
-import { AccessService } from './access.js';
-import { ResourceService } from './resources.js';
-import { IdentityService } from './identity.js';
-import { BillingService } from './billing.js';
-import { FlagService } from './flags.js';
-import { JobService } from './jobs.js';
+import { InMemoryStore } from './runtime/store.js';
+import { InMemoryStorage, StorageService } from './storage/storage.js';
+import { AuditService } from './audit/audit.js';
+import { AccessService } from './identity/access.js';
+import { ResourceService } from './tenancy/resources.js';
+import { IdentityService } from './identity/identity.js';
+import { BillingService } from './billing/billing.js';
+import { FlagService } from './feature-flags/flags.js';
+import { JobService } from './workflows/jobs.js';
 import {
   EventService,
   NotificationService,
   PaymentService,
   WebhookService,
   TelemetryService,
-} from './integrations.js';
-import { CashfreeAdapter, CashfreeWebhookAdapter } from './cashfree.js';
-import { RazorpayWebhookAdapter } from './razorpay-webhook.js';
-import { StripePaymentAdapter } from './stripe-payment.js';
-import { RazorpayAdapter } from './integrations.js';
-import { CapabilityService } from './capabilities.js';
+} from './integrations/integrations.js';
+import { CashfreeAdapter, CashfreeWebhookAdapter } from './payments/cashfree.js';
+import { RazorpayWebhookAdapter } from './payments/razorpay-webhook.js';
+import { StripePaymentAdapter } from './payments/stripe-payment.js';
+import { RazorpayAdapter } from './integrations/integrations.js';
+import { CapabilityService } from './capabilities/capabilities.js';
 
 export {
   defineSaplingConfig,
@@ -70,9 +70,9 @@ export {
   TelemetryService,
   CapabilityService,
 };
-export { RazorpayAdapter } from './integrations.js';
-export * from './cashfree.js';
-export * from './stripe-payment.js';
+export { RazorpayAdapter } from './integrations/integrations.js';
+export * from './payments/cashfree.js';
+export * from './payments/stripe-payment.js';
 export { Defender, runScan } from '@saplings/security';
 export { Gateway, GatewayError, GatewayHttpPolicies } from '@saplings/harbor';
 export { IdentityPlatform as Kingsman } from '@saplings/kingsman';
@@ -121,63 +121,63 @@ export class SaplingSDK {
   readonly capabilities: CapabilityService;
   readonly #services: SaasServicesRegistry;
   /** providerWorkflows service. */
-  get providerWorkflows(): import('./provider-workflow.js').ProviderWorkflow {
+  get providerWorkflows(): import('./workflows/provider-workflow.js').ProviderWorkflow {
     return this.#services.providerWorkflows;
   }
   /** governance service. */
-  get governance(): import('./governance.js').GovernanceService {
+  get governance(): import('./data/governance.js').GovernanceService {
     return this.#services.governance;
   }
   /** domains service. */
-  get domains(): import('./domain-policy.js').DomainPolicyService {
+  get domains(): import('./data/domain-policy.js').DomainPolicyService {
     return this.#services.domains;
   }
   /** providerOperations service. */
-  get providerOperations(): import('./provider-operations.js').ProviderOperations {
+  get providerOperations(): import('./platform/provider-operations.js').ProviderOperations {
     return this.#services.providerOperations;
   }
   /** recurring service. */
-  get recurring(): import('./recurring.js').RecurringBilling {
+  get recurring(): import('./billing/recurring.js').RecurringBilling {
     return this.#services.recurring;
   }
   /** offboarding service. */
-  get offboarding(): import('./offboarding.js').TenantOffboarding {
+  get offboarding(): import('./tenancy/offboarding.js').TenantOffboarding {
     return this.#services.offboarding;
   }
   /** impersonation service. */
-  get impersonation(): import('./impersonation.js').ImpersonationService {
+  get impersonation(): import('./identity/impersonation.js').ImpersonationService {
     return this.#services.impersonation;
   }
   /** operations service. */
-  get operations(): import('./operations.js').Operations {
+  get operations(): import('./platform/operations.js').Operations {
     return this.#services.operations;
   }
   /** accounts service. */
-  get accounts(): import('./accounts.js').Accounts {
+  get accounts(): import('./identity/accounts.js').Accounts {
     return this.#services.accounts;
   }
   /** commerce service. */
-  get commerce(): import('./commerce.js').Commerce {
+  get commerce(): import('./billing/commerce.js').Commerce {
     return this.#services.commerce;
   }
   /** data service. */
-  get data(): import('./data.js').DataService {
+  get data(): import('./data/data.js').DataService {
     return this.#services.data;
   }
   /** analytics service. */
-  get analytics(): import('./analytics.js').Analytics {
+  get analytics(): import('./analytics/analytics.js').Analytics {
     return this.#services.analytics;
   }
   /** automation service. */
-  get automation(): import('./automation.js').Automation {
+  get automation(): import('./workflows/automation.js').Automation {
     return this.#services.automation;
   }
   /** lifecycle service. */
-  get lifecycle(): import('./reliability.js').Lifecycle {
+  get lifecycle(): import('./runtime/reliability.js').Lifecycle {
     return this.#services.lifecycle;
   }
   /** metrics service. */
-  get metrics(): import('./reliability.js').Metrics {
+  get metrics(): import('./runtime/reliability.js').Metrics {
     return this.#services.metrics;
   }
   readonly worker: WorkerRuntime;
@@ -634,37 +634,37 @@ export function createSapling(config: SaplingConfig): SaplingSDK {
   return new SaplingSDK(config);
 }
 
-export * from './valkey.js';
+export * from './runtime/valkey.js';
 
-export * from './razorpay-webhook.js';
-export * from './federation.js';
-export * from './totp.js';
+export * from './payments/razorpay-webhook.js';
+export * from './identity/federation.js';
+export * from './identity/totp.js';
 
-export * from './worker.js';
-export * from './operations.js';
-export * from './control-plane.js';
-export * from './media.js';
+export * from './workflows/worker.js';
+export * from './platform/operations.js';
+export * from './platform/control-plane.js';
+export * from './storage/media.js';
 
-export * from './impersonation.js';
+export * from './identity/impersonation.js';
 
-export type * from './quality-config.js';
+export type * from './quality/quality-config.js';
 
-export * from './http-idempotency.js';
-export * from './provider-operations.js';
-export * from './stripe-recurring.js';
+export * from './http/http-idempotency.js';
+export * from './platform/provider-operations.js';
+export * from './billing/stripe-recurring.js';
 
-export * from './transactional-processing.js';
+export * from './runtime/transactional-processing.js';
 
-export * from './governance.js';
-export * from './domain-policy.js';
-export * from './billing-policy.js';
+export * from './data/governance.js';
+export * from './data/domain-policy.js';
+export * from './billing/billing-policy.js';
 
-export * from './provider-workflow.js';
+export * from './workflows/provider-workflow.js';
 
-export type { Accounts } from './accounts.js';
-export type { Commerce } from './commerce.js';
-export type { DataService } from './data.js';
-export type { Analytics } from './analytics.js';
-export type { Automation } from './automation.js';
+export type { Accounts } from './identity/accounts.js';
+export type { Commerce } from './billing/commerce.js';
+export type { DataService } from './data/data.js';
+export type { Analytics } from './analytics/analytics.js';
+export type { Automation } from './workflows/automation.js';
 
-export * from './business-workflows.js';
+export * from './workflows/business-workflows.js';

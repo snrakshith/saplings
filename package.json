@@ -15,7 +15,7 @@
     "doctor": "node packages/cli/dist/index.js doctor",
     "build:adapters": "tsc -p packages/adapter-drizzle && tsc -p packages/adapter-aws && tsc -p packages/adapter-app",
     "catalog:refresh": "node scripts/refresh-v03-catalog.mjs",
-    "verify:build": "pnpm run build && pnpm run catalog:refresh && pnpm run build && pnpm run build:hooks && pnpm run build:ui && pnpm run typecheck:sdk && pnpm run test:vitest:verify && pnpm run typecheck:platforms && pnpm run consolidation:verify",
+    "verify:build": "pnpm run verify:sdk-layout && pnpm run build && pnpm run catalog:refresh && pnpm run build && pnpm run build:hooks && pnpm run build:ui && pnpm run typecheck:sdk && pnpm run test:vitest:verify && pnpm run typecheck:platforms && pnpm run consolidation:verify",
     "test:integration": "vitest run --config vitest.integration.config.mts tests/integration/postgres.test.mjs tests/integration/valkey.test.mjs",
     "test:postgres": "vitest run --config vitest.integration.config.mts tests/integration/postgres.test.mjs",
     "test:valkey": "vitest run --config vitest.integration.config.mts tests/integration/valkey.test.mjs",

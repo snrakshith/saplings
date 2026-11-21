@@ -6,10 +6,10 @@ Release: 0.17.0 · Technical specification
 Reference code present; not production validated. Implemented integration path; live verification and remaining feature-specific engineering open.
 
 ## Source of truth
-- `packages/sdk/src/cashfree.ts`
+- `packages/sdk/src/payments/cashfree.ts`
 
 ## Public contract / current implementation
-See packages/sdk/src/cashfree.ts and package exports. Order creation, checkout session, signed capture and refund polling; INR only.
+See packages/sdk/src/payments/cashfree.ts and package exports. Order creation, checkout session, signed capture and refund polling; INR only.
 
 ## Configuration and dependencies
 Configure provider credentials or relevant installed dependency/approved test environment.

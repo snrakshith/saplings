@@ -32,7 +32,7 @@ Reference implementation; production validation and app-specific authorization p
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 SDK source moved to root; no additional feature-specific implementation claimed for this feature in this release.
 
@@ -56,6 +56,6 @@ SDK owns organizations; Kingsman manages identity org membership
 - Feature enable/disable, permission denial, unknown action and tenant offboarding freeze, tested against the complete 182-feature inventory. Optional per-action input/output schemas and resource authorization hooks are also tested; actual application policies are not generated automatically.
 - **access:** Authorization checks and system-field immutability for resource mutations, role and impersonation boundaries.
 
-**Source references:** `packages/sdk/src/resources.ts`, `packages/kingsman/src/saas-access.ts`, `tests/v012.test.mjs`, `packages/sdk/src/offboarding.ts`, `packages/sdk/src/governance.ts`, `packages/sdk/src/domain-policy.ts`, `packages/sdk/src/store.ts`, `packages/sdk/src/access.ts`. **Tests:** `tests/v012.test.mjs` for shared controls and listed enhancements. Per-feature end-to-end verification is still required.
+**Source references:** `packages/sdk/src/tenancy/resources.ts`, `packages/kingsman/src/saas-access.ts`, `tests/v012.test.mjs`, `packages/sdk/src/tenancy/offboarding.ts`, `packages/sdk/src/data/governance.ts`, `packages/sdk/src/data/domain-policy.ts`, `packages/sdk/src/runtime/store.ts`, `packages/sdk/src/identity/access.ts`. **Tests:** `tests/v012.test.mjs` for shared controls and listed enhancements. Per-feature end-to-end verification is still required.
 
 **What remains:** The original P0/P1/P2 checklist above stays open until the feature's exact acceptance scenario and independent evidence are validated. Catalog registration, generated documentation and local mock tests are not closure.

@@ -5,6 +5,6 @@
 docs/
 pnpm-lock.yaml
 packages/catalog/src/index.ts
-packages/sdk/src/feature-types.ts
+packages/sdk/src/capabilities/feature-types.ts
 packages/validations/compat/
 **/helm/**/templates/

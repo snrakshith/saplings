@@ -6,12 +6,12 @@ Release: 0.17.0 · Technical specification
 provider reference mapping; per-feature production proof not established. OAuth2/OIDC provider.
 
 ## Source of truth
-- `packages/sdk/src/registry.ts:56`
-- `packages/sdk/src/accounts.ts`
-- `packages/sdk/src/identity.ts`
-- `packages/sdk/src/federation.ts`
-- `packages/sdk/src/totp.ts`
-- `packages/sdk/src/access.ts`
+- `packages/sdk/src/capabilities/registry.ts:56`
+- `packages/sdk/src/identity/accounts.ts`
+- `packages/sdk/src/identity/identity.ts`
+- `packages/sdk/src/identity/federation.ts`
+- `packages/sdk/src/identity/totp.ts`
+- `packages/sdk/src/identity/access.ts`
 
 ## Public contract / current implementation
 Typed registry call: `sapling.invokeCapability(ctx, 'SAAS-011', 'authorize', input)`. All registered actions: authorize, callback, refresh, revoke. Context: `ActorContext`; generic payload: `JsonRecord`; result currently `unknown` through the generic registry. Require `capabilities:SAAS-011:<action>` permission plus service/domain checks.
@@ -46,7 +46,7 @@ Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the p
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 Related shared implementation path hardened; feature-specific acceptance still open.
 

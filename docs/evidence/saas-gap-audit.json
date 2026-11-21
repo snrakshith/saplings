@@ -29,11 +29,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -66,11 +66,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -103,11 +103,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -140,11 +140,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -177,11 +177,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -215,11 +215,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -246,11 +246,11 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -279,11 +279,11 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -319,11 +319,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -352,11 +352,11 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -386,11 +386,11 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -418,11 +418,11 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -450,11 +450,11 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -482,11 +482,11 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -517,14 +517,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -553,14 +553,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -589,14 +589,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -628,11 +628,11 @@
         "packages/kingsman/src/saas-accounts.ts",
         "packages/sdk/src/types.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -659,12 +659,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -691,12 +691,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -723,12 +723,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -755,12 +755,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -787,12 +787,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -822,12 +822,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -860,14 +860,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -900,14 +900,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -940,14 +940,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -980,14 +980,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1020,14 +1020,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1055,12 +1055,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1087,12 +1087,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1119,12 +1119,12 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1154,14 +1154,14 @@
         "access"
       ],
       "sources": [
-        "packages/sdk/src/resources.ts",
+        "packages/sdk/src/tenancy/resources.ts",
         "packages/kingsman/src/saas-access.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1191,17 +1191,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1231,17 +1231,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1274,17 +1274,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1313,17 +1313,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1353,17 +1353,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1393,17 +1393,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1433,17 +1433,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1474,17 +1474,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1511,16 +1511,16 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1549,16 +1549,16 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1585,16 +1585,16 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1624,17 +1624,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1663,17 +1663,17 @@
         "billing"
       ],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1700,16 +1700,16 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1739,16 +1739,16 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1775,16 +1775,16 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1812,16 +1812,16 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1848,10 +1848,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1878,10 +1878,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1910,10 +1910,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1941,10 +1941,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -1972,10 +1972,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2002,10 +2002,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2032,10 +2032,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2062,10 +2062,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2092,10 +2092,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2122,10 +2122,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2154,13 +2154,13 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2189,13 +2189,13 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2223,10 +2223,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2253,10 +2253,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2284,10 +2284,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2314,10 +2314,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2344,10 +2344,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2375,10 +2375,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2409,10 +2409,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2443,10 +2443,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2473,9 +2473,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2502,9 +2502,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2531,9 +2531,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2560,9 +2560,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2591,9 +2591,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2624,9 +2624,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2654,9 +2654,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2683,9 +2683,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2712,9 +2712,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2741,9 +2741,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2771,9 +2771,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2800,9 +2800,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2832,9 +2832,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2864,9 +2864,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2893,9 +2893,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2922,9 +2922,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2951,9 +2951,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -2986,12 +2986,12 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3020,12 +3020,12 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3054,12 +3054,12 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3088,9 +3088,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3119,9 +3119,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3150,12 +3150,12 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3183,9 +3183,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3213,9 +3213,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3242,9 +3242,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3273,12 +3273,12 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3307,12 +3307,12 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3339,9 +3339,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3368,9 +3368,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3397,9 +3397,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3426,9 +3426,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3455,9 +3455,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3484,9 +3484,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3513,9 +3513,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3546,9 +3546,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3575,9 +3575,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3604,9 +3604,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3633,9 +3633,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3663,9 +3663,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3692,9 +3692,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3721,9 +3721,9 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3751,10 +3751,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3782,10 +3782,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3812,10 +3812,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3843,10 +3843,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3873,10 +3873,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3904,10 +3904,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3934,10 +3934,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3964,10 +3964,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -3995,10 +3995,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -4025,10 +4025,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -4055,10 +4055,10 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -4213,9 +4213,9 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4245,9 +4245,9 @@
         "domains"
       ],
       "sources": [
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4306,8 +4306,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4595,8 +4595,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4630,8 +4630,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4692,8 +4692,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4727,8 +4727,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4840,8 +4840,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4875,8 +4875,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4910,8 +4910,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -4939,13 +4939,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -4973,13 +4973,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5007,13 +5007,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5040,13 +5040,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5073,13 +5073,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5106,13 +5106,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5139,13 +5139,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5172,13 +5172,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5205,13 +5205,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5238,13 +5238,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5272,13 +5272,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5307,13 +5307,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5342,13 +5342,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5376,13 +5376,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5411,13 +5411,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5444,13 +5444,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5477,13 +5477,13 @@
       "engineeringState": "baseline-reference",
       "domains": [],
       "sources": [
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "testEvidence": "tests/v012.test.mjs",
       "liveAcceptanceVerified": false,
@@ -5516,8 +5516,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5579,8 +5579,8 @@
         "business"
       ],
       "sources": [
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5610,8 +5610,8 @@
         "business"
       ],
       "sources": [
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5645,8 +5645,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5680,8 +5680,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5711,8 +5711,8 @@
         "business"
       ],
       "sources": [
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5744,8 +5744,8 @@
         "business"
       ],
       "sources": [
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5779,8 +5779,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5810,8 +5810,8 @@
         "business"
       ],
       "sources": [
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5845,8 +5845,8 @@
         "crud"
       ],
       "sources": [
-        "packages/sdk/src/registry.ts",
-        "packages/sdk/src/domain-policy.ts",
+        "packages/sdk/src/capabilities/registry.ts",
+        "packages/sdk/src/data/domain-policy.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",
@@ -5876,8 +5876,8 @@
         "business"
       ],
       "sources": [
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/registry.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/capabilities/registry.ts",
         "tests/v012.test.mjs"
       ],
       "testEvidence": "tests/v012.test.mjs",

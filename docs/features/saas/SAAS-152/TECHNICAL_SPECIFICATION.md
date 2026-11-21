@@ -6,7 +6,7 @@ Release: 0.17.0 · Technical specification
 local reference mapping; per-feature production proof not established. Reference implementation; production validation and app-specific authorization pending.
 
 ## Source of truth
-- `packages/sdk/src/registry.ts:85`
+- `packages/sdk/src/capabilities/registry.ts:85`
 
 ## Public contract / current implementation
 Typed registry call: `sapling.invokeCapability(ctx, 'SAAS-152', 'create', input)`. All registered actions: create, get, list, update, delete. Context: `ActorContext`; generic payload: `JsonRecord`; result currently `unknown` through the generic registry. Require `capabilities:SAAS-152:<action>` permission plus service/domain checks.
@@ -41,7 +41,7 @@ Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the p
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 SDK source moved to root; no additional feature-specific implementation claimed for this feature in this release.
 

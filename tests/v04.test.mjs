@@ -9,7 +9,7 @@ import {
   StripePaymentMethodsAdapter,
   ValkeyRateState,
 } from '../packages/sdk/dist/index.js';
-import { boundedResponseText } from '../packages/sdk/dist/http.js';
+import { boundedResponseText } from '../packages/sdk/dist/http/http.js';
 const ctx = { tenantId: 'a', actorId: 'admin', permissions: ['*'] };
 const make = (extra = {}) => createSapling({ app: { id: 'v04', environment: 'test' }, ...extra });
 test('transaction scope rejects cross-tenant reads and writes; rollback and nested transaction', async () => {
