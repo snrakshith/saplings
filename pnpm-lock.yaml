@@ -233,6 +233,49 @@ importers:
         specifier: ^7.1.10
         version: 7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
 
+  console:
+    dependencies:
+      '@saplings/harbor':
+        specifier: workspace:*
+        version: link:../packages/harbor
+      '@saplings/kingsman':
+        specifier: workspace:*
+        version: link:../packages/kingsman
+      '@saplings/murphi-ui':
+        specifier: workspace:*
+        version: link:../packages/murphi-ui
+      '@saplings/sdk':
+        specifier: workspace:*
+        version: link:../packages/sdk
+      '@saplings/ui-core':
+        specifier: workspace:*
+        version: link:../packages/ui-core
+      express:
+        specifier: ^5.1.0
+        version: 5.3.0
+      react:
+        specifier: ^19.3.0
+        version: 19.3.1
+      react-dom:
+        specifier: ^19.3.0
+        version: 19.3.1(react@19.3.1)
+      yaml:
+        specifier: ^2.8.1
+        version: 2.9.1
+    devDependencies:
+      '@types/express':
+        specifier: ^5.0.3
+        version: 5.0.6
+      '@types/react':
+        specifier: ^19.2.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.2.0
+        version: 19.3.0(@types/react@19.3.0)
+      vite:
+        specifier: ^7.1.10
+        version: 7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
+
   examples/express-app:
     dependencies:
       '@saplings/adapter-aws':

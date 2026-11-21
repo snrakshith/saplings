@@ -6,13 +6,13 @@ Release: 0.17.0 · Technical specification
 hybrid reference mapping; per-feature production proof not established. Durable, approved offboarding workflow; configure idempotent legal hold, revoke, export, purge and verification handlers.
 
 ## Source of truth
-- `packages/sdk/src/registry.ts:66`
-- `packages/sdk/src/offboarding.ts`
-- `packages/sdk/src/governance.ts`
-- `packages/sdk/src/domain-policy.ts`
-- `packages/sdk/src/resources.ts`
-- `packages/sdk/src/store.ts`
-- `packages/sdk/src/access.ts`
+- `packages/sdk/src/capabilities/registry.ts:66`
+- `packages/sdk/src/tenancy/offboarding.ts`
+- `packages/sdk/src/data/governance.ts`
+- `packages/sdk/src/data/domain-policy.ts`
+- `packages/sdk/src/tenancy/resources.ts`
+- `packages/sdk/src/runtime/store.ts`
+- `packages/sdk/src/identity/access.ts`
 
 ## Public contract / current implementation
 Typed registry call: `sapling.invokeCapability(ctx, 'SAAS-024', 'request', input)`. All registered actions: request, approve, status, advance. Context: `ActorContext`; generic payload: `JsonRecord`; result currently `unknown` through the generic registry. Require `capabilities:SAAS-024:<action>` permission plus service/domain checks.
@@ -47,7 +47,7 @@ Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the p
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 SDK source moved to root; no additional feature-specific implementation claimed for this feature in this release.
 

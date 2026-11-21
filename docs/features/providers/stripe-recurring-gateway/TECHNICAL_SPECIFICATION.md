@@ -6,10 +6,10 @@ Release: 0.17.0 · Technical specification
 Reference code present; not production validated. Implemented integration path; live verification and remaining feature-specific engineering open.
 
 ## Source of truth
-- `packages/sdk/src/stripe-recurring.ts`
+- `packages/sdk/src/billing/stripe-recurring.ts`
 
 ## Public contract / current implementation
-See packages/sdk/src/stripe-recurring.ts and package exports. Mandate lookup, recurring intent recovery and webhook wake-up.
+See packages/sdk/src/billing/stripe-recurring.ts and package exports. Mandate lookup, recurring intent recovery and webhook wake-up.
 
 ## Configuration and dependencies
 Configure provider credentials or relevant installed dependency/approved test environment.

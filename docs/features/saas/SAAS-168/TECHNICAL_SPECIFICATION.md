@@ -6,14 +6,14 @@ Release: 0.17.0 · Technical specification
 provider reference mapping; per-feature production proof not established. Disaster recovery provider and operational drills.
 
 ## Source of truth
-- `packages/sdk/src/registry.ts:86`
-- `packages/sdk/src/providers.ts`
-- `packages/sdk/src/provider-operations.ts`
-- `packages/sdk/src/provider-workflow.ts`
-- `packages/sdk/src/control-plane.ts`
-- `packages/sdk/src/reliability.ts`
-- `packages/sdk/src/operations.ts`
-- `packages/sdk/src/worker.ts`
+- `packages/sdk/src/capabilities/registry.ts:86`
+- `packages/sdk/src/platform/providers.ts`
+- `packages/sdk/src/platform/provider-operations.ts`
+- `packages/sdk/src/workflows/provider-workflow.ts`
+- `packages/sdk/src/platform/control-plane.ts`
+- `packages/sdk/src/runtime/reliability.ts`
+- `packages/sdk/src/platform/operations.ts`
+- `packages/sdk/src/workflows/worker.ts`
 
 ## Public contract / current implementation
 Typed registry call: `sapling.invokeCapability(ctx, 'SAAS-168', 'backup', input)`. All registered actions: backup, restore, drill. Context: `ActorContext`; generic payload: `JsonRecord`; result currently `unknown` through the generic registry. Require `capabilities:SAAS-168:<action>` permission plus service/domain checks.
@@ -48,7 +48,7 @@ Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the p
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 SDK source moved to root; no additional feature-specific implementation claimed for this feature in this release.
 

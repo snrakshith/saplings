@@ -32,7 +32,7 @@ Device records only; hardware attestation requires provider.
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 Related shared implementation path hardened; feature-specific acceptance still open.
 
@@ -56,6 +56,6 @@ No migration of existing user or session records. Old SDK public classes remain 
 - Feature enable/disable, permission denial, unknown action and tenant offboarding freeze, tested against the complete 182-feature inventory. Optional per-action input/output schemas and resource authorization hooks are also tested; actual application policies are not generated automatically.
 - No new feature-specific implementation in this patch; original gap checklist remains authoritative.
 
-**Source references:** `packages/sdk/src/accounts.ts`, `packages/sdk/src/identity.ts`, `packages/sdk/src/federation.ts`, `packages/sdk/src/totp.ts`, `packages/sdk/src/access.ts`. **Tests:** `tests/v012.test.mjs` for shared controls and listed enhancements. Per-feature end-to-end verification is still required.
+**Source references:** `packages/sdk/src/identity/accounts.ts`, `packages/sdk/src/identity/identity.ts`, `packages/sdk/src/identity/federation.ts`, `packages/sdk/src/identity/totp.ts`, `packages/sdk/src/identity/access.ts`. **Tests:** `tests/v012.test.mjs` for shared controls and listed enhancements. Per-feature end-to-end verification is still required.
 
 **What remains:** The original P0/P1/P2 checklist above stays open until the feature's exact acceptance scenario and independent evidence are validated. Catalog registration, generated documentation and local mock tests are not closure.

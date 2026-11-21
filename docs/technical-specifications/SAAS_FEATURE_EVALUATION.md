@@ -1,6 +1,6 @@
 # SaaS technical evaluation — v0.17.0
 
-182 original IDs. Binding source for every row: `packages/sdk/src/registry.ts`. This inventory describes registered implementation paths, not completed production features. The **acceptance criterion** is mandatory in addition to application-level RBAC/ABAC, observability and live gates. Related source references are in `saas-evaluation.json`.
+182 original IDs. Binding source for every row: `packages/sdk/src/capabilities/registry.ts`. This inventory describes registered implementation paths, not completed production features. The **acceptance criterion** is mandatory in addition to application-level RBAC/ABAC, observability and live gates. Related source references are in `saas-evaluation.json`.
 
 ## Identity & access
 

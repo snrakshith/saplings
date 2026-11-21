@@ -1,0 +1,234 @@
+import { randomBytes, randomUUID, createCipheriv, createDecipheriv } from 'node:crypto';
+import type { DomainPolicyService } from './domain-policy.js';
+import type { ActorContext, Store, JsonRecord } from '../types.js';
+import {
+  atomic,
+  fail,
+  hash,
+  insert,
+  integer,
+  now,
+  object,
+  page,
+  read,
+  redact,
+  strings,
+  text,
+  update,
+} from '../runtime/primitives.js';
+import type { Row } from '../runtime/primitives.js';
+export class DataService {
+  constructor(
+    private store: Store,
+    private allowed: string[] = [],
+    private domains?: DomainPolicyService,
+    private requirePolicies = false,
+  ) {}
+  private async assertNoHold(tx: Store, ctx: ActorContext) {
+    if ((await tx.get<Row>(ctx.tenantId, 'legal-holds', 'current'))?.active === true)
+      return fail('Legal hold active', 'LEGAL_HOLD', 409);
+  }
+  collection(value: unknown) {
+    const c = text(value, 'collection', 100);
+    if (!this.allowed.includes(c)) return fail('Collection not allowed', 'FORBIDDEN', 403);
+    if (this.requirePolicies && !this.domains?.hasPolicy(c))
+      return fail('Domain read/write policy required', 'DOMAIN_POLICY_REQUIRED', 503);
+    return c;
+  }
+  async import(ctx: ActorContext, input: JsonRecord) {
+    const c = this.collection(input.collection);
+    if (!Array.isArray(input.rows) || input.rows.length > 500)
+      return fail('Max 500 rows per import');
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      const rows = [];
+      for (const row of input.rows as unknown[])
+        rows.push(
+          this.domains?.hasPolicy(c)
+            ? await this.domains.mutate(ctx, c, randomUUID(), 'create', object(row), tx)
+            : await insert(tx, ctx, c, object(row)),
+        );
+      return { imported: rows.length, ids: rows.map((r) => r.id) };
+    });
+  }
+  async *stream(ctx: ActorContext, collection: unknown, batchSize = 250): AsyncGenerator<Row> {
+    const c = this.collection(collection);
+    integer(batchSize, 'batchSize', 1, 500);
+    let after: string | undefined;
+    do {
+      const batch = this.domains?.hasPolicy(c)
+        ? await this.domains.list(ctx, c, { limit: batchSize, after })
+        : await page(this.store, ctx, c, { limit: batchSize, after });
+      for (const row of batch.items) {
+        if (typeof row.id !== 'string') return fail('Invalid paged record', 'INVALID_STORE', 500);
+        yield row as Row;
+      }
+      if (batch.next === after && batch.next !== undefined)
+        throw Error('Store returned a non-advancing cursor');
+      after = batch.next;
+    } while (after !== undefined);
+  }
+  async export(ctx: ActorContext, input: JsonRecord) {
+    const c = this.collection(input.collection);
+    const rows: Row[] = [];
+    let bytes = 0;
+    for await (const row of this.stream(ctx, c)) {
+      bytes += Buffer.byteLength(JSON.stringify(row));
+      if (rows.length >= 10000 || bytes > 10_000_000)
+        return fail('Use streaming export for large collections', 'EXPORT_LIMIT', 413);
+      rows.push(row);
+    }
+    return { collection: c, exportedAt: now(), rows };
+  }
+  async softDelete(ctx: ActorContext, input: JsonRecord) {
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      await this.assertNoHold(tx, ctx);
+      const c = this.collection(input.collection);
+      return this.domains?.hasPolicy(c)
+        ? this.domains.mutate(ctx, c, text(input.id), 'update', { deletedAt: now() }, tx)
+        : update(tx, ctx, c, input.id, { deletedAt: now() });
+    });
+  }
+  async archive(ctx: ActorContext, input: JsonRecord) {
+    const c = this.collection(input.collection);
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      await this.assertNoHold(tx, ctx);
+      const r = await read(tx, ctx, c, input.id);
+      if (this.domains?.hasPolicy(c)) await this.domains.authorizeRecord(ctx, c, 'delete', r);
+      const a = await insert(tx, ctx, 'archives', { collection: c, record: r, archivedAt: now() });
+      await tx.delete(ctx.tenantId, c, r.id);
+      return { id: a.id };
+    });
+  }
+  async retention(ctx: ActorContext, input: JsonRecord) {
+    const c = this.collection(input.collection),
+      days = integer(input.days, 'days', 1, 36500),
+      cutoff = Date.now() - days * 86400000;
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      await this.assertNoHold(tx, ctx);
+      if (this.requirePolicies)
+        return fail(
+          'Use governance.sweep with configured retention policy',
+          'GOVERNANCE_REQUIRED',
+          503,
+        );
+      const rows = (await tx.list<Row>(ctx.tenantId, c))
+        .filter((r) => r.createdAt && Date.parse(r.createdAt) < cutoff)
+        .slice(0, 500);
+      if (input.confirm !== true) return { eligible: rows.length, deleted: 0 };
+      for (const r of rows) {
+        if (this.domains?.hasPolicy(c)) await this.domains.authorizeRecord(ctx, c, 'delete', r);
+        await tx.delete(ctx.tenantId, c, r.id);
+      }
+      return { deleted: rows.length };
+    });
+  }
+  async remove(ctx: ActorContext, input: JsonRecord) {
+    if (input.confirm !== true) return fail('Explicit confirmation required');
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      await this.assertNoHold(tx, ctx);
+      const c = this.collection(input.collection),
+        id = text(input.id, 'id');
+      if (this.domains?.hasPolicy(c)) return this.domains.mutate(ctx, c, id, 'delete', {}, tx);
+      return { deleted: await tx.delete(ctx.tenantId, c, id) };
+    });
+  }
+  async search(ctx: ActorContext, input: JsonRecord) {
+    const c = this.collection(input.collection),
+      query = text(input.query, 'query', 200).toLowerCase(),
+      fields = strings(input.fields);
+    const limit = integer(input.limit ?? 50, 'limit', 1, 500);
+    if (
+      !fields.length ||
+      fields.length > 12 ||
+      fields.some((f) => !/^[A-Za-z][A-Za-z0-9_]{0,63}$/.test(f))
+    )
+      return fail('Invalid search fields');
+    if (this.domains?.hasPolicy(c) && fields.some((f) => !this.domains!.readable(c, f)))
+      return fail('Search field not readable', 'FORBIDDEN', 403);
+    if (this.store.search && !this.domains?.hasPolicy(c))
+      return this.store.search<Row>(ctx.tenantId, c, query, fields, limit);
+    const results: Row[] = [];
+    for await (const r of this.stream(ctx, c)) {
+      if (
+        !r.deletedAt &&
+        fields.some((f) => typeof r[f] === 'string' && String(r[f]).toLowerCase().includes(query))
+      )
+        results.push(r);
+      if (results.length >= limit) break;
+    }
+    return results;
+  }
+  async consent(ctx: ActorContext, input: JsonRecord) {
+    const purpose = text(input.purpose, 'purpose', 100);
+    if (typeof input.granted !== 'boolean') return fail('granted must be boolean');
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      const id = hash(ctx.actorId + ':' + purpose);
+      const event = await insert(tx, ctx, 'consent-history', {
+        userId: ctx.actorId,
+        purpose,
+        granted: input.granted,
+        policyVersion: text(input.policyVersion, 'policyVersion'),
+      });
+      await tx.put(ctx.tenantId, 'consents', {
+        id,
+        userId: ctx.actorId,
+        purpose,
+        granted: input.granted,
+        eventId: event.id,
+        updatedAt: now(),
+      });
+      return event;
+    });
+  }
+}
+export class EnvelopeCrypto {
+  constructor(
+    private key: Uint8Array,
+    private keyId = 'v1',
+  ) {
+    if (key.byteLength !== 32) throw new Error('AES-256 key must be 32 bytes');
+  }
+  encrypt(ctx: ActorContext, plain: string) {
+    const iv = randomBytes(12),
+      cipher = createCipheriv('aes-256-gcm', Buffer.from(this.key), iv);
+    cipher.setAAD(Buffer.from(JSON.stringify([ctx.tenantId, this.keyId])));
+    const ciphertext = Buffer.concat([cipher.update(plain, 'utf8'), cipher.final()]);
+    return {
+      keyId: this.keyId,
+      iv: iv.toString('base64url'),
+      tag: cipher.getAuthTag().toString('base64url'),
+      ciphertext: ciphertext.toString('base64url'),
+    };
+  }
+  decrypt(ctx: ActorContext, input: JsonRecord) {
+    if (input.keyId !== this.keyId) return fail('Unknown key version');
+    const cipher = createDecipheriv(
+      'aes-256-gcm',
+      Buffer.from(this.key),
+      Buffer.from(text(input.iv), 'base64url'),
+    );
+    cipher.setAAD(Buffer.from(JSON.stringify([ctx.tenantId, this.keyId])));
+    cipher.setAuthTag(Buffer.from(text(input.tag), 'base64url'));
+    return Buffer.concat([
+      cipher.update(Buffer.from(text(input.ciphertext, 'ciphertext', 1000000), 'base64url')),
+      cipher.final(),
+    ]).toString('utf8');
+  }
+}
+export function validateRecord(input: JsonRecord, schema: JsonRecord) {
+  const errors: string[] = [];
+  for (const [key, spec] of Object.entries(schema)) {
+    const rule = object(spec),
+      v = input[key];
+    if (v === undefined) {
+      if (rule.required) errors.push(`${key}: required`);
+      continue;
+    }
+    if (rule.type === 'array' ? !Array.isArray(v) : typeof v !== rule.type)
+      errors.push(`${key}: wrong type`);
+    if (typeof v === 'string' && typeof rule.maxLength === 'number' && v.length > rule.maxLength)
+      errors.push(`${key}: too long`);
+  }
+  return { valid: !errors.length, errors };
+}
+export { redact };

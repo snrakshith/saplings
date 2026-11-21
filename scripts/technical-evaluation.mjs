@@ -19,40 +19,60 @@ if (
 )
   throw Error('Inventory mismatch');
 const refs = {
-  identity: ['accounts.ts', 'identity.ts', 'federation.ts', 'totp.ts', 'access.ts'],
+  identity: [
+    'identity/accounts.ts',
+    'identity/identity.ts',
+    'identity/federation.ts',
+    'identity/totp.ts',
+    'identity/access.ts',
+  ],
   tenancy: [
-    'offboarding.ts',
-    'governance.ts',
-    'domain-policy.ts',
-    'resources.ts',
-    'store.ts',
-    'access.ts',
+    'tenancy/offboarding.ts',
+    'data/governance.ts',
+    'data/domain-policy.ts',
+    'tenancy/resources.ts',
+    'runtime/store.ts',
+    'identity/access.ts',
   ],
   billing: [
-    'billing.ts',
-    'commerce.ts',
-    'recurring.ts',
-    'business-workflows.ts',
-    'billing-policy.ts',
-    'stripe-recurring.ts',
-    'razorpay-webhook.ts',
-    'cashfree.ts',
-    'stripe-payment.ts',
-    'integrations.ts',
+    'billing/billing.ts',
+    'billing/commerce.ts',
+    'billing/recurring.ts',
+    'workflows/business-workflows.ts',
+    'billing/billing-policy.ts',
+    'billing/stripe-recurring.ts',
+    'payments/razorpay-webhook.ts',
+    'payments/cashfree.ts',
+    'payments/stripe-payment.ts',
+    'integrations/integrations.ts',
   ],
-  security: ['operations.ts', 'audit.ts', 'data.ts', 'security-state.ts'],
-  notifications: ['integrations.ts', 'worker.ts', 'registry.ts'],
-  storage: ['storage.ts', 'data.ts', 'media.ts'],
-  analytics: ['analytics.ts', 'flags.ts', 'resources.ts'],
-  workflows: ['automation.ts', 'governance.ts', 'worker.ts', 'jobs.ts'],
+  security: [
+    'platform/operations.ts',
+    'audit/audit.ts',
+    'data/data.ts',
+    'security/security-state.ts',
+  ],
+  notifications: [
+    'integrations/integrations.ts',
+    'workflows/worker.ts',
+    'capabilities/registry.ts',
+  ],
+  storage: ['storage/storage.ts', 'data/data.ts', 'storage/media.ts'],
+  analytics: ['analytics/analytics.ts', 'feature-flags/flags.ts', 'tenancy/resources.ts'],
+  workflows: [
+    'workflows/automation.ts',
+    'data/governance.ts',
+    'workflows/worker.ts',
+    'workflows/jobs.ts',
+  ],
   operations: [
-    'providers.ts',
-    'provider-operations.ts',
-    'provider-workflow.ts',
-    'control-plane.ts',
-    'reliability.ts',
-    'operations.ts',
-    'worker.ts',
+    'platform/providers.ts',
+    'platform/provider-operations.ts',
+    'workflows/provider-workflow.ts',
+    'platform/control-plane.ts',
+    'runtime/reliability.ts',
+    'platform/operations.ts',
+    'workflows/worker.ts',
   ],
 };
 const rows = features.map((f) => {
@@ -61,7 +81,7 @@ const rows = features.map((f) => {
     ...f,
     kind: op.kind,
     registeredActions: op.actions,
-    source: 'packages/sdk/src/registry.ts',
+    source: 'packages/sdk/src/capabilities/registry.ts',
     relatedSources: (refs[f.module] ?? []).map((x) => 'packages/sdk/src/' + x),
     verification:
       'Catalog registration checked; feature-specific end-to-end proof not established.',
@@ -80,7 +100,7 @@ const md = (s) =>
 const write = (f, s) => fs.writeFileSync(path.join(dir, f), s + '\n');
 write('saas-evaluation.json', JSON.stringify(rows, null, 2));
 let doc =
-  '# SaaS technical evaluation — v0.17.0\n\n182 original IDs. Binding source for every row: `packages/sdk/src/registry.ts`. This inventory describes registered implementation paths, not completed production features. The **acceptance criterion** is mandatory in addition to application-level RBAC/ABAC, observability and live gates. Related source references are in `saas-evaluation.json`.\n';
+  '# SaaS technical evaluation — v0.17.0\n\n182 original IDs. Binding source for every row: `packages/sdk/src/capabilities/registry.ts`. This inventory describes registered implementation paths, not completed production features. The **acceptance criterion** is mandatory in addition to application-level RBAC/ABAC, observability and live gates. Related source references are in `saas-evaluation.json`.\n';
 for (const category of [...new Set(rows.map((r) => r.category))]) {
   doc += `\n## ${category}\n\n| ID / feature | Implementation | Operations | Dependency / limitation | Acceptance criterion |\n|---|---|---|---|---|\n`;
   for (const f of rows.filter((r) => r.category === category))

@@ -120,7 +120,7 @@ const domain = {
   ],
 };
 const relativeSource = (file) => file;
-const registry = 'packages/sdk/src/registry.ts';
+const registry = 'packages/sdk/src/capabilities/registry.ts';
 const lines = text(registry).split('\n');
 function binding(id) {
   const n = Number(id.slice(-3));
@@ -185,7 +185,11 @@ for (const f of saas) {
   const actions = f.registeredActions.join(', ');
   const payments = ['SAAS-042', 'SAAS-047', 'SAAS-050'].includes(f.id);
   const refs = [b.location, ...new Set(f.relatedSources ?? [])];
-  if (payments) refs.push('packages/sdk/src/cashfree.ts', 'packages/sdk/src/integrations.ts');
+  if (payments)
+    refs.push(
+      'packages/sdk/src/payments/cashfree.ts',
+      'packages/sdk/src/integrations/integrations.ts',
+    );
   dossier({
     group: 'saas',
     id: f.id,
@@ -373,7 +377,12 @@ for (const [id, requirement] of Object.entries(controlTasks)) {
     status: evidence
       ? 'Current control path present; effectiveness not certified'
       : 'Cross-cutting integration / policy; production closure pending',
-    sources: [defender, policy, 'packages/sdk/src/index.ts', 'packages/sdk/src/security-state.ts'],
+    sources: [
+      defender,
+      policy,
+      'packages/sdk/src/index.ts',
+      'packages/sdk/src/security/security-state.ts',
+    ],
     contract: `\`security.defender\` in sapling.config.ts; \`Defender.assess\`, \`Defender.preflight\`, and middleware. ${evidence ? fence(evidence) : 'Inspect source and runtime security specification for exact configuration.'}`,
     deps: 'Verified request context, trusted proxy policy, shared rate-state and configured alert sink where applicable.',
     flow: 'Preflight -> verified tenant context -> bounded assessment -> configured decision -> durable/redacted evidence and response; enforce failure policy and avoid unbounded per-client state.',
@@ -629,7 +638,7 @@ const extras = [
     'providers',
     'cashfree-payment-gateway',
     'Cashfree payment gateway',
-    'packages/sdk/src/cashfree.ts',
+    'packages/sdk/src/payments/cashfree.ts',
     'Order creation, checkout session, signed capture and refund polling; INR only.',
     'Complete sandbox checkout and refund state matrix, reconciliation worker and merchant-account binding; add Cashfree subscriptions separately.',
   ],
@@ -637,7 +646,7 @@ const extras = [
     'providers',
     'razorpay-payment-gateway',
     'Razorpay payment gateway',
-    'packages/sdk/src/integrations.ts',
+    'packages/sdk/src/integrations/integrations.ts',
     'Existing order/refund adapter and optional signed webhook in root razorpay-webhook.ts.',
     'Verify merchant credentials, signed capture/refund, stable idempotency, ambiguous order/refund recovery and provider-switch migration.',
   ],
@@ -645,7 +654,7 @@ const extras = [
     'providers',
     'stripe-payment-gateway',
     'Stripe one-time payment gateway',
-    'packages/sdk/src/stripe-payment.ts',
+    'packages/sdk/src/payments/stripe-payment.ts',
     'PaymentIntent checkout, read-based capture and refund creation; recurring and tokenized methods separate.',
     'Add one-time webhook, refund polling and ambiguous intent/refund recovery; validate Stripe sandbox and account mapping.',
   ],
@@ -653,7 +662,7 @@ const extras = [
     'providers',
     'stripe-recurring-gateway',
     'Stripe recurring gateway',
-    'packages/sdk/src/stripe-recurring.ts',
+    'packages/sdk/src/billing/stripe-recurring.ts',
     'Mandate lookup, recurring intent recovery and webhook wake-up.',
     'Validate real mandate consent, off-session charge, requires-action recovery and settlement; avoid duplicate invoice payment.',
   ],

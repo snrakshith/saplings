@@ -1,31 +1,31 @@
 [
   {
     "checkId": "SQL_INTERPOLATION",
-    "location": "integrations.ts:366",
+    "location": "integrations/integrations.ts:366",
     "lineSha256": "a7692bffa26e970d8af18089b3a441f7ad4db3c062cdc7090e9a659aec48573a",
     "reason": "The interpolated string is input to an HMAC signature."
   },
   {
     "checkId": "EVAL_INPUT",
-    "location": "valkey.ts:2",
+    "location": "runtime/valkey.ts:2",
     "lineSha256": "19dce21e9c466f578531cb428bd6aaf355420c2ab8be2bf48563c13e65fe1381",
     "reason": "The comment describes the Redis client API."
   },
   {
     "checkId": "EVAL_INPUT",
-    "location": "valkey.ts:4",
+    "location": "runtime/valkey.ts:4",
     "lineSha256": "a6a8b9eea78ae515d92af09531353608d0dea53ae58603ae4be06da4a37a8e86",
     "reason": "The interface declares the Redis client API."
   },
   {
     "checkId": "EVAL_INPUT",
-    "location": "valkey.ts:12",
+    "location": "runtime/valkey.ts:12",
     "lineSha256": "9b5ae3e06dfac593b1d00e26bb97a1ab762ea4bef43263610d305abe73952f91",
     "reason": "The Redis call evaluates fixed Lua with separate keys and arguments."
   },
   {
     "checkId": "EVAL_INPUT",
-    "location": "valkey.ts:26",
+    "location": "runtime/valkey.ts:26",
     "lineSha256": "9b5ae3e06dfac593b1d00e26bb97a1ab762ea4bef43263610d305abe73952f91",
     "reason": "The Redis call evaluates fixed Lua with separate keys and arguments."
   }

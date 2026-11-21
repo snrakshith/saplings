@@ -6,17 +6,17 @@ Release: 0.17.0 · Technical specification
 hybrid reference mapping; per-feature production proof not established. Durable retry schedule and idempotent recurring gateway; verify provider payment result.
 
 ## Source of truth
-- `packages/sdk/src/registry.ts:74`
-- `packages/sdk/src/billing.ts`
-- `packages/sdk/src/commerce.ts`
-- `packages/sdk/src/recurring.ts`
-- `packages/sdk/src/business-workflows.ts`
-- `packages/sdk/src/billing-policy.ts`
-- `packages/sdk/src/stripe-recurring.ts`
-- `packages/sdk/src/razorpay-webhook.ts`
-- `packages/sdk/src/cashfree.ts`
-- `packages/sdk/src/stripe-payment.ts`
-- `packages/sdk/src/integrations.ts`
+- `packages/sdk/src/capabilities/registry.ts:74`
+- `packages/sdk/src/billing/billing.ts`
+- `packages/sdk/src/billing/commerce.ts`
+- `packages/sdk/src/billing/recurring.ts`
+- `packages/sdk/src/workflows/business-workflows.ts`
+- `packages/sdk/src/billing/billing-policy.ts`
+- `packages/sdk/src/billing/stripe-recurring.ts`
+- `packages/sdk/src/payments/razorpay-webhook.ts`
+- `packages/sdk/src/payments/cashfree.ts`
+- `packages/sdk/src/payments/stripe-payment.ts`
+- `packages/sdk/src/integrations/integrations.ts`
 
 ## Public contract / current implementation
 Typed registry call: `sapling.invokeCapability(ctx, 'SAAS-048', 'enqueue', input)`. All registered actions: enqueue, chargeDue, resume, sweep. Context: `ActorContext`; generic payload: `JsonRecord`; result currently `unknown` through the generic registry. Require `capabilities:SAAS-048:<action>` permission plus service/domain checks.
@@ -51,7 +51,7 @@ Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the p
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 SDK source moved to root; no additional feature-specific implementation claimed for this feature in this release.
 

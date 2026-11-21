@@ -27,12 +27,12 @@
       "directory": "docs/features/saas/SAAS-001",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:48",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:48",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -45,12 +45,12 @@
       "directory": "docs/features/saas/SAAS-002",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:49",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:49",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -63,12 +63,12 @@
       "directory": "docs/features/saas/SAAS-003",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:50",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:50",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -81,12 +81,12 @@
       "directory": "docs/features/saas/SAAS-004",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:51",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:51",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -99,12 +99,12 @@
       "directory": "docs/features/saas/SAAS-005",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:52",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:52",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -117,12 +117,12 @@
       "directory": "docs/features/saas/SAAS-006",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:53",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:53",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -135,12 +135,12 @@
       "directory": "docs/features/saas/SAAS-007",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:54",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:54",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -153,12 +153,12 @@
       "directory": "docs/features/saas/SAAS-008",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:55",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:55",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -171,12 +171,12 @@
       "directory": "docs/features/saas/SAAS-009",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:56",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:56",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -189,12 +189,12 @@
       "directory": "docs/features/saas/SAAS-010",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:56",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:56",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -207,12 +207,12 @@
       "directory": "docs/features/saas/SAAS-011",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:56",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:56",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -225,12 +225,12 @@
       "directory": "docs/features/saas/SAAS-012",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:56",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:56",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -243,12 +243,12 @@
       "directory": "docs/features/saas/SAAS-013",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:57",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:57",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -261,12 +261,12 @@
       "directory": "docs/features/saas/SAAS-014",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:58",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:58",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -279,12 +279,12 @@
       "directory": "docs/features/saas/SAAS-015",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:59",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:59",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -297,12 +297,12 @@
       "directory": "docs/features/saas/SAAS-016",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:60",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:60",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -315,12 +315,12 @@
       "directory": "docs/features/saas/SAAS-017",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:60",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:60",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -333,12 +333,12 @@
       "directory": "docs/features/saas/SAAS-018",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:61",
-        "packages/sdk/src/accounts.ts",
-        "packages/sdk/src/identity.ts",
-        "packages/sdk/src/federation.ts",
-        "packages/sdk/src/totp.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:61",
+        "packages/sdk/src/identity/accounts.ts",
+        "packages/sdk/src/identity/identity.ts",
+        "packages/sdk/src/identity/federation.ts",
+        "packages/sdk/src/identity/totp.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Identity engineer",
       "priority": "P0/P1",
@@ -351,13 +351,13 @@
       "directory": "docs/features/saas/SAAS-019",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:62",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:62",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -370,13 +370,13 @@
       "directory": "docs/features/saas/SAAS-020",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:63",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:63",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -389,13 +389,13 @@
       "directory": "docs/features/saas/SAAS-021",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:64",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:64",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -408,13 +408,13 @@
       "directory": "docs/features/saas/SAAS-022",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:63",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:63",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -427,13 +427,13 @@
       "directory": "docs/features/saas/SAAS-023",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:65",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:65",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -446,13 +446,13 @@
       "directory": "docs/features/saas/SAAS-024",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:66",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:66",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -465,13 +465,13 @@
       "directory": "docs/features/saas/SAAS-025",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:67",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:67",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -484,13 +484,13 @@
       "directory": "docs/features/saas/SAAS-026",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:67",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:67",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -503,13 +503,13 @@
       "directory": "docs/features/saas/SAAS-027",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:67",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:67",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -522,13 +522,13 @@
       "directory": "docs/features/saas/SAAS-028",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:67",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:67",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -541,13 +541,13 @@
       "directory": "docs/features/saas/SAAS-029",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:67",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:67",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -560,13 +560,13 @@
       "directory": "docs/features/saas/SAAS-030",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:68",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:68",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -579,13 +579,13 @@
       "directory": "docs/features/saas/SAAS-031",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:68",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:68",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -598,13 +598,13 @@
       "directory": "docs/features/saas/SAAS-032",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:68",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:68",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -617,13 +617,13 @@
       "directory": "docs/features/saas/SAAS-033",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:68",
-        "packages/sdk/src/offboarding.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/domain-policy.ts",
-        "packages/sdk/src/resources.ts",
-        "packages/sdk/src/store.ts",
-        "packages/sdk/src/access.ts"
+        "packages/sdk/src/capabilities/registry.ts:68",
+        "packages/sdk/src/tenancy/offboarding.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/data/domain-policy.ts",
+        "packages/sdk/src/tenancy/resources.ts",
+        "packages/sdk/src/runtime/store.ts",
+        "packages/sdk/src/identity/access.ts"
       ],
       "owner": "Backend / data engineer",
       "priority": "P0/P1",
@@ -636,17 +636,17 @@
       "directory": "docs/features/saas/SAAS-034",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:69",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:69",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -659,17 +659,17 @@
       "directory": "docs/features/saas/SAAS-035",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:70",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:70",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -682,17 +682,17 @@
       "directory": "docs/features/saas/SAAS-036",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:70",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:70",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -705,17 +705,17 @@
       "directory": "docs/features/saas/SAAS-037",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:70",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:70",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -728,17 +728,17 @@
       "directory": "docs/features/saas/SAAS-038",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:71",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:71",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -751,17 +751,17 @@
       "directory": "docs/features/saas/SAAS-039",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:71",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:71",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -774,17 +774,17 @@
       "directory": "docs/features/saas/SAAS-040",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:71",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:71",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -797,17 +797,17 @@
       "directory": "docs/features/saas/SAAS-041",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:72",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:72",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -820,19 +820,19 @@
       "directory": "docs/features/saas/SAAS-042",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:73",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:73",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -845,17 +845,17 @@
       "directory": "docs/features/saas/SAAS-043",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:73",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:73",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -868,17 +868,17 @@
       "directory": "docs/features/saas/SAAS-044",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:74",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:74",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -891,17 +891,17 @@
       "directory": "docs/features/saas/SAAS-045",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:74",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:74",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -914,17 +914,17 @@
       "directory": "docs/features/saas/SAAS-046",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:74",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:74",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -937,19 +937,19 @@
       "directory": "docs/features/saas/SAAS-047",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:74",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:74",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -962,17 +962,17 @@
       "directory": "docs/features/saas/SAAS-048",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:74",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:74",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -985,17 +985,17 @@
       "directory": "docs/features/saas/SAAS-049",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:74",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:74",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -1008,19 +1008,19 @@
       "directory": "docs/features/saas/SAAS-050",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:74",
-        "packages/sdk/src/billing.ts",
-        "packages/sdk/src/commerce.ts",
-        "packages/sdk/src/recurring.ts",
-        "packages/sdk/src/business-workflows.ts",
-        "packages/sdk/src/billing-policy.ts",
-        "packages/sdk/src/stripe-recurring.ts",
-        "packages/sdk/src/razorpay-webhook.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/stripe-payment.ts",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/cashfree.ts",
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/capabilities/registry.ts:74",
+        "packages/sdk/src/billing/billing.ts",
+        "packages/sdk/src/billing/commerce.ts",
+        "packages/sdk/src/billing/recurring.ts",
+        "packages/sdk/src/workflows/business-workflows.ts",
+        "packages/sdk/src/billing/billing-policy.ts",
+        "packages/sdk/src/billing/stripe-recurring.ts",
+        "packages/sdk/src/payments/razorpay-webhook.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/payments/stripe-payment.ts",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/payments/cashfree.ts",
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Billing / finance engineer",
       "priority": "P0/P1",
@@ -1033,11 +1033,11 @@
       "directory": "docs/features/saas/SAAS-051",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:75",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:75",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1050,11 +1050,11 @@
       "directory": "docs/features/saas/SAAS-052",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:75",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:75",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1067,11 +1067,11 @@
       "directory": "docs/features/saas/SAAS-053",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1084,11 +1084,11 @@
       "directory": "docs/features/saas/SAAS-054",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1101,11 +1101,11 @@
       "directory": "docs/features/saas/SAAS-055",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1118,11 +1118,11 @@
       "directory": "docs/features/saas/SAAS-056",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1135,11 +1135,11 @@
       "directory": "docs/features/saas/SAAS-057",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1152,11 +1152,11 @@
       "directory": "docs/features/saas/SAAS-058",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1169,11 +1169,11 @@
       "directory": "docs/features/saas/SAAS-059",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1186,11 +1186,11 @@
       "directory": "docs/features/saas/SAAS-060",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1203,11 +1203,11 @@
       "directory": "docs/features/saas/SAAS-061",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1220,11 +1220,11 @@
       "directory": "docs/features/saas/SAAS-062",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1237,11 +1237,11 @@
       "directory": "docs/features/saas/SAAS-063",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1254,11 +1254,11 @@
       "directory": "docs/features/saas/SAAS-064",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1271,11 +1271,11 @@
       "directory": "docs/features/saas/SAAS-065",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1288,11 +1288,11 @@
       "directory": "docs/features/saas/SAAS-066",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1305,11 +1305,11 @@
       "directory": "docs/features/saas/SAAS-067",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:76",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:76",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1322,11 +1322,11 @@
       "directory": "docs/features/saas/SAAS-068",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:77",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:77",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1339,11 +1339,11 @@
       "directory": "docs/features/saas/SAAS-069",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:77",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:77",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1356,11 +1356,11 @@
       "directory": "docs/features/saas/SAAS-070",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:77",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/audit.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/capabilities/registry.ts:77",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/audit/audit.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / governance engineer",
       "priority": "P0/P1",
@@ -1373,10 +1373,10 @@
       "directory": "docs/features/saas/SAAS-071",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:78",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:78",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1389,10 +1389,10 @@
       "directory": "docs/features/saas/SAAS-072",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:79",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:79",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1405,10 +1405,10 @@
       "directory": "docs/features/saas/SAAS-073",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:78",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:78",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1421,10 +1421,10 @@
       "directory": "docs/features/saas/SAAS-074",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:78",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:78",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1437,10 +1437,10 @@
       "directory": "docs/features/saas/SAAS-075",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1453,10 +1453,10 @@
       "directory": "docs/features/saas/SAAS-076",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1469,10 +1469,10 @@
       "directory": "docs/features/saas/SAAS-077",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1485,10 +1485,10 @@
       "directory": "docs/features/saas/SAAS-078",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1501,10 +1501,10 @@
       "directory": "docs/features/saas/SAAS-079",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1517,10 +1517,10 @@
       "directory": "docs/features/saas/SAAS-080",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1533,10 +1533,10 @@
       "directory": "docs/features/saas/SAAS-081",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1549,10 +1549,10 @@
       "directory": "docs/features/saas/SAAS-082",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:80",
-        "packages/sdk/src/integrations.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/registry.ts"
+        "packages/sdk/src/capabilities/registry.ts:80",
+        "packages/sdk/src/integrations/integrations.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/capabilities/registry.ts"
       ],
       "owner": "Integration engineer",
       "priority": "P0/P1",
@@ -1565,10 +1565,10 @@
       "directory": "docs/features/saas/SAAS-083",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1581,10 +1581,10 @@
       "directory": "docs/features/saas/SAAS-084",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1597,10 +1597,10 @@
       "directory": "docs/features/saas/SAAS-085",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1613,10 +1613,10 @@
       "directory": "docs/features/saas/SAAS-086",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1629,10 +1629,10 @@
       "directory": "docs/features/saas/SAAS-087",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1645,10 +1645,10 @@
       "directory": "docs/features/saas/SAAS-088",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1661,10 +1661,10 @@
       "directory": "docs/features/saas/SAAS-089",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1677,10 +1677,10 @@
       "directory": "docs/features/saas/SAAS-090",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1693,10 +1693,10 @@
       "directory": "docs/features/saas/SAAS-091",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1709,10 +1709,10 @@
       "directory": "docs/features/saas/SAAS-092",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1725,10 +1725,10 @@
       "directory": "docs/features/saas/SAAS-093",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1741,10 +1741,10 @@
       "directory": "docs/features/saas/SAAS-094",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1757,10 +1757,10 @@
       "directory": "docs/features/saas/SAAS-095",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1773,10 +1773,10 @@
       "directory": "docs/features/saas/SAAS-096",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1789,10 +1789,10 @@
       "directory": "docs/features/saas/SAAS-097",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1805,10 +1805,10 @@
       "directory": "docs/features/saas/SAAS-098",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1821,10 +1821,10 @@
       "directory": "docs/features/saas/SAAS-099",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:81",
-        "packages/sdk/src/storage.ts",
-        "packages/sdk/src/data.ts",
-        "packages/sdk/src/media.ts"
+        "packages/sdk/src/capabilities/registry.ts:81",
+        "packages/sdk/src/storage/storage.ts",
+        "packages/sdk/src/data/data.ts",
+        "packages/sdk/src/storage/media.ts"
       ],
       "owner": "Storage / database engineer",
       "priority": "P0/P1",
@@ -1837,10 +1837,10 @@
       "directory": "docs/features/saas/SAAS-100",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1853,10 +1853,10 @@
       "directory": "docs/features/saas/SAAS-101",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1869,10 +1869,10 @@
       "directory": "docs/features/saas/SAAS-102",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1885,10 +1885,10 @@
       "directory": "docs/features/saas/SAAS-103",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1901,10 +1901,10 @@
       "directory": "docs/features/saas/SAAS-104",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1917,10 +1917,10 @@
       "directory": "docs/features/saas/SAAS-105",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1933,10 +1933,10 @@
       "directory": "docs/features/saas/SAAS-106",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1949,10 +1949,10 @@
       "directory": "docs/features/saas/SAAS-107",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1965,10 +1965,10 @@
       "directory": "docs/features/saas/SAAS-108",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1981,10 +1981,10 @@
       "directory": "docs/features/saas/SAAS-109",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -1997,10 +1997,10 @@
       "directory": "docs/features/saas/SAAS-110",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -2013,10 +2013,10 @@
       "directory": "docs/features/saas/SAAS-111",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -2029,10 +2029,10 @@
       "directory": "docs/features/saas/SAAS-112",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:82",
-        "packages/sdk/src/analytics.ts",
-        "packages/sdk/src/flags.ts",
-        "packages/sdk/src/resources.ts"
+        "packages/sdk/src/capabilities/registry.ts:82",
+        "packages/sdk/src/analytics/analytics.ts",
+        "packages/sdk/src/feature-flags/flags.ts",
+        "packages/sdk/src/tenancy/resources.ts"
       ],
       "owner": "Analytics engineer",
       "priority": "P0/P1",
@@ -2045,11 +2045,11 @@
       "directory": "docs/features/saas/SAAS-113",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2062,11 +2062,11 @@
       "directory": "docs/features/saas/SAAS-114",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2079,11 +2079,11 @@
       "directory": "docs/features/saas/SAAS-115",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2096,11 +2096,11 @@
       "directory": "docs/features/saas/SAAS-116",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2113,11 +2113,11 @@
       "directory": "docs/features/saas/SAAS-117",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2130,11 +2130,11 @@
       "directory": "docs/features/saas/SAAS-118",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2147,11 +2147,11 @@
       "directory": "docs/features/saas/SAAS-119",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2164,11 +2164,11 @@
       "directory": "docs/features/saas/SAAS-120",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2181,11 +2181,11 @@
       "directory": "docs/features/saas/SAAS-121",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2198,11 +2198,11 @@
       "directory": "docs/features/saas/SAAS-122",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2215,11 +2215,11 @@
       "directory": "docs/features/saas/SAAS-123",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:83",
-        "packages/sdk/src/automation.ts",
-        "packages/sdk/src/governance.ts",
-        "packages/sdk/src/worker.ts",
-        "packages/sdk/src/jobs.ts"
+        "packages/sdk/src/capabilities/registry.ts:83",
+        "packages/sdk/src/workflows/automation.ts",
+        "packages/sdk/src/data/governance.ts",
+        "packages/sdk/src/workflows/worker.ts",
+        "packages/sdk/src/workflows/jobs.ts"
       ],
       "owner": "Workflow engineer",
       "priority": "P0/P1",
@@ -2232,7 +2232,7 @@
       "directory": "docs/features/saas/SAAS-124",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2245,7 +2245,7 @@
       "directory": "docs/features/saas/SAAS-125",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2258,7 +2258,7 @@
       "directory": "docs/features/saas/SAAS-126",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2271,7 +2271,7 @@
       "directory": "docs/features/saas/SAAS-127",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2284,7 +2284,7 @@
       "directory": "docs/features/saas/SAAS-128",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2297,7 +2297,7 @@
       "directory": "docs/features/saas/SAAS-129",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2310,7 +2310,7 @@
       "directory": "docs/features/saas/SAAS-130",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2323,7 +2323,7 @@
       "directory": "docs/features/saas/SAAS-131",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2336,7 +2336,7 @@
       "directory": "docs/features/saas/SAAS-132",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2349,7 +2349,7 @@
       "directory": "docs/features/saas/SAAS-133",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2362,7 +2362,7 @@
       "directory": "docs/features/saas/SAAS-134",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2375,7 +2375,7 @@
       "directory": "docs/features/saas/SAAS-135",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2388,7 +2388,7 @@
       "directory": "docs/features/saas/SAAS-136",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2401,7 +2401,7 @@
       "directory": "docs/features/saas/SAAS-137",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2414,7 +2414,7 @@
       "directory": "docs/features/saas/SAAS-138",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:84"
+        "packages/sdk/src/capabilities/registry.ts:84"
       ],
       "owner": "SDK / API engineer",
       "priority": "P0/P1",
@@ -2427,7 +2427,7 @@
       "directory": "docs/features/saas/SAAS-139",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2440,7 +2440,7 @@
       "directory": "docs/features/saas/SAAS-140",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2453,7 +2453,7 @@
       "directory": "docs/features/saas/SAAS-141",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2466,7 +2466,7 @@
       "directory": "docs/features/saas/SAAS-142",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2479,7 +2479,7 @@
       "directory": "docs/features/saas/SAAS-143",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2492,7 +2492,7 @@
       "directory": "docs/features/saas/SAAS-144",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2505,7 +2505,7 @@
       "directory": "docs/features/saas/SAAS-145",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2518,7 +2518,7 @@
       "directory": "docs/features/saas/SAAS-146",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2531,7 +2531,7 @@
       "directory": "docs/features/saas/SAAS-147",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2544,7 +2544,7 @@
       "directory": "docs/features/saas/SAAS-148",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2557,7 +2557,7 @@
       "directory": "docs/features/saas/SAAS-149",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2570,7 +2570,7 @@
       "directory": "docs/features/saas/SAAS-150",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2583,7 +2583,7 @@
       "directory": "docs/features/saas/SAAS-151",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2596,7 +2596,7 @@
       "directory": "docs/features/saas/SAAS-152",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2609,7 +2609,7 @@
       "directory": "docs/features/saas/SAAS-153",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:85"
+        "packages/sdk/src/capabilities/registry.ts:85"
       ],
       "owner": "Platform engineer",
       "priority": "P0/P1",
@@ -2622,14 +2622,14 @@
       "directory": "docs/features/saas/SAAS-154",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2642,14 +2642,14 @@
       "directory": "docs/features/saas/SAAS-155",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2662,14 +2662,14 @@
       "directory": "docs/features/saas/SAAS-156",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2682,14 +2682,14 @@
       "directory": "docs/features/saas/SAAS-157",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2702,14 +2702,14 @@
       "directory": "docs/features/saas/SAAS-158",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2722,14 +2722,14 @@
       "directory": "docs/features/saas/SAAS-159",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2742,14 +2742,14 @@
       "directory": "docs/features/saas/SAAS-160",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2762,14 +2762,14 @@
       "directory": "docs/features/saas/SAAS-161",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2782,14 +2782,14 @@
       "directory": "docs/features/saas/SAAS-162",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2802,14 +2802,14 @@
       "directory": "docs/features/saas/SAAS-163",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2822,14 +2822,14 @@
       "directory": "docs/features/saas/SAAS-164",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2842,14 +2842,14 @@
       "directory": "docs/features/saas/SAAS-165",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2862,14 +2862,14 @@
       "directory": "docs/features/saas/SAAS-166",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2882,14 +2882,14 @@
       "directory": "docs/features/saas/SAAS-167",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2902,14 +2902,14 @@
       "directory": "docs/features/saas/SAAS-168",
       "status": "provider reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2922,14 +2922,14 @@
       "directory": "docs/features/saas/SAAS-169",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2942,14 +2942,14 @@
       "directory": "docs/features/saas/SAAS-170",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:86",
-        "packages/sdk/src/providers.ts",
-        "packages/sdk/src/provider-operations.ts",
-        "packages/sdk/src/provider-workflow.ts",
-        "packages/sdk/src/control-plane.ts",
-        "packages/sdk/src/reliability.ts",
-        "packages/sdk/src/operations.ts",
-        "packages/sdk/src/worker.ts"
+        "packages/sdk/src/capabilities/registry.ts:86",
+        "packages/sdk/src/platform/providers.ts",
+        "packages/sdk/src/platform/provider-operations.ts",
+        "packages/sdk/src/workflows/provider-workflow.ts",
+        "packages/sdk/src/platform/control-plane.ts",
+        "packages/sdk/src/runtime/reliability.ts",
+        "packages/sdk/src/platform/operations.ts",
+        "packages/sdk/src/workflows/worker.ts"
       ],
       "owner": "SRE / platform engineer",
       "priority": "P0/P1",
@@ -2962,7 +2962,7 @@
       "directory": "docs/features/saas/SAAS-171",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -2975,7 +2975,7 @@
       "directory": "docs/features/saas/SAAS-172",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -2988,7 +2988,7 @@
       "directory": "docs/features/saas/SAAS-173",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3001,7 +3001,7 @@
       "directory": "docs/features/saas/SAAS-174",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3014,7 +3014,7 @@
       "directory": "docs/features/saas/SAAS-175",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3027,7 +3027,7 @@
       "directory": "docs/features/saas/SAAS-176",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3040,7 +3040,7 @@
       "directory": "docs/features/saas/SAAS-177",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3053,7 +3053,7 @@
       "directory": "docs/features/saas/SAAS-178",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3066,7 +3066,7 @@
       "directory": "docs/features/saas/SAAS-179",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3079,7 +3079,7 @@
       "directory": "docs/features/saas/SAAS-180",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3092,7 +3092,7 @@
       "directory": "docs/features/saas/SAAS-181",
       "status": "local reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -3105,7 +3105,7 @@
       "directory": "docs/features/saas/SAAS-182",
       "status": "hybrid reference mapping; per-feature production proof not established",
       "source": [
-        "packages/sdk/src/registry.ts:87"
+        "packages/sdk/src/capabilities/registry.ts:87"
       ],
       "owner": "Application engineer",
       "priority": "P0/P1",
@@ -4335,7 +4335,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4351,7 +4351,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4367,7 +4367,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4383,7 +4383,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4399,7 +4399,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4415,7 +4415,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4431,7 +4431,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4447,7 +4447,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4463,7 +4463,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4479,7 +4479,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4495,7 +4495,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4511,7 +4511,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4527,7 +4527,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4543,7 +4543,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4559,7 +4559,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4575,7 +4575,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4591,7 +4591,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4607,7 +4607,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4623,7 +4623,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4639,7 +4639,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4655,7 +4655,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4671,7 +4671,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4687,7 +4687,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4703,7 +4703,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4719,7 +4719,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4735,7 +4735,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -4751,7 +4751,7 @@
         "packages/security/src/defender.ts",
         "packages/security/src/policy.ts",
         "packages/sdk/src/index.ts",
-        "packages/sdk/src/security-state.ts"
+        "packages/sdk/src/security/security-state.ts"
       ],
       "owner": "Security / platform engineer",
       "priority": "P0/P1",
@@ -12772,7 +12772,7 @@
       "directory": "docs/features/providers/cashfree-payment-gateway",
       "status": "Reference code present; not production validated",
       "source": [
-        "packages/sdk/src/cashfree.ts"
+        "packages/sdk/src/payments/cashfree.ts"
       ],
       "owner": "Integration / platform engineer",
       "priority": "P0/P1",
@@ -12785,7 +12785,7 @@
       "directory": "docs/features/providers/razorpay-payment-gateway",
       "status": "Reference code present; not production validated",
       "source": [
-        "packages/sdk/src/integrations.ts"
+        "packages/sdk/src/integrations/integrations.ts"
       ],
       "owner": "Integration / platform engineer",
       "priority": "P0/P1",
@@ -12798,7 +12798,7 @@
       "directory": "docs/features/providers/stripe-payment-gateway",
       "status": "Reference code present; not production validated",
       "source": [
-        "packages/sdk/src/stripe-payment.ts"
+        "packages/sdk/src/payments/stripe-payment.ts"
       ],
       "owner": "Integration / platform engineer",
       "priority": "P0/P1",
@@ -12811,7 +12811,7 @@
       "directory": "docs/features/providers/stripe-recurring-gateway",
       "status": "Reference code present; not production validated",
       "source": [
-        "packages/sdk/src/stripe-recurring.ts"
+        "packages/sdk/src/billing/stripe-recurring.ts"
       ],
       "owner": "Integration / platform engineer",
       "priority": "P0/P1",

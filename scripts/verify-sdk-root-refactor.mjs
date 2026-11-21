@@ -1,57 +1,39 @@
-/** Public/source layout regression: prevents accidental reintroduction of expanded folder. */
-import fs from 'node:fs';
-import path from 'node:path';
-const root = 'packages/sdk/src',
-  required = [
-    'accounts',
-    'analytics',
-    'automation',
-    'billing-policy',
-    'business-workflows',
-    'cashfree',
-    'commerce',
-    'control-plane',
-    'data',
-    'domain-policy',
-    'federation',
-    'governance',
-    'http',
-    'impersonation',
-    'media',
-    'offboarding',
-    'operations',
-    'primitives',
-    'provider-operations',
-    'provider-workflow',
-    'providers',
-    'razorpay-webhook',
-    'recurring',
-    'registry',
-    'reliability',
-    'security-state',
-    'stripe-payment',
-    'stripe-recurring',
-    'totp',
-    'valkey',
-    'worker',
-  ];
-const failures = [];
-if (fs.existsSync(path.join(root, 'expanded'))) failures.push('Old nested SDK directory exists');
-for (const stem of required)
-  if (!fs.existsSync(path.join(root, stem + '.ts')))
-    failures.push('Missing flat SDK source: ' + stem);
-for (const f of fs.readdirSync(root).filter((f) => f.endsWith('.ts'))) {
-  const contents = fs.readFileSync(path.join(root, f), 'utf8');
-  if (contents.includes("from './expanded/") || contents.includes('from "./expanded/'))
-    failures.push('Stale SDK import: ' + f);
-}
-const manifest = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-if (manifest.version !== '0.17.0') failures.push('Unexpected release version');
-const result = {
-  version: manifest.version,
-  flattenedModules: required.length,
-  oldDirectoryAbsent: !fs.existsSync(path.join(root, 'expanded')),
-  failures,
+/** Validate the domain layout while keeping the published SDK entry point at the root. */
+import { existsSync, readdirSync } from 'node:fs';
+import { join } from 'node:path';
+
+const root = 'packages/sdk/src';
+const domains = {
+  analytics: 'analytics.ts',
+  audit: 'audit.ts',
+  billing: 'billing.ts',
+  capabilities: 'registry.ts',
+  data: 'data.ts',
+  'feature-flags': 'flags.ts',
+  http: 'http.ts',
+  identity: 'identity.ts',
+  integrations: 'integrations.ts',
+  payments: 'stripe-payment.ts',
+  platform: 'provider-operations.ts',
+  quality: 'quality-config.ts',
+  runtime: 'store.ts',
+  security: 'security-state.ts',
+  storage: 'storage.ts',
+  tenancy: 'resources.ts',
+  workflows: 'worker.ts',
 };
-console.log(JSON.stringify(result, null, 2));
+const entries = readdirSync(root, { withFileTypes: true });
+const rootFiles = entries
+  .filter((entry) => entry.isFile())
+  .map((entry) => entry.name)
+  .sort();
+const failures = [];
+if (rootFiles.join(',') !== 'config.ts,index.ts,types.ts')
+  failures.push('Keep declarations, configuration and the entry point at the SDK source root');
+if (existsSync(join(root, 'expanded'))) failures.push('Old expanded directory exists');
+for (const [domain, entry] of Object.entries(domains)) {
+  if (!existsSync(join(root, domain, entry)))
+    failures.push('Missing SDK module ' + domain + '/' + entry);
+}
+console.log(JSON.stringify({ domains: Object.keys(domains), failures }, null, 2));
 if (failures.length) process.exitCode = 1;

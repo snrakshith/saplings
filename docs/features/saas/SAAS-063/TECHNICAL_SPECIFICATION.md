@@ -6,11 +6,11 @@ Release: 0.17.0 · Technical specification
 local reference mapping; per-feature production proof not established. Reference implementation; production validation and app-specific authorization pending.
 
 ## Source of truth
-- `packages/sdk/src/registry.ts:76`
-- `packages/sdk/src/operations.ts`
-- `packages/sdk/src/audit.ts`
-- `packages/sdk/src/data.ts`
-- `packages/sdk/src/security-state.ts`
+- `packages/sdk/src/capabilities/registry.ts:76`
+- `packages/sdk/src/platform/operations.ts`
+- `packages/sdk/src/audit/audit.ts`
+- `packages/sdk/src/data/data.ts`
+- `packages/sdk/src/security/security-state.ts`
 
 ## Public contract / current implementation
 Typed registry call: `sapling.invokeCapability(ctx, 'SAAS-063', 'record', input)`. All registered actions: record, history. Context: `ActorContext`; generic payload: `JsonRecord`; result currently `unknown` through the generic registry. Require `capabilities:SAAS-063:<action>` permission plus service/domain checks.
@@ -45,7 +45,7 @@ Use pnpm workspace builds and the matching 0.17.0 package versions. Retain the p
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 SDK source moved to root; no additional feature-specific implementation claimed for this feature in this release.
 
