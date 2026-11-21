@@ -1,10 +1,10 @@
 import { createSapling, Gateway } from '@saplings/sdk';
 
-import { setup, starterConfig, tenant } from '../sapling.config.js';
+import { setup, tenant } from '../sapling.config.js';
 import { commerce } from './commerce.js';
 import { foundation } from './foundation.js';
 import { operations } from './operations.js';
-import type { StarterRuntime } from './runtime.js';
+import { starterRuntimeConfig, type StarterRuntime } from './runtime.js';
 
 export const checks = { ...foundation, ...commerce, ...operations };
 
@@ -53,7 +53,7 @@ export async function runStarterCheck(id: string, runtime: StarterRuntime) {
       clients: identity.config.spec.clients.map((client) => client.clientId),
     };
   }
-  const config = starterConfig(runtime.apiPort);
+  const config = starterRuntimeConfig(runtime.apiPort);
   if (id === 'harbor') {
     const { config: gatewayConfig, dependencies } = config.platforms.harbor;
     const gateway = new Gateway(gatewayConfig, dependencies);

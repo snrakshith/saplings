@@ -1,5 +1,4 @@
 import { defineSaplingConfig } from '@saplings/sdk';
-import { localNotifications, localOperation, localPayments } from './starter/local-adapters.js';
 
 export const project = { id: 'saplings-starter', name: 'Saplings Starter' };
 export const tenant = { id: 'local', name: 'Local workspace' };
@@ -48,11 +47,9 @@ export function starterConfig(apiPort: number) {
     notifications: { enabled: true, provider: 'custom' },
     payments: { enabled: true, provider: 'custom' },
     workflows: { enabled: true, maxAttempts: setup.workflows.attempts },
-    providers: { notifications: localNotifications, payments: localPayments },
     services: {
       dataCollections: [setup.governance.collection],
       retentionPolicies: { [setup.governance.collection]: { days: setup.governance.days } },
-      providerOperations: { [setup.operations.operation]: localOperation },
     },
     platforms: {
       kingsman: {
