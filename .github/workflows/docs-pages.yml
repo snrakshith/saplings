@@ -10,6 +10,11 @@ on:
       - 'examples/**'
       - 'README.md'
       - '.node-version'
+      - '.npmrc'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'tsconfig.base.json'
       - 'scripts/build-docs-pages.sh'
       - 'scripts/sync-site-package-guides.mjs'
       - '.github/workflows/docs-pages.yml'
@@ -22,6 +27,11 @@ on:
       - 'examples/**'
       - 'README.md'
       - '.node-version'
+      - '.npmrc'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - 'pnpm-workspace.yaml'
+      - 'tsconfig.base.json'
       - 'scripts/build-docs-pages.sh'
       - 'scripts/sync-site-package-guides.mjs'
       - '.github/workflows/docs-pages.yml'
@@ -44,6 +54,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+      - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version-file: .node-version
@@ -51,7 +62,8 @@ jobs:
       - uses: actions/configure-pages@v6
         id: pages
         if: github.ref == 'refs/heads/main'
-      - name: Build and validate the documentation
+      - run: pnpm install --frozen-lockfile
+      - name: Build and validate documentation and Storybooks
         env:
           PAGES_BASE_PATH: ${{ steps.pages.outputs.base_path }}
         run: |
