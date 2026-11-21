@@ -1,12 +1,12 @@
 import type { ConsoleStore } from '../store.js';
-import { parseSampleManifest, type SampleManifest } from './manifest.js';
+import { parseStarterManifest, type StarterManifest } from './manifest.js';
 
-export function sampleDiscovery(store: ConsoleStore, port: number) {
+export function starterDiscovery(store: ConsoleStore, port: number) {
   const url = 'http://127.0.0.1:' + port + '/.well-known/saplings-console.json';
   let pending: Promise<void> | undefined;
 
   async function sync() {
-    let manifest: SampleManifest;
+    let manifest: StarterManifest;
     try {
       const response = await fetch(url, {
         redirect: 'error',
@@ -25,12 +25,12 @@ export function sampleDiscovery(store: ConsoleStore, port: number) {
         await response.body?.cancel();
         return;
       }
-      manifest = parseSampleManifest(await response.json());
+      manifest = parseStarterManifest(await response.json());
     } catch {
-      // The console can run while the sample is stopped, starting, or changing configuration.
+      // The console can run while the starter is stopped, starting, or changing configuration.
       return;
     }
-    store.syncSample(manifest);
+    store.syncStarter(manifest);
   }
 
   return () => {

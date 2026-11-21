@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 import express from 'express';
 
-import { sampleDiscovery } from './discovery/sample.js';
+import { starterDiscovery } from './discovery/starter.js';
 import { authorizeConsole, localRequestsOnly } from './middleware/access.js';
 import { apiNotFound, handleError } from './middleware/errors.js';
 import { projectRoutes } from './routes/projects.js';
@@ -13,12 +13,12 @@ export function createConsoleApp({
   store,
   token,
   webRoot,
-  samplePort,
+  starterPort,
 }: {
   store: ConsoleStore;
   token: string;
   webRoot?: string;
-  samplePort?: number;
+  starterPort?: number;
 }) {
   const app = express();
   app.disable('x-powered-by');
@@ -28,7 +28,7 @@ export function createConsoleApp({
   const api = express.Router();
   api.use(authorizeConsole(token));
   api.use(express.json({ limit: '8mb', inflate: false }));
-  const discover = samplePort === undefined ? undefined : sampleDiscovery(store, samplePort);
+  const discover = starterPort === undefined ? undefined : starterDiscovery(store, starterPort);
   api.use(projectRoutes(store, discover), tenantRoutes(store), setupRoutes(store));
   api.use(apiNotFound);
   app.use('/api', api);

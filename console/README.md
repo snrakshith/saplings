@@ -24,19 +24,19 @@ Open `http://127.0.0.1:4178` and enter the access token printed in the server te
 
 The console binds to loopback for use by a local operator. Shared hosting would require authenticated operator identities, project authorization, and an audit trail. Use secret references in configs and protect both the database and downloaded files.
 
-## Try the sample full-stack app
+## Connect the Saplings Starter
 
 From the repository root, install dependencies and run `pnpm run build:all`. Start each process in its own terminal.
 
 | Process | Command | URL |
 | --- | --- | --- |
-| Sample API | `pnpm run dev:api` | `http://127.0.0.1:3000` |
-| Sample web | `pnpm run dev:web` | `http://localhost:5173` |
+| Starter API | `pnpm run dev:api` | `http://127.0.0.1:3000` |
+| Starter web | `pnpm run dev:web` | `http://localhost:5173` |
 | Developer console | `pnpm run start:console` | `http://127.0.0.1:4178` |
 
-Unlock the console and look for **Saplings Fullstack Demo → Demo workspace**. The project appears when the local sample API starts, including if the console is already open. The console imports Kingsman, Harbor, and the saved SDK setup drafts declared by the sample's [`sapling.config.ts`](../apps/api/src/sapling.config.ts). The repository's [quality config](../sapling.config.ts) uses the same SDK and platform configuration.
+Unlock the console and look for **Saplings Starter → Local workspace**. The starter appears in either startup order. The console imports the Kingsman and Harbor configuration and all eleven SDK drafts from the starter's [`sapling.config.ts`](../apps/api/src/sapling.config.ts).
 
-The sample API publishes a loopback-only demo manifest. Keep credentials in environment-backed SDK dependencies and keep the demo manifest free of credentials. Set `SAPLINGS_SAMPLE_PORT` on the console when running the sample API on a custom `PORT`. The console validates the manifest, refreshes drafts still managed by it, and preserves drafts edited in the console. Use **Reload saved draft** to read refreshed values in an open tenant workspace. The sample's realm and gateway are development configurations for SDK integration.
+The starter publishes a credential-free loopback manifest during development. Set `SAPLINGS_STARTER_PORT` on the console if the starter API uses a custom `PORT`. Changing the starter project key allows another starter project to be discovered. The console refreshes source-managed drafts and preserves operator edits. Use **Reload saved draft** to inspect changes in an open workspace. See the [starter guide](../apps/README.md) for the workflow and provider coverage.
 
 ## Onboard an application
 

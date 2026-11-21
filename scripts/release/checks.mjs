@@ -64,7 +64,7 @@ const plans = [
   ],
   [
     'quality-build',
-    ['typecheck:quality', 'build:quality:demo'],
+    ['typecheck:quality', 'build:starter'],
     ['react', 'web-vitals', 'playwright', 'express', 'vite'],
   ],
   ['validation-compat', ['test:validation:compat', 'typecheck:validation:compat'], ['zod']],

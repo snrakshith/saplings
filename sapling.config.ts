@@ -1,9 +1,9 @@
 import { defineSaplingConfig } from '@saplings/sdk';
-import { sampleConfig } from './apps/api/src/sapling.config.ts';
+import { starterConfig } from './apps/api/src/sapling.config.ts';
 import quality from './examples/configs/fullstack-quality-profile.ts';
 
-// Use the same SDK and platform configuration as the sample API.
+// Use the same SDK and platform configuration as the starter API.
 export default defineSaplingConfig({
-  ...sampleConfig(Number(process.env.PORT ?? 3000)),
+  ...starterConfig(Number(process.env.PORT ?? 3000)),
   quality,
 });

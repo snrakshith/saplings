@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/example-api",
+  "name": "@saplings/starter-api",
   "version": "0.17.0",
   "private": true,
   "type": "module",

@@ -6,7 +6,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, test } from 'vitest';
 
-import { startSampleSdk } from '../apps/api/src/sample-sdk.ts';
+import { capabilities } from '../apps/api/src/starter/checks.ts';
+import { domains } from '../console/src/onboarding.ts';
+import { startStarterSdk } from '../apps/api/src/starter/runtime.ts';
 import { createSapling } from '../packages/sdk/dist/index.js';
 import { createConsoleApp } from '../console/src/server/app.ts';
 import { ConsoleStore } from '../console/src/server/store.ts';
@@ -17,9 +19,9 @@ let store;
 let server;
 let url;
 
-async function start(samplePort) {
+async function start(starterPort) {
   store = new ConsoleStore(join(directory, 'console.sqlite'));
-  server = createConsoleApp({ store, token, samplePort }).listen(0, '127.0.0.1');
+  server = createConsoleApp({ store, token, starterPort }).listen(0, '127.0.0.1');
   await once(server, 'listening');
   url = 'http://127.0.0.1:' + server.address().port;
 }
@@ -311,8 +313,8 @@ test('saves each SDK onboarding draft by tenant and verifies flags and analytics
   );
 });
 
-test('discovers the sample after startup and syncs config without replacing console edits', async () => {
-  const sample = await startSampleSdk(3000);
+test('discovers the starter after startup and syncs config without replacing console edits', async () => {
+  const starter = await startStarterSdk(3000);
   let manifest;
   const source = createServer((req, res) => {
     if (req.url !== '/.well-known/saplings-console.json' || !manifest) {
@@ -329,13 +331,13 @@ test('discovers the sample after startup and syncs config without replacing cons
   }).listen(0, '127.0.0.1');
   await once(source, 'listening');
   const port = source.address().port;
-  const { project, tenant } = sample.manifest;
+  const { project, tenant } = starter.manifest;
   const draftPath = '/projects/' + project.id + '/tenants/' + tenant.id;
   try {
     await stop();
     await start(port);
     assert.deepEqual(await (await request('/projects')).json(), []);
-    manifest = structuredClone(sample.manifest);
+    manifest = structuredClone(starter.manifest);
     assert.deepEqual(await (await request('/projects')).json(), [
       { ...project, tenants: [tenant] },
     ]);
@@ -344,9 +346,14 @@ test('discovers the sample after startup and syncs config without replacing cons
     ]);
     const original = await (await request(draftPath)).json();
     assert.equal(original.revision, 1);
-    assert.equal(original.kingsman.spec.clients[0].clientId, 'demo-web');
-    assert.equal(original.harbor.spec.services[0].routes[0].name, 'sample-api');
+    assert.equal(original.kingsman.spec.clients[0].clientId, 'starter-web');
+    assert.equal(original.harbor.spec.services[0].routes[0].name, 'starter-api');
     const setup = await (await request(draftPath + '/setup')).json();
+    assert.deepEqual(Object.keys(setup).sort(), Object.keys(domains).sort());
+    assert.deepEqual(
+      capabilities.map(({ id }) => id).sort(),
+      ['kingsman', 'harbor', ...Object.keys(domains)].sort(),
+    );
     assert.equal(setup.flags.values.flag, 'show-cloud-item');
 
     const flags = { ...setup.flags.values, rollout: 25 };
@@ -387,10 +394,10 @@ test('discovers the sample after startup and syncs config without replacing cons
   }
 });
 
-test('leaves a manually created project with the sample key under manual control', async () => {
-  const { manifest } = await startSampleSdk(3000);
+test('leaves a manually created project with the starter key under manual control', async () => {
+  const { manifest } = await startStarterSdk(3000);
   await createProject(manifest.project.id);
-  store.syncSample(manifest);
+  store.syncStarter(manifest);
   assert.deepEqual(await (await request('/projects')).json(), [
     { id: manifest.project.id, name: 'Customer portal', tenants: [] },
   ]);

@@ -4,6 +4,8 @@ Start with the [SDK quickstart](sites/quickstart.mdx), [SDK API signatures](pack
 
 The SDK's source is grouped by domain under `packages/sdk/src/`. Start at `index.ts` for SDK construction, then look in folders such as `billing/`, `data/`, `feature-flags/`, or `workflows/` for the implementation. Applications continue to import from `@saplings/sdk`.
 
+The [Saplings Starter](apps/README.md) provides a runnable React and Express foundation with the SDK wired in.
+
 The [Saplings Developer Console](console/README.md) guides application and tenant onboarding, Kingsman identity setup, and Harbor route registration.
 
 Reusable packages are released under the `@saplings` npm organization. See the [Changesets release guide](.changeset/README.md) for npm setup and versioning.

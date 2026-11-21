@@ -2,8 +2,8 @@ import { DatabaseSync } from 'node:sqlite';
 
 import type { ConfigPair, Project, ProjectSummary, Tenant, TenantSummary } from '../contracts.js';
 import type { DomainId, SetupDraft, SetupValues, TenantSetup } from '../onboarding.js';
-import type { SampleManifest } from './discovery/manifest.js';
-import { reconcileSample } from './discovery/reconcile.js';
+import type { StarterManifest } from './discovery/manifest.js';
+import { reconcileStarter } from './discovery/reconcile.js';
 import { InputError } from './input.js';
 import { consoleSchema } from './schema.js';
 
@@ -132,8 +132,8 @@ export class ConsoleStore {
     return { revision: revision + 1, values };
   }
 
-  syncSample(manifest: SampleManifest) {
-    reconcileSample(this.db, this, manifest);
+  syncStarter(manifest: StarterManifest) {
+    reconcileStarter(this.db, this, manifest);
   }
 
   close() {

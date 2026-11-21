@@ -88,7 +88,7 @@ Authoritative sources: original sapling-quality-platform.zip (v0.1.0) and unifie
 pnpm install
 pnpm run build
 pnpm run build:quality
-pnpm run build:quality:demo
+pnpm run build:starter
 pnpm run typecheck:quality
 pnpm test
 pnpm run quality -- list

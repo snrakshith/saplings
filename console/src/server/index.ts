@@ -12,15 +12,17 @@ if (token.length < 32) throw new Error('SAPLINGS_CONSOLE_TOKEN must be at least 
 const port = Number(process.env.SAPLINGS_CONSOLE_PORT ?? '4178');
 if (!Number.isInteger(port) || port < 1 || port > 65535)
   throw new Error('Invalid SAPLINGS_CONSOLE_PORT.');
-const samplePort = Number(process.env.SAPLINGS_SAMPLE_PORT ?? '3000');
-if (!Number.isInteger(samplePort) || samplePort < 1 || samplePort > 65535)
-  throw new Error('Invalid SAPLINGS_SAMPLE_PORT.');
+const starterPort = Number(
+  process.env.SAPLINGS_STARTER_PORT ?? process.env.SAPLINGS_SAMPLE_PORT ?? '3000',
+);
+if (!Number.isInteger(starterPort) || starterPort < 1 || starterPort > 65535)
+  throw new Error('Invalid SAPLINGS_STARTER_PORT.');
 const database = resolve(process.env.SAPLINGS_CONSOLE_DB ?? '.data/console.sqlite');
 mkdirSync(dirname(database), { recursive: true, mode: 0o700 });
 const store = new ConsoleStore(database);
 const webRoot = fileURLToPath(new URL('../web/', import.meta.url));
 
-const server = createConsoleApp({ store, token, webRoot, samplePort }).listen(
+const server = createConsoleApp({ store, token, webRoot, starterPort }).listen(
   port,
   '127.0.0.1',
   () => {

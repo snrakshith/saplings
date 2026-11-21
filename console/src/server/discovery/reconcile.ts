@@ -3,11 +3,11 @@ import { isDeepStrictEqual } from 'node:util';
 
 import { domainId, type DomainId } from '../../onboarding.js';
 import type { ConsoleStore } from '../store.js';
-import type { SampleManifest } from './manifest.js';
+import type { StarterManifest } from './manifest.js';
 
 type Revisions = { platform: number; setup: Partial<Record<DomainId, number>> };
 
-export function reconcileSample(db: DatabaseSync, store: ConsoleStore, manifest: SampleManifest) {
+export function reconcileStarter(db: DatabaseSync, store: ConsoleStore, manifest: StarterManifest) {
   db.exec('BEGIN IMMEDIATE');
   try {
     reconcileDrafts(db, store, manifest);
@@ -21,7 +21,7 @@ export function reconcileSample(db: DatabaseSync, store: ConsoleStore, manifest:
 function reconcileDrafts(
   db: DatabaseSync,
   store: ConsoleStore,
-  { project, tenant, config, setup }: SampleManifest,
+  { project, tenant, config, setup }: StarterManifest,
 ) {
   const row = db
     .prepare('SELECT revisions FROM sample_imports WHERE project_id = ? AND tenant_id = ?')

@@ -17,10 +17,12 @@ jobs:
           node-version-file: .node-version
       - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
       - run: pnpm run build
-      - run: pnpm run build:quality:demo
+      - run: pnpm run build:starter
       - run: pnpm run build:console
       - name: Verify console onboarding in Chromium
         run: node console/test/browser.mjs
+      - name: Verify starter workflows in Chromium
+        run: node apps/web/test/starter-browser.mjs
       - name: Start backend and frontend
         run: |
           pnpm run dev:api > /tmp/api.log 2>&1 &

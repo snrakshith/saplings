@@ -1,19 +1,41 @@
 import { defineSaplingConfig } from '@saplings/sdk';
+import { localNotifications, localOperation, localPayments } from './starter/local-adapters.js';
 
-export const project = { id: 'sapling-fullstack-demo', name: 'Saplings Fullstack Demo' };
-export const tenant = { id: 'demo', name: 'Demo workspace' };
+export const project = { id: 'saplings-starter', name: 'Saplings Starter' };
+export const tenant = { id: 'local', name: 'Local workspace' };
 
 export const setup = {
   workspace: { workspace: tenant.name, project: project.name },
-  flags: { flag: 'show-cloud-item', enabled: true, rollout: 100, subject: 'demo-visitor' },
-  analytics: { event: 'demo.started', subject: 'demo-visitor' },
+  flags: { flag: 'show-cloud-item', enabled: true, rollout: 100, subject: 'starter-visitor' },
+  analytics: { event: 'starter.started', subject: 'starter-visitor' },
   storage: { provider: 'memory', object: 'onboarding-test.txt' },
   audit: { limit: 50 },
+  notifications: {
+    channel: 'inapp',
+    endpoint: 'https://starter.example.invalid/webhooks/notifications',
+    secretRef: 'STARTER_WEBHOOK_SECRET',
+  },
+  payments: {
+    provider: 'custom',
+    endpoint: 'https://starter.example.invalid/webhooks/payments',
+    secretRef: 'PAYMENT_PROVIDER_SECRET',
+  },
+  billing: {
+    plan: 'Starter',
+    currency: 'USD',
+    price: 1000,
+    feature: 'reports',
+    metric: 'reports.created',
+    quota: 100,
+  },
+  workflows: { job: 'starter.report', attempts: 3 },
+  governance: { collection: 'starter-reports', days: 90 },
+  operations: { operation: 'starter.prepare', target: 'local-workspace', key: 'starter-check' },
 };
 
 const realm = project.id + '-' + tenant.id;
 
-export function sampleConfig(apiPort: number) {
+export function starterConfig(apiPort: number) {
   return defineSaplingConfig({
     app: { ...project, environment: 'development' },
     middleware: { correlationId: true },
@@ -22,6 +44,16 @@ export function sampleConfig(apiPort: number) {
     analytics: { enabled: true },
     storage: { enabled: true, provider: 'memory' },
     audit: { enabled: true },
+    billing: { enabled: true, currency: setup.billing.currency },
+    notifications: { enabled: true, provider: 'custom' },
+    payments: { enabled: true, provider: 'custom' },
+    workflows: { enabled: true, maxAttempts: setup.workflows.attempts },
+    providers: { notifications: localNotifications, payments: localPayments },
+    services: {
+      dataCollections: [setup.governance.collection],
+      retentionPolicies: { [setup.governance.collection]: { days: setup.governance.days } },
+      providerOperations: { [setup.operations.operation]: localOperation },
+    },
     platforms: {
       kingsman: {
         config: {
@@ -33,7 +65,7 @@ export function sampleConfig(apiPort: number) {
             frontend: { issuer: 'https://localhost/realms/' + realm },
             keys: {
               providers: [
-                { name: 'demo', type: 'rsa-generated', algorithm: 'RS256', active: true },
+                { name: 'local', type: 'rsa-generated', algorithm: 'RS256', active: true },
               ],
             },
             tokens: {
@@ -45,7 +77,7 @@ export function sampleConfig(apiPort: number) {
             security: { passwordPolicy: { hashAlgorithm: 'argon2id', minLength: 12 } },
             clients: [
               {
-                clientId: 'demo-web',
+                clientId: 'starter-web',
                 accessType: 'public',
                 protocol: 'openid-connect',
                 pkce: 'S256',
@@ -57,18 +89,19 @@ export function sampleConfig(apiPort: number) {
         },
       },
       harbor: {
+        dependencies: { allowedUpstreamHosts: ['127.0.0.1:' + apiPort] },
         config: {
           apiVersion: 'gateway.sapling.dev/v1alpha1',
           kind: 'GatewayConfig',
           metadata: { name: realm, workspace: project.id, environment: 'development' },
           spec: {
-            upstreams: [{ name: 'demo-api', targets: [{ target: '127.0.0.1:' + apiPort }] }],
+            upstreams: [{ name: 'starter-api', targets: [{ target: '127.0.0.1:' + apiPort }] }],
             services: [
               {
-                name: 'demo-api',
-                upstream: 'demo-api',
+                name: 'starter-api',
+                upstream: 'starter-api',
                 protocol: 'http',
-                routes: [{ name: 'sample-api', paths: ['/api'], pathMatch: 'prefix' }],
+                routes: [{ name: 'starter-api', paths: ['/api'], pathMatch: 'prefix' }],
               },
             ],
           },
