@@ -11,7 +11,9 @@
   "dependencies": {
     "express": "^5.1.0",
     "@saplings/quality-node-diagnostics": "workspace:*",
-    "@saplings/sdk": "workspace:*"
+    "@saplings/sdk": "workspace:*",
+    "@saplings/remote-config": "workspace:*",
+    "@saplings/miner": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",

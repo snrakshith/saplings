@@ -32,6 +32,8 @@
           "packages/kingsman",
           "packages/middleware",
           "packages/observability",
+          "packages/remote-config",
+          "packages/miner",
           "packages/realtime",
           "packages/security"
         ]

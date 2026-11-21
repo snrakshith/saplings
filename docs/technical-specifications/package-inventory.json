@@ -250,5 +250,19 @@
     },
     "peerDependencies": {},
     "source": "packages/validations"
+  },
+  {
+    "package": "@saplings/miner",
+    "version": "0.0.0",
+    "dependencies": {},
+    "peerDependencies": {},
+    "source": "packages/miner"
+  },
+  {
+    "package": "@saplings/remote-config",
+    "version": "0.0.0",
+    "dependencies": {},
+    "peerDependencies": {},
+    "source": "packages/remote-config"
   }
 ]

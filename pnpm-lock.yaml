@@ -188,9 +188,15 @@ importers:
 
   apps/api:
     dependencies:
+      '@saplings/miner':
+        specifier: workspace:*
+        version: link:../../packages/miner
       '@saplings/quality-node-diagnostics':
         specifier: workspace:*
         version: link:../../packages/quality-node-diagnostics
+      '@saplings/remote-config':
+        specifier: workspace:*
+        version: link:../../packages/remote-config
       '@saplings/sdk':
         specifier: workspace:*
         version: link:../../packages/sdk
@@ -210,12 +216,18 @@ importers:
       '@saplings/hooks':
         specifier: workspace:*
         version: link:../../packages/hooks
+      '@saplings/miner':
+        specifier: workspace:*
+        version: link:../../packages/miner
       '@saplings/murphi-ui':
         specifier: workspace:*
         version: link:../../packages/murphi-ui
       '@saplings/quality-browser-runtime':
         specifier: workspace:*
         version: link:../../packages/quality-browser-runtime
+      '@saplings/remote-config':
+        specifier: workspace:*
+        version: link:../../packages/remote-config
       '@saplings/ui-core':
         specifier: workspace:*
         version: link:../../packages/ui-core
@@ -355,6 +367,9 @@ importers:
 
   packages/adapter-drizzle:
     dependencies:
+      '@saplings/miner':
+        specifier: workspace:*
+        version: link:../miner
       '@saplings/sdk':
         specifier: workspace:*
         version: link:../sdk
@@ -494,6 +509,8 @@ importers:
         specifier: ^2.0.2
         version: 2.5.0
 
+  packages/miner: {}
+
   packages/murph-appui:
     dependencies:
       '@saplings/ui-core':
@@ -592,6 +609,8 @@ importers:
       ws:
         specifier: ^8.0.0
         version: 8.23.0
+
+  packages/remote-config: {}
 
   packages/sdk:
     dependencies:

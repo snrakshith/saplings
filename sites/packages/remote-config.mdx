@@ -1,0 +1,51 @@
+---
+title: "@saplings/remote-config"
+description: "Versioned application JSON with review, publication, and tenant-scoped reads."
+---
+
+## Server setup
+
+Install `@saplings/remote-config` in the application API. Construct the service once with a transactional store, trusted scopes, and registered document validators. The Saplings SDK's InMemoryStore supports local testing. DrizzleStore uses PostgreSQL row-level security and tenant transactions for durable operation.
+
+```ts
+import { createRemoteConfig } from '@saplings/remote-config';
+
+const config = createRemoteConfig({
+  store,
+  publicTenantId: 'project-wide',
+  definitions: {
+    welcome: {
+      audience: 'public',
+      validate: (value) =>
+        Object.keys(value).length === 1 && typeof value.message === 'string',
+    },
+    workspace: {
+      audience: 'signed-in',
+      validate: (value) =>
+        Object.keys(value).length === 1 && typeof value.message === 'string',
+    },
+  },
+});
+```
+
+Resolve `projectId`, `tenantId`, `environment`, `actorId`, and permissions on the application backend. Provide `config:edit` to authors, `config:review` to reviewers, and `config:read` to operators viewing history. Grant project-wide public document access separately in the HTTP adapter. The application verifies signed-in reads and chooses the public partition for anonymous reads.
+
+## Draft and publish
+
+Call `saveDraft(actor, key, value, expectedLatest)` with revision 0 for a new document. Submit the returned revision and approve it to publish atomically. `reject` records a decision. `restore` copies a previously published revision into a draft, with the current revision as its conflict check. Use `history` for the editor and review queue. Workflow identities can receive edit permission and submit drafts for human review.
+
+The default review policy permits self-approval in development and requires a different actor in staging and production. Set `reviewPolicy` to `operator`, `distinct-reviewer`, or an environment map in application configuration. Keep the operator policy and validators outside editable documents. Browser-facing config should contain client-visible settings. Store credentials in the application's secret provider.
+
+## Consume published values
+
+Return the SDK's published value, revision, and ETag from the application HTTP adapter. For React, create a reader per session and workspace, and reset it on logout or scope changes.
+
+```ts
+import { createConfigReader } from '@saplings/remote-config/browser';
+
+const config = createConfigReader('/api/config/workspace', { message: 'Welcome' });
+const current = await config.read();
+console.log(current.message);
+```
+
+Revalidate every 30 seconds by default. The reader uses a scoped cached value for a transient failure and the app default until the first publication. A private read needs an authenticated application session.

@@ -1,3 +1,4 @@
+import type { Event, Scope } from '@saplings/miner';
 import { eq, and, gt, asc, sql, or } from 'drizzle-orm';
 import { pgTable, text, jsonb, primaryKey, timestamp } from 'drizzle-orm/pg-core';
 import type { Store } from '@saplings/sdk';
@@ -110,6 +111,37 @@ export class DrizzleStore implements Store {
       return rows.map((r) => r.body as T);
     });
   }
+  /** Bounded time-range Scan for Miner's tenant and application partition. */
+  async minerEvents(scope: Scope, collection: string, from: number, to: number, limit: number) {
+    const expected = 'miner:events:' + JSON.stringify([scope.projectId, scope.environment]);
+    if (
+      collection !== expected ||
+      !Number.isInteger(limit) ||
+      limit < 1 ||
+      limit > 50001 ||
+      !Number.isSafeInteger(from) ||
+      !Number.isSafeInteger(to)
+    )
+      throw Error('Invalid Miner query');
+    return this.scoped(scope.tenantId, async (db) => {
+      const time = sql`(body->>'time')::bigint`;
+      const rows = await db
+        .select({ body: saplingRecords.body })
+        .from(saplingRecords)
+        .where(
+          and(
+            eq(saplingRecords.tenantId, scope.tenantId),
+            eq(saplingRecords.collection, collection),
+            sql`collection LIKE 'miner:events:%' AND jsonb_typeof(body->'time') = 'number'`,
+            sql`${time} >= ${from} AND ${time} < ${to}`,
+          ),
+        )
+        .orderBy(asc(time), asc(saplingRecords.id))
+        .limit(limit);
+      return rows.map(({ body }) => body as Event);
+    });
+  }
+
   async page<T>(tenantId: string, collection: string, limit: number, after?: string) {
     this.limit(limit);
     return this.scoped(tenantId, async (db) => {

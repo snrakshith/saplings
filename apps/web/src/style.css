@@ -154,3 +154,10 @@ section {
 .app .counter-button:hover {
   background: #174d9e;
 }
+
+.starter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}

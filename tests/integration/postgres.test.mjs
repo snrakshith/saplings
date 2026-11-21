@@ -236,3 +236,40 @@ test('live PostgreSQL: offboarding pauses direct writes and durable job admissio
     await Promise.all([firstPool.end(), secondPool.end()]);
   }
 });
+
+test('live PostgreSQL: approvals and indexed Miner queries preserve tenant boundaries', async () => {
+  const { createRemoteConfig } = await import('../../packages/remote-config/dist/index.js');
+  const { createMiner } = await import('../../packages/miner/dist/index.js');
+  const pool = new pg.Pool({ connectionString: process.env.TEST_DATABASE_URL });
+  const store = new DrizzleStore(drizzle(pool));
+  const scope = { projectId: 'integration', environment: 'production', tenantId: randomUUID() };
+  const actor = { ...scope, actorId: 'author', permissions: ['config:edit', 'config:review'] };
+  try {
+    const remote = createRemoteConfig({
+      store,
+      publicTenantId: 'unused',
+      definitions: { workspace: { audience: 'signed-in', validate: () => true } },
+    });
+    await remote.saveDraft(actor, 'workspace', { message: 'ready' }, 0);
+    await remote.submit(actor, 'workspace', 1);
+    await remote.approve({ ...actor, actorId: 'reviewer' }, 'workspace', 1);
+    assert.deepEqual((await remote.read(scope, 'workspace', 'signed-in')).value, {
+      message: 'ready',
+    });
+    const other = { ...scope, tenantId: randomUUID() };
+    assert.equal(await remote.read(other, 'workspace', 'signed-in'), undefined);
+    const now = Date.now();
+    const miner = createMiner({ store, schemas: { viewed: {} }, now: () => now });
+    const analyst = { ...scope, subject: 'u:member', consent: true, permissions: ['miner:read'] };
+    const submissions = await Promise.all(
+      Array.from({ length: 6 }, () => miner.track(analyst, { id: 'same', name: 'viewed' })),
+    );
+    assert.equal(submissions.filter(({ duplicate }) => !duplicate).length, 1);
+    const range = { from: now - 1000, to: now + 1000 };
+    const report = { id: 'daily', type: 'trend', event: 'viewed' };
+    assert.equal((await miner.report(analyst, range, report)).total, 1);
+    assert.equal((await miner.report({ ...analyst, ...other }, range, report)).total, 0);
+  } finally {
+    await pool.end();
+  }
+});

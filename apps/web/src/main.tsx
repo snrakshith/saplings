@@ -7,6 +7,7 @@ import { startFrontendObservability } from '@saplings/quality-browser-runtime';
 
 import { Catalog } from './starter/Catalog.js';
 import { Capabilities } from './starter/Capabilities.js';
+import { Services } from './starter/Services.js';
 import { Home } from './starter/Home.js';
 import './style.css';
 
@@ -33,6 +34,9 @@ function App() {
             <a href="/dashboard" aria-current={path === '/dashboard' ? 'page' : undefined}>
               Capabilities
             </a>
+            <a href="/services" aria-current={path === '/services' ? 'page' : undefined}>
+              Services
+            </a>
             <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
               SDK catalog
             </a>
@@ -41,6 +45,8 @@ function App() {
         <main>
           {path === '/dashboard' ? (
             <Capabilities />
+          ) : path === '/services' ? (
+            <Services />
           ) : path === '/catalog' ? (
             <Catalog />
           ) : path === '/login' ? (

@@ -38,6 +38,12 @@ Unlock the console and look for **Saplings Starter → Local workspace**. The st
 
 The starter publishes a credential-free loopback manifest during development. Set `SAPLINGS_STARTER_PORT` on the console if the starter API uses a custom `PORT`. Changing the starter project key allows another starter project to be discovered. The console refreshes source-managed drafts and preserves operator edits. Use **Reload saved draft** to inspect changes in an open workspace. See the [starter guide](../apps/README.md) for the workflow and provider coverage.
 
+## Work with live application services
+
+The **Remote Config** and **Miner** tabs call the selected application's service API. The console access token opens the console and the application operator token authorizes service actions. Remote Config stores revisions and review history in the application. Miner stores consented events, reports, targeting rules, and experiments in the same application boundary. The [starter guide](../apps/README.md#try-remote-config-and-miner) walks through both workflows.
+
+The local starter target is enabled by default. Use `SAPLINGS_SERVICE_TARGETS` to supply a JSON array of `{ "origin", "projectId", "tenantId" }` objects when connecting other applications. For one target, `SAPLINGS_SERVICE_ORIGIN`, `SAPLINGS_SERVICE_PROJECT`, and `SAPLINGS_SERVICE_TENANT` override the starter defaults. Targets must use HTTPS or loopback HTTP. The console matches the selected project and tenant to the configured target and forwards an operator token only to that origin. Each application verifies the operator's access and chooses its own runtime environment.
+
 ## Onboard an application
 
 1. **Create a project.** Choose a stable key and a display name.

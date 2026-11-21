@@ -3,6 +3,7 @@ import { randomUUID } from 'node:crypto';
 import { createNodeDiagnostics } from '@saplings/quality-node-diagnostics';
 import { startStarterSdk } from './starter/runtime.js';
 import { starterRoutes } from './starter/routes.js';
+import { localServices } from './services/routes.js';
 import { setup } from './sapling.config.js';
 const app = express(),
   orders = new Map<string, { id: string; quantity: number }>(),
@@ -42,6 +43,8 @@ app.get('/metrics', (_req, res) => {
       ].join('\n') + '\n',
     );
 });
+const services = localServices();
+app.use(services.router);
 app.use(starterRoutes(() => starter));
 app.get('/api/items', async (_req, res) => {
   const { sdk, context } = await starter;
@@ -70,7 +73,13 @@ const server = app.listen(PORT, () => {
   if (!address || typeof address === 'string') throw new Error('Sample API requires a TCP port');
   starter = startStarterSdk(address.port);
   starter.then(
-    () => console.log(`Starter API on http://127.0.0.1:${address.port}`),
+    () => {
+      console.log(`Starter API on http://127.0.0.1:${address.port}`);
+      if (process.env.NODE_ENV !== 'production') {
+        for (const credential of services.credentials)
+          console.log('Starter ' + credential.label + ' token ' + credential.token);
+      }
+    },
     (error: unknown) => {
       console.error('Could not start the starter SDK', error);
       diagnostics.close();

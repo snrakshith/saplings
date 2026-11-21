@@ -6,11 +6,20 @@ import { FormError } from '../forms/FormError.js';
 import { Gateway } from '../gateway/Gateway.js';
 import { Identity } from '../identity/Identity.js';
 import { TenantOnboarding } from '../onboarding/TenantOnboarding.js';
+import { ServiceWorkspace } from '../services/ServiceWorkspace.js';
 import { ConfigEditor } from './ConfigEditor.js';
 import { ConfigExport } from './ConfigExport.js';
 import { PlatformSummary } from './PlatformSummary.js';
 
-const tabs = ['Onboarding', 'Kingsman', 'Harbor', 'Configuration', 'Export'] as const;
+const tabs = [
+  'Onboarding',
+  'Kingsman',
+  'Harbor',
+  'Configuration',
+  'Remote Config',
+  'Miner',
+  'Export',
+] as const;
 type Tab = (typeof tabs)[number];
 
 export function TenantWorkspace({
@@ -93,6 +102,9 @@ export function TenantWorkspace({
       )}
       {tab === 'Configuration' && (
         <ConfigEditor key={tenant.revision} config={{ kingsman, harbor }} save={save} />
+      )}
+      {(tab === 'Remote Config' || tab === 'Miner') && (
+        <ServiceWorkspace key={tab} api={api} path={path} section={tab} />
       )}
       {tab === 'Export' && (
         <ConfigExport project={project} tenant={tenant} config={{ kingsman, harbor }} />

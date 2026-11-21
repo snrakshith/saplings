@@ -15,3 +15,17 @@
   width: min(100%, 24rem);
   accent-color: var(--sapling-primary);
 }
+
+.miner-results-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  overflow-wrap: anywhere;
+  font-variant-numeric: tabular-nums;
+}
+
+.miner-results-table th,
+.miner-results-table td {
+  padding: 0.5rem;
+  border-bottom: 1px solid var(--sapling-border);
+}

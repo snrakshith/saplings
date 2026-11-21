@@ -7,6 +7,7 @@ import { preview } from 'vite';
 
 import { createConsoleApp } from '../../../console/dist/server/app.js';
 import { ConsoleStore } from '../../../console/dist/server/store.js';
+import { verifyProductServices } from './services-flow.mjs';
 
 const expected = {
   kingsman: ['signingKeys', 1],
@@ -28,29 +29,42 @@ const api = spawn(
   process.execPath,
   [fileURLToPath(new URL('../../api/dist/server.js', import.meta.url))],
   {
-    env: { ...process.env, PORT: '0', NODE_ENV: 'development' },
+    env: {
+      ...process.env,
+      PORT: '0',
+      NODE_ENV: 'development',
+      SAPLINGS_CONFIG_REVIEW: 'distinct-reviewer',
+    },
     stdio: ['ignore', 'pipe', 'inherit'],
   },
 );
 const exited = once(api, 'exit');
+let startup = '';
+api.stdout.on('data', (chunk) => {
+  startup += String(chunk);
+});
 const store = new ConsoleStore(':memory:');
 let browser;
 let web;
 let consoleServer;
 try {
-  const [output] = await Promise.race([
+  await Promise.race([
     once(api.stdout, 'data', { signal: AbortSignal.timeout(10000) }),
     exited.then(([code]) => {
       throw new Error('Starter API exited with ' + code);
     }),
   ]);
-  const apiPort = Number(String(output).match(/http:\/\/127\.0\.0\.1:(\d+)/)?.[1]);
+  const apiPort = Number(startup.match(/http:\/\/127\.0\.0\.1:(\d+)/)?.[1]);
   assert.ok(apiPort, 'Starter API announced a loopback port');
   const apiUrl = 'http://127.0.0.1:' + apiPort;
   web = await preview({
     configFile: false,
     root: fileURLToPath(new URL('..', import.meta.url)),
-    preview: { host: '127.0.0.1', port: 0, proxy: { '/api': apiUrl } },
+    preview: {
+      host: '127.0.0.1',
+      port: 0,
+      proxy: { '/api': { target: apiUrl, changeOrigin: false } },
+    },
   });
   browser = await chromium.launch({
     executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH,
@@ -84,18 +98,35 @@ try {
 
   const token = 'starter-browser-test-console-token';
   const webRoot = fileURLToPath(new URL('../../../console/dist/web', import.meta.url));
-  consoleServer = createConsoleApp({ store, token, webRoot, starterPort: apiPort }).listen(
-    0,
-    '127.0.0.1',
-  );
+  consoleServer = createConsoleApp({
+    store,
+    token,
+    webRoot,
+    starterPort: apiPort,
+    serviceTargets: [{ origin: apiUrl, projectId: 'saplings-starter', tenantId: 'local' }],
+  }).listen(0, '127.0.0.1');
   await once(consoleServer, 'listening');
   await page.goto('http://127.0.0.1:' + consoleServer.address().port);
   await page.getByLabel('Console access token').fill(token);
   await page.getByRole('button', { name: 'Unlock console' }).click();
   await page.getByRole('heading', { name: 'Local workspace', exact: true }).waitFor();
   await page.getByText('11 of 11 SDK setup drafts saved', { exact: true }).waitFor();
+  const credentials = Object.fromEntries(
+    Array.from(
+      startup.matchAll(/^Starter (author|reviewer|member) token (\S+)$/gm),
+      ([, label, value]) => [label, value],
+    ),
+  );
+  assert.equal(
+    Object.keys(credentials).length,
+    3,
+    'Starter issued three distinct development credentials',
+  );
+  await verifyProductServices({ browser, page, webUrl, apiUrl, credentials });
   assert.deepEqual(errors, []);
-  console.log('Verified all 13 starter workflows, SDK catalog, and console discovery in Chromium.');
+  console.log(
+    'Verified all 13 starter workflows, SDK catalog, console discovery, config approval, and the Miner experiment in Chromium.',
+  );
 } finally {
   await browser?.close();
   if (consoleServer) await new Promise((resolve) => consoleServer.close(resolve));

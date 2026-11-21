@@ -34,7 +34,7 @@
     "build:quality:demo": "pnpm run build:starter",
     "typecheck:quality": "pnpm run build:quality && pnpm run build:hooks && pnpm run build:murphi-ui && tsc --noEmit -p apps/web/tsconfig.json && tsc -p apps/api",
     "build:quality:local": "tsc -p packages/observability && tsc -p packages/quality-contracts && tsc -p packages/quality-node-diagnostics && tsc -p packages/quality-core && tsc -p packages/backend-quality && tsc -p packages/quality-browser-runtime && tsc -p packages/frontend-quality/tsconfig.local.json && tsc -p packages/cli",
-    "build:foundation": "tsc -p packages/observability && tsc -p packages/utils && tsc -p packages/validations && tsc -p packages/realtime && tsc -p packages/middleware",
+    "build:foundation": "tsc -p packages/observability && tsc -p packages/utils && tsc -p packages/validations && tsc -p packages/realtime && tsc -p packages/middleware && tsc -p packages/remote-config && tsc -p packages/miner",
     "test:foundation": "vitest run --config vitest.config.mts tests/foundation.test.mjs",
     "test:foundation:live": "vitest run --config vitest.integration.config.mts tests/integration/foundation-transports.test.mjs",
     "test:validation:compat": "vitest run --config vitest.integration.config.mts tests/integration/zod-compat.test.mjs",

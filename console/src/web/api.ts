@@ -8,11 +8,12 @@ export class ConsoleError extends Error {
 }
 
 export function consoleApi(token: string) {
-  return async <T>(path: string, method = 'GET', body?: unknown): Promise<T> => {
+  return async <T>(path: string, method = 'GET', body?: unknown, operator?: string): Promise<T> => {
     const response = await fetch('/api' + path, {
       method,
       headers: {
         Authorization: 'Bearer ' + token,
+        ...(operator && { 'X-Saplings-Operator': operator }),
         ...(body === undefined ? {} : { 'Content-Type': 'application/json' }),
       },
       body: body === undefined ? undefined : JSON.stringify(body),

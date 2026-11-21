@@ -24,7 +24,7 @@ for (const [group, count] of Object.entries({
   scanner: 41,
   quality: 32,
   defender: 27,
-  packages: 24,
+  packages: 26,
 }))
   if (m.counts[group] !== count) throw Error('Count mismatch ' + group);
 if (m.total !== ids.size || m.documents !== ids.size * 3) throw Error('Total mismatch');

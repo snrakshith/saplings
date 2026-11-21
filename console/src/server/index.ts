@@ -22,7 +22,16 @@ mkdirSync(dirname(database), { recursive: true, mode: 0o700 });
 const store = new ConsoleStore(database);
 const webRoot = fileURLToPath(new URL('../web/', import.meta.url));
 
-const server = createConsoleApp({ store, token, webRoot, starterPort }).listen(
+const starterTarget = {
+  origin: process.env.SAPLINGS_SERVICE_ORIGIN ?? 'http://127.0.0.1:' + starterPort,
+  projectId: process.env.SAPLINGS_SERVICE_PROJECT ?? 'saplings-starter',
+  tenantId: process.env.SAPLINGS_SERVICE_TENANT ?? 'local',
+};
+const serviceTargets: unknown = process.env.SAPLINGS_SERVICE_TARGETS
+  ? JSON.parse(process.env.SAPLINGS_SERVICE_TARGETS)
+  : [starterTarget];
+if (!Array.isArray(serviceTargets)) throw new Error('SAPLINGS_SERVICE_TARGETS must be an array.');
+const server = createConsoleApp({ store, token, webRoot, starterPort, serviceTargets }).listen(
   port,
   '127.0.0.1',
   () => {
