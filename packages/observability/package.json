@@ -1,6 +1,6 @@
 {
   "name": "@saplings/observability",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Structured backend logs, OpenTelemetry helpers, and Node.js process metrics",
   "type": "module",
   "main": "./dist/index.js",
