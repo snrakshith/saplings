@@ -1,6 +1,7 @@
 import { DatabaseSync } from 'node:sqlite';
 
 import type { ConfigPair, Project, ProjectSummary, Tenant, TenantSummary } from '../contracts.js';
+import type { DomainId, SetupDraft, SetupValues, TenantSetup } from '../onboarding.js';
 import { InputError } from './config.js';
 
 type TenantRow = TenantSummary & { revision: number; config: string };
@@ -22,6 +23,13 @@ export class ConsoleStore {
         revision INTEGER NOT NULL DEFAULT 1,
         config TEXT NOT NULL CHECK (json_valid(config)),
         PRIMARY KEY (project_id, id)
+      ) STRICT;
+      CREATE TABLE IF NOT EXISTS tenant_setup (
+        project_id TEXT NOT NULL, tenant_id TEXT NOT NULL, domain TEXT NOT NULL,
+        revision INTEGER NOT NULL,
+        settings TEXT NOT NULL CHECK (json_valid(settings)),
+        PRIMARY KEY (project_id, tenant_id, domain),
+        FOREIGN KEY (project_id, tenant_id) REFERENCES tenants(project_id, id)
       ) STRICT;
     `);
   }
@@ -92,6 +100,53 @@ export class ConsoleStore {
     if (!result.changes)
       throw new InputError('This draft changed elsewhere. Reload it before editing.', 409);
     return { id: tenant.id, name: tenant.name, ...pair, revision: revision + 1 };
+  }
+
+  setup(projectId: string, tenantId: string): TenantSetup {
+    this.tenant(projectId, tenantId);
+    const rows = this.db
+      .prepare(
+        'SELECT domain, revision, settings FROM tenant_setup WHERE project_id = ? AND tenant_id = ?',
+      )
+      .all(projectId, tenantId) as { domain: DomainId; revision: number; settings: string }[];
+    return Object.fromEntries(
+      rows.map(({ domain, revision, settings }) => [
+        domain,
+        { revision, values: JSON.parse(settings) as SetupValues },
+      ]),
+    );
+  }
+
+  saveSetup(
+    projectId: string,
+    tenantId: string,
+    domain: DomainId,
+    revision: number,
+    values: SetupValues,
+  ): SetupDraft {
+    this.tenant(projectId, tenantId);
+    const settings = JSON.stringify(values);
+    const result =
+      revision === 0
+        ? this.db
+            .prepare(
+              `
+        INSERT INTO tenant_setup (project_id, tenant_id, domain, revision, settings)
+        VALUES (?, ?, ?, 1, ?) ON CONFLICT(project_id, tenant_id, domain) DO NOTHING
+      `,
+            )
+            .run(projectId, tenantId, domain, settings)
+        : this.db
+            .prepare(
+              `
+        UPDATE tenant_setup SET settings = ?, revision = revision + 1
+        WHERE project_id = ? AND tenant_id = ? AND domain = ? AND revision = ?
+      `,
+            )
+            .run(settings, projectId, tenantId, domain, revision);
+    if (!result.changes)
+      throw new InputError('This setup changed elsewhere. Reload it before editing.', 409);
+    return { revision: revision + 1, values };
   }
 
   close() {

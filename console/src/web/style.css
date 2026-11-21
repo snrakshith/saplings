@@ -429,3 +429,12 @@ fieldset {
     padding-top: 1.25rem;
   }
 }
+
+.setup-example {
+  overflow: auto;
+  max-width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--sapling-border);
+  border-radius: var(--corner);
+  background: var(--sapling-background);
+}

@@ -72,6 +72,31 @@ try {
   assert.equal(bundle.harbor.spec.services[0].routes[0].name, 'customers');
   assert.equal(bundle.kingsman.spec.clients[0].clientId, 'portal-web');
 
+  await button('SDK setup').click();
+  await button('Set up Feature flags').click();
+  await fill('Flag key', 'beta-access');
+  await fill('Rollout percentage', '0');
+  await button('Save setup draft').click();
+  await page.getByText('Setup draft saved.').waitFor();
+  await button('Run SDK preview').click();
+  await page.getByText('Preview decision: disabled').waitFor();
+  await button('All setup areas').click();
+  await button('Set up Product analytics').click();
+  await button('Save setup draft').click();
+  await button('Run SDK preview').click();
+  await page.getByText('Events recorded in preview: 1').waitFor();
+  await button('All setup areas').click();
+  const [setupDownload] = await Promise.all([
+    page.waitForEvent('download'),
+    button('Download setup drafts').click(),
+  ]);
+  const setup = JSON.parse(await readFile(await setupDownload.path(), 'utf8'));
+  assert.equal(setup.setup.flags.values.flag, 'beta-access');
+  assert.equal(setup.setup.analytics.values.event, 'onboarding.completed');
+  await button('Set up Billing and subscriptions').click();
+  await button('Save setup draft').click();
+  await page.getByText('Setup draft saved.').waitFor();
+
   await page.setViewportSize({ width: 375, height: 812 });
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
   await button('Lock console').click();

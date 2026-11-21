@@ -3,6 +3,8 @@ import { resolve } from 'node:path';
 import express, { type ErrorRequestHandler } from 'express';
 
 import { importPair, InputError, object, record, starterPair, validatePair } from './config.js';
+import { domainId } from '../onboarding.js';
+import { previewSetup, setupValues } from './onboarding.js';
 import type { ConsoleStore } from './store.js';
 
 const hash = (value: string) => createHash('sha256').update(value).digest();
@@ -88,6 +90,24 @@ export function createConsoleApp({
         validatePair(body.config),
       ),
     );
+  });
+  const setupPath = '/projects/:projectId/tenants/:tenantId/setup';
+  api.get(setupPath, (req, res) => {
+    res.json(store.setup(req.params.projectId, req.params.tenantId));
+  });
+  api.put(`${setupPath}/:domain`, (req, res) => {
+    const { projectId, tenantId, domain } = req.params;
+    if (!domainId(domain)) throw new InputError('Setup area not found.', 404);
+    const { revision, values } = object(req.body);
+    if (typeof revision !== 'number' || !Number.isSafeInteger(revision) || revision < 0)
+      throw new InputError('Provide the current setup revision.');
+    res.json(store.saveSetup(projectId, tenantId, domain, revision, setupValues(domain, values)));
+  });
+  api.post(`${setupPath}/:domain/preview`, async (req, res) => {
+    const { projectId, tenantId, domain } = req.params;
+    if (!domainId(domain)) throw new InputError('Setup area not found.', 404);
+    store.tenant(projectId, tenantId);
+    res.json(await previewSetup(domain, tenantId, setupValues(domain, req.body)));
   });
   api.use((_req, res) => {
     res.status(404).json({ error: 'Console API endpoint not found.' });

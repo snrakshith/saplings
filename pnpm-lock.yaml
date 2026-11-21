@@ -244,6 +244,9 @@ importers:
       '@saplings/murphi-ui':
         specifier: workspace:*
         version: link:../packages/murphi-ui
+      '@saplings/sdk':
+        specifier: workspace:*
+        version: link:../packages/sdk
       '@saplings/ui-core':
         specifier: workspace:*
         version: link:../packages/ui-core

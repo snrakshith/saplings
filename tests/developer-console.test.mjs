@@ -211,3 +211,101 @@ test('rejects unauthenticated requests, invalid configuration, and stale edits',
   assert.equal(badDocument.status, 400);
   assert.equal((await request('/projects/portal/tenants/invalid')).status, 404);
 });
+
+test('saves each SDK onboarding draft by tenant and verifies flags and analytics in isolation', async () => {
+  await createProject();
+  const tenant = await newTenant();
+  const setup = tenantPath + '/setup';
+  assert.deepEqual(await (await request(setup)).json(), {});
+  const drafts = {
+    flags: { flag: 'new-checkout', enabled: true, rollout: 0, subject: 'staging-user' },
+    analytics: { event: 'onboarding.completed', subject: 'staging-user' },
+    notifications: {
+      channel: 'email',
+      endpoint: 'https://app.example.com/hooks/notifications',
+      secretRef: 'WEBHOOK_SIGNING_SECRET',
+    },
+    payments: {
+      provider: 'stripe',
+      endpoint: 'https://app.example.com/hooks/payments',
+      secretRef: 'STRIPE_SECRET',
+    },
+    billing: {
+      plan: 'Starter',
+      currency: 'USD',
+      price: 1000,
+      feature: 'reports',
+      metric: 'reports.created',
+      quota: 100,
+    },
+    storage: { provider: 'memory', object: 'onboarding-test.txt' },
+    workspace: { workspace: 'Staging', project: 'Customer portal' },
+    workflows: { job: 'reports.generate', attempts: 3 },
+    audit: { limit: 50 },
+    governance: { collection: 'reports', days: 90 },
+    operations: { operation: 'deploy.staging', target: 'sandbox', key: 'onboarding-check' },
+  };
+  for (const [id, values] of Object.entries(drafts)) {
+    const save = await request(setup + '/' + id, { revision: 0, values }, 'PUT');
+    assert.equal(save.status, 200, id);
+    assert.deepEqual(await save.json(), { revision: 1, values });
+  }
+  assert.deepEqual(await (await request(setup + '/flags/preview', drafts.flags)).json(), {
+    enabled: false,
+  });
+  assert.deepEqual(
+    await (await request(setup + '/flags/preview', { ...drafts.flags, rollout: 100 })).json(),
+    { enabled: true },
+  );
+  for (let run = 0; run < 2; run++) {
+    assert.deepEqual(await (await request(setup + '/analytics/preview', drafts.analytics)).json(), {
+      count: 1,
+    });
+  }
+  const stale = await request(setup + '/flags', { revision: 0, values: drafts.flags }, 'PUT');
+  assert.equal(stale.status, 409);
+  const updatedFlag = { ...drafts.flags, rollout: 100 };
+  assert.equal(
+    (await request(setup + '/flags', { revision: 1, values: updatedFlag }, 'PUT')).status,
+    200,
+  );
+  const invalid = await request(
+    setup + '/payments',
+    {
+      revision: 1,
+      values: { ...drafts.payments, endpoint: 'https://app.example.com/hook?secret=hidden' },
+    },
+    'PUT',
+  );
+  assert.equal(invalid.status, 400);
+  const extra = await request(
+    setup + '/notifications',
+    {
+      revision: 1,
+      values: { ...drafts.notifications, credential: 'value' },
+    },
+    'PUT',
+  );
+  assert.equal(extra.status, 400);
+  assert.equal((await request(setup + '/payments/preview', drafts.payments)).status, 400);
+  assert.equal(
+    (await request(setup + '/constructor', { revision: 0, values: {} }, 'PUT')).status,
+    404,
+  );
+  await createProject('another');
+  assert.equal((await request('/projects/another/tenants/north/setup')).status, 404);
+  assert.deepEqual(await (await request(tenantPath)).json(), tenant);
+
+  await stop();
+  await start();
+  const stored = await (await request(setup)).json();
+  assert.deepEqual(
+    stored,
+    Object.fromEntries(
+      Object.entries({ ...drafts, flags: updatedFlag }).map(([domain, values]) => [
+        domain,
+        { revision: domain === 'flags' ? 2 : 1, values },
+      ]),
+    ),
+  );
+});

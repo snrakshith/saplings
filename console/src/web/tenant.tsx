@@ -6,8 +6,9 @@ import { type consoleApi, download, parseJson, tenantPath } from './api.js';
 import { FormError, JsonField, message, useForm, value } from './forms.js';
 import { Gateway } from './gateway.js';
 import { Identity } from './identity.js';
+import { Setup } from './setup.js';
 
-const tabs = ['Overview', 'Kingsman', 'Harbor', 'Configuration', 'Export'] as const;
+const tabs = ['Overview', 'Kingsman', 'Harbor', 'SDK setup', 'Configuration', 'Export'] as const;
 type Tab = (typeof tabs)[number];
 
 function ConfigEditor({
@@ -218,6 +219,9 @@ export function TenantWorkspace({
       )}
       {tab === 'Harbor' && (
         <Gateway config={harbor} save={(config) => save({ kingsman, harbor: config })} />
+      )}
+      {tab === 'SDK setup' && (
+        <Setup api={api} path={path} projectId={project.id} tenantId={tenant.id} />
       )}
       {tab === 'Configuration' && (
         <ConfigEditor key={tenant.revision} config={{ kingsman, harbor }} save={save} />

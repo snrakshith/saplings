@@ -35,6 +35,26 @@ The console binds to loopback for use by a local operator. Shared hosting would 
 
 A console tenant is an onboarding record. Live tenant and organization provisioning, user administration, and route rollout happen in your application or its deployment pipeline. Runtime support for individual settings depends on the capabilities documented by each package.
 
+## Set up SDK capabilities
+
+Open **SDK setup** inside a tenant and choose the areas your application uses. Every form saves a tenant-scoped draft and provides an SDK example using the saved settings. Download those settings from the SDK setup list for staging and review.
+
+| Area | First setup |
+| --- | --- |
+| Feature flags | Save a flag, rollout percentage, and test subject. |
+| Product analytics | Define the first event and test subject. |
+| Notifications and webhooks | Choose a channel and register the staging endpoint and signing-secret reference for your worker. |
+| Payments | Choose a sandbox provider, callback URL, and credential reference. |
+| Billing and subscriptions | Draft a plan, included feature, and monthly usage quota. |
+| File storage and media | Choose a storage backend and a tenant-scoped test object. |
+| Project and workspace setup | Define workspace and project records for the application tenant. |
+| Workflows and background jobs | Choose a job type and retry limit. |
+| Audit and activity | Choose a result limit for reviewing an audit trail. |
+| Data management and governance | Draft a collection allowlist and retention period. |
+| Provider operations | Choose a registered operation kind, staging target, and idempotency key. |
+
+The flag and analytics previews run the real SDK with a temporary store and a synthetic actor. The flag preview uses the console tenant key for bucketing. Verify rollout assignments and event ingestion again with your application's tenant ID and store. Provider calls, live operations, and credential handling happen in the staging application. The setup download contains draft inputs and revision numbers.
+
 ## Load the exported files in an SDK application
 
 ```ts

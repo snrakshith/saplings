@@ -1,5 +1,3 @@
-import type { ConfigPair } from '../contracts.js';
-
 export class ConsoleError extends Error {
   constructor(
     message: string,
@@ -43,7 +41,7 @@ export function parseJson(text: string, label: string): unknown {
   }
 }
 
-export function download(filename: string, value: ConfigPair | ConfigPair[keyof ConfigPair]) {
+export function download(filename: string, value: unknown) {
   const url = URL.createObjectURL(
     new Blob([JSON.stringify(value, null, 2) + '\n'], {
       type: 'application/json',

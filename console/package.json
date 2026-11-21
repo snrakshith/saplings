@@ -12,6 +12,7 @@
     "@saplings/harbor": "workspace:*",
     "@saplings/kingsman": "workspace:*",
     "@saplings/murphi-ui": "workspace:*",
+    "@saplings/sdk": "workspace:*",
     "@saplings/ui-core": "workspace:*",
     "express": "^5.1.0",
     "react": "^19.3.0",
