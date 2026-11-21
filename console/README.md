@@ -30,14 +30,15 @@ The console binds to loopback for use by a local operator. Shared hosting would 
 2. **Add a tenant.** Generate a starter realm and gateway by entering your HTTPS issuer base, or import existing Kingsman JSON and Harbor JSON or YAML. You can also import a console bundle.
 3. **Configure Kingsman.** Set the issuer and manage OIDC clients and their redirect URIs. New public clients use authorization code with S256 PKCE.
 4. **Configure Harbor.** Register one or more paths, choose the allowed methods and path matching, and route traffic to a new or existing upstream service.
-5. **Configure advanced settings.** Edit either complete native document on the Configuration tab for scopes, roles, identity providers, organizations, TLS, plugins, consumers, or other package settings. The server validates both documents before it saves a new revision. If another session saved first, reload the saved draft before applying your changes.
-6. **Export and integrate.** Download `realm.json` and `gateway.json` for the application, or use the bundle to move the draft to another console instance.
+5. **Set up the SDK.** Use the tenant onboarding checklist to work through the eleven SDK areas and track saved drafts.
+6. **Configure advanced settings.** Edit either complete native document on the Configuration tab for scopes, roles, identity providers, organizations, TLS, plugins, consumers, or other package settings. The server validates both documents before it saves a new revision. If another session saved first, reload the saved draft before applying your changes.
+7. **Export and integrate.** Download `realm.json` and `gateway.json` for the application, or use the bundle to move the draft to another console instance.
 
 A console tenant is an onboarding record. Live tenant and organization provisioning, user administration, and route rollout happen in your application or its deployment pipeline. Runtime support for individual settings depends on the capabilities documented by each package.
 
 ## Set up SDK capabilities
 
-Open **SDK setup** inside a tenant and choose the areas your application uses. Every form saves a tenant-scoped draft and provides an SDK example using the saved settings. Download those settings from the SDK setup list for staging and review.
+Every tenant opens to **Onboarding**. The checklist shows all eleven SDK areas with their saved-draft status. Start with the next unfinished area or open any area directly. Every form saves a tenant-scoped draft and provides an SDK example using the saved settings. Download the drafts from the checklist for staging and review.
 
 | Area | First setup |
 | --- | --- |

@@ -1,4 +1,4 @@
-/** Shared form definitions for the tenant's optional SDK integrations. */
+/** Shared form definitions for the tenant onboarding checklist. */
 type FieldBase = { key: string; label: string; hint?: string };
 export type SetupField = FieldBase &
   (

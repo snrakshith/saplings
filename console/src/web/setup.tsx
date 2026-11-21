@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Button } from '@saplings/murphi-ui';
 
 import {
@@ -13,7 +13,15 @@ import {
 import { type consoleApi, download } from './api.js';
 import { Field, FormError, message, useForm, value } from './forms.js';
 
-const ids = Object.keys(domains) as DomainId[];
+const groups: { title: string; areas: DomainId[] }[] = [
+  { title: 'Application foundation', areas: ['workspace', 'flags', 'analytics', 'storage'] },
+  { title: 'Payments and billing', areas: ['payments', 'billing'] },
+  {
+    title: 'Operations and governance',
+    areas: ['notifications', 'workflows', 'audit', 'governance', 'operations'],
+  },
+];
+const areas = groups.flatMap((group) => group.areas);
 
 function SetupInput({ field, saved }: { field: SetupField; saved: SetupValues }) {
   const { key, type, label, hint } = field;
@@ -63,6 +71,7 @@ function SetupEditor({
   draft,
   onSave,
   close,
+  next,
 }: {
   api: ReturnType<typeof consoleApi>;
   path: string;
@@ -70,6 +79,7 @@ function SetupEditor({
   draft?: SetupDraft;
   onSave: (next: SetupDraft) => void;
   close: () => void;
+  next?: { title: string; open: () => void };
 }) {
   const domain = domains[id];
   const form = useForm();
@@ -78,12 +88,16 @@ function SetupEditor({
   const [notice, setNotice] = useState('');
   const endpoint = path + '/' + id;
   const saved = draft?.values ?? {};
+  const heading = useRef<HTMLHeadingElement>(null);
+  useEffect(() => heading.current?.focus(), []);
   return (
     <section className="panel">
       <div className="section-head top">
-        <h2>{domain.title}</h2>
+        <h2 ref={heading} tabIndex={-1}>
+          {domain.title}
+        </h2>
         <Button variant="text" type="button" onClick={close}>
-          All setup areas
+          Back to onboarding
         </Button>
       </div>
       <p>{domain.summary}</p>
@@ -157,20 +171,34 @@ function SetupEditor({
           )}
         </form>
       )}
+      {draft && next && (
+        <div className="actions">
+          <Button
+            type="button"
+            variant="outlined"
+            onClick={next.open}
+            disabled={form.busy || preview.busy}
+          >
+            Continue with {next.title}
+          </Button>
+        </div>
+      )}
     </section>
   );
 }
 
-export function Setup({
+export function TenantOnboarding({
   api,
   path,
   projectId,
   tenantId,
+  platforms,
 }: {
   api: ReturnType<typeof consoleApi>;
   path: string;
   projectId: string;
   tenantId: string;
+  platforms: ReactNode;
 }) {
   const [drafts, setDrafts] = useState<TenantSetup>();
   const [selected, select] = useState<DomainId>();
@@ -207,65 +235,87 @@ export function Setup({
         </Button>
       </section>
     );
-  if (!drafts) return <p role="status">Loading SDK setup…</p>;
+  if (!drafts) return <p role="status">Loading the onboarding checklist…</p>;
+  const savedCount = areas.filter((id) => drafts[id]).length;
+  const next = areas.find((id) => id !== selected && !drafts[id]);
   if (selected)
     return (
-      <>
-        <SetupEditor
-          key={selected}
-          api={api}
-          path={url}
-          id={selected}
-          draft={drafts[selected]}
-          close={() => select(undefined)}
-          onSave={(draft) => setDrafts((previous) => ({ ...previous, [selected]: draft }))}
-        />
-        <Button type="button" variant="text" onClick={refresh}>
-          Reload saved setup
-        </Button>
-      </>
+      <SetupEditor
+        key={selected}
+        api={api}
+        path={url}
+        id={selected}
+        draft={drafts[selected]}
+        close={() => select(undefined)}
+        next={next && { title: domains[next].title, open: () => select(next) }}
+        onSave={(draft) => setDrafts((previous) => ({ ...previous, [selected]: draft }))}
+      />
     );
 
   return (
-    <section className="panel">
-      <div className="section-head top">
-        <h2>SDK setup</h2>
-        {Object.keys(drafts).length > 0 && (
-          <Button
-            type="button"
-            variant="outlined"
-            onClick={() =>
-              download(projectId + '-' + tenantId + '.setup.json', {
-                version: 1,
-                project: projectId,
-                tenant: tenantId,
-                setup: drafts,
-              })
-            }
-          >
-            Download setup drafts
+    <>
+      <section className="panel">
+        <div className="section-head top">
+          <h2>Tenant onboarding checklist</h2>
+          {savedCount > 0 && (
+            <Button
+              type="button"
+              variant="outlined"
+              onClick={() =>
+                download(projectId + '-' + tenantId + '.setup.json', {
+                  version: 1,
+                  project: projectId,
+                  tenant: tenantId,
+                  setup: drafts,
+                })
+              }
+            >
+              Download setup drafts
+            </Button>
+          )}
+        </div>
+        <p>Configure identity and routing, then work through every SDK area for this tenant.</p>
+        <div className="setup-progress">
+          <p role="status">
+            <strong>
+              {savedCount} of {areas.length} SDK setup drafts saved
+            </strong>
+          </p>
+          <progress aria-label="SDK setup drafts saved" value={savedCount} max={areas.length} />
+        </div>
+        {next && (
+          <Button type="button" onClick={() => select(next)}>
+            Continue with {domains[next].title}
           </Button>
         )}
-      </div>
-      <p>
-        Set up the capabilities your app uses. Apply the examples in staging with your SDK and
-        provider credentials.
-      </p>
-      <ul className="rows">
-        {ids.map((id) => (
-          <li key={id}>
-            <div>
-              <strong>{domains[id].title}</strong>
-              <p>{domains[id].summary}</p>
-              {drafts[id] && <p>Draft saved</p>}
-            </div>
-            <Button type="button" variant="outlined" onClick={() => select(id)}>
-              {drafts[id] ? 'Edit ' : 'Set up '}
-              {domains[id].title}
-            </Button>
-          </li>
-        ))}
-      </ul>
-    </section>
+        {savedCount === areas.length && (
+          <p>
+            All drafts are saved. Apply the examples and verify the setup in your staging
+            application.
+          </p>
+        )}
+      </section>
+      {platforms}
+      {groups.map(({ title, areas }) => (
+        <section key={title} className="panel" aria-label={title}>
+          <h2>{title}</h2>
+          <ul className="rows">
+            {areas.map((id) => (
+              <li key={id}>
+                <div>
+                  <strong>{domains[id].title}</strong>
+                  <p>{domains[id].summary}</p>
+                  <p>{drafts[id] ? 'Draft saved' : 'Setup needed'}</p>
+                </div>
+                <Button type="button" variant="outlined" onClick={() => select(id)}>
+                  {drafts[id] ? 'Edit ' : 'Set up '}
+                  {domains[id].title}
+                </Button>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </>
   );
 }

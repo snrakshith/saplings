@@ -6,9 +6,9 @@ import { type consoleApi, download, parseJson, tenantPath } from './api.js';
 import { FormError, JsonField, message, useForm, value } from './forms.js';
 import { Gateway } from './gateway.js';
 import { Identity } from './identity.js';
-import { Setup } from './setup.js';
+import { TenantOnboarding } from './setup.js';
 
-const tabs = ['Overview', 'Kingsman', 'Harbor', 'SDK setup', 'Configuration', 'Export'] as const;
+const tabs = ['Onboarding', 'Kingsman', 'Harbor', 'Configuration', 'Export'] as const;
 type Tab = (typeof tabs)[number];
 
 function ConfigEditor({
@@ -123,9 +123,10 @@ export function TenantWorkspace({
   initial: Tenant;
 }) {
   const [tenant, setTenant] = useState(initial);
-  const [tab, setTab] = useState<Tab>('Overview');
+  const [tab, setTab] = useState<Tab>('Onboarding');
   const [notice, setNotice] = useState('');
   const [reloadError, setReloadError] = useState('');
+  const [onboardingRefresh, refreshOnboarding] = useState(0);
   const path = tenantPath(project.id, tenant.id);
   const { kingsman, harbor } = tenant;
   const routeCount = harbor.spec.services.reduce(
@@ -171,57 +172,42 @@ export function TenantWorkspace({
       <div className="notice" role="status">
         {notice}
       </div>
-      {tab === 'Overview' && (
-        <>
-          <div className="summary-grid">
-            <section className="panel summary">
-              <h2>Kingsman</h2>
-              <p className="summary-value">{kingsman.spec.clients.length}</p>
-              <p>OIDC clients</p>
-              <Button type="button" variant="outlined" onClick={() => setTab('Kingsman')}>
-                Manage identity
-              </Button>
-            </section>
-            <section className="panel summary">
-              <h2>Harbor</h2>
-              <p className="summary-value">{routeCount}</p>
-              <p>Gateway routes</p>
-              <Button type="button" variant="outlined" onClick={() => setTab('Harbor')}>
-                Manage routes
-              </Button>
-            </section>
-          </div>
-          <section className="panel">
-            <h2>Onboarding checklist</h2>
-            <ol className="instructions">
-              <li>
-                <strong>Configure identity.</strong> Confirm the issuer for{' '}
-                <code>{kingsman.metadata.name}</code> and add an OIDC client if your app signs users
-                in.
-              </li>
-              <li>
-                <strong>Register entry points.</strong> Map incoming Harbor routes to your
-                application’s upstream services.
-              </li>
-              <li>
-                <strong>Integrate the SDK.</strong> Export the validated revision, supply your
-                runtime dependencies, and test the app in staging.
-              </li>
-            </ol>
-            <Button type="button" variant="outlined" onClick={() => setTab('Export')}>
-              Go to export
-            </Button>
-          </section>
-        </>
+      {tab === 'Onboarding' && (
+        <TenantOnboarding
+          key={onboardingRefresh}
+          api={api}
+          path={path}
+          projectId={project.id}
+          tenantId={tenant.id}
+          platforms={
+            <div className="summary-grid">
+              <section className="panel summary">
+                <h2>Kingsman</h2>
+                <p className="summary-value">{kingsman.spec.clients.length}</p>
+                <p>
+                  OIDC clients · <code>{kingsman.metadata.name}</code>
+                </p>
+                <Button type="button" variant="outlined" onClick={() => setTab('Kingsman')}>
+                  Manage identity
+                </Button>
+              </section>
+              <section className="panel summary">
+                <h2>Harbor</h2>
+                <p className="summary-value">{routeCount}</p>
+                <p>Gateway routes</p>
+                <Button type="button" variant="outlined" onClick={() => setTab('Harbor')}>
+                  Manage routes
+                </Button>
+              </section>
+            </div>
+          }
+        />
       )}
       {tab === 'Kingsman' && (
         <Identity config={kingsman} save={(config) => save({ kingsman: config, harbor })} />
       )}
       {tab === 'Harbor' && (
         <Gateway config={harbor} save={(config) => save({ kingsman, harbor: config })} />
-      )}
-      {tab === 'SDK setup' && (
-        <Setup api={api} path={path} projectId={project.id} tenantId={tenant.id} />
       )}
       {tab === 'Configuration' && (
         <ConfigEditor key={tenant.revision} config={{ kingsman, harbor }} save={save} />
@@ -237,7 +223,8 @@ export function TenantWorkspace({
             try {
               setReloadError('');
               setTenant(await api<Tenant>(path));
-              setTab('Overview');
+              refreshOnboarding((count) => count + 1);
+              setTab('Onboarding');
               setNotice('Loaded the latest saved draft.');
             } catch (error) {
               setReloadError(message(error));

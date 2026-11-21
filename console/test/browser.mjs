@@ -7,6 +7,7 @@ import { chromium } from 'playwright';
 
 import { createConsoleApp } from '../dist/server/app.js';
 import { ConsoleStore } from '../dist/server/store.js';
+import { domains } from '../dist/onboarding.js';
 
 const store = new ConsoleStore(':memory:');
 const token = randomBytes(32).toString('base64url');
@@ -37,6 +38,12 @@ try {
   await fill('Key', 'north');
   await fill('Kingsman issuer base URL', 'https://auth.example.com');
   await button('Create tenant draft').click();
+  const progress = page.getByRole('progressbar', { name: 'SDK setup drafts saved' });
+  await page.getByText('0 of 11 SDK setup drafts saved', { exact: true }).waitFor();
+  assert.equal(await progress.getAttribute('max'), '11');
+  for (const { title } of Object.values(domains)) {
+    await button('Set up ' + title).waitFor();
+  }
 
   await button('Manage identity').click();
   await button('Add client').click();
@@ -72,30 +79,55 @@ try {
   assert.equal(bundle.harbor.spec.services[0].routes[0].name, 'customers');
   assert.equal(bundle.kingsman.spec.clients[0].clientId, 'portal-web');
 
-  await button('SDK setup').click();
-  await button('Set up Feature flags').click();
+  await button('Onboarding').click();
+  await button('Continue with Project and workspace setup').click();
+  await fill('Workspace name', 'Staging');
+  await fill('Project name', 'Customer Portal');
+  await button('Save setup draft').click();
+  await button('Continue with Feature flags').click();
   await fill('Flag key', 'beta-access');
   await fill('Rollout percentage', '0');
   await button('Save setup draft').click();
-  await page.getByText('Setup draft saved.').waitFor();
   await button('Run SDK preview').click();
   await page.getByText('Preview decision: disabled').waitFor();
-  await button('All setup areas').click();
-  await button('Set up Product analytics').click();
+  await button('Continue with Product analytics').click();
   await button('Save setup draft').click();
   await button('Run SDK preview').click();
   await page.getByText('Events recorded in preview: 1').waitFor();
-  await button('All setup areas').click();
+  await button('Back to onboarding').click();
+  await page.getByText('3 of 11 SDK setup drafts saved', { exact: true }).waitFor();
+
+  const remaining = [
+    ['storage'],
+    ['payments', 'HTTPS payment callback', 'https://app.example.com/hooks/payments'],
+    ['billing'],
+    ['notifications', 'HTTPS webhook endpoint', 'https://app.example.com/hooks/notify'],
+    ['workflows'],
+    ['audit'],
+    ['governance'],
+    ['operations'],
+  ];
+  for (const [id, label, endpoint] of remaining) {
+    await button('Set up ' + domains[id].title).click();
+    if (label) await fill(label, endpoint);
+    await button('Save setup draft').click();
+    await page.getByText('Setup draft saved.').waitFor();
+    await button('Back to onboarding').click();
+  }
+
+  await page.getByText('11 of 11 SDK setup drafts saved', { exact: true }).waitFor();
+  await button('Reload saved draft').click();
+  await page.getByText('11 of 11 SDK setup drafts saved', { exact: true }).waitFor();
+  assert.equal(await progress.getAttribute('value'), '11');
+  await page.getByText(/All drafts are saved/).waitFor();
   const [setupDownload] = await Promise.all([
     page.waitForEvent('download'),
     button('Download setup drafts').click(),
   ]);
   const setup = JSON.parse(await readFile(await setupDownload.path(), 'utf8'));
+  assert.equal(Object.keys(setup.setup).length, 11);
   assert.equal(setup.setup.flags.values.flag, 'beta-access');
   assert.equal(setup.setup.analytics.values.event, 'onboarding.completed');
-  await button('Set up Billing and subscriptions').click();
-  await button('Save setup draft').click();
-  await page.getByText('Setup draft saved.').waitFor();
 
   await page.setViewportSize({ width: 375, height: 812 });
   assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
