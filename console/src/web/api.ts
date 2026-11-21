@@ -53,3 +53,7 @@ export function download(filename: string, value: unknown) {
   link.click();
   setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
+
+export function message(error: unknown) {
+  return error instanceof Error ? error.message : 'The console could not complete this request.';
+}

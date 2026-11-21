@@ -1,0 +1,17 @@
+.setup-example {
+  overflow: auto;
+  max-width: 100%;
+  padding: 1rem;
+  border: 1px solid var(--sapling-border);
+  border-radius: var(--corner);
+  background: var(--sapling-background);
+}
+
+.setup-progress {
+  margin: 1rem 0;
+}
+
+.setup-progress progress {
+  width: min(100%, 24rem);
+  accent-color: var(--sapling-primary);
+}

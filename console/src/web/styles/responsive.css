@@ -1,0 +1,27 @@
+@media (max-width: 720px) {
+  .console-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--sapling-border);
+  }
+
+  .projects {
+    margin-top: 1rem;
+  }
+
+  .projects ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .sidebar-footer {
+    padding-top: 0.75rem;
+  }
+
+  .workspace {
+    padding-top: 1.25rem;
+  }
+}

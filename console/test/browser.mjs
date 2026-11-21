@@ -79,6 +79,31 @@ try {
   assert.equal(bundle.harbor.spec.services[0].routes[0].name, 'customers');
   assert.equal(bundle.kingsman.spec.clients[0].clientId, 'portal-web');
 
+  await button('Kingsman').click();
+  await button('Edit portal-web').click();
+  await fill('Redirect URIs', 'https://portal.example.com/new-callback');
+  await button('Save client').click();
+  await page.getByText('Configuration saved at revision 4.').waitFor();
+  await button('Edit portal-web').click();
+  assert.equal(
+    await page.getByLabel('Redirect URIs', { exact: true }).inputValue(),
+    'https://portal.example.com/new-callback',
+  );
+  await button('Remove client from draft').click();
+  await page.getByText('Configuration saved at revision 5.').waitFor();
+  await page.getByText('Register a client when your application needs to sign users in.').waitFor();
+
+  await button('Harbor').click();
+  await button('Edit customers').click();
+  await fill('Paths', '/api/accounts');
+  await button('Save route').click();
+  await page.getByText('Configuration saved at revision 6.').waitFor();
+  await page.getByText('/api/accounts · GET · exact', { exact: true }).waitFor();
+  await button('Edit customers').click();
+  await button('Remove route from draft').click();
+  await page.getByText('Configuration saved at revision 7.').waitFor();
+  await page.getByText('No routes saved.', { exact: false }).waitFor();
+
   await button('Onboarding').click();
   await button('Continue with Project and workspace setup').click();
   await fill('Workspace name', 'Staging');
