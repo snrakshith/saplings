@@ -24,6 +24,20 @@ Open `http://127.0.0.1:4178` and enter the access token printed in the server te
 
 The console binds to loopback for use by a local operator. Shared hosting would require authenticated operator identities, project authorization, and an audit trail. Use secret references in configs and protect both the database and downloaded files.
 
+## Try the sample full-stack app
+
+From the repository root, install dependencies and run `pnpm run build:all`. Start each process in its own terminal.
+
+| Process | Command | URL |
+| --- | --- | --- |
+| Sample API | `pnpm run dev:api` | `http://127.0.0.1:3000` |
+| Sample web | `pnpm run dev:web` | `http://localhost:5173` |
+| Developer console | `pnpm run start:console` | `http://127.0.0.1:4178` |
+
+Unlock the console and look for **Saplings Fullstack Demo → Demo workspace**. The project appears when the local sample API starts, including if the console is already open. The console imports Kingsman, Harbor, and the saved SDK setup drafts declared by the sample's [`sapling.config.ts`](../apps/api/src/sapling.config.ts). The repository's [quality config](../sapling.config.ts) uses the same SDK and platform configuration.
+
+The sample API publishes a loopback-only demo manifest. Keep credentials in environment-backed SDK dependencies and keep the demo manifest free of credentials. Set `SAPLINGS_SAMPLE_PORT` on the console when running the sample API on a custom `PORT`. The console validates the manifest, refreshes drafts still managed by it, and preserves drafts edited in the console. Use **Reload saved draft** to read refreshed values in an open tenant workspace. The sample's realm and gateway are development configurations for SDK integration.
+
 ## Onboard an application
 
 1. **Create a project.** Choose a stable key and a display name.

@@ -1,11 +1,12 @@
 import assert from 'node:assert/strict';
 import { mkdtemp, readFile, rm } from 'node:fs/promises';
 import { once } from 'node:events';
-import { get } from 'node:http';
+import { createServer, get } from 'node:http';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, test } from 'vitest';
 
+import { startSampleSdk } from '../apps/api/src/sample-sdk.ts';
 import { createSapling } from '../packages/sdk/dist/index.js';
 import { createConsoleApp } from '../console/src/server/app.ts';
 import { ConsoleStore } from '../console/src/server/store.ts';
@@ -16,9 +17,9 @@ let store;
 let server;
 let url;
 
-async function start() {
+async function start(samplePort) {
   store = new ConsoleStore(join(directory, 'console.sqlite'));
-  server = createConsoleApp({ store, token }).listen(0, '127.0.0.1');
+  server = createConsoleApp({ store, token, samplePort }).listen(0, '127.0.0.1');
   await once(server, 'listening');
   url = 'http://127.0.0.1:' + server.address().port;
 }
@@ -308,4 +309,89 @@ test('saves each SDK onboarding draft by tenant and verifies flags and analytics
       ]),
     ),
   );
+});
+
+test('discovers the sample after startup and syncs config without replacing console edits', async () => {
+  const sample = await startSampleSdk(3000);
+  let manifest;
+  const source = createServer((req, res) => {
+    if (req.url !== '/.well-known/saplings-console.json' || !manifest) {
+      res.writeHead(404).end();
+      return;
+    }
+    const json = JSON.stringify(manifest);
+    res
+      .writeHead(200, {
+        'Content-Type': 'application/json',
+        'Content-Length': Buffer.byteLength(json),
+      })
+      .end(json);
+  }).listen(0, '127.0.0.1');
+  await once(source, 'listening');
+  const port = source.address().port;
+  const { project, tenant } = sample.manifest;
+  const draftPath = '/projects/' + project.id + '/tenants/' + tenant.id;
+  try {
+    await stop();
+    await start(port);
+    assert.deepEqual(await (await request('/projects')).json(), []);
+    manifest = structuredClone(sample.manifest);
+    assert.deepEqual(await (await request('/projects')).json(), [
+      { ...project, tenants: [tenant] },
+    ]);
+    assert.deepEqual(await (await request('/projects')).json(), [
+      { ...project, tenants: [tenant] },
+    ]);
+    const original = await (await request(draftPath)).json();
+    assert.equal(original.revision, 1);
+    assert.equal(original.kingsman.spec.clients[0].clientId, 'demo-web');
+    assert.equal(original.harbor.spec.services[0].routes[0].name, 'sample-api');
+    const setup = await (await request(draftPath + '/setup')).json();
+    assert.equal(setup.flags.values.flag, 'show-cloud-item');
+
+    const flags = { ...setup.flags.values, rollout: 25 };
+    const manual = await request(draftPath + '/setup/flags', { revision: 1, values: flags }, 'PUT');
+    assert.equal(manual.status, 200);
+
+    manifest.config.harbor.spec.upstreams[0].targets[0].target = '127.0.0.1:3001';
+    manifest.setup.flags.rollout = 80;
+    manifest.setup.analytics.event = 'demo.updated';
+    await request('/projects');
+    await request('/projects');
+    const synced = await (await request(draftPath)).json();
+    assert.equal(synced.revision, 2);
+    assert.equal(synced.harbor.spec.upstreams[0].targets[0].target, '127.0.0.1:3001');
+    const syncedSetup = await (await request(draftPath + '/setup')).json();
+    assert.deepEqual(syncedSetup.flags, { revision: 2, values: flags });
+    assert.equal(syncedSetup.analytics.revision, 2);
+    assert.equal(syncedSetup.analytics.values.event, 'demo.updated');
+
+    const save = await request(
+      draftPath,
+      {
+        revision: 2,
+        config: { kingsman: synced.kingsman, harbor: synced.harbor },
+      },
+      'PUT',
+    );
+    assert.equal(save.status, 200);
+    manifest.config.harbor.spec.upstreams[0].targets[0].target = '127.0.0.1:3002';
+    await stop();
+    await start(port);
+    await request('/projects');
+    const saved = await (await request(draftPath)).json();
+    assert.equal(saved.revision, 3);
+    assert.equal(saved.harbor.spec.upstreams[0].targets[0].target, '127.0.0.1:3001');
+  } finally {
+    await new Promise((resolve) => source.close(resolve));
+  }
+});
+
+test('leaves a manually created project with the sample key under manual control', async () => {
+  const { manifest } = await startSampleSdk(3000);
+  await createProject(manifest.project.id);
+  store.syncSample(manifest);
+  assert.deepEqual(await (await request('/projects')).json(), [
+    { id: manifest.project.id, name: 'Customer portal', tenants: [] },
+  ]);
 });

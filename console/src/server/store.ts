@@ -2,6 +2,8 @@ import { DatabaseSync } from 'node:sqlite';
 
 import type { ConfigPair, Project, ProjectSummary, Tenant, TenantSummary } from '../contracts.js';
 import type { DomainId, SetupDraft, SetupValues, TenantSetup } from '../onboarding.js';
+import type { SampleManifest } from './discovery/manifest.js';
+import { reconcileSample } from './discovery/reconcile.js';
 import { InputError } from './input.js';
 import { consoleSchema } from './schema.js';
 
@@ -128,6 +130,10 @@ export class ConsoleStore {
     if (!result.changes)
       throw new InputError('This setup changed elsewhere. Reload it before editing.', 409);
     return { revision: revision + 1, values };
+  }
+
+  syncSample(manifest: SampleManifest) {
+    reconcileSample(this.db, this, manifest);
   }
 
   close() {

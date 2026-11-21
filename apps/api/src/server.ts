@@ -1,10 +1,13 @@
 import express from 'express';
 import { randomUUID } from 'node:crypto';
 import { createNodeDiagnostics } from '@saplings/quality-node-diagnostics';
+import { sampleManifest, startSampleSdk } from './sample-sdk.js';
+import { setup } from './sapling.config.js';
 const app = express(),
   orders = new Map<string, { id: string; quantity: number }>(),
   diagnostics = createNodeDiagnostics();
 const PORT = Number(process.env.PORT ?? 3000);
+let sample: ReturnType<typeof startSampleSdk>;
 app.disable('x-powered-by');
 app.use(express.json({ limit: '1mb' }));
 app.use((req, res, next) => {
@@ -38,14 +41,17 @@ app.get('/metrics', (_req, res) => {
       ].join('\n') + '\n',
     );
 });
-app.get('/api/items', (_req, res) =>
-  res.json({
-    items: [
-      { id: 'a1', name: 'Quality toolkit' },
-      { id: 'b2', name: 'Sapling cloud' },
-    ],
-  }),
+app.get(
+  '/.well-known/saplings-console.json',
+  sampleManifest(() => sample),
 );
+app.get('/api/items', async (_req, res) => {
+  const { sdk, context } = await sample;
+  const items = [{ id: 'a1', name: 'Quality toolkit' }];
+  const { enabled } = await sdk.flags.evaluate(context, setup.flags.flag, setup.flags.subject);
+  if (enabled) items.push({ id: 'b2', name: 'Sapling cloud' });
+  res.json({ items });
+});
 app.get('/api/slow', async (_req, res) => {
   await new Promise((r) => setTimeout(r, 200));
   res.json({ ok: true });
@@ -61,7 +67,20 @@ app.post('/api/telemetry', (req, res) => {
   res.sendStatus(202);
 });
 app.use((_req, res) => res.status(404).json({ error: 'not found' }));
-const server = app.listen(PORT, () => console.log(`Example backend on http://127.0.0.1:${PORT}`));
+const server = app.listen(PORT, () => {
+  const address = server.address();
+  if (!address || typeof address === 'string') throw new Error('Sample API requires a TCP port');
+  sample = startSampleSdk(address.port);
+  sample.then(
+    () => console.log(`Example backend on http://127.0.0.1:${address.port}`),
+    (error: unknown) => {
+      console.error('Could not start the sample SDK', error);
+      diagnostics.close();
+      server.close();
+      process.exitCode = 1;
+    },
+  );
+});
 for (const signal of ['SIGINT', 'SIGTERM'])
   process.on(signal, () =>
     server.close(() => {

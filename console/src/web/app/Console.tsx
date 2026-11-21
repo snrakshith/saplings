@@ -1,8 +1,9 @@
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { Button } from '@saplings/murphi-ui';
 import type { Project, ProjectSummary, Tenant } from '../../contracts.js';
 import { consoleApi } from '../api.js';
 import { ProjectForm } from '../projects/ProjectForm.js';
+import { useProjectRefresh } from '../projects/useProjectRefresh.js';
 import { TenantForm } from '../tenants/TenantForm.js';
 import { TenantLoader } from '../tenants/TenantLoader.js';
 import { Sidebar } from './Sidebar.js';
@@ -26,7 +27,25 @@ export function Console({
     tenantId: initial[0]?.tenants[0]?.id,
   }));
   const [screen, setScreen] = useState<Screen>('workspace');
-  const project = projects.find((item) => item.id === selection.projectId);
+  const refresh = useCallback((snapshot: ProjectSummary[]) => {
+    setProjects((current) => {
+      // Project and tenant creation is additive. A response in flight may predate a local save.
+      const merged = new Map(current.map((project) => [project.id, project]));
+      for (const project of snapshot) {
+        const tenants = new Map(
+          merged.get(project.id)?.tenants.map((tenant) => [tenant.id, tenant]),
+        );
+        for (const tenant of project.tenants) tenants.set(tenant.id, tenant);
+        merged.set(project.id, { ...project, tenants: [...tenants.values()] });
+      }
+      return [...merged.values()];
+    });
+  }, []);
+  useProjectRefresh(api, refresh);
+  const project = selection.projectId
+    ? projects.find((item) => item.id === selection.projectId)
+    : projects[0];
+  const tenantId = selection.projectId ? selection.tenantId : project?.tenants[0]?.id;
   const open = (projectId: string, tenantId?: string) => {
     select({ projectId, tenantId });
     setScreen('workspace');
@@ -39,7 +58,7 @@ export function Console({
       <Sidebar
         projects={projects}
         project={screen === 'project' ? undefined : project}
-        activeTenantId={screen === 'workspace' ? selection.tenantId : undefined}
+        activeTenantId={screen === 'workspace' ? tenantId : undefined}
         open={open}
         newProject={() => setScreen('project')}
         newTenant={() => setScreen('tenant')}
@@ -90,12 +109,12 @@ export function Console({
               }}
             />
           </>
-        ) : project && selection.tenantId ? (
+        ) : project && tenantId ? (
           <TenantLoader
-            key={project.id + '/' + selection.tenantId}
+            key={project.id + '/' + tenantId}
             api={api}
             project={project}
-            tenantId={selection.tenantId}
+            tenantId={tenantId}
           />
         ) : (
           <>

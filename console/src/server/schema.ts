@@ -18,4 +18,10 @@ CREATE TABLE IF NOT EXISTS tenant_setup (
   PRIMARY KEY (project_id, tenant_id, domain),
   FOREIGN KEY (project_id, tenant_id) REFERENCES tenants(project_id, id)
 ) STRICT;
+CREATE TABLE IF NOT EXISTS sample_imports (
+  project_id TEXT NOT NULL, tenant_id TEXT NOT NULL,
+  revisions TEXT NOT NULL CHECK (json_valid(revisions)),
+  PRIMARY KEY (project_id, tenant_id),
+  FOREIGN KEY (project_id, tenant_id) REFERENCES tenants(project_id, id)
+) STRICT;
 `;

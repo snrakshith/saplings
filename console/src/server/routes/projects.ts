@@ -2,9 +2,10 @@ import { Router } from 'express';
 import { object, record } from '../input.js';
 import type { ConsoleStore } from '../store.js';
 
-export function projectRoutes(store: ConsoleStore) {
+export function projectRoutes(store: ConsoleStore, discoverSample?: () => Promise<void>) {
   const router = Router();
-  router.get('/projects', (_req, res) => {
+  router.get('/projects', async (_req, res) => {
+    await discoverSample?.();
     res.json(store.projects());
   });
   router.post('/projects', (req, res) => {
