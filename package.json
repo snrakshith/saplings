@@ -46,7 +46,7 @@
     "typecheck:sdk": "tsc --noEmit --strict --skipLibCheck --module NodeNext --target ES2022 tests/types/sdk-api.ts",
     "typecheck:hooks": "tsc --noEmit -p tests/types/hooks.tsconfig.json",
     "install:locked": "pnpm install --frozen-lockfile",
-    "build:all": "pnpm run build && pnpm run build:adapters && pnpm run build:hooks && pnpm run build:ui",
+    "build:all": "pnpm run build && pnpm run build:adapters && pnpm run build:hooks && pnpm run build:ui && pnpm run build:console",
     "docs:features": "node scripts/generate-feature-specs.mjs && node scripts/annotate-v015-saas.mjs && pnpm run ownership:refresh",
     "docs:site:sync": "node scripts/sync-site-package-guides.mjs",
     "docs:site:check": "node scripts/sync-site-package-guides.mjs --check",
@@ -79,11 +79,13 @@
     "changeset": "changeset",
     "release:version": "changeset version && pnpm install --lockfile-only",
     "release:verify": "pnpm run build:all && pnpm test && node scripts/release/verify-npm-packages.mjs",
-    "format": "prettier --write apps examples packages scripts tests deploy infra sites/docs.json sites/storybook .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
-    "format:check": "prettier --check apps examples packages scripts tests deploy infra sites/docs.json sites/storybook .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
-    "lint": "oxlint --quiet apps examples packages scripts tests sites/storybook",
-    "lint:fix": "oxlint --fix apps examples packages scripts tests sites/storybook",
-    "typecheck": "pnpm run build:all && pnpm run test:types && pnpm run typecheck:platforms && pnpm run typecheck:validation:compat && pnpm run typecheck:quality"
+    "format": "prettier --write apps console examples packages scripts tests deploy infra sites/docs.json sites/storybook .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
+    "format:check": "prettier --check apps console examples packages scripts tests deploy infra sites/docs.json sites/storybook .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
+    "lint": "oxlint --quiet apps console examples packages scripts tests sites/storybook",
+    "lint:fix": "oxlint --fix apps console examples packages scripts tests sites/storybook",
+    "typecheck": "pnpm run build:all && pnpm run test:types && pnpm run typecheck:platforms && pnpm run typecheck:validation:compat && pnpm run typecheck:quality",
+    "build:console": "pnpm --filter @saplings/console run build",
+    "start:console": "pnpm --filter @saplings/console run start"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

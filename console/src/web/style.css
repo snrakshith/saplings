@@ -1,0 +1,431 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+
+.console-layout,
+.unlock {
+  min-height: 100vh;
+  color: var(--sapling-text);
+  background: var(--sapling-background);
+  font-family: var(--font), system-ui, sans-serif;
+}
+
+.console-layout {
+  display: grid;
+  grid-template-columns: 17.5rem minmax(0, 1fr);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--sapling-surface);
+  border-right: 1px solid var(--sapling-border);
+  padding: 1.5rem 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--corner);
+  background: var(--sapling-primary);
+  color: var(--sapling-on-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.brand div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.brand div span,
+.sidebar-footer,
+.muted,
+small,
+.rows p,
+.project-link span {
+  color: var(--sapling-text-muted);
+}
+
+.brand div span,
+.project-link span,
+small {
+  font-size: 0.85rem;
+}
+
+.projects {
+  margin-top: 2rem;
+}
+
+.sidebar-heading,
+.section-head,
+.page-heading,
+.actions,
+.rows li,
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sidebar-heading h2 {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.projects ul,
+.rows {
+  list-style: none;
+  padding: 0;
+}
+
+.projects ul {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.5rem 0 0;
+}
+
+.project-link,
+.tenant-link,
+.tabs button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.project-link,
+.tenant-link {
+  width: 100%;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.65rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+  border-radius: var(--corner);
+}
+
+.project-link[aria-current],
+.tenant-link[aria-current],
+.project-link:hover,
+.tenant-link:hover {
+  background: var(--sapling-background);
+  border-color: var(--sapling-border);
+}
+
+.tenants {
+  border-top: 1px solid var(--sapling-border);
+  padding-top: 1rem;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  font-size: 0.85rem;
+}
+
+.workspace {
+  padding: 2.5rem clamp(1rem, 4vw, 4rem);
+  width: 100%;
+  max-width: 86rem;
+  margin: 0 auto;
+}
+
+.page-heading {
+  margin-bottom: 1.35rem;
+  align-items: flex-start;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0 0 0.65rem;
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p,
+li {
+  line-height: 1.5;
+}
+
+.breadcrumb {
+  color: var(--sapling-text-muted);
+  font-size: 0.9rem;
+}
+
+.breadcrumb span {
+  margin: 0 0.25rem;
+}
+
+.status {
+  border: 1px solid var(--sapling-border);
+  border-radius: 99px;
+  background: var(--sapling-surface);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.status span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 100%;
+  background: var(--sapling-primary);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.75rem;
+  border-bottom: 1px solid var(--sapling-border);
+}
+
+.tabs button {
+  padding: 0.65rem 0.5rem;
+  border-bottom: 3px solid transparent;
+}
+
+.tabs [aria-current] {
+  border-bottom-color: var(--sapling-primary);
+  font-weight: 650;
+}
+
+.notice {
+  margin: 0.85rem 0;
+  font-size: 0.9rem;
+}
+
+.panel {
+  margin-bottom: 1rem;
+  padding: clamp(1rem, 3vw, 1.65rem);
+  background: var(--sapling-surface);
+  border: 1px solid var(--sapling-border);
+  border-radius: var(--corner);
+}
+
+.empty {
+  padding-block: 2rem;
+}
+
+.empty p,
+.panel > p {
+  max-width: 70ch;
+}
+
+.summary-grid,
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0 1rem;
+}
+
+.summary-value {
+  margin-bottom: 0;
+  font-size: 2.3rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.summary h2,
+.summary p {
+  margin-bottom: 0.5rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.3rem;
+  margin: 0.7rem 0 1rem;
+  min-width: 0;
+}
+
+.field > label {
+  font-weight: 600;
+}
+
+input:not([type='checkbox']),
+textarea,
+select {
+  width: 100%;
+  min-width: 0;
+  font: inherit;
+  border: 1px solid var(--sapling-border);
+  border-radius: 0.45rem;
+  padding: 0.55rem 0.65rem;
+  background: var(--sapling-surface);
+  color: var(--sapling-text);
+}
+
+textarea {
+  resize: vertical;
+}
+
+.json-field textarea {
+  font:
+    0.83rem/1.5 ui-monospace,
+    monospace;
+}
+
+.check {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.actions {
+  justify-content: flex-start;
+  margin: 0.75rem 0 0;
+}
+
+fieldset {
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  border: 0;
+}
+
+.section-head {
+  margin: 1.5rem 0 0.7rem;
+}
+
+.section-head.top {
+  margin-top: 0;
+}
+
+.section-head h2,
+.section-head h3 {
+  margin: 0;
+}
+
+.rows li {
+  border-top: 1px solid var(--sapling-border);
+  padding: 0.7rem 0;
+}
+
+.rows p {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.editor {
+  margin: 1rem 0;
+  padding: 1rem;
+  border: 1px solid var(--sapling-border);
+  border-radius: var(--corner);
+}
+
+.instructions {
+  padding-inline-start: 1.5rem;
+}
+
+.instructions li {
+  margin-bottom: 0.45rem;
+}
+
+.error {
+  color: var(--sapling-text);
+  border-inline-start: 3px solid var(--sapling-error);
+  padding: 0.3rem 0.7rem;
+}
+
+.unlock {
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+}
+
+.unlock .panel {
+  width: min(100%, 29rem);
+  margin: 0;
+}
+
+.unlock .brand {
+  margin-bottom: 1.5rem;
+}
+
+.unlock h1 {
+  font-size: 1.65rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--sapling-info);
+  outline-offset: 2px;
+}
+
+.visually-hidden,
+.skip-link:not(:focus) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+.skip-link:focus {
+  position: fixed;
+  z-index: 3;
+  padding: 0.65rem;
+  background: var(--sapling-surface);
+  color: var(--sapling-text);
+}
+
+@media (max-width: 720px) {
+  .console-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid var(--sapling-border);
+  }
+
+  .projects {
+    margin-top: 1rem;
+  }
+
+  .projects ul {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .sidebar-footer {
+    padding-top: 0.75rem;
+  }
+
+  .workspace {
+    padding-top: 1.25rem;
+  }
+}
