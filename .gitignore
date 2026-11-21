@@ -15,3 +15,5 @@ quality-baselines/
 .cache/
 
 .vitest/
+
+storybook-static/

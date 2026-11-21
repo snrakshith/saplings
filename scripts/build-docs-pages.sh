@@ -35,3 +35,35 @@ for (const page of pages) {
 }
 console.log(`Verified ${pages.length} rendered entry points in the Pages export`);
 JS
+
+pnpm run build:ui
+pnpm --filter @saplings/storybook run typecheck
+destination=$(realpath -- "$destination")
+for target in web app; do
+  output="$destination/storybook/$target"
+  pnpm --filter @saplings/storybook run "build:$target" --output-dir "$output"
+  node --input-type=module - "$output" "$base_path/storybook/$target/" <<'JS'
+import assert from 'node:assert/strict';
+import { readFileSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+
+const [output, basePath] = process.argv.slice(2);
+const site = new URL(basePath, 'https://pages.invalid');
+const { entries } = JSON.parse(readFileSync(join(output, 'index.json'), 'utf8'));
+const storyCount = Object.values(entries).filter(({ type }) => type === 'story').length;
+assert.ok(storyCount > 0, `No stories were indexed under ${basePath}`);
+
+for (const file of ['index.html', 'iframe.html']) {
+  const page = readFileSync(join(output, file), 'utf8');
+  assert.ok(page, `Empty Storybook entry point: ${file}`);
+  for (const [, reference] of page.matchAll(/<(?:link|script)\b[^>]+(?:href|src)="([^"]+)"/g)) {
+    const asset = new URL(reference, site);
+    if (asset.origin !== site.origin) continue;
+    assert.ok(asset.pathname.startsWith(site.pathname), `Asset outside ${basePath}: ${reference}`);
+    const path = join(output, decodeURIComponent(asset.pathname.slice(site.pathname.length)));
+    assert.ok(statSync(path).isFile(), `Missing Storybook asset: ${reference}`);
+  }
+}
+console.log(`Verified ${storyCount} stories and entry point assets under ${basePath}`);
+JS
+done

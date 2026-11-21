@@ -22,10 +22,15 @@ The CLI prints the preview URL. Run `npx --yes mint@4.3.76 broken-links` in this
 
 ## Publish to GitHub Pages
 
-The Documentation Pages workflow checks and exports the site when a pull request to `main` changes the docs, packages, or examples. After a qualifying push to `main`, it deploys the export to [Saplings documentation](https://snrakshith.github.io/saplings/). The workflow also supports manual runs.
+The Documentation Pages workflow builds documentation and both UI Storybooks when a pull request to `main` changes their sources or dependencies. After a qualifying push to `main`, it deploys all three together to [Saplings documentation](https://snrakshith.github.io/saplings/). The workflow also supports manual runs.
+
+- [Murphi UI Storybook](https://snrakshith.github.io/saplings/storybook/web/)
+- [Murph App UI Storybook](https://snrakshith.github.io/saplings/storybook/app/)
+- [Develop the Storybooks locally](storybook/README.md)
 
 Set the repository's Pages source to **GitHub Actions**. The workflow reads the production base path from Pages and checks pull request builds with the repository path. To reproduce that build locally, run from the repository root.
 
 ```bash
+pnpm install --frozen-lockfile
 bash scripts/build-docs-pages.sh /saplings "$(mktemp -d)/site"
 ```

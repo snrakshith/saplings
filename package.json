@@ -79,10 +79,10 @@
     "changeset": "changeset",
     "release:version": "changeset version && pnpm install --lockfile-only",
     "release:verify": "pnpm run build:all && pnpm test && node scripts/release/verify-npm-packages.mjs",
-    "format": "prettier --write apps examples packages scripts tests deploy infra sites/docs.json .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
-    "format:check": "prettier --check apps examples packages scripts tests deploy infra sites/docs.json .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
-    "lint": "oxlint --quiet apps examples packages scripts tests",
-    "lint:fix": "oxlint --fix apps examples packages scripts tests",
+    "format": "prettier --write apps examples packages scripts tests deploy infra sites/docs.json sites/storybook .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
+    "format:check": "prettier --check apps examples packages scripts tests deploy infra sites/docs.json sites/storybook .github package.json pnpm-workspace.yaml tsconfig.base.json sapling.config.ts 'vitest*.mts' types .prettierrc.json .oxlintrc.json",
+    "lint": "oxlint --quiet apps examples packages scripts tests sites/storybook",
+    "lint:fix": "oxlint --fix apps examples packages scripts tests sites/storybook",
     "typecheck": "pnpm run build:all && pnpm run test:types && pnpm run typecheck:platforms && pnpm run typecheck:validation:compat && pnpm run typecheck:quality"
   },
   "devDependencies": {

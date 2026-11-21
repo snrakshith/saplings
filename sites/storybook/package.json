@@ -1,0 +1,26 @@
+{
+  "name": "@saplings/storybook",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev:web": "storybook dev --config-dir .storybook/web --port 6006",
+    "dev:app": "storybook dev --config-dir .storybook/app --port 6007",
+    "build:web": "storybook build --config-dir .storybook/web",
+    "build:app": "storybook build --config-dir .storybook/app",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "devDependencies": {
+    "@saplings/murph-appui": "workspace:*",
+    "@saplings/murphi-ui": "workspace:*",
+    "@storybook/addon-docs": "10.6.8",
+    "@storybook/react-vite": "10.6.8",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-native-web": "0.21.4",
+    "storybook": "10.6.8",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.10"
+  }
+}

@@ -2,3 +2,7 @@ packages:
   - 'packages/*'
   - 'examples/*'
   - 'apps/*'
+  - 'sites/storybook'
+
+overrides:
+  '@joshwooding/vite-plugin-react-docgen-typescript>glob': 14.0.6
