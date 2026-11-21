@@ -12,6 +12,7 @@
   "devDependencies": {
     "@saplings/murph-appui": "workspace:*",
     "@saplings/murphi-ui": "workspace:*",
+    "@saplings/ui-core": "workspace:*",
     "@storybook/addon-docs": "10.6.8",
     "@storybook/react-vite": "10.6.8",
     "@types/react": "^19.3.0",

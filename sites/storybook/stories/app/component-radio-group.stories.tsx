@@ -1,0 +1,35 @@
+import { useState } from 'react';
+import type { Meta, StoryObj } from '@storybook/react-vite';
+import { RadioGroup } from '@saplings/murph-appui';
+
+const meta = {
+  tags: ['autodocs'],
+  title: 'Components/Forms/RadioGroup',
+  component: RadioGroup,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Pass a controlled value and onChange handler to manage a mutually exclusive set of options.',
+      },
+    },
+  },
+} satisfies Meta<typeof RadioGroup>;
+export default meta;
+
+export const Example: StoryObj = {
+  render: function Example() {
+    const [value, setValue] = useState('team');
+    return (
+      <RadioGroup
+        label="Project visibility"
+        options={[
+          { value: 'team', label: 'Team' },
+          { value: 'private', label: 'Private' },
+        ]}
+        value={value}
+        onChange={setValue}
+      />
+    );
+  },
+};

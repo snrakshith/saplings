@@ -3,8 +3,18 @@ import { fn } from 'storybook/test';
 import { Button } from '@saplings/murph-appui';
 
 const meta = {
-  title: 'Button',
+  tags: ['autodocs'],
+  title: 'Components/Forms/Button',
+  id: 'button',
   component: Button,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Button styles follow the shared buttonAppearance contract. The native size and spacing also follow controlMetrics.',
+      },
+    },
+  },
   args: { children: 'Save changes', onPress: fn() },
   argTypes: {
     variant: { control: 'select', options: ['primary', 'secondary', 'outlined', 'text'] },

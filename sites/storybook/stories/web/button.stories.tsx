@@ -3,8 +3,18 @@ import { fn } from 'storybook/test';
 import { Button } from '@saplings/murphi-ui';
 
 const meta = {
-  title: 'Button',
+  tags: ['autodocs'],
+  title: 'Components/Forms/Button',
+  id: 'button',
   component: Button,
+  parameters: {
+    docs: {
+      description: {
+        component:
+          'Button styles follow the shared buttonAppearance contract. Use variant for the visual priority and loading for pending work.',
+      },
+    },
+  },
   args: { children: 'Save changes', onClick: fn() },
   argTypes: {
     variant: { control: 'select', options: ['primary', 'secondary', 'outlined', 'text'] },

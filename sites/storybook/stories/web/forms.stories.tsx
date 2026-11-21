@@ -45,7 +45,12 @@ function ProfileForm() {
   );
 }
 
-const meta = { title: 'Forms', component: ProfileForm } satisfies Meta<typeof ProfileForm>;
+const meta = {
+  tags: ['autodocs'],
+  title: 'Examples/Forms',
+  id: 'forms',
+  component: ProfileForm,
+} satisfies Meta<typeof ProfileForm>;
 export default meta;
 
 export const Profile: StoryObj<typeof meta> = {};
