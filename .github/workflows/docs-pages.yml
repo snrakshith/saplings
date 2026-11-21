@@ -17,6 +17,7 @@ on:
       - 'tsconfig.base.json'
       - 'scripts/build-docs-pages.sh'
       - 'scripts/sync-site-package-guides.mjs'
+      - 'scripts/verify-storybook-coverage.mjs'
       - '.github/workflows/docs-pages.yml'
   push:
     branches: [main]
@@ -34,6 +35,7 @@ on:
       - 'tsconfig.base.json'
       - 'scripts/build-docs-pages.sh'
       - 'scripts/sync-site-package-guides.mjs'
+      - 'scripts/verify-storybook-coverage.mjs'
       - '.github/workflows/docs-pages.yml'
   workflow_dispatch:
 

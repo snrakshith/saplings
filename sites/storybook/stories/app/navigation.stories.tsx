@@ -34,7 +34,11 @@ function DialogExample() {
   );
 }
 
-const meta = { title: 'Navigation and overlays' } satisfies Meta;
+const meta = {
+  tags: ['autodocs'],
+  title: 'Examples/Navigation and overlays',
+  id: 'navigation-and-overlays',
+} satisfies Meta;
 export default meta;
 type Story = StoryObj<typeof meta>;
 

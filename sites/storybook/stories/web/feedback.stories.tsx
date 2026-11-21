@@ -2,7 +2,9 @@ import type { Meta, StoryObj } from '@storybook/react-vite';
 import { Alert, Badge, Card, Progress, Stack, Typography } from '@saplings/murphi-ui';
 
 const meta = {
-  title: 'Feedback',
+  tags: ['autodocs'],
+  title: 'Examples/Feedback',
+  id: 'feedback',
   component: Alert,
   args: { severity: 'success', children: 'Your changes were saved.' },
   argTypes: {

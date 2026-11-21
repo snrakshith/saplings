@@ -42,6 +42,7 @@ destination=$(realpath -- "$destination")
 for target in web app; do
   output="$destination/storybook/$target"
   pnpm --filter @saplings/storybook run "build:$target" --output-dir "$output"
+  node scripts/verify-storybook-coverage.mjs "$target" "$output"
   node --input-type=module - "$output" "$base_path/storybook/$target/" <<'JS'
 import assert from 'node:assert/strict';
 import { readFileSync, statSync } from 'node:fs';

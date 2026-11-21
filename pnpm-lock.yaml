@@ -598,6 +598,9 @@ importers:
       '@saplings/murphi-ui':
         specifier: workspace:*
         version: link:../../packages/murphi-ui
+      '@saplings/ui-core':
+        specifier: workspace:*
+        version: link:../../packages/ui-core
       '@storybook/addon-docs':
         specifier: 10.6.8
         version: 10.6.8(@types/react-dom@19.3.0(@types/react@19.3.0))(@types/react@19.3.0)(storybook@10.6.8(@types/react@19.3.0)(prettier@3.10.1)(react@19.3.1))
