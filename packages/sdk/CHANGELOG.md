@@ -1,5 +1,13 @@
 # @saplings/sdk
 
+## 0.17.3
+
+### Patch Changes
+
+- d8be144: Add a shared Node.js observability package for structured logs, OpenTelemetry traces and metrics, and process and request diagnostics. The SDK and quality diagnostics use the shared implementations through their existing exports.
+- Updated dependencies [d8be144]
+  - @saplings/observability@0.1.0
+
 ## 0.17.2
 
 ### Patch Changes

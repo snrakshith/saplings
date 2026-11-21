@@ -1,5 +1,13 @@
 # @saplings/cli
 
+## 0.18.1
+
+### Patch Changes
+
+- Updated dependencies [d8be144]
+  - @saplings/sdk@0.17.3
+  - @saplings/backend-quality@0.18.1
+
 ## 0.18.0
 
 ### Minor Changes
