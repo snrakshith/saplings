@@ -5,8 +5,8 @@ import {
   MemoryHierarchicalAdmission,
 } from '@saplings/realtime';
 import type { SaplingConfig, ResolvedConfig } from './types.js';
-import { InMemoryStore } from './store.js';
-import { InMemoryStorage } from './storage.js';
+import { InMemoryStore } from './runtime/store.js';
+import { InMemoryStorage } from './storage/storage.js';
 import { SaplingError } from './types.js';
 import { saasFeatures, securityScanners } from '@saplings/catalog';
 /** Single strongly typed configuration entry point. No unknown keys are silently activated. */

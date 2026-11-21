@@ -106,8 +106,8 @@ const map = catalog.map((f) => {
         ? 'packages/kingsman/src'
         : owner === '@saplings/harbor'
           ? 'packages/harbor/src'
-          : 'packages/sdk/src/registry.ts',
-    legacyActionBinding: 'packages/sdk/src/registry.ts',
+          : 'packages/sdk/src/capabilities/registry.ts',
+    legacyActionBinding: 'packages/sdk/src/capabilities/registry.ts',
   };
 });
 const counts = map.reduce((out, row) => ((out[row.owner] = (out[row.owner] ?? 0) + 1), out), {});

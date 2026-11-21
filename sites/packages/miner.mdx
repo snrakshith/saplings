@@ -1,0 +1,43 @@
+---
+title: "@saplings/miner"
+description: "Product analytics, feature targeting, and experiments for application-owned data."
+---
+
+## Server setup
+
+Register allowed event names and property types. Pass a transactional store and derive trusted subject, consent, project, environment, and tenant context on the server. Use a server-issued anonymous ID for pre-login tracking. Derive signed-in user identity from the application session and link the visitor only after authentication.
+
+```ts
+import { createMiner } from '@saplings/miner';
+
+const miner = createMiner({
+  store,
+  schemas: { 'checkout.completed': { plan: 'string' } },
+  retentionDays: 90,
+});
+
+await miner.track(actor, {
+  id: crypto.randomUUID(),
+  name: 'checkout.completed',
+  properties: { plan: 'team' },
+});
+```
+
+Use InMemoryStore locally. For PostgreSQL, apply the Drizzle adapter migrations including its Miner time index. Use the existing tenant RLS role and `DrizzleStore`. Configure the application worker to call `purge` for each registered tenant, project, and environment under `miner:privacy`. Use `deleteSubject` for subject erasure. Legacy SDK analytics and flags retain their existing storage and behavior. Attribute backfilled events to a specific scope and use stable source IDs when re-ingesting.
+
+## Browser SDK
+
+Install the browser SDK against your own authenticated or consent-aware endpoints. It captures events only when you call it. Reuse the event ID for retries and have the server derive identities from its session and visitor cookie.
+
+```ts
+import { createMinerClient } from '@saplings/miner/browser';
+
+const miner = createMinerClient();
+await miner.track('checkout.completed', { plan: 'team' });
+```
+
+## Reports and experiments
+
+Use `saveReport` and `report` for trends, breakdowns, ordered funnels, and calendar-day retention in UTC. Use `saveCohort` to describe membership from an event and an optional property match. Use report access via `miner:read` and scope all reports to the application's tenant, project and environment. Queries cap the number of events at 50,000 and support selecting narrower windows.
+
+Define flags and experiment drafts with `miner:admin`. Set an experiment’s `flag` to gate assignments on an existing flag. Launch the experiment before asking for an assignment and record an exposure after rendering the variant. Results count one exposure and conversion per subject within a 14-day conversion window, with absolute percentage-point lift versus control. The console exposes these workflows. Replay, surveys, autocapture, and significance testing are separate release scope.

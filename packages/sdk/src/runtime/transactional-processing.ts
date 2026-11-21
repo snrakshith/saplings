@@ -1,0 +1,164 @@
+import type { ActorContext, JsonRecord, Store } from '../types.js';
+import type { EventJournal, RealtimeEvent } from '@saplings/realtime';
+import { atomic, fail, hash, integer, scope, text, requireActiveTenant } from './primitives.js';
+/** Canonical, bounded JSON; no getters, functions, non-finite numbers, undefined or cyclic values. */
+function canonical(value: unknown, maxBytes = 1_000_000) {
+  let nodes = 0;
+  const visit = (v: unknown, depth: number): unknown => {
+    if (++nodes > 50000 || depth > 32) return fail('JSON complexity exceeds limit');
+    if (v === null || typeof v === 'boolean' || typeof v === 'string') return v;
+    if (typeof v === 'number' && Number.isFinite(v)) return v;
+    if (!v || typeof v !== 'object') return fail('Expected JSON value');
+    if (Array.isArray(v)) {
+      if (Object.keys(v).length !== v.length) return fail('Sparse or extended array');
+      return Array.from({ length: v.length }, (_, i) => {
+        const d = Object.getOwnPropertyDescriptor(v, String(i));
+        if (!d || !('value' in d)) return fail('Invalid array property');
+        return visit(d.value, depth + 1);
+      });
+    }
+    const proto = Object.getPrototypeOf(v);
+    if (proto !== Object.prototype && proto !== null) return fail('Expected plain JSON object');
+    const entries = Object.entries(Object.getOwnPropertyDescriptors(v)).sort(([a], [b]) =>
+      a < b ? -1 : a > b ? 1 : 0,
+    );
+    return Object.fromEntries(
+      entries.map(([k, d]) => {
+        if (
+          ['__proto__', 'constructor', 'prototype'].includes(k) ||
+          !('value' in d) ||
+          !d.enumerable
+        )
+          return fail('Unsafe JSON property');
+        return [k, visit(d.value, depth + 1)];
+      }),
+    );
+  };
+  const serialized = JSON.stringify(visit(value, 0));
+  if (Buffer.byteLength(serialized) > maxBytes) return fail('JSON exceeds size limit');
+  return serialized;
+}
+export interface TransactionalHttpResponse {
+  status: number;
+  body: unknown;
+}
+export interface TransactionalHttpRequest {
+  operation: string;
+  key: string;
+  method: string;
+  input: JsonRecord;
+}
+/** Trusted route handler helper. Authorize each request BEFORE calling, including replay. Only DB effects on tx (or an outbox insert) are safe. */
+export async function transactionalHttpOperation(
+  store: Store,
+  ctx: ActorContext,
+  request: TransactionalHttpRequest,
+  execute: (tx: Store) => Promise<TransactionalHttpResponse>,
+): Promise<TransactionalHttpResponse & { replayed: boolean }> {
+  scope(ctx);
+  const operation = text(request.operation, 'operation', 200),
+    key = text(request.key, 'key', 200),
+    method = request.method.toUpperCase();
+  if (!['POST', 'PUT', 'PATCH', 'DELETE'].includes(method))
+    return fail('Unsupported mutation method');
+  if (!request.input || typeof request.input !== 'object' || Array.isArray(request.input))
+    return fail('Expected request object');
+  const raw = canonical(request.input),
+    fingerprint = hash(raw),
+    id = hash(JSON.stringify([ctx.actorId, operation, method, key]));
+  return atomic(store, ctx.tenantId, async (tx) => {
+    await requireActiveTenant(tx, ctx.tenantId);
+    const previous = await tx.get<{
+      id: string;
+      fingerprint: string;
+      result: TransactionalHttpResponse;
+    }>(ctx.tenantId, 'transactional-http', id);
+    if (previous) {
+      if (previous.fingerprint !== fingerprint)
+        return fail('Operation key conflict', 'CONFLICT', 409);
+      return { ...previous.result, replayed: true };
+    }
+    const result = await execute(tx);
+    integer(result.status, 'status', 200, 299);
+    const body = JSON.parse(canonical(result.body));
+    const saved = { status: result.status, body };
+    await tx.put(ctx.tenantId, 'transactional-http', {
+      id,
+      fingerprint,
+      result: saved,
+      createdAt: new Date().toISOString(),
+    });
+    return { ...saved, replayed: false };
+  });
+}
+const identifier = (s: string) =>
+  typeof s === 'string' && /^[A-Za-z0-9_.:-]{1,128}$/.test(s) && !s.startsWith('__sapling_');
+/** Durable transactional consumer for trusted service identities. Handler must use supplied tx only; remote side effects use outbox. No wire ACK protocol. */
+export class TransactionalEventConsumer {
+  constructor(
+    private readonly store: Store,
+    private readonly journal: EventJournal,
+  ) {}
+  async process(
+    ctx: ActorContext,
+    channel: string,
+    consumer: string,
+    handle: (tx: Store, event: RealtimeEvent) => Promise<void>,
+    limit = 20,
+  ) {
+    scope(ctx);
+    if (!identifier(ctx.tenantId) || !identifier(channel) || !identifier(consumer))
+      return fail('Invalid consumer scope');
+    integer(limit, 'limit', 1, 100);
+    const id = hash(JSON.stringify([consumer, channel])),
+      topic = `${encodeURIComponent(ctx.tenantId)}/${encodeURIComponent(channel)}`,
+      collection = 'realtime-consumer-cursors';
+    const snapshot = await this.store.get<{ id: string; cursor: string }>(
+        ctx.tenantId,
+        collection,
+        id,
+      ),
+      cursor = snapshot?.cursor ?? '0';
+    const batch = await this.journal.read(topic, cursor, limit);
+    if (batch.gap)
+      return fail(
+        'Consumer cursor expired: explicit snapshot recovery required',
+        'REPLAY_GAP',
+        409,
+      );
+    if (!Array.isArray(batch.events) || batch.events.length > limit)
+      return fail('Invalid journal batch', 'INVALID_JOURNAL', 502);
+    let prev = cursor;
+    const seen = new Set<string>();
+    for (const event of batch.events) {
+      if (
+        !event ||
+        typeof event.id !== 'string' ||
+        !event.id ||
+        event.id === prev ||
+        seen.has(event.id) ||
+        event.tenantId !== ctx.tenantId ||
+        event.channel !== channel
+      )
+        return fail('Invalid journal event', 'INVALID_JOURNAL', 502);
+      seen.add(event.id);
+      prev = event.id;
+    }
+    return atomic(this.store, ctx.tenantId, async (tx) => {
+      await requireActiveTenant(tx, ctx.tenantId);
+      const current = await tx.get<{ id: string; cursor: string }>(ctx.tenantId, collection, id);
+      if ((current?.cursor ?? '0') !== cursor)
+        return { processed: 0, cursor: current?.cursor ?? '0', contended: true };
+      for (const event of batch.events) await handle(tx, event);
+      if (batch.events.length)
+        await tx.put(ctx.tenantId, collection, {
+          id,
+          consumer,
+          channel,
+          cursor: prev,
+          updatedAt: new Date().toISOString(),
+        });
+      return { processed: batch.events.length, cursor: prev, contended: false };
+    });
+  }
+}

@@ -22,7 +22,7 @@ const targets = {
     summary:
       'Authorization checks and system-field immutability for resource mutations, role and impersonation boundaries.',
     files: [
-      'packages/sdk/src/resources.ts',
+      'packages/sdk/src/tenancy/resources.ts',
       'packages/kingsman/src/saas-access.ts',
       'tests/v012.test.mjs',
     ],
@@ -32,7 +32,11 @@ const targets = {
     ids: [34, 35, 36, 37, 38, 39, 40, 41, 45, 46],
     summary:
       'Atomic usage event deduplication, quota/audit consistency, one active subscription per plan/customer, invoice deduplication and coupon limits.',
-    files: ['packages/sdk/src/billing.ts', 'packages/sdk/src/commerce.ts', 'tests/v012.test.mjs'],
+    files: [
+      'packages/sdk/src/billing/billing.ts',
+      'packages/sdk/src/billing/commerce.ts',
+      'tests/v012.test.mjs',
+    ],
     newIds: [35, 38, 39, 40, 41, 45],
   },
   domains: {
@@ -40,9 +44,9 @@ const targets = {
     summary:
       'Domain row/field policies now apply to bounded data imports, exports, streaming, search, pagination and filters; destructive paths respect legal hold.',
     files: [
-      'packages/sdk/src/domain-policy.ts',
-      'packages/sdk/src/data.ts',
-      'packages/sdk/src/registry.ts',
+      'packages/sdk/src/data/domain-policy.ts',
+      'packages/sdk/src/data/data.ts',
+      'packages/sdk/src/capabilities/registry.ts',
       'tests/v012.test.mjs',
     ],
     newIds: [88, 89, 90, 93, 97, 98, 129, 130],
@@ -52,8 +56,8 @@ const targets = {
     summary:
       'Configured domain policy now governs catalog-backed generic CRUD; production use without a matching policy fails closed; partial updates no longer require creation-only fields.',
     files: [
-      'packages/sdk/src/registry.ts',
-      'packages/sdk/src/domain-policy.ts',
+      'packages/sdk/src/capabilities/registry.ts',
+      'packages/sdk/src/data/domain-policy.ts',
       'tests/v012.test.mjs',
     ],
     newIds: [132, 143, 144, 146, 147, 151, 152, 153, 171, 175, 176, 179, 181],
@@ -63,8 +67,8 @@ const targets = {
     summary:
       'Validated task assignees and transitions, ticket transitions and scoped listing, approval/admin read permissions and auditable ownership transfers.',
     files: [
-      'packages/sdk/src/business-workflows.ts',
-      'packages/sdk/src/registry.ts',
+      'packages/sdk/src/workflows/business-workflows.ts',
+      'packages/sdk/src/capabilities/registry.ts',
       'tests/v012.test.mjs',
     ],
     newIds: [173, 174, 178, 180, 182],
@@ -74,9 +78,9 @@ const targets = {
     summary:
       'All catalog IDs have disable/permission/unknown-action/frozen-tenant checks, plus configurable per-action input/output validation and application resource authorization; exact application schemas are not automatically supplied.',
     files: [
-      'packages/sdk/src/capabilities.ts',
+      'packages/sdk/src/capabilities/capabilities.ts',
       'packages/sdk/src/types.ts',
-      'packages/sdk/src/registry.ts',
+      'packages/sdk/src/capabilities/registry.ts',
       'tests/v012.test.mjs',
     ],
     newIds: [],

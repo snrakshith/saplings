@@ -1,0 +1,390 @@
+import { boundedResponseText } from '../http/http.js';
+import type { ActorContext, FeatureAdapter, JsonRecord } from '../types.js';
+import { fail, hash, integer, object, strings, text } from '../runtime/primitives.js';
+import { Bulkhead, CircuitBreaker, timeout } from '../runtime/reliability.js';
+const segment = (s: string) => encodeURIComponent(s);
+export type ProviderToken = () => Promise<string>;
+class JsonClient {
+  private limiter = new Bulkhead(16);
+  private breaker = new CircuitBreaker();
+  private base: URL;
+  constructor(
+    base: string,
+    private token: ProviderToken,
+    private extra: Record<string, string> = {},
+  ) {
+    this.base = new URL(base);
+    if (
+      this.base.protocol !== 'https:' ||
+      this.base.username ||
+      this.base.password ||
+      this.base.search ||
+      this.base.hash
+    )
+      throw Error('Fixed HTTPS provider base required');
+  }
+  async request(
+    path: string,
+    method = 'GET',
+    payload?: JsonRecord,
+    headers: Record<string, string> = {},
+  ) {
+    return this.limiter.run(() =>
+      this.breaker.run(() =>
+        timeout(async (signal) => {
+          const url = new URL(this.base.href.replace(/\/$/, '') + path);
+          if (url.origin !== this.base.origin) throw Error('Provider origin mismatch');
+          const token = await this.token();
+          if (signal.aborted) throw Error('Provider deadline');
+          const res = await fetch(url, {
+            method,
+            redirect: 'error',
+            signal,
+            headers: {
+              authorization: `Bearer ${token}`,
+              accept: 'application/json',
+              ...this.extra,
+              ...(payload ? { 'content-type': 'application/json' } : {}),
+              ...headers,
+            },
+            body: payload ? JSON.stringify(payload) : undefined,
+          });
+          if (!res.ok) {
+            await res.body?.cancel();
+            return fail(`Provider returned ${res.status}`, 'PROVIDER_FAILED', 502);
+          }
+          const raw = await boundedResponseText(res, 2_000_000);
+          return raw ? object(JSON.parse(raw)) : {};
+        }, 10000),
+      ),
+    );
+  }
+}
+export interface WorkflowTarget {
+  workflow: string;
+  ref: string;
+  inputNames?: string[];
+  tenantIds: string[];
+}
+/** Fixed workflow IDs, refs and tenants. The workflows themselves must use protected environments and safe input handling. */
+export class GitHubWorkflowAdapter implements FeatureAdapter {
+  private client: JsonClient;
+  constructor(
+    owner: string,
+    repository: string,
+    token: ProviderToken,
+    private targets: Record<string, WorkflowTarget>,
+  ) {
+    this.client = new JsonClient(
+      `https://api.github.com/repos/${segment(owner)}/${segment(repository)}`,
+      token,
+      { 'x-github-api-version': '2022-11-28', accept: 'application/vnd.github+json' },
+    );
+  }
+  async execute({ ctx, featureId, action, input }: Parameters<FeatureAdapter['execute']>[0]) {
+    const key = `${featureId}:${action}`,
+      target = this.targets[key];
+    if (!Object.hasOwn(this.targets, key) || !target.tenantIds.includes(ctx.tenantId))
+      return fail('Workflow not authorized', 'FORBIDDEN', 403);
+    const path = `/actions/workflows/${segment(target.workflow)}`;
+    if (action === 'status')
+      return this.operationStatus(
+        ctx,
+        featureId,
+        'status',
+        text(input.operationId, 'operationId', 100),
+      );
+    if (
+      ['destroy', 'restore', 'rollback', 'apply', 'activate', 'remove', 'configure'].includes(
+        action,
+      ) &&
+      input.confirm !== true
+    )
+      return fail('Explicit confirmation required');
+    const allowed = target.inputNames ?? [];
+    const inputs: Record<string, string> = {};
+    for (const name of allowed) {
+      if (name === 'tenant_id') inputs[name] = ctx.tenantId;
+      else if (name === 'operation_id') inputs[name] = text(input.operationId, 'operationId', 100);
+      else if (input[name] !== undefined) inputs[name] = text(input[name], name, 500);
+    }
+    const result = await this.client.request(path + '/dispatches', 'POST', {
+      ref: target.ref,
+      inputs,
+    });
+    return {
+      accepted: true,
+      workflow: target.workflow,
+      provider: result,
+      completion: 'check workflow status',
+    };
+  }
+  async operationStatus(ctx: ActorContext, featureId: string, action: string, operationId: string) {
+    const key = `${featureId}:${action}`,
+      target = this.targets[key];
+    if (!Object.hasOwn(this.targets, key) || !target.tenantIds.includes(ctx.tenantId))
+      return fail('Workflow not authorized', 'FORBIDDEN', 403);
+    if (!(target.inputNames ?? []).includes('operation_id'))
+      return fail('Operation correlation not configured', 'CONFIG_REQUIRED', 503);
+    const r = await this.client.request(
+      `/actions/workflows/${segment(target.workflow)}/runs?event=workflow_dispatch&per_page=100`,
+    );
+    const rows = (Array.isArray(r.workflow_runs) ? r.workflow_runs : [])
+      .map(object)
+      .filter(
+        (run) =>
+          run.display_title === `sapling:${operationId}` &&
+          run.event === 'workflow_dispatch' &&
+          run.head_branch === target.ref,
+      );
+    if (rows.length !== 1) return { state: 'unknown', matches: rows.length };
+    const run = rows[0];
+    if (typeof run.id !== 'number' || !Number.isSafeInteger(run.id))
+      return fail('Malformed workflow run', 'PROVIDER_FAILED', 502);
+    return {
+      state:
+        run.status === 'completed'
+          ? run.conclusion === 'success'
+            ? 'succeeded'
+            : 'failed'
+          : 'running',
+      reference: String(run.id),
+      conclusion: run.conclusion,
+    };
+  }
+  assertCorrelation(featureId: string, action: string) {
+    const target = this.targets[`${featureId}:${action}`];
+    if (!target || !(target.inputNames ?? []).includes('operation_id'))
+      throw Error('Workflow operation_id input required');
+  }
+}
+export class KubernetesScaleAdapter implements FeatureAdapter {
+  private client: JsonClient;
+  constructor(
+    apiBase: string,
+    token: ProviderToken,
+    private targets: Record<
+      string,
+      { namespace: string; deployment: string; tenantIds: string[]; min: number; max: number }
+    >,
+  ) {
+    this.client = new JsonClient(apiBase, token);
+  }
+  async execute({ ctx, featureId, action, input }: Parameters<FeatureAdapter['execute']>[0]) {
+    if (featureId !== 'SAAS-167' || !['scale', 'status'].includes(action))
+      return fail('Unsupported operation');
+    const name = text(input.target),
+      target = this.targets[name];
+    if (!Object.hasOwn(this.targets, name) || !target.tenantIds.includes(ctx.tenantId))
+      return fail('Scale target not authorized', 'FORBIDDEN', 403);
+    const path = `/apis/apps/v1/namespaces/${segment(target.namespace)}/deployments/${segment(target.deployment)}/scale`;
+    if (action === 'status') return this.client.request(path);
+    if (input.confirm !== true) return fail('Explicit scale confirmation required');
+    const replicas = integer(input.replicas, 'replicas', target.min, target.max);
+    return this.client.request(
+      path,
+      'PATCH',
+      { spec: { replicas } },
+      { 'content-type': 'application/merge-patch+json' },
+    );
+  }
+}
+export class CloudflareCacheAdapter implements FeatureAdapter {
+  private client: JsonClient;
+  constructor(
+    token: ProviderToken,
+    private targets: Record<
+      string,
+      { zoneId: string; origin: string; tenantIds: string[]; prefix: string }
+    >,
+  ) {
+    this.client = new JsonClient('https://api.cloudflare.com/client/v4', token);
+  }
+  async execute({ ctx, featureId, action, input }: Parameters<FeatureAdapter['execute']>[0]) {
+    if (featureId !== 'SAAS-094' || !['purge', 'configure'].includes(action))
+      return fail('Unsupported operation');
+    const target = text(input.target),
+      config = this.targets[target];
+    if (!Object.hasOwn(this.targets, target) || !config.tenantIds.includes(ctx.tenantId))
+      return fail('CDN target not authorized', 'FORBIDDEN', 403);
+    if (action === 'configure')
+      return fail(
+        'Cache configuration requires reviewed control-plane workflow',
+        'PROVIDER_REQUIRED',
+        503,
+      );
+    const files = strings(input.urls);
+    if (!files.length || files.length > 30) return fail('Specify 1–30 URLs');
+    for (const raw of files) {
+      const url = new URL(raw);
+      if (
+        url.origin !== config.origin ||
+        url.username ||
+        url.password ||
+        url.hash ||
+        !(
+          url.pathname === config.prefix ||
+          url.pathname.startsWith(config.prefix.endsWith('/') ? config.prefix : config.prefix + '/')
+        )
+      )
+        return fail('URL outside tenant cache scope', 'FORBIDDEN', 403);
+    }
+    const result = await this.client.request(
+      `/zones/${segment(config.zoneId)}/purge_cache`,
+      'POST',
+      { files },
+    );
+    if (result.success !== true) return fail('Cache purge rejected', 'PROVIDER_FAILED', 502);
+    return { accepted: true };
+  }
+}
+/** Sends an already formed OTLP/HTTP JSON trace payload. Use official OTel SDK to instrument application spans. */
+export class OtlpTraceAdapter implements FeatureAdapter {
+  private client: JsonClient;
+  private sent = 0;
+  private failed = 0;
+  constructor(base: string, token: ProviderToken) {
+    this.client = new JsonClient(base, token);
+  }
+  async execute({ featureId, action, input }: Parameters<FeatureAdapter['execute']>[0]) {
+    if (featureId !== 'SAAS-155') return fail('Unsupported operation');
+    if (action === 'status') return { sent: this.sent, failed: this.failed };
+    if (action !== 'export') return fail('Unsupported action');
+    const spans = input.resourceSpans;
+    if (!Array.isArray(spans) || Buffer.byteLength(JSON.stringify(spans)) > 1000000)
+      return fail('Bounded OTLP resourceSpans required');
+    try {
+      const r = await this.client.request('/v1/traces', 'POST', { resourceSpans: spans });
+      if (r.partialSuccess && Number(object(r.partialSuccess).rejectedSpans ?? 0) > 0) {
+        this.failed++;
+        return { accepted: false, partialSuccess: r.partialSuccess };
+      }
+      this.sent++;
+      return { accepted: true };
+    } catch (e) {
+      this.failed++;
+      throw e;
+    }
+  }
+}
+/** Only setup intents and tokenized provider references. The mapping is supplied by trusted backend code, not user IDs from a request. */
+export class StripePaymentMethodsAdapter implements FeatureAdapter {
+  private bulk = new Bulkhead(16);
+  constructor(
+    private token: ProviderToken,
+    private customer: (ctx: ActorContext) => Promise<string>,
+  ) {}
+  private async request(
+    path: string,
+    method = 'GET',
+    params?: Record<string, string>,
+    idempotency?: string,
+  ) {
+    return this.bulk.run(async () => {
+      const r = await fetch('https://api.stripe.com/v1' + path, {
+        method,
+        redirect: 'error',
+        signal: AbortSignal.timeout(10000),
+        headers: {
+          authorization: `Bearer ${await this.token()}`,
+          ...(params ? { 'content-type': 'application/x-www-form-urlencoded' } : {}),
+          ...(idempotency ? { 'idempotency-key': idempotency } : {}),
+        },
+        body: params ? new URLSearchParams(params) : undefined,
+      });
+      if (!r.ok) {
+        await r.body?.cancel();
+        return fail(`Stripe status ${r.status}`, 'PROVIDER_FAILED', 502);
+      }
+      const raw = await boundedResponseText(r, 1000000);
+      return object(JSON.parse(raw));
+    });
+  }
+  async execute({ ctx, featureId, action, input }: Parameters<FeatureAdapter['execute']>[0]) {
+    if (featureId !== 'SAAS-043') return fail('Unsupported feature');
+    const customer = await this.customer(ctx);
+    if (!/^cus_[A-Za-z0-9]+$/.test(customer))
+      return fail('Verified customer mapping required', 'FORBIDDEN', 403);
+    if (action === 'attach') {
+      const key = hash(`${ctx.tenantId}:${customer}:${text(input.idempotencyKey)}`);
+      const r = await this.request(
+        '/setup_intents',
+        'POST',
+        { customer, usage: 'off_session', 'payment_method_types[0]': 'card' },
+        key,
+      );
+      return { id: r.id, clientSecret: r.client_secret, status: r.status };
+    }
+    if (action === 'list') {
+      const r = await this.request(
+        `/customers/${segment(customer)}/payment_methods?type=card&limit=100`,
+      );
+      return {
+        items: (Array.isArray(r.data) ? r.data : []).map((v) => {
+          const x = object(v),
+            card = object(x.card ?? {});
+          return {
+            id: x.id,
+            type: x.type,
+            brand: card.brand,
+            last4: card.last4,
+            expMonth: card.exp_month,
+            expYear: card.exp_year,
+          };
+        }),
+        hasMore: r.has_more,
+      };
+    }
+    if (action === 'detach') {
+      const id = text(input.paymentMethodId);
+      if (!/^pm_[A-Za-z0-9]+$/.test(id)) return fail('Invalid payment method');
+      const r = await this.request(`/payment_methods/${segment(id)}`);
+      if (r.customer !== customer)
+        return fail('Payment method not owned by customer', 'FORBIDDEN', 403);
+      const result = await this.request(
+        `/payment_methods/${segment(id)}/detach`,
+        'POST',
+        {},
+        hash(`${ctx.tenantId}:${customer}:${id}:detach`),
+      );
+      return { id: result.id, detached: result.customer === null };
+    }
+    return fail('Unknown payment action');
+  }
+}
+
+/** Wrap a fixed GitHub workflow dispatch/status pair for ProviderOperations. Configure run-name: sapling:${{ inputs.operation_id }}. */
+export function githubOperationDriver(
+  adapter: GitHubWorkflowAdapter,
+  featureId: string,
+  action: string,
+): import('./provider-operations.js').OperationDriver {
+  adapter.assertCorrelation(featureId, action);
+  return {
+    submit: async (ctx, id, input) => {
+      await adapter.execute({
+        ctx,
+        featureId,
+        action,
+        input: { ...input, operationId: id },
+        options: {},
+      });
+      return { state: 'accepted' };
+    },
+    inspect: async (ctx, id) => {
+      const r = await adapter.operationStatus(ctx, featureId, action, id);
+      const result = object(r);
+      return {
+        state:
+          result.state === 'succeeded'
+            ? 'succeeded'
+            : result.state === 'failed'
+              ? 'failed'
+              : result.state === 'running'
+                ? 'running'
+                : 'unknown',
+        reference: typeof result.reference === 'string' ? result.reference : undefined,
+      };
+    },
+  };
+}

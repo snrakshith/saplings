@@ -2,8 +2,8 @@ FROM node:26.13.1-bookworm-slim AS builder
 WORKDIR /repo
 RUN npm install --global pnpm@10.11.0
 COPY . .
-RUN pnpm install --frozen-lockfile && pnpm run build && pnpm exec tsc -p packages/quality-node-diagnostics && pnpm --filter @sapling/example-api run build
-RUN pnpm --filter @sapling/example-api deploy --legacy --prod /out
+RUN pnpm install --frozen-lockfile && pnpm run build && pnpm exec tsc -p packages/quality-node-diagnostics && pnpm --filter @saplings/starter-api run build
+RUN pnpm --filter @saplings/starter-api deploy --legacy --prod /out
 FROM node:26.13.1-bookworm-slim
 ENV NODE_ENV=production PORT=3000
 WORKDIR /repo

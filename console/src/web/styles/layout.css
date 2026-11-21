@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+}
+
+.console-layout,
+.unlock {
+  min-height: 100vh;
+  color: var(--sapling-text);
+  background: var(--sapling-background);
+  font-family: var(--font), system-ui, sans-serif;
+}
+
+.console-layout {
+  display: grid;
+  grid-template-columns: 17.5rem minmax(0, 1fr);
+}
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--sapling-surface);
+  border-right: 1px solid var(--sapling-border);
+  padding: 1.5rem 1rem;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--corner);
+  background: var(--sapling-primary);
+  color: var(--sapling-on-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.brand div {
+  display: grid;
+  gap: 0.15rem;
+}
+
+.brand div span,
+.sidebar-footer,
+.muted,
+small,
+.rows p,
+.project-link span {
+  color: var(--sapling-text-muted);
+}
+
+.brand div span,
+.project-link span,
+small {
+  font-size: 0.85rem;
+}
+
+.projects {
+  margin-top: 2rem;
+}
+
+.sidebar-heading,
+.section-head,
+.page-heading,
+.actions,
+.rows li,
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.sidebar-heading h2 {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.projects ul,
+.rows {
+  list-style: none;
+  padding: 0;
+}
+
+.projects ul {
+  display: grid;
+  gap: 0.25rem;
+  margin: 0.5rem 0 0;
+}
+
+.project-link,
+.tenant-link,
+.tabs button {
+  font: inherit;
+  color: inherit;
+  background: transparent;
+  border: 1px solid transparent;
+  cursor: pointer;
+}
+
+.project-link,
+.tenant-link {
+  width: 100%;
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.65rem;
+  text-align: left;
+  overflow-wrap: anywhere;
+  border-radius: var(--corner);
+}
+
+.project-link[aria-current],
+.tenant-link[aria-current],
+.project-link:hover,
+.tenant-link:hover {
+  background: var(--sapling-background);
+  border-color: var(--sapling-border);
+}
+
+.tenants {
+  border-top: 1px solid var(--sapling-border);
+  padding-top: 1rem;
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding-top: 2rem;
+  font-size: 0.85rem;
+}

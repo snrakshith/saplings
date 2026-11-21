@@ -1,0 +1,122 @@
+.workspace {
+  padding: 2.5rem clamp(1rem, 4vw, 4rem);
+  width: 100%;
+  max-width: 86rem;
+  margin: 0 auto;
+}
+
+.page-heading {
+  margin-bottom: 1.35rem;
+  align-items: flex-start;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin: 0 0 0.65rem;
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  font-size: clamp(1.7rem, 4vw, 2.4rem);
+  line-height: 1.15;
+}
+
+h2 {
+  font-size: 1.2rem;
+}
+
+h3 {
+  font-size: 1rem;
+}
+
+p,
+li {
+  line-height: 1.5;
+}
+
+.breadcrumb {
+  color: var(--sapling-text-muted);
+  font-size: 0.9rem;
+}
+
+.breadcrumb span {
+  margin: 0 0.25rem;
+}
+
+.status {
+  border: 1px solid var(--sapling-border);
+  border-radius: 99px;
+  background: var(--sapling-surface);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+}
+
+.status span {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 100%;
+  background: var(--sapling-primary);
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem 0.75rem;
+  border-bottom: 1px solid var(--sapling-border);
+}
+
+.tabs button {
+  padding: 0.65rem 0.5rem;
+  border-bottom: 3px solid transparent;
+}
+
+.tabs [aria-current] {
+  border-bottom-color: var(--sapling-primary);
+  font-weight: 650;
+}
+
+.notice {
+  margin: 0.85rem 0;
+  font-size: 0.9rem;
+}
+
+.panel {
+  margin-bottom: 1rem;
+  padding: clamp(1rem, 3vw, 1.65rem);
+  background: var(--sapling-surface);
+  border: 1px solid var(--sapling-border);
+  border-radius: var(--corner);
+}
+
+.empty {
+  padding-block: 2rem;
+}
+
+.empty p,
+.panel > p {
+  max-width: 70ch;
+}
+
+.summary-grid,
+.fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+  gap: 0 1rem;
+}
+
+.summary-value {
+  margin-bottom: 0;
+  font-size: 2.3rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.summary h2,
+.summary p {
+  margin-bottom: 0.5rem;
+}

@@ -73,7 +73,7 @@
     "delivery": "adapter",
     "status": "hybrid-reference",
     "operations": "verify",
-    "limitations": "JWT verification delegated to configured authentication adapter.",
+    "limitations": "JWT verification delegated to configured Kingsman realm or authentication adapter; audience required.",
     "providerPath": ""
   },
   {

@@ -1,5 +1,5 @@
 {
-  "name": "@sapling/example-api",
+  "name": "@saplings/starter-api",
   "version": "0.17.0",
   "private": true,
   "type": "module",
@@ -10,7 +10,10 @@
   },
   "dependencies": {
     "express": "^5.1.0",
-    "@saplings/quality-node-diagnostics": "workspace:*"
+    "@saplings/quality-node-diagnostics": "workspace:*",
+    "@saplings/sdk": "workspace:*",
+    "@saplings/remote-config": "workspace:*",
+    "@saplings/miner": "workspace:*"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",

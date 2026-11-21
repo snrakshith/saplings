@@ -6,10 +6,10 @@ Release: 0.17.0 · Technical specification
 Reference code present; not production validated. Implemented integration path; live verification and remaining feature-specific engineering open.
 
 ## Source of truth
-- `packages/sdk/src/integrations.ts`
+- `packages/sdk/src/integrations/integrations.ts`
 
 ## Public contract / current implementation
-See packages/sdk/src/integrations.ts and package exports. Existing order/refund adapter and optional signed webhook in root razorpay-webhook.ts.
+See packages/sdk/src/integrations/integrations.ts and package exports. Existing order/refund adapter and optional signed webhook in root razorpay-webhook.ts.
 
 ## Configuration and dependencies
 Configure provider credentials or relevant installed dependency/approved test environment.

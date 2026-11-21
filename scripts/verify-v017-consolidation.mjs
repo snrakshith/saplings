@@ -11,7 +11,7 @@ const pkgDirs = fs
   .readdirSync('packages')
   .filter((d) => fs.existsSync(`packages/${d}/package.json`));
 req(manifest.version === '0.17.0', 'Unexpected version');
-req(pkgDirs.length === 24, 'Workspace package count changed');
+req(pkgDirs.length === 26, 'Workspace package count changed');
 const names = pkgDirs.map((d) => JSON.parse(read(`packages/${d}/package.json`)));
 req(
   names.every((m) => m.name.startsWith('@saplings/')),
@@ -63,7 +63,7 @@ const expected = {
   totp: 'totp',
 };
 for (const [old, owned] of Object.entries(expected)) {
-  const shim = `packages/sdk/src/${old}.ts`,
+  const shim = `packages/sdk/src/identity/${old}.ts`,
     src = `packages/kingsman/src/${owned}.ts`;
   req(fs.existsSync(shim) && fs.existsSync(src), 'Missing migrated IAM module ' + old);
   if (old !== 'totp')
@@ -81,8 +81,8 @@ req(
   'Canonical SDK accessors missing',
 );
 req(
-  read('packages/sdk/src/registry.ts').includes('KingsmanMembership') &&
-    read('packages/sdk/src/registry.ts').includes('sdk.httpPolicies.envelope'),
+  read('packages/sdk/src/capabilities/registry.ts').includes('KingsmanMembership') &&
+    read('packages/sdk/src/capabilities/registry.ts').includes('sdk.httpPolicies.envelope'),
   'Real capability delegates absent',
 );
 req(

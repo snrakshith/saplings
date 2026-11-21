@@ -103,7 +103,7 @@ export interface PaymentAdapter {
 export interface PaymentConfig {
   enabled?: boolean;
   provider?: 'cashfree' | 'razorpay' | 'stripe' | 'custom';
-  cashfree?: import('./cashfree.js').CashfreeOptions;
+  cashfree?: import('./payments/cashfree.js').CashfreeOptions;
   razorpay?: { keyId: string; secret: string; webhookSecret?: string };
   stripe?: { secret: string };
 }
@@ -158,13 +158,16 @@ export interface FeatureSettings {
   actions?: Record<string, FeatureActionSettings>;
 }
 export type ServiceConfig = {
-  accountPasswordPolicy?: import('./accounts.js').AccountPasswordPolicy;
-  providerWorkflows?: Record<string, import('./provider-workflow.js').ProviderWorkflowDefinition>;
-  domainPolicies?: Record<string, import('./domain-policy.js').DomainPolicy>;
+  accountPasswordPolicy?: import('./identity/accounts.js').AccountPasswordPolicy;
+  providerWorkflows?: Record<
+    string,
+    import('./workflows/provider-workflow.js').ProviderWorkflowDefinition
+  >;
+  domainPolicies?: Record<string, import('./data/domain-policy.js').DomainPolicy>;
   retentionPolicies?: Record<string, { days: number; terminalStatuses?: readonly string[] }>;
-  providerOperations?: Record<string, import('./provider-operations.js').OperationDriver>;
-  recurring?: import('./recurring.js').RecurringSettings;
-  offboarding?: import('./offboarding.js').OffboardingSettings;
+  providerOperations?: Record<string, import('./platform/provider-operations.js').OperationDriver>;
+  recurring?: import('./billing/recurring.js').RecurringSettings;
+  offboarding?: import('./tenancy/offboarding.js').OffboardingSettings;
   dataCollections?: string[];
   encryptionKey?: Uint8Array;
   impersonationScopes?: string[];
@@ -174,8 +177,8 @@ export type ServiceConfig = {
     secret: string;
     purpose: string;
   }) => Promise<void>;
-  worker?: import('./worker.js').WorkerSettings;
-  operations?: import('./operations.js').OperationsSettings;
+  worker?: import('./workflows/worker.js').WorkerSettings;
+  operations?: import('./platform/operations.js').OperationsSettings;
 };
 export interface PlatformConfig {
   /** Kong-inspired gateway configuration and infrastructure adapters. */
@@ -205,7 +208,7 @@ export interface SaplingConfig {
   realtime?: import('@saplings/realtime').RealtimeConfig;
   middleware?: import('@saplings/middleware').MiddlewareConfig;
   quality?:
-    | import('./quality-config.js').BackendQualityConfig
+    | import('./quality/quality-config.js').BackendQualityConfig
     | import('@saplings/quality-contracts').QualityConfig;
   /** Service-specific configuration. */
   services?: ServiceConfig;

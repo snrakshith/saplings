@@ -90,7 +90,7 @@ for (const [name, rows] of [
 }
 fs.writeFileSync('docs/feature-operations.json', JSON.stringify(manifest, null, 2) + '\n');
 fs.writeFileSync(
-  'packages/sdk/src/feature-types.ts',
+  'packages/sdk/src/capabilities/feature-types.ts',
   '/** Generated from the canonical feature action inventory; checked against the runtime manifest. */\nexport interface FeatureActionMap {\n' +
     manifest
       .map(

@@ -19,7 +19,7 @@
         "register"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-002",
@@ -34,7 +34,7 @@
         "consume"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-003",
@@ -49,7 +49,7 @@
         "consume"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-004",
@@ -64,7 +64,7 @@
         "consume"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-005",
@@ -79,7 +79,7 @@
         "logout"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-006",
@@ -95,7 +95,7 @@
         "revoke"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-007",
@@ -109,7 +109,7 @@
         "verify"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-008",
@@ -125,7 +125,7 @@
         "revoke"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-009",
@@ -143,7 +143,7 @@
         "revoke"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-010",
@@ -159,7 +159,7 @@
         "metadata"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-011",
@@ -176,7 +176,7 @@
         "revoke"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-012",
@@ -191,7 +191,7 @@
         "callback"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-013",
@@ -206,7 +206,7 @@
         "revoke"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-014",
@@ -221,7 +221,7 @@
         "revoke"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-015",
@@ -237,7 +237,7 @@
         "assign"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-016",
@@ -251,7 +251,7 @@
         "check"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-017",
@@ -265,7 +265,7 @@
         "check"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-018",
@@ -279,7 +279,7 @@
         "login"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-019",
@@ -292,8 +292,8 @@
       "actions": [
         "provision"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-020",
@@ -306,8 +306,8 @@
       "actions": [
         "context"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-021",
@@ -320,8 +320,8 @@
       "actions": [
         "check"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-022",
@@ -334,8 +334,8 @@
       "actions": [
         "context"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-023",
@@ -348,8 +348,8 @@
       "actions": [
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-024",
@@ -365,8 +365,8 @@
         "status",
         "advance"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-025",
@@ -383,8 +383,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-026",
@@ -401,8 +401,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-027",
@@ -419,8 +419,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-028",
@@ -437,8 +437,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-029",
@@ -455,8 +455,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-030",
@@ -471,7 +471,7 @@
         "accept"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-031",
@@ -485,7 +485,7 @@
         "switch"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-032",
@@ -499,7 +499,7 @@
         "set"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-033",
@@ -514,7 +514,7 @@
         "stop"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-034",
@@ -528,8 +528,8 @@
         "create",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-035",
@@ -543,8 +543,8 @@
         "create",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-036",
@@ -561,8 +561,8 @@
         "cancelSchedule",
         "quoteChange"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-037",
@@ -575,8 +575,8 @@
       "actions": [
         "start"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-038",
@@ -590,8 +590,8 @@
         "meter",
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-039",
@@ -605,8 +605,8 @@
         "set",
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-040",
@@ -620,8 +620,8 @@
         "set",
         "check"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-041",
@@ -636,8 +636,8 @@
         "get",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-042",
@@ -650,8 +650,8 @@
       "actions": [
         "order"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-043",
@@ -666,8 +666,8 @@
         "list",
         "detach"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-044",
@@ -680,8 +680,8 @@
       "actions": [
         "calculate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-045",
@@ -695,8 +695,8 @@
         "create",
         "redeem"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-046",
@@ -709,8 +709,8 @@
       "actions": [
         "post"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-047",
@@ -723,8 +723,8 @@
       "actions": [
         "refund"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-048",
@@ -740,8 +740,8 @@
         "resume",
         "sweep"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-049",
@@ -754,8 +754,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-050",
@@ -769,8 +769,8 @@
         "verify",
         "reconcile"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-051",
@@ -783,8 +783,8 @@
       "actions": [
         "scan"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-052",
@@ -797,8 +797,8 @@
       "actions": [
         "assess"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-053",
@@ -813,8 +813,8 @@
         "put",
         "rotate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-054",
@@ -828,8 +828,8 @@
         "encrypt",
         "decrypt"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-055",
@@ -844,7 +844,7 @@
         "configure"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-056",
@@ -858,7 +858,7 @@
         "policy"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-057",
@@ -872,7 +872,7 @@
         "policy"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-058",
@@ -885,8 +885,8 @@
       "actions": [
         "policy"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-059",
@@ -900,7 +900,7 @@
         "policy"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-060",
@@ -914,7 +914,7 @@
         "policy"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-061",
@@ -927,8 +927,8 @@
       "actions": [
         "run"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-062",
@@ -941,8 +941,8 @@
       "actions": [
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-063",
@@ -956,8 +956,8 @@
         "record",
         "history"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-064",
@@ -970,8 +970,8 @@
       "actions": [
         "export"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-065",
@@ -985,8 +985,8 @@
         "list",
         "record"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-066",
@@ -1000,7 +1000,7 @@
         "policy"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-067",
@@ -1014,7 +1014,7 @@
         "policy"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-068",
@@ -1028,8 +1028,8 @@
         "list",
         "ack"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-069",
@@ -1046,8 +1046,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-070",
@@ -1064,8 +1064,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-071",
@@ -1078,8 +1078,8 @@
       "actions": [
         "send"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-072",
@@ -1092,8 +1092,8 @@
       "actions": [
         "enqueue"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-073",
@@ -1106,8 +1106,8 @@
       "actions": [
         "send"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-074",
@@ -1120,8 +1120,8 @@
       "actions": [
         "send"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-075",
@@ -1136,8 +1136,8 @@
         "list",
         "read"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-076",
@@ -1154,8 +1154,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-077",
@@ -1169,8 +1169,8 @@
         "set",
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-078",
@@ -1183,8 +1183,8 @@
       "actions": [
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-079",
@@ -1197,8 +1197,8 @@
       "actions": [
         "enqueue"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-080",
@@ -1211,8 +1211,8 @@
       "actions": [
         "optOut"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-081",
@@ -1226,8 +1226,8 @@
         "verify",
         "reconcile"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-082",
@@ -1240,8 +1240,8 @@
       "actions": [
         "render"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-083",
@@ -1257,8 +1257,8 @@
         "list",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-084",
@@ -1274,8 +1274,8 @@
         "list",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-085",
@@ -1288,8 +1288,8 @@
       "actions": [
         "sign"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-086",
@@ -1302,8 +1302,8 @@
       "actions": [
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-087",
@@ -1316,8 +1316,8 @@
       "actions": [
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-088",
@@ -1334,8 +1334,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-089",
@@ -1348,8 +1348,8 @@
       "actions": [
         "import"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-090",
@@ -1362,8 +1362,8 @@
       "actions": [
         "export"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-091",
@@ -1378,8 +1378,8 @@
         "restore",
         "status"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-092",
@@ -1394,8 +1394,8 @@
         "apply",
         "status"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-093",
@@ -1408,8 +1408,8 @@
       "actions": [
         "search"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-094",
@@ -1423,8 +1423,8 @@
         "purge",
         "configure"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-095",
@@ -1438,8 +1438,8 @@
         "transform",
         "status"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-096",
@@ -1452,8 +1452,8 @@
       "actions": [
         "validate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-097",
@@ -1466,8 +1466,8 @@
       "actions": [
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-098",
@@ -1480,8 +1480,8 @@
       "actions": [
         "archive"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-099",
@@ -1494,8 +1494,8 @@
       "actions": [
         "mask"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-100",
@@ -1508,8 +1508,8 @@
       "actions": [
         "track"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-101",
@@ -1522,8 +1522,8 @@
       "actions": [
         "identify"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-102",
@@ -1536,8 +1536,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-103",
@@ -1550,8 +1550,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-104",
@@ -1564,8 +1564,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-105",
@@ -1578,8 +1578,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-106",
@@ -1596,8 +1596,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-107",
@@ -1610,8 +1610,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-108",
@@ -1624,8 +1624,8 @@
       "actions": [
         "schedule"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-109",
@@ -1638,8 +1638,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-110",
@@ -1653,8 +1653,8 @@
         "capture",
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-111",
@@ -1667,8 +1667,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-112",
@@ -1681,8 +1681,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-113",
@@ -1696,8 +1696,8 @@
         "enqueue",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-114",
@@ -1711,8 +1711,8 @@
         "enqueue",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-115",
@@ -1725,8 +1725,8 @@
       "actions": [
         "requeue"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-116",
@@ -1740,8 +1740,8 @@
         "list",
         "requeue"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-117",
@@ -1754,8 +1754,8 @@
       "actions": [
         "start"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-118",
@@ -1769,8 +1769,8 @@
         "request",
         "decide"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-119",
@@ -1783,8 +1783,8 @@
       "actions": [
         "evaluate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-120",
@@ -1797,8 +1797,8 @@
       "actions": [
         "enqueue"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-121",
@@ -1812,8 +1812,8 @@
         "verify",
         "dispatch"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-122",
@@ -1826,8 +1826,8 @@
       "actions": [
         "record"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-123",
@@ -1840,8 +1840,8 @@
       "actions": [
         "append"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-124",
@@ -1855,7 +1855,7 @@
         "envelope"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-125",
@@ -1869,8 +1869,8 @@
         "execute",
         "schema"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-126",
@@ -1883,8 +1883,8 @@
       "actions": [
         "document"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-127",
@@ -1897,8 +1897,8 @@
       "actions": [
         "generate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-128",
@@ -1912,7 +1912,7 @@
         "resolve"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-129",
@@ -1925,8 +1925,8 @@
       "actions": [
         "page"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-130",
@@ -1939,8 +1939,8 @@
       "actions": [
         "filter"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-131",
@@ -1954,7 +1954,7 @@
         "headers"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-132",
@@ -1971,8 +1971,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-133",
@@ -1986,7 +1986,7 @@
         "check"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-134",
@@ -2000,8 +2000,8 @@
         "sign",
         "verify"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-135",
@@ -2014,8 +2014,8 @@
       "actions": [
         "enqueue"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-136",
@@ -2028,8 +2028,8 @@
       "actions": [
         "emit"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-137",
@@ -2043,7 +2043,7 @@
         "get"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-138",
@@ -2057,7 +2057,7 @@
         "envelope"
       ],
       "source": "packages/harbor/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-139",
@@ -2071,8 +2071,8 @@
         "set",
         "evaluate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-140",
@@ -2086,8 +2086,8 @@
         "set",
         "evaluate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-141",
@@ -2101,8 +2101,8 @@
         "set",
         "evaluate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-142",
@@ -2115,8 +2115,8 @@
       "actions": [
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-143",
@@ -2133,8 +2133,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-144",
@@ -2151,8 +2151,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-145",
@@ -2167,8 +2167,8 @@
         "uninstall",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-146",
@@ -2185,8 +2185,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-147",
@@ -2203,8 +2203,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-148",
@@ -2220,8 +2220,8 @@
         "activate",
         "remove"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-149",
@@ -2234,8 +2234,8 @@
       "actions": [
         "format"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-150",
@@ -2248,8 +2248,8 @@
       "actions": [
         "format"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-151",
@@ -2266,8 +2266,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-152",
@@ -2284,8 +2284,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-153",
@@ -2302,8 +2302,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-154",
@@ -2316,8 +2316,8 @@
       "actions": [
         "log"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-155",
@@ -2331,8 +2331,8 @@
         "export",
         "status"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-156",
@@ -2346,8 +2346,8 @@
         "observe",
         "snapshot"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-157",
@@ -2360,8 +2360,8 @@
       "actions": [
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-158",
@@ -2374,8 +2374,8 @@
       "actions": [
         "get"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-159",
@@ -2388,8 +2388,8 @@
       "actions": [
         "describe"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-160",
@@ -2402,8 +2402,8 @@
       "actions": [
         "describe"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-161",
@@ -2416,8 +2416,8 @@
       "actions": [
         "describe"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-162",
@@ -2430,8 +2430,8 @@
       "actions": [
         "describe"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-163",
@@ -2444,8 +2444,8 @@
       "actions": [
         "report"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-164",
@@ -2459,8 +2459,8 @@
         "record",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-165",
@@ -2475,8 +2475,8 @@
         "status",
         "rollback"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-166",
@@ -2491,8 +2491,8 @@
         "apply",
         "destroy"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-167",
@@ -2506,8 +2506,8 @@
         "scale",
         "status"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-168",
@@ -2522,8 +2522,8 @@
         "restore",
         "drill"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-169",
@@ -2536,8 +2536,8 @@
       "actions": [
         "status"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-170",
@@ -2550,8 +2550,8 @@
       "actions": [
         "validate"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-171",
@@ -2568,8 +2568,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-172",
@@ -2586,8 +2586,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-173",
@@ -2603,8 +2603,8 @@
         "complete",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-174",
@@ -2617,8 +2617,8 @@
       "actions": [
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-175",
@@ -2635,8 +2635,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-176",
@@ -2653,8 +2653,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-177",
@@ -2668,7 +2668,7 @@
         "list"
       ],
       "source": "packages/kingsman/src",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-178",
@@ -2683,8 +2683,8 @@
         "update",
         "list"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-179",
@@ -2701,8 +2701,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-180",
@@ -2715,8 +2715,8 @@
       "actions": [
         "overview"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-181",
@@ -2733,8 +2733,8 @@
         "update",
         "delete"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     },
     {
       "id": "SAAS-182",
@@ -2747,8 +2747,8 @@
       "actions": [
         "transfer"
       ],
-      "source": "packages/sdk/src/registry.ts",
-      "legacyActionBinding": "packages/sdk/src/registry.ts"
+      "source": "packages/sdk/src/capabilities/registry.ts",
+      "legacyActionBinding": "packages/sdk/src/capabilities/registry.ts"
     }
   ]
 }

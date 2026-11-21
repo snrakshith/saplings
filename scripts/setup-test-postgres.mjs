@@ -10,6 +10,7 @@ try {
     '0002_rls_and_indexes.sql',
     '0003_integrity.sql',
     '0004_search.sql',
+    '0005_miner.sql',
   ])
     await db.query(await readFile('packages/adapter-drizzle/migrations/' + path, 'utf8'));
   await db.query(

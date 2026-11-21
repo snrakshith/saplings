@@ -9,7 +9,7 @@ Cross-cutting integration / policy; production closure pending. Bounded runtime 
 - `packages/security/src/defender.ts`
 - `packages/security/src/policy.ts`
 - `packages/sdk/src/index.ts`
-- `packages/sdk/src/security-state.ts`
+- `packages/sdk/src/security/security-state.ts`
 
 ## Public contract / current implementation
 `security.defender` in sapling.config.ts; `Defender.assess`, `Defender.preflight`, and middleware. Inspect source and runtime security specification for exact configuration.

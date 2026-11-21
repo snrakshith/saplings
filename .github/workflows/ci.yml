@@ -54,6 +54,7 @@ jobs:
           name: dependency-lock-review
           path: pnpm-lock.yaml
       - run: pnpm run verify:build
+      - run: pnpm run build:console
       - run: pnpm run build:adapters
       - run: pnpm run build:hooks
       - run: pnpm run build:ui

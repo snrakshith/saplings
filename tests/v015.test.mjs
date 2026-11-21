@@ -92,24 +92,24 @@ async function req(port, path, method = 'GET', body, headers = {}) {
     r.end(body);
   });
 }
-test('31 SaaS modules moved to root; no expanded folder and no runtime expanded property', () => {
+test('SDK domains have named folders and the flat runtime API remains intact', () => {
   const source = new URL('../packages/sdk/src/', import.meta.url);
   assert.equal(existsSync(new URL('expanded/', source)), false);
   for (const name of [
-    'registry',
-    'accounts',
-    'domain-policy',
-    'business-workflows',
-    'governance',
-    'cashfree',
-    'provider-workflow',
-    'stripe-recurring',
-    'offboarding',
-    'operations',
-    'worker',
-    'totp',
-    'valkey',
-    'primitives',
+    'capabilities/registry',
+    'identity/accounts',
+    'data/domain-policy',
+    'workflows/business-workflows',
+    'data/governance',
+    'payments/cashfree',
+    'workflows/provider-workflow',
+    'billing/stripe-recurring',
+    'tenancy/offboarding',
+    'platform/operations',
+    'workflows/worker',
+    'identity/totp',
+    'runtime/valkey',
+    'runtime/primitives',
   ])
     assert.ok(existsSync(new URL(name + '.ts', source)));
   const sdk = createSapling({ app: { id: 'refactor', environment: 'test' } });

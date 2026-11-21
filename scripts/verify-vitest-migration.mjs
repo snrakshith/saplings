@@ -53,7 +53,7 @@ if (
   fail('Quality engine must use Vitest with verified report');
 for (const f of ['vitest.config.mts', 'vitest.integration.config.mts', 'vitest.quality.config.mts'])
   if (!existsSync(f)) fail('Missing config ' + f);
-const source = readFileSync('packages/sdk/src/quality-config.ts', 'utf8');
+const source = readFileSync('packages/sdk/src/quality/quality-config.ts', 'utf8');
 if (!/'vitest'\s*\|\s*'node-test'/.test(source))
   fail('Quality engine type and legacy alias not preserved');
 const pipeline = readFileSync('.github/workflows/ci.yml', 'utf8');

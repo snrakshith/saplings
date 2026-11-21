@@ -64,7 +64,7 @@ pnpm run build:murphi-ui
 pnpm run build:murph-appui
 pnpm run typecheck:ui
 pnpm run test:ui
-pnpm --filter @sapling/example-web run build
+pnpm --filter @saplings/starter-web run build
 ```
 
 Offline testing in this build uses global TypeScript and a subset of React/Emotion modules included in the uploaded Murphi demo **only for local tests**. No vendored `node_modules` enter the archive. The native structural typecheck uses an explicitly labeled local shim when RN itself is unavailable; this does not replace compiling against actual React Native 0.88 definitions or simulator tests. See `../evidence/` for results and release blockers.

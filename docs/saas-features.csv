@@ -5,7 +5,7 @@ id,category,module,name,delivery,status,operations,limitations,providerPath
 "SAAS-004","Identity & access","identity","Password reset","native","local-reference","issue; consume","Reference implementation; production validation and app-specific authorization pending.",""
 "SAAS-005","Identity & access","identity","Login and logout","native","local-reference","login; logout","Reference implementation; production validation and app-specific authorization pending.",""
 "SAAS-006","Identity & access","identity","Session management","native","local-reference","verify; list; revoke","Reference implementation; production validation and app-specific authorization pending.",""
-"SAAS-007","Identity & access","identity","JWT validation","adapter","hybrid-reference","verify","JWT verification delegated to configured authentication adapter.",""
+"SAAS-007","Identity & access","identity","JWT validation","adapter","hybrid-reference","verify","JWT verification delegated to configured Kingsman realm or authentication adapter; audience required.",""
 "SAAS-008","Identity & access","identity","API key lifecycle","native","local-reference","create; list; revoke","Reference implementation; production validation and app-specific authorization pending.",""
 "SAAS-009","Identity & access","identity","MFA and step-up auth","adapter","hybrid-reference","enroll; confirm; challenge; verify; revoke","TOTP with encrypted factor, replay prevention and MFA-gated local sessions; external federation MFA separate.",""
 "SAAS-010","Identity & access","identity","SSO and SAML","adapter","provider-required","start; callback; metadata","SAML federation identity provider.","OidcFederationAdapter (SAML broker)"

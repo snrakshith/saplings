@@ -34,7 +34,7 @@ local reference mapping; per-feature production proof not established. This is a
 
 ## v0.15.0 — root refactor and critical-code review
 
-**Source location:** `packages/sdk/src/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
+**Source location:** `packages/sdk/src/capabilities/registry.ts` and adjacent root modules, not `packages/sdk/src/expanded/`. **Readiness:** OPEN; previous acceptance items and production requirements remain mandatory.
 
 Related shared implementation path hardened; feature-specific acceptance still open.
 
