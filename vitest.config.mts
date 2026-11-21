@@ -4,7 +4,7 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   test: {
     name: 'sapling-sdk',
-    include: ['tests/*.test.mjs'],
+    include: ['tests/*.test.mjs', 'packages/observability/tests/*.test.mjs'],
     exclude: ['**/node_modules/**', '**/dist/**', '**/coverage/**'],
     environment: 'node',
     pool: 'forks',

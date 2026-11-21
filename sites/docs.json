@@ -31,6 +31,7 @@
           "packages/harbor",
           "packages/kingsman",
           "packages/middleware",
+          "packages/observability",
           "packages/realtime",
           "packages/security"
         ]

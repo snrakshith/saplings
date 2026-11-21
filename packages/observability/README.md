@@ -1,0 +1,94 @@
+# @saplings/observability
+
+Reusable backend observability for Node.js services. Write structured JSON logs, correlate them with OpenTelemetry spans, record metrics with an OpenTelemetry meter, and measure the health of a Node.js process.
+
+## Install
+
+Use Node.js 22 or later. This package ships ESM and TypeScript declarations.
+
+```bash
+npm install @saplings/observability
+```
+
+## Instrument application work
+
+```ts
+import { createObservability } from '@saplings/observability';
+
+const telemetry = createObservability({ serviceName: 'orders' });
+const processed = telemetry.meter.createCounter('orders.processed');
+
+await telemetry.withSpan('orders.process', async (span) => {
+  span.setAttribute('orders.source', 'batch');
+  processed.add(1, { source: 'batch' });
+  await telemetry.log({
+    level: 'info',
+    event: 'orders.processed',
+    fields: { source: 'batch' },
+  });
+});
+```
+
+Logs go to stdout by default and include `trace_id` and `span_id` when a valid span is active. The default level is `info`. Pass `write` to use another sink or `redactKeys` to add service-specific sensitive keys. The logger redacts common credential fields recursively, including headers such as `Authorization` and `Cookie`. Pass only approved structured fields and keep sensitive values out of event names and trace attributes.
+
+## Export traces and metrics
+
+Initialize an OpenTelemetry provider in the host service before loading the application. Use Node.js 22.15 or later for this OpenTelemetry SDK setup. Install the Node SDK and HTTP instrumentation.
+
+```bash
+npm install @opentelemetry/api@^1.10.0 @opentelemetry/sdk-node@0.301.2 @opentelemetry/instrumentation-http@0.301.2
+```
+
+Save this as `instrumentation.mjs`.
+
+```js
+import { HttpInstrumentation } from '@opentelemetry/instrumentation-http';
+import { NodeSDK } from '@opentelemetry/sdk-node';
+
+export const sdk = new NodeSDK({ instrumentations: [new HttpInstrumentation()] });
+sdk.start();
+```
+
+Point the service at an OpenTelemetry Collector and preload the instrumentation.
+
+```bash
+OTEL_SERVICE_NAME=orders \
+OTEL_EXPORTER_OTLP_ENDPOINT=http://127.0.0.1:4318 \
+OTEL_EXPORTER_OTLP_PROTOCOL=http/protobuf \
+OTEL_TRACES_EXPORTER=otlp \
+OTEL_METRICS_EXPORTER=otlp \
+OTEL_LOGS_EXPORTER=none \
+OTEL_SEMCONV_STABILITY_OPT_IN=http \
+node --import ./instrumentation.mjs server.mjs
+```
+
+Configure the collector to receive OTLP over HTTP. The HTTP instrumentation creates request spans and propagates trace context. Use stable operation names and bounded metric attributes such as a route template or operation type. Flush pending exports with `await sdk.shutdown()` during the application's shutdown sequence. Collect JSON stdout through your platform's log pipeline. Until a provider is registered, OpenTelemetry spans and metrics use its no-op defaults.
+
+## API
+
+| Entry point | Use |
+| --- | --- |
+| `createLogger(options)` | Returns an async `log(event)` function when you need structured logs alone. |
+| `createObservability(options)` | Returns `log`, `tracer`, `meter`, and `withSpan`. |
+| `withSpan(name, work, options?)` | Runs an async or synchronous operation in an active span, closes it on completion, and propagates the original error. |
+| `createNodeDiagnostics()` | Starts collection of memory, CPU usage, uptime, and event-loop delay. Call `snapshot()` to sample and `close()` to stop. |
+| `new RequestMetrics()` | Keeps local request totals, 5xx totals, mean duration in milliseconds, and availability. Use `observe(status, durationMs)` and `snapshot()`. |
+
+For Saplings SDK logging, pass the telemetry object as `providers.telemetry` when you call `createSapling`. Use `createNodeDiagnostics` and `RequestMetrics` for health snapshots or tests. Aggregating metrics across processes requires the configured OpenTelemetry provider and collector.
+
+## Read a process snapshot
+
+```ts
+import { createNodeDiagnostics, RequestMetrics } from '@saplings/observability';
+
+const diagnostics = createNodeDiagnostics();
+const requests = new RequestMetrics();
+
+try {
+  requests.observe(200, 15);
+  requests.observe(503, 25);
+  console.log({ process: diagnostics.snapshot(), requests: requests.snapshot() });
+} finally {
+  diagnostics.close();
+}
+```

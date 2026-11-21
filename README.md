@@ -1,6 +1,6 @@
 ## Documentation
 
-Start with the [SDK quickstart](sites/quickstart.mdx), [SDK API signatures](packages/sdk/README.md), and [unified CLI guide](packages/cli/README.md). The [Mintlify site](sites/README.md) includes onboarding, configuration, deployment, quality, and reference pages for all 23 npm packages.
+Start with the [SDK quickstart](sites/quickstart.mdx), [SDK API signatures](packages/sdk/README.md), and [unified CLI guide](packages/cli/README.md). The [Mintlify site](sites/README.md) includes onboarding, configuration, deployment, quality, and reference pages for all 24 npm packages, including [backend observability](packages/observability/README.md).
 
 Reusable packages are released under the `@saplings` npm organization. See the [Changesets release guide](.changeset/README.md) for npm setup and versioning.
 
