@@ -52,7 +52,7 @@ pnpm run starter:prepare
 docker compose --env-file .starter/compose.env --profile starter up --build --wait
 ```
 
-Open [the HTTPS starter](https://localhost:8443). Trust the generated development certificate `.starter/tls-cert.pem` in your local browser. The preparation command writes development-only secrets with restricted permissions and preserves existing files. Read the local accounts from `.starter/accounts.json`. Sign in as **member** and queue a dashboard report to count consented visits from the last 24 hours. The dashboard shows the result from the worker. Visit **Services** to read config and send consented events. PostgreSQL persists the job, its result, sessions, config, and Miner data across API or worker restarts.
+Open [the HTTPS starter](https://localhost:8443). Trust the generated development certificate `.starter/tls-cert.pem` in your local browser. The preparation command writes development-only secrets with restricted permissions and preserves existing files. It gives each checkout a separate Compose project and database volume. Set `STARTER_DB_PORT` in `.starter/compose.env` if your machine already uses port 5432. Read the local accounts from `.starter/accounts.json`. Sign in as **member** and queue a dashboard report to count consented visits from the last 24 hours. The dashboard shows the result from the worker. Visit **Services** to read config and send consented events. PostgreSQL persists the job, its result, sessions, config, and Miner data across API or worker restarts.
 
 For the Console, start it in a separate terminal with the durable service target and the local certificate:
 

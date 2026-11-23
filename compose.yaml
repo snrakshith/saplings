@@ -28,7 +28,7 @@ services:
       POSTGRES_USER: sapling_dev
       POSTGRES_PASSWORD: ${STARTER_DB_ADMIN_PASSWORD:-local_only_change_me}
     ports:
-      - '127.0.0.1:5432:5432'
+      - '127.0.0.1:${STARTER_DB_PORT:-5432}:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:

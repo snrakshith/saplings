@@ -45,7 +45,6 @@ jobs:
         with:
           node-version-file: .node-version
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm run starter:prepare
       - name: Start the canonical Starter
         run: docker compose --env-file .starter/compose.env --profile starter up --build --wait --wait-timeout 180
@@ -61,9 +60,16 @@ jobs:
           fi
       - name: Verify durable sign-in, config, events, jobs, and data after a restart
         run: |
+          if command -v google-chrome >/dev/null; then
+            PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=$(command -v google-chrome)
+            export PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+          else
+            pnpm exec playwright install --with-deps chromium
+          fi
           export NODE_EXTRA_CA_CERTS="$PWD/.starter/tls-cert.pem" SAPLINGS_TEST_COMPOSE=1
-          export SAPLINGS_TEST_RUNTIME_DATABASE_URL=$(sed -n 's|^DATABASE_URL=\(.*\)@postgres:|\1@127.0.0.1:|p' .starter/compose.env)
+          SAPLINGS_TEST_RUNTIME_DATABASE_URL=$(sed -n 's|^DATABASE_URL=\(.*\)@postgres:|\1@127.0.0.1:|p' .starter/compose.env)
           test -n "$SAPLINGS_TEST_RUNTIME_DATABASE_URL"
+          export SAPLINGS_TEST_RUNTIME_DATABASE_URL
           node apps/web/test/durable-starter.mjs
       - name: Report stack state
         if: failure()

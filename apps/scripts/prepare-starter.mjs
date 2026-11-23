@@ -1,5 +1,5 @@
 import { execFileSync } from 'node:child_process';
-import { randomBytes } from 'node:crypto';
+import { createHash, randomBytes } from 'node:crypto';
 import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
@@ -57,6 +57,8 @@ if (!exists('compose.env')) {
   output(
     'compose.env',
     [
+      'COMPOSE_PROJECT_NAME=saplings-starter-' +
+        createHash('sha256').update(root).digest('hex').slice(0, 10),
       'APP_ORIGIN=https://localhost:8443',
       'STARTER_UID=' + (process.getuid?.() ?? 1000),
       'STARTER_GID=' + (process.getgid?.() ?? 1000),
