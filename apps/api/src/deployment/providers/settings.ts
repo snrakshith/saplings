@@ -23,7 +23,7 @@ function endpoint(name: string, secure: string, local: string, host: string, env
     url.password ||
     url.search ||
     url.hash ||
-    url.pathname !== '/' ||
+    (url.pathname && url.pathname !== '/') ||
     (url.protocol !== secure &&
       !(
         env === 'staging' &&

@@ -78,7 +78,10 @@ jobs:
           node apps/web/test/durable-starter.mjs
       - name: Report stack state
         if: failure()
-        run: docker compose --env-file .starter/compose.env -f compose.yaml -f infra/docker/compose.providers.yaml -f infra/docker/compose.observability.yaml --profile starter ps --all
+        run: |
+          starter=(docker compose --env-file .starter/compose.env -f compose.yaml -f infra/docker/compose.providers.yaml -f infra/docker/compose.observability.yaml --profile starter)
+          "${starter[@]}" ps --all
+          "${starter[@]}" logs --no-color --tail 60 provider-init bootstrap api worker web observability
       - name: Shut down the disposable stack
         if: always()
         run: |

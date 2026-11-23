@@ -95,7 +95,7 @@ docker compose --env-file .starter/compose.env -f compose.yaml -f infra/docker/c
 | Cashfree Checkout | Set `CASHFREE_CLIENT_ID`, `CASHFREE_CLIENT_SECRET`, `CASHFREE_ENVIRONMENT`, `STARTER_CHECKOUT_AMOUNT_MINOR` (INR paise), and a stable `SAPLING_ENCRYPTION_KEY` (32 bytes in Base64). Use `SAPLINGS_DEPLOYMENT_ENVIRONMENT=staging` with sandbox credentials. Register the HTTPS app domain and subscribe to success webhooks at `/api/webhooks/cashfree`. The Starter opens hosted checkout, verifies the raw callback, then reconciles verified provider status before displaying capture. Test with a sandbox merchant before enabling production credentials. |
 | Durable rate limits | Set `VALKEY_URL` to a private TLS endpoint. PostgreSQL is the shared rate-limit store when Valkey is unset. |
 
-Managed object storage and email delivery require cloud IAM permissions. The app owns recipient and object access rules. Keep the provider credentials, signer, and encryption key in your deployment secret manager.
+Use separate databases, buckets, and credentials for staging and production. Managed object storage and email delivery require cloud IAM permissions. The app owns recipient and object access rules. Keep the provider credentials, signer, and encryption key in your deployment secret manager.
 
 ## Verify
 

@@ -37,3 +37,5 @@ services:
     environment: *provider-sandbox
   worker:
     environment: *provider-sandbox
+    depends_on:
+      api: { condition: service_healthy }
