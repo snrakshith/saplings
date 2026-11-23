@@ -6,11 +6,11 @@ Use Node 22+, install dependencies, `pnpm run build`, run sample API (`pnpm run 
 
 ## Docker
 
-- `Dockerfile` builds the Starter API and worker.
-- `infra/docker/Dockerfile.web` builds the Starter web app and same-origin proxy.
+- `starter/deploy/Dockerfile.api` builds the Starter API and worker.
+- `starter/deploy/Dockerfile.web` builds the Starter web app and same-origin proxy.
 - `infra/docker/Dockerfile.runner` builds the separate quality runner.
 
-Use the [Saplings Starter guide](../../../apps/README.md#run-the-durable-stack) to run the full stack. Keep the quality runner and its staged workloads separate from application deployment.
+Use the [Saplings Starter guide](../../../starter/README.md#run-the-durable-stack) to run the full stack. Keep the quality runner and its staged workloads separate from application deployment.
 
 For reproducible deployments: generate and commit `pnpm-lock.yaml` using a connected npm environment, replace example image tags with immutable digests, use `npm ci`, maintain SBOM and patch cadence. The ZIP does not contain an npm-generated lockfile because dependency installation was unavailable in its assembly environment.
 

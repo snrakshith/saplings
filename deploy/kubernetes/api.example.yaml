@@ -1,5 +1,5 @@
 # Deploy the canonical Starter API image after running the migrations and account bootstrap.
-# See apps/README.md for runtime settings. Supply a private network and HTTPS ingress.
+# See starter/README.md for runtime settings. Supply a private network and HTTPS ingress.
 apiVersion: apps/v1
 kind: Deployment
 metadata:

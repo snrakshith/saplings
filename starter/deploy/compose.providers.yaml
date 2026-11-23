@@ -1,0 +1,41 @@
+# Local provider transports for the same durable Starter.
+x-provider-sandbox: &provider-sandbox
+  SAPLINGS_DEPLOYMENT_ENVIRONMENT: staging
+  AWS_ACCESS_KEY_ID: starter-local
+  AWS_SECRET_ACCESS_KEY: starter-local-only
+  AWS_REGION: us-east-1
+  S3_BUCKET: saplings-starter
+  S3_ENDPOINT: http://object-store:5000
+  STARTER_NOTIFICATIONS: smtp
+  SES_FROM: starter@starter.example.invalid
+  SMTP_URL: smtp://mailpit:1025
+  VALKEY_URL: redis://valkey:6379
+
+services:
+  object-store:
+    image: motoserver/moto:5.2.6
+  mailpit:
+    image: axllent/mailpit:v1.34.0
+    ports: ['127.0.0.1:${STARTER_MAIL_PORT:-8025}:8025']
+  valkey:
+    profiles: [starter, valkey]
+  provider-init:
+    profiles: [starter]
+    image: saplings-starter-api:local
+    build: { context: ., dockerfile: starter/deploy/Dockerfile.api }
+    environment: *provider-sandbox
+    command: [node, dist/deployment/providers/bootstrap-storage.js]
+    depends_on:
+      object-store: { condition: service_started }
+  bootstrap:
+    environment: *provider-sandbox
+    depends_on:
+      provider-init: { condition: service_completed_successfully }
+      valkey: { condition: service_healthy }
+      mailpit: { condition: service_started }
+  api:
+    environment: *provider-sandbox
+  worker:
+    environment: *provider-sandbox
+    depends_on:
+      api: { condition: service_healthy }

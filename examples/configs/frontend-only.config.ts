@@ -5,6 +5,6 @@ export default defineQualityConfig({
   frontend: {
     baseUrl: 'http://127.0.0.1:5173',
     routes: ['/'],
-    bundle: { directory: 'apps/web/dist', maxTotalGzipKb: 350 },
+    bundle: { directory: 'starter/frontend/dist', maxTotalGzipKb: 350 },
   },
 });

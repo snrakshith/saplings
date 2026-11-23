@@ -9,3 +9,5 @@ coverage/
 
 .starter/
 .env.*
+
+starter/.starter/

@@ -186,122 +186,6 @@ importers:
         specifier: 4.6.7
         version: 4.6.7
 
-  apps/api:
-    dependencies:
-      '@aws-sdk/client-s3':
-        specifier: ^3.750.0
-        version: 3.1173.0
-      '@aws-sdk/client-sesv2':
-        specifier: ^3.750.0
-        version: 3.1173.0
-      '@aws-sdk/client-sns':
-        specifier: ^3.750.0
-        version: 3.1173.0
-      '@opentelemetry/api':
-        specifier: ^1.10.0
-        version: 1.10.0
-      '@opentelemetry/exporter-logs-otlp-proto':
-        specifier: 0.301.2
-        version: 0.301.2(@opentelemetry/api@1.10.0)
-      '@opentelemetry/resources':
-        specifier: 3.1.1
-        version: 3.1.1(@opentelemetry/api@1.10.0)
-      '@opentelemetry/sdk-logs':
-        specifier: 3.1.1
-        version: 3.1.1(@opentelemetry/api@1.10.0)
-      '@opentelemetry/sdk-node':
-        specifier: 0.301.2
-        version: 0.301.2(@opentelemetry/api@1.10.0)
-      '@saplings/adapter-aws':
-        specifier: workspace:*
-        version: link:../../packages/adapter-aws
-      '@saplings/adapter-drizzle':
-        specifier: workspace:*
-        version: link:../../packages/adapter-drizzle
-      '@saplings/kingsman':
-        specifier: workspace:*
-        version: link:../../packages/kingsman
-      '@saplings/miner':
-        specifier: workspace:*
-        version: link:../../packages/miner
-      '@saplings/observability':
-        specifier: workspace:*
-        version: link:../../packages/observability
-      '@saplings/quality-node-diagnostics':
-        specifier: workspace:*
-        version: link:../../packages/quality-node-diagnostics
-      '@saplings/remote-config':
-        specifier: workspace:*
-        version: link:../../packages/remote-config
-      '@saplings/sdk':
-        specifier: workspace:*
-        version: link:../../packages/sdk
-      drizzle-orm:
-        specifier: ^0.45.2
-        version: 0.45.4(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1)
-      express:
-        specifier: ^5.1.0
-        version: 5.3.0
-      nodemailer:
-        specifier: ^10.6.1
-        version: 10.6.1
-      pg:
-        specifier: ^8.0.0
-        version: 8.23.1
-      redis:
-        specifier: ^5.0.0
-        version: 5.12.4(@opentelemetry/api@1.10.0)
-    devDependencies:
-      '@types/express':
-        specifier: ^5.0.3
-        version: 5.0.6
-      '@types/nodemailer':
-        specifier: ^8.0.0
-        version: 8.0.2
-      '@types/pg':
-        specifier: ^8.0.0
-        version: 8.23.1
-      tsx:
-        specifier: ^4.20.6
-        version: 4.23.15
-
-  apps/web:
-    dependencies:
-      '@saplings/hooks':
-        specifier: workspace:*
-        version: link:../../packages/hooks
-      '@saplings/miner':
-        specifier: workspace:*
-        version: link:../../packages/miner
-      '@saplings/murphi-ui':
-        specifier: workspace:*
-        version: link:../../packages/murphi-ui
-      '@saplings/quality-browser-runtime':
-        specifier: workspace:*
-        version: link:../../packages/quality-browser-runtime
-      '@saplings/remote-config':
-        specifier: workspace:*
-        version: link:../../packages/remote-config
-      '@saplings/ui-core':
-        specifier: workspace:*
-        version: link:../../packages/ui-core
-      react:
-        specifier: ^19.3.0
-        version: 19.3.1
-      react-dom:
-        specifier: ^19.3.0
-        version: 19.3.1(react@19.3.1)
-    devDependencies:
-      '@types/react':
-        specifier: ^19.2.0
-        version: 19.3.0
-      '@types/react-dom':
-        specifier: ^19.2.0
-        version: 19.3.0(@types/react@19.3.0)
-      vite:
-        specifier: ^7.1.10
-        version: 7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
-
   console:
     dependencies:
       '@saplings/harbor':
@@ -707,6 +591,139 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
+      vite:
+        specifier: ^7.1.10
+        version: 7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)
+
+  starter: {}
+
+  starter/backend:
+    dependencies:
+      '@aws-sdk/client-s3':
+        specifier: ^3.750.0
+        version: 3.1173.0
+      '@aws-sdk/client-sesv2':
+        specifier: ^3.750.0
+        version: 3.1173.0
+      '@aws-sdk/client-sns':
+        specifier: ^3.750.0
+        version: 3.1173.0
+      '@opentelemetry/api':
+        specifier: ^1.10.0
+        version: 1.10.0
+      '@opentelemetry/exporter-logs-otlp-proto':
+        specifier: 0.301.2
+        version: 0.301.2(@opentelemetry/api@1.10.0)
+      '@opentelemetry/resources':
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/sdk-logs':
+        specifier: 3.1.1
+        version: 3.1.1(@opentelemetry/api@1.10.0)
+      '@opentelemetry/sdk-node':
+        specifier: 0.301.2
+        version: 0.301.2(@opentelemetry/api@1.10.0)
+      '@saplings/adapter-aws':
+        specifier: workspace:*
+        version: link:../../packages/adapter-aws
+      '@saplings/adapter-drizzle':
+        specifier: workspace:*
+        version: link:../../packages/adapter-drizzle
+      '@saplings/harbor':
+        specifier: workspace:*
+        version: link:../../packages/harbor
+      '@saplings/kingsman':
+        specifier: workspace:*
+        version: link:../../packages/kingsman
+      '@saplings/middleware':
+        specifier: workspace:*
+        version: link:../../packages/middleware
+      '@saplings/miner':
+        specifier: workspace:*
+        version: link:../../packages/miner
+      '@saplings/observability':
+        specifier: workspace:*
+        version: link:../../packages/observability
+      '@saplings/quality-node-diagnostics':
+        specifier: workspace:*
+        version: link:../../packages/quality-node-diagnostics
+      '@saplings/remote-config':
+        specifier: workspace:*
+        version: link:../../packages/remote-config
+      '@saplings/sdk':
+        specifier: workspace:*
+        version: link:../../packages/sdk
+      '@saplings/security':
+        specifier: workspace:*
+        version: link:../../packages/security
+      '@saplings/utils':
+        specifier: workspace:*
+        version: link:../../packages/utils
+      '@saplings/validations':
+        specifier: workspace:*
+        version: link:../../packages/validations
+      drizzle-orm:
+        specifier: ^0.45.2
+        version: 0.45.4(@opentelemetry/api@1.10.0)(@types/pg@8.23.1)(pg@8.23.1)
+      express:
+        specifier: ^5.1.0
+        version: 5.3.0
+      nodemailer:
+        specifier: ^10.6.1
+        version: 10.6.1
+      pg:
+        specifier: ^8.0.0
+        version: 8.23.1
+      redis:
+        specifier: ^5.0.0
+        version: 5.12.4(@opentelemetry/api@1.10.0)
+    devDependencies:
+      '@types/express':
+        specifier: ^5.0.3
+        version: 5.0.6
+      '@types/nodemailer':
+        specifier: ^8.0.0
+        version: 8.0.2
+      '@types/pg':
+        specifier: ^8.0.0
+        version: 8.23.1
+      tsx:
+        specifier: ^4.20.6
+        version: 4.23.15
+
+  starter/frontend:
+    dependencies:
+      '@saplings/hooks':
+        specifier: workspace:*
+        version: link:../../packages/hooks
+      '@saplings/miner':
+        specifier: workspace:*
+        version: link:../../packages/miner
+      '@saplings/murphi-ui':
+        specifier: workspace:*
+        version: link:../../packages/murphi-ui
+      '@saplings/quality-browser-runtime':
+        specifier: workspace:*
+        version: link:../../packages/quality-browser-runtime
+      '@saplings/remote-config':
+        specifier: workspace:*
+        version: link:../../packages/remote-config
+      '@saplings/ui-core':
+        specifier: workspace:*
+        version: link:../../packages/ui-core
+      react:
+        specifier: ^19.3.0
+        version: 19.3.1
+      react-dom:
+        specifier: ^19.3.0
+        version: 19.3.1(react@19.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^19.2.0
+        version: 19.3.0
+      '@types/react-dom':
+        specifier: ^19.2.0
+        version: 19.3.0(@types/react@19.3.0)
       vite:
         specifier: ^7.1.10
         version: 7.3.8(@types/node@26.6.6)(jiti@2.7.0)(terser@5.51.2)(tsx@4.23.15)(yaml@2.9.1)

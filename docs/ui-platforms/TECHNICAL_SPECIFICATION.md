@@ -6,7 +6,7 @@
 flowchart TB
   A["@saplings/ui-core · TypeScript tokens"] --> B["@saplings/murphi-ui · React/Emotion web"]
   A --> C["@saplings/murph-appui · React Native"]
-  B --> D["apps/web · Vite reference"]
+  B --> D["starter/frontend · Vite reference"]
   C --> E["examples/ui-platforms/native · sample App"]
   A --> F["Backend/Node consumers of pure tokens"]
 ```

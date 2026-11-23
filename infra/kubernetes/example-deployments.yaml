@@ -1,4 +1,4 @@
-# Stage the canonical Starter after running its migrations and account bootstrap. See apps/README.md.
+# Stage the canonical Starter after running its migrations and account bootstrap. See starter/README.md.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
