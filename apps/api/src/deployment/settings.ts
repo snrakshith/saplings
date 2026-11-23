@@ -1,7 +1,9 @@
+import { deploymentEnvironment } from './providers/settings.js';
 import { readFileSync } from 'node:fs';
 
 export type DurableSettings = {
   origin: URL;
+  environment: ReturnType<typeof deploymentEnvironment>;
   databaseUrl: string;
   signingKey: string;
   visitorSecret: string;
@@ -39,5 +41,5 @@ export function durableSettings(): DurableSettings {
     throw new Error('SAPLINGS_VISITOR_SECRET must contain 32 random bytes encoded as hex.');
   const databaseUrl = required('DATABASE_URL');
   const signingKey = readFileSync(required('SAPLINGS_SIGNING_KEY_FILE'), 'utf8');
-  return { origin, databaseUrl, signingKey, visitorSecret };
+  return { origin, environment: deploymentEnvironment(), databaseUrl, signingKey, visitorSecret };
 }

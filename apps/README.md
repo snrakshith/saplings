@@ -71,7 +71,31 @@ To stop the local stack and preserve its data, run `docker compose --env-file .s
 - Supply a stable RSA PEM through `SAPLINGS_SIGNING_KEY_FILE` and a stable 32-byte hex `SAPLINGS_VISITOR_SECRET` from your secret manager. Use your deployment certificate, signing key, and account data. Local files generated in `.starter/` are development credentials.
 - Run `node dist/deployment/migrate.js` in the API image with `SAPLINGS_MIGRATION_DATABASE_URL` for the database owner and `DATABASE_URL` for the `saplings_starter_runtime` role. The owner applies the Drizzle migrations and grants the scoped runtime role table access. Provision the runtime role separately if the migration account cannot create roles. Only supply the runtime URL to the API and worker. The API and worker verify that RLS is forced and that the runtime database role cannot bypass it.
 - Run `node dist/deployment/bootstrap.js` with the runtime settings and `SAPLINGS_BOOTSTRAP_FILE` pointing to a protected JSON array of `{ "username", "email", "password", "role" }` accounts. Roles are `member`, `author`, or `reviewer`. Use unique users for author and reviewer. The bootstrap command skips matching accounts and leaves existing passwords intact. Remove the bootstrap file from the runtime environment after provisioning.
-- Run `node dist/server.js` for the API and `node dist/worker.js` from the same image. Use `/health` for liveness and `/ready` for readiness. The worker processes the project’s jobs and runs Miner retention cleanup. Provider callbacks, live payments, notifications, and object storage need your provider adapters and independent sandbox verification. Use the [SDK configuration guide](../docs/CONFIGURATION_REFERENCE.md) for those integrations.
+- Run `node dist/server.js` for the API and `node dist/worker.js` from the same image. Use `/health` for liveness and `/ready` for readiness. The worker processes the project’s jobs and runs Miner retention cleanup. The provider settings below connect the durable API to AWS or Cashfree. Use a provider sandbox and verify the deployed integration before accepting live traffic.
+
+## Try local providers and observability
+
+Start the same durable Starter with its provider and observability overlays:
+
+```bash
+pnpm run starter:prepare
+docker compose --env-file .starter/compose.env -f compose.yaml -f infra/docker/compose.providers.yaml -f infra/docker/compose.observability.yaml --profile starter up --build --wait
+```
+
+- Sign in at [the Starter](https://localhost:8443) and open **Providers**. Upload, read, and delete a text object through the S3 adapter. Send a test message and read it in [Mailpit](http://127.0.0.1:8025). The provider overlay uses an S3 emulator, a local SMTP inbox, and Valkey-backed rate limits. It runs with the staging scope and preserves separate Remote Config and Miner data from the production scope.
+- Queue a report from **Capabilities** and open [Grafana](http://127.0.0.1:3300). In Explore, choose **Tempo** for traces, **Loki** for structured logs, or **Prometheus** for metrics. Look for services `saplings-starter-api` and `saplings-starter-worker`. API responses carry an `X-Trace-Id` when tracing is enabled. The report worker continues the producer trace and logs the same trace ID. Prometheus receives `starter_http_requests_total` and `starter_worker_jobs_total`.
+- Use the same Compose file list when shutting down the overlays. The Grafana and Mailpit ports bind to loopback. The all-in-one telemetry stack is for local use. Point `OTEL_EXPORTER_OTLP_ENDPOINT` at your managed/private collector for deployments. OTLP uses HTTP/protobuf and accepts exporter headers through `OTEL_EXPORTER_OTLP_HEADERS`. The API also exposes its private `/metrics` endpoint.
+
+## Connect deployed providers
+
+| Integration | Settings and behavior |
+| --- | --- |
+| AWS object storage | Supply `AWS_REGION`, `S3_BUCKET`, and your workload's AWS credentials. Set `S3_KMS_KEY_ID` for a KMS-backed bucket. Upload, read, and delete use user-owned keys under a tenant namespace. AWS-hosted buckets can issue 60-second signed download links. |
+| AWS notifications | Set `STARTER_NOTIFICATIONS=aws` and `SES_FROM` to a verified sender. The SDK adapter supports SES email and SNS SMS. The Starter sends a fixed email only to the signed-in account. Configure AWS sandbox permissions and sending limits before delivery. |
+| Cashfree Checkout | Set `CASHFREE_CLIENT_ID`, `CASHFREE_CLIENT_SECRET`, `CASHFREE_ENVIRONMENT`, `STARTER_CHECKOUT_AMOUNT_MINOR` (INR paise), and a stable `SAPLING_ENCRYPTION_KEY` (32 bytes in Base64). Use `SAPLINGS_DEPLOYMENT_ENVIRONMENT=staging` with sandbox credentials. Register the HTTPS app domain and subscribe to success webhooks at `/api/webhooks/cashfree`. The Starter opens hosted checkout, verifies the raw callback, then reconciles verified provider status before displaying capture. Test with a sandbox merchant before enabling production credentials. |
+| Durable rate limits | Set `VALKEY_URL` to a private TLS endpoint. PostgreSQL is the shared rate-limit store when Valkey is unset. |
+
+Managed object storage and email delivery require cloud IAM permissions. The app owns recipient and object access rules. Keep the provider credentials, signer, and encryption key in your deployment secret manager.
 
 ## Verify
 

@@ -18,6 +18,7 @@ jobs:
       - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
       - run: pnpm run build
       - run: pnpm run build:starter
+      - run: node apps/api/test/cashfree.mjs
       - run: pnpm run build:console
       - name: Verify console onboarding in Chromium
         run: node console/test/browser.mjs
@@ -47,7 +48,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm run starter:prepare
       - name: Start the canonical Starter
-        run: docker compose --env-file .starter/compose.env --profile starter up --build --wait --wait-timeout 180
+        run: >-
+          docker compose --env-file .starter/compose.env -f compose.yaml
+          -f infra/docker/compose.providers.yaml -f infra/docker/compose.observability.yaml
+          --profile starter up --build --wait --wait-timeout 180
       - name: Verify startup rejects incomplete secrets and privileged database roles
         run: |
           starter=(docker compose --env-file .starter/compose.env --profile starter)
@@ -70,13 +74,14 @@ jobs:
           SAPLINGS_TEST_RUNTIME_DATABASE_URL=$(sed -n 's|^DATABASE_URL=\(.*\)@postgres:|\1@127.0.0.1:|p' .starter/compose.env)
           test -n "$SAPLINGS_TEST_RUNTIME_DATABASE_URL"
           export SAPLINGS_TEST_RUNTIME_DATABASE_URL
+          node apps/web/test/provider-stack.mjs
           node apps/web/test/durable-starter.mjs
       - name: Report stack state
         if: failure()
-        run: docker compose --env-file .starter/compose.env --profile starter ps --all
+        run: docker compose --env-file .starter/compose.env -f compose.yaml -f infra/docker/compose.providers.yaml -f infra/docker/compose.observability.yaml --profile starter ps --all
       - name: Shut down the disposable stack
         if: always()
         run: |
           if test -f .starter/compose.env; then
-            docker compose --env-file .starter/compose.env --profile starter down --volumes
+            docker compose --env-file .starter/compose.env -f compose.yaml -f infra/docker/compose.providers.yaml -f infra/docker/compose.observability.yaml --profile starter down --volumes
           fi

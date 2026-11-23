@@ -10,6 +10,7 @@ import { Capabilities } from './starter/Capabilities.js';
 import { Services } from './starter/Services.js';
 import { Identity } from './starter/Identity.js';
 import { Home } from './starter/Home.js';
+import { Providers } from './starter/Providers.js';
 import './style.css';
 
 startFrontendObservability({ endpoint: import.meta.env.VITE_TELEMETRY_URL || undefined });
@@ -38,6 +39,9 @@ function App() {
             <a href="/services" aria-current={path === '/services' ? 'page' : undefined}>
               Services
             </a>
+            <a href="/providers" aria-current={path === '/providers' ? 'page' : undefined}>
+              Providers
+            </a>
             <a href="/catalog" aria-current={path === '/catalog' ? 'page' : undefined}>
               SDK catalog
             </a>
@@ -48,6 +52,8 @@ function App() {
             <Capabilities />
           ) : path === '/services' ? (
             <Services />
+          ) : path === '/providers' ? (
+            <Providers />
           ) : path === '/catalog' ? (
             <Catalog />
           ) : path === '/login' ? (

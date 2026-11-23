@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { Router, type Request } from 'express';
 import { body, RequestError, type createServiceAuth } from '../services/auth.js';
+import type { StarterTelemetry } from './telemetry.js';
 import type { StarterReport } from './reports.js';
 import type { DurableRuntime } from './runtime.js';
 
@@ -14,6 +15,7 @@ type ReportJob = {
 export function jobRoutes(
   runtime: DurableRuntime,
   auth: ReturnType<typeof createServiceAuth>,
+  telemetry: StarterTelemetry,
 ): Router {
   const router = Router();
   async function actor(req: Request) {
@@ -39,9 +41,27 @@ export function jobRoutes(
     const idempotencyKey = createHash('sha256')
       .update(JSON.stringify([context.actorId, key]))
       .digest('hex');
+    const traceparent = await runtime.store.transaction(context.tenantId, async (tx) => {
+      const collection = 'starter-job-trace';
+      const reserved = await tx.get<{ traceparent?: string }>(
+        context.tenantId,
+        collection,
+        idempotencyKey,
+      );
+      if (reserved) return reserved.traceparent;
+      const old = await tx.get<{ payload?: { traceparent?: string } }>(
+        context.tenantId,
+        'durable-jobs',
+        idempotencyKey,
+      );
+      const traceparent = old ? old.payload?.traceparent : telemetry.producerTrace();
+      await tx.put(context.tenantId, collection, { id: idempotencyKey, traceparent });
+      return traceparent;
+    });
     const job = await runtime.sdk.automation.enqueue(context, {
       type: 'starter.report',
       idempotencyKey,
+      payload: traceparent ? { traceparent } : {},
     });
     res.status(202).json(status(job as ReportJob));
   });

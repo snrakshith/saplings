@@ -1,9 +1,10 @@
 import express from 'express';
 import { createIdentityHttpHandler } from '@saplings/kingsman';
-import { createNodeDiagnostics } from '@saplings/quality-node-diagnostics';
 import { InMemoryStore } from '@saplings/sdk';
 
 import { jobRoutes } from './deployment/job-routes.js';
+import { cashfreeRoutes, providerRoutes } from './deployment/providers/routes.js';
+import { startTelemetry, type StarterTelemetry } from './deployment/telemetry.js';
 import { openDurableRuntime } from './deployment/runtime.js';
 import { durableSettings, starterProfile } from './deployment/settings.js';
 import { localServices, serviceErrors, serviceRoutes } from './services/routes.js';
@@ -12,17 +13,18 @@ import { qualityRoutes } from './starter/quality-routes.js';
 import { starterRoutes } from './starter/routes.js';
 import { startStarterSdk } from './starter/runtime.js';
 
-async function main() {
+async function main(telemetry: StarterTelemetry) {
   const profile = starterProfile();
   const port = Number(process.env.PORT ?? 3000);
   if (!Number.isInteger(port) || port < 0 || port > 65535) throw new Error('Invalid PORT.');
   const settings = profile === 'durable' ? durableSettings() : undefined;
-  const runtime = settings && (await openDurableRuntime(settings));
+  const runtime = settings && (await openDurableRuntime(settings, telemetry));
   const app = express();
-  const diagnostics = createNodeDiagnostics();
+  const { diagnostics } = telemetry;
   let totalRequests = 0;
   let closing = false;
   app.disable('x-powered-by');
+  app.use(telemetry.http);
   app.use((req, res, next) => {
     totalRequests++;
     res.set('X-Content-Type-Options', 'nosniff');
@@ -43,7 +45,7 @@ async function main() {
       store: runtime.store,
       login: runtime.login,
       secret: settings.visitorSecret,
-      scope: { ...starterScope, environment: 'production' },
+      scope: { ...starterScope, environment: settings.environment },
       origin: settings.origin,
       reviewPolicy: 'distinct-reviewer',
     });
@@ -59,8 +61,13 @@ async function main() {
         return oidc(req, res);
       next();
     });
+    app.use(cashfreeRoutes(runtime, settings.origin));
     app.use(express.json({ limit: '1mb', inflate: false }));
-    app.use(routes.router, jobRoutes(runtime, routes.auth));
+    app.use(
+      routes.router,
+      jobRoutes(runtime, routes.auth, telemetry),
+      providerRoutes(runtime, routes.auth),
+    );
     app.get('/api/starter/catalog', (_req, res) => res.json(runtime.sdk.featureManifest()));
   } else {
     const store = new InMemoryStore();
@@ -134,7 +141,7 @@ async function main() {
       code = 1;
       console.error('Could not fully close the Starter runtime.');
     } finally {
-      diagnostics.close();
+      await telemetry.close();
       clearTimeout(timeout);
       process.exitCode = code;
     }
@@ -147,9 +154,12 @@ async function main() {
   process.once('SIGTERM', () => void shutdown(0));
 }
 
+let telemetry: StarterTelemetry | undefined;
 try {
-  await main();
+  telemetry = startTelemetry('api');
+  await main(telemetry);
 } catch (error) {
   console.error(error instanceof Error ? error.message : 'Could not start the Starter API.');
   process.exitCode = 1;
+  await telemetry?.close();
 }

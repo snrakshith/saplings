@@ -28,6 +28,7 @@ const servicePaths = [
   '/api/starter/session',
   '/api/starter/operator-token',
   '/api/starter/jobs',
+  '/api/starter/providers',
 ];
 
 export function serviceRoutes(options: {

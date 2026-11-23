@@ -1,0 +1,12 @@
+# Private OTLP collector, Tempo, Loki, Prometheus, and Grafana for local development.
+services:
+  observability:
+    image: grafana/otel-lgtm:0.41.1
+    profiles: [starter]
+    ports: ['127.0.0.1:${STARTER_GRAFANA_PORT:-3300}:3000']
+  api:
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://observability:4318
+  worker:
+    environment:
+      OTEL_EXPORTER_OTLP_ENDPOINT: http://observability:4318
