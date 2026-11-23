@@ -6,18 +6,26 @@
   "scripts": {
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
-    "build": "tsc -p ."
+    "build": "tsc -p .",
+    "worker": "node dist/worker.js",
+    "migrate": "node dist/deployment/migrate.js",
+    "bootstrap": "node dist/deployment/bootstrap.js"
   },
   "dependencies": {
     "express": "^5.1.0",
     "@saplings/quality-node-diagnostics": "workspace:*",
     "@saplings/sdk": "workspace:*",
     "@saplings/remote-config": "workspace:*",
-    "@saplings/miner": "workspace:*"
+    "@saplings/miner": "workspace:*",
+    "@saplings/adapter-drizzle": "workspace:*",
+    "@saplings/kingsman": "workspace:*",
+    "drizzle-orm": "^0.45.2",
+    "pg": "^8.0.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
-    "tsx": "^4.20.6"
+    "tsx": "^4.20.6",
+    "@types/pg": "^8.0.0"
   },
   "files": [
     "dist",

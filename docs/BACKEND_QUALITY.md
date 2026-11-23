@@ -35,7 +35,7 @@ pnpm install
 pnpm run verify:build
 pnpm test
 pnpm run quality -- list
-pnpm run quality -- run performance --config examples/express-app/sapling.config.ts
+pnpm run quality -- run performance --config examples/configs/legacy-backend-quality.ts
 pnpm run quality -- report
 ```
 
@@ -43,7 +43,7 @@ Start the local app using Node.js 26. External package consumers can install `@s
 
 ## One configuration
 
-`examples/express-app/sapling.config.ts` imports the typed 15-category example from `quality-profile.ts`. The runtime and quality tool share the same config entry point. `quality` fields: environment (local/staging only), allowedOrigins, targets, allowedNamespaces, allowedDeployments, suites, maxConcurrency, maxDurationSeconds, outputDir, allowDisruptive. Suites declare id, category, engine, target, probes (relative GET paths/statuses/headers), requests, concurrency, durationSeconds, stages, thresholds, timeoutMs, script or approved namespace/deployment. Native runner samples latency with bounded request count and concurrency; errors include unexpected status or network failure. The native runner uses step changes rather than k6 ramp stages. Use workload-specific data and tenants; a health endpoint is not a real production traffic model.
+`examples/configs/legacy-backend-quality.ts` imports the typed 15-category profile from `legacy-backend-suites.ts`. The canonical Starter provides the target application. `quality` fields: environment (local/staging only), allowedOrigins, targets, allowedNamespaces, allowedDeployments, suites, maxConcurrency, maxDurationSeconds, outputDir, allowDisruptive. Suites declare id, category, engine, target, probes (relative GET paths/statuses/headers), requests, concurrency, durationSeconds, stages, thresholds, timeoutMs, script or approved namespace/deployment. Native runner samples latency with bounded request count and concurrency; errors include unexpected status or network failure. The native runner uses step changes rather than k6 ramp stages. Use workload-specific data and tenants; a health endpoint is not a real production traffic model.
 
 ```ts
 import {defineSaplingConfig} from '@saplings/sdk';
@@ -57,7 +57,7 @@ export default defineSaplingConfig({
 });
 ```
 
-Staging: `QUALITY_STAGING=yes QUALITY_ORIGIN=https://approved.example SAPLING_QUALITY_CONFIRM=yes pnpm run quality -- run load --config examples/express-app/sapling.config.ts`. For disruption, additionally require `SAPLING_QUALITY_DISRUPTIVE=yes` and config `allowDisruptive:true`. Never run against unapproved or production targets. Explicit origin restrictions are not a network sandbox: configure egress controls, DNS and credentials, use scoped sandbox accounts. Operator-supplied scripts and third-party tools are trusted and can perform arbitrary actions; review before execution. Kubernetes default context must be dedicated staging; use scoped RBAC, enforce network policies and review manifests. Example Chaos Mesh scripts require pre-reviewed manifests. Cleanup after cancellation or runner crash remains an operational responsibility.
+Staging: `QUALITY_STAGING=yes QUALITY_ORIGIN=https://approved.example SAPLING_QUALITY_CONFIRM=yes pnpm run quality -- run load --config examples/configs/legacy-backend-quality.ts`. For disruption, additionally require `SAPLING_QUALITY_DISRUPTIVE=yes` and config `allowDisruptive:true`. Never run against unapproved or production targets. Explicit origin restrictions are not a network sandbox: configure egress controls, DNS and credentials, use scoped sandbox accounts. Operator-supplied scripts and third-party tools are trusted and can perform arbitrary actions; review before execution. Kubernetes default context must be dedicated staging; use scoped RBAC, enforce network policies and review manifests. Example Chaos Mesh scripts require pre-reviewed manifests. Cleanup after cancellation or runner crash remains an operational responsibility.
 
 ## CI, Docker and Kubernetes
 

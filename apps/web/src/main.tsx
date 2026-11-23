@@ -8,6 +8,7 @@ import { startFrontendObservability } from '@saplings/quality-browser-runtime';
 import { Catalog } from './starter/Catalog.js';
 import { Capabilities } from './starter/Capabilities.js';
 import { Services } from './starter/Services.js';
+import { Identity } from './starter/Identity.js';
 import { Home } from './starter/Home.js';
 import './style.css';
 
@@ -50,16 +51,7 @@ function App() {
           ) : path === '/catalog' ? (
             <Catalog />
           ) : path === '/login' ? (
-            <>
-              <h1>Identity setup</h1>
-              <p>
-                Configure your issuer and OIDC client in the developer console. The local starter
-                can read the configured issuer and public signing keys.
-              </p>
-              <a className="starter-link" href="/dashboard#kingsman">
-                Open the Kingsman check
-              </a>
-            </>
+            <Identity />
           ) : (
             <Home />
           )}

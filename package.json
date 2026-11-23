@@ -30,7 +30,7 @@
     "build:web": "pnpm run build:hooks && pnpm run build:murphi-ui && pnpm --filter @saplings/starter-web run build",
     "dev:web": "pnpm --filter @saplings/starter-web run dev",
     "dev:api": "pnpm --filter @saplings/starter-api run dev",
-    "build:starter": "tsc -p apps/api && pnpm run build:web",
+    "build:starter": "tsc -p packages/adapter-drizzle && tsc -p apps/api && pnpm run build:web",
     "build:quality:demo": "pnpm run build:starter",
     "typecheck:quality": "pnpm run build:quality && pnpm run build:hooks && pnpm run build:murphi-ui && tsc --noEmit -p apps/web/tsconfig.json && tsc -p apps/api",
     "build:quality:local": "tsc -p packages/observability && tsc -p packages/quality-contracts && tsc -p packages/quality-node-diagnostics && tsc -p packages/quality-core && tsc -p packages/backend-quality && tsc -p packages/quality-browser-runtime && tsc -p packages/frontend-quality/tsconfig.local.json && tsc -p packages/cli",
@@ -86,7 +86,9 @@
     "lint:fix": "oxlint --fix apps console examples packages scripts tests sites/storybook",
     "typecheck": "pnpm run build:all && pnpm run test:types && pnpm run typecheck:platforms && pnpm run typecheck:validation:compat && pnpm run typecheck:quality",
     "build:console": "pnpm --filter @saplings/console run build",
-    "start:console": "pnpm --filter @saplings/console run start"
+    "start:console": "pnpm --filter @saplings/console run start",
+    "dev:starter": "pnpm --parallel --filter @saplings/starter-api --filter @saplings/starter-web run dev",
+    "starter:prepare": "node apps/scripts/prepare-starter.mjs"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

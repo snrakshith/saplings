@@ -64,7 +64,7 @@ pnpm run typecheck:sdk
 pnpm run typecheck:hooks
 pnpm test
 pnpm run test:hooks
-pnpm --filter @sapling/example-express run dev
+pnpm run dev:starter
 pnpm --filter @saplings/starter-web run dev
 pnpm run release:preflight
 ```

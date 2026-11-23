@@ -153,13 +153,12 @@ One TypeScript SDK for reusable SaaS and security capabilities, using a single t
 Use the Node.js 26 LTS version in `.node-version` and pnpm 10.11.0.
 
 ```sh
-pnpm install
-pnpm run verify:build
-pnpm test
-pnpm run build:adapters
-pnpm run check:catalog
-pnpm --filter @sapling/example-express run dev
+pnpm install --frozen-lockfile
+pnpm run build:all
+pnpm run dev:starter
 ```
+
+Open the [Starter guide](apps/README.md) for the Console, Kingsman sign-in, and the durable Compose stack.
 
 ```ts
 import { createSapling, defineSaplingConfig } from '@saplings/sdk';
@@ -189,8 +188,8 @@ lint fixes. Pull requests run `pnpm run format:check`, `pnpm run lint`, and
 - `packages/security`: scanner, defender, report evidence adapters.
 - `packages/catalog`: generated master inventory.
 - `packages/adapter-drizzle`: PostgreSQL store and migrations; `adapter-aws`: S3/SES/SNS; `adapter-app`: GraphQL/Sharp.
-- `packages/cli`: catalog, scanner, doctor; `examples/express-app`: demo and production config template.
-- `tests`: local suite and live PostgreSQL integration; `.github/workflows`: CI; `deploy`: Kubernetes template; `Dockerfile`: example app image.
+- `packages/cli`: catalog, scanner, doctor; `apps`: the full-stack Saplings Starter.
+- `tests`: local suite and live PostgreSQL integration; `.github/workflows`: CI; `deploy`: Kubernetes template; `Dockerfile`: Starter API and worker image.
 - `docs`: design, operations, verification and explicit release gaps.
 
 [Master checklist](docs/MASTER_FEATURE_CHECKLIST.md) · [Getting started](docs/GETTING_STARTED.md) · [Provider matrix](docs/PROVIDER_MATRIX.md) · [Verification](docs/BUILD_VERIFICATION.md) · [Remaining production gates](docs/GAPS_AND_IMPROVEMENTS.md).

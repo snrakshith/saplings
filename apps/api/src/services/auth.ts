@@ -23,30 +23,41 @@ export function body(req: Request): Record<string, unknown> {
   return req.body as Record<string, unknown>;
 }
 
-function cookies(req: Request) {
+function cookies(req: import('node:http').IncomingMessage) {
   return new Map(
-    (req.get('cookie') ?? '')
+    (req.headers.cookie ?? '')
       .split(';')
       .map((part) => part.trim().split('=', 2) as [string, string]),
   );
 }
 
-export function createServiceAuth(authentication: AuthenticationAdapter, secret: string) {
+export type ServiceLogin = {
+  session: AuthenticationAdapter['verifyAccessToken'];
+  bearer: AuthenticationAdapter['verifyAccessToken'];
+  signIn(input: Record<string, unknown>): Promise<string>;
+  revoke?(session: string): Promise<void>;
+  operatorToken?(session: string): Promise<{ token: string; expiresIn: number }>;
+};
+
+export function createServiceAuth(login: ServiceLogin, secret: string, secure: boolean) {
   if (secret.length < 32) throw new Error('A 32-character visitor secret is required.');
   const sign = (value: string) => createHmac('sha256', secret).update(value).digest();
+  const sessionCookie = secure ? '__Host-' + sessionName : sessionName;
   const cookieSettings = {
     httpOnly: true,
     sameSite: 'strict' as const,
-    secure: process.env.NODE_ENV === 'production',
-    path: '/api',
+    secure,
+    path: secure ? '/' : '/api',
   };
 
   async function identity(req: Request, required: boolean) {
     const header = req.get('authorization');
     if (header && !/^Bearer \S+$/.test(header)) throw new RequestError('Invalid credentials.', 401);
-    const token = header?.slice(7) ?? cookies(req).get(sessionName);
-    const principal = token && (await authentication.verifyAccessToken(token));
-    if (!principal && (required || token)) throw new RequestError('Sign in to continue.', 401);
+    const token = cookies(req).get(sessionCookie);
+    const principal = header
+      ? await login.bearer(header.slice(7))
+      : token && (await login.session(token));
+    if (!principal && (required || header)) throw new RequestError('Sign in to continue.', 401);
     return principal || undefined;
   }
   function visitor(req: Request) {
@@ -64,16 +75,32 @@ export function createServiceAuth(authentication: AuthenticationAdapter, secret:
       });
     }
   }
-  async function signIn(res: Response, token: unknown) {
-    if (typeof token !== 'string' || !(await authentication.verifyAccessToken(token)))
-      throw new RequestError('Invalid credentials.', 401);
-    res.cookie(sessionName, token, cookieSettings);
+  async function signIn(req: Request, res: Response, input: Record<string, unknown>) {
+    const token = await login.signIn(input);
+    const previous = cookies(req).get(sessionCookie);
+    if (previous) await login.revoke?.(previous);
+    res.cookie(sessionCookie, token, cookieSettings);
   }
-  function signOut(res: Response) {
-    res.clearCookie(sessionName, cookieSettings);
+  async function signOut(req: Request, res: Response) {
+    const previous = cookies(req).get(sessionCookie);
+    if (previous) await login.revoke?.(previous);
+    res.clearCookie(sessionCookie, cookieSettings);
     res.clearCookie(visitorName, cookieSettings);
   }
-  return { identity, visitor, consent, signIn, signOut };
+  async function operatorToken(req: Request) {
+    const session = cookies(req).get(sessionCookie);
+    if (!session || !login.operatorToken) throw new RequestError('Operator sign-in required.', 401);
+    return login.operatorToken(session);
+  }
+  return {
+    identity,
+    visitor,
+    consent,
+    signIn,
+    signOut,
+    operatorToken,
+    browserSession: (req: import('node:http').IncomingMessage) => cookies(req).get(sessionCookie),
+  };
 }
 
 export function createLocalLogin(tenantId: string) {
@@ -103,5 +130,14 @@ export function createLocalLogin(tenantId: string) {
         return { tenantId, userId: actor.label, roles: [], permissions: actor.permissions };
     },
   };
-  return { authentication, credentials };
+  const login: ServiceLogin = {
+    session: authentication.verifyAccessToken,
+    bearer: authentication.verifyAccessToken,
+    async signIn({ token }) {
+      if (typeof token !== 'string' || !(await authentication.verifyAccessToken(token)))
+        throw new RequestError('Invalid credentials.', 401);
+      return token;
+    },
+  };
+  return { login, credentials };
 }

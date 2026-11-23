@@ -1,5 +1,7 @@
 import { useStarterFetch, type Capability } from './api.js';
 import { CapabilityCard } from './CapabilityCard.js';
+import { ReportJobs } from './ReportJobs.js';
+import type { Session } from './SessionFields.js';
 
 const sections = [
   { title: 'Platform', ids: ['kingsman', 'harbor'] },
@@ -8,7 +10,7 @@ const sections = [
   { title: 'Operations', ids: ['notifications', 'workflows', 'audit', 'governance', 'operations'] },
 ];
 
-export function Capabilities() {
+function LocalCapabilities() {
   const { data, error } = useStarterFetch<{ capabilities: Capability[] }>('/api/starter');
   const byId = new Map(data?.capabilities.map((capability) => [capability.id, capability]));
   return (
@@ -34,5 +36,16 @@ export function Capabilities() {
           </section>
         ))}
     </>
+  );
+}
+
+export function Capabilities() {
+  const { data, error } = useStarterFetch<Session>('/api/starter/session');
+  if (error) return <p role="alert">{error}</p>;
+  if (!data) return <p role="status">Loading dashboard…</p>;
+  return data.profile === 'durable' ? (
+    <ReportJobs signedIn={data.signedIn} />
+  ) : (
+    <LocalCapabilities />
   );
 }

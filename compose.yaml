@@ -1,27 +1,119 @@
-# Optional local PostgreSQL development environment. Use real secrets and a managed DB in production.
+x-starter-image: &starter-image
+  image: saplings-starter-api:local
+  build: { context: ., dockerfile: Dockerfile }
+  profiles: [starter]
+  user: '${STARTER_UID:-1000}:${STARTER_GID:-1000}'
+
+x-runtime-environment: &runtime-environment
+  APP_ORIGIN: ${APP_ORIGIN:-https://localhost:8443}
+  DATABASE_URL: ${DATABASE_URL:-}
+  SAPLINGS_SIGNING_KEY_FILE: /run/starter/signing-key.pem
+  SAPLINGS_VISITOR_SECRET: ${SAPLINGS_VISITOR_SECRET:-}
+
+x-runtime: &runtime
+  <<: *starter-image
+  environment: *runtime-environment
+  volumes:
+    - type: bind
+      source: ${STARTER_FILES:-./.starter}/signing-key.pem
+      target: /run/starter/signing-key.pem
+      read_only: true
+      bind: { create_host_path: false }
+
 services:
   postgres:
     image: postgres:17-alpine
     environment:
       POSTGRES_DB: sapling_dev
       POSTGRES_USER: sapling_dev
-      POSTGRES_PASSWORD: local_only_change_me
+      POSTGRES_PASSWORD: ${STARTER_DB_ADMIN_PASSWORD:-local_only_change_me}
     ports:
-      - "127.0.0.1:5432:5432"
+      - '127.0.0.1:5432:5432'
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sapling_dev -d sapling_dev"]
+      test: ['CMD-SHELL', 'pg_isready -U sapling_dev -d sapling_dev']
       interval: 5s
       timeout: 3s
       retries: 10
   valkey:
     image: valkey/valkey:8-alpine
-    ports: ["127.0.0.1:6379:6379"]
+    profiles: [valkey]
+    ports: ['127.0.0.1:6379:6379']
     healthcheck:
-      test: ["CMD", "valkey-cli", "ping"]
+      test: ['CMD', 'valkey-cli', 'ping']
       interval: 5s
       timeout: 3s
+      retries: 10
+  migrate:
+    <<: *starter-image
+    command: [node, dist/deployment/migrate.js]
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-}
+      SAPLINGS_MIGRATION_DATABASE_URL: ${SAPLINGS_MIGRATION_DATABASE_URL:-}
+    depends_on:
+      postgres: { condition: service_healthy }
+  bootstrap:
+    <<: *runtime
+    command: [node, dist/deployment/bootstrap.js]
+    environment:
+      <<: *runtime-environment
+      SAPLINGS_BOOTSTRAP_FILE: /run/starter/accounts.json
+    volumes:
+      - type: bind
+        source: ${STARTER_FILES:-./.starter}/signing-key.pem
+        target: /run/starter/signing-key.pem
+        read_only: true
+        bind: { create_host_path: false }
+      - type: bind
+        source: ${STARTER_FILES:-./.starter}/accounts.json
+        target: /run/starter/accounts.json
+        read_only: true
+        bind: { create_host_path: false }
+    depends_on:
+      migrate: { condition: service_completed_successfully }
+  api:
+    <<: *runtime
+    depends_on:
+      bootstrap: { condition: service_completed_successfully }
+    healthcheck:
+      test:
+        [
+          CMD,
+          node,
+          -e,
+          "fetch('http://127.0.0.1:3000/ready').then(r=>{if(!r.ok) process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 5s
+      timeout: 4s
+      retries: 10
+  worker:
+    <<: *runtime
+    command: [node, dist/worker.js]
+    depends_on:
+      bootstrap: { condition: service_completed_successfully }
+  web:
+    profiles: [starter]
+    build: { context: ., dockerfile: infra/docker/Dockerfile.web }
+    ports: ['${STARTER_BIND_ADDRESS:-127.0.0.1}:${STARTER_HTTPS_PORT:-8443}:8443']
+    volumes:
+      - type: bind
+        source: ${STARTER_FILES:-./.starter}/tls-cert.pem
+        target: /run/starter/tls-cert.pem
+        read_only: true
+        bind: { create_host_path: false }
+      - type: bind
+        source: ${STARTER_FILES:-./.starter}/tls-key.pem
+        target: /run/starter/tls-key.pem
+        read_only: true
+        bind: { create_host_path: false }
+    depends_on:
+      api: { condition: service_healthy, restart: true }
+    healthcheck:
+      test:
+        [CMD, wget, '-q', '--no-check-certificate', '-O', /dev/null, 'https://127.0.0.1:8443/ready']
+      interval: 5s
+      timeout: 4s
       retries: 10
 volumes:
   pgdata:

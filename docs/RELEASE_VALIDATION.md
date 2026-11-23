@@ -53,7 +53,7 @@ Generate source hash: `pnpm run release:gate -- --print-source-hash`. Use `scrip
 
 Use `pnpm run quality -- run --scope fullstack --profile release --config sapling.config.ts` for dedicated staging. Retain raw external evidence, environment details and results. This does not automatically close release gates. See `BACKEND_QUALITY.md`.
 
-Full quality build, live backend and live frontend gate evidence are separately required. See QUALITY_INTEGRATION.md. Legacy profiles use `pnpm run quality:legacy -- run --config examples/express-app/sapling.config.ts`.
+Full quality build, live backend and live frontend gate evidence are separately required. See QUALITY_INTEGRATION.md. Legacy profiles use `pnpm run quality:legacy -- run --config examples/configs/legacy-backend-quality.ts`.
 
 ## v0.7.0 update
 

@@ -1,13 +1,13 @@
-import { createSapling } from '@saplings/sdk';
+import { createSapling, type Store } from '@saplings/sdk';
 
 import { project, starterConfig, setup, tenant } from '../sapling.config.js';
 import { localNotifications, localOperation, localPayments } from './local-adapters.js';
 
-export function starterRuntimeConfig(port: number) {
+export function starterRuntimeConfig(port: number, store?: Store) {
   const config = starterConfig(port);
   return {
     ...config,
-    providers: { notifications: localNotifications, payments: localPayments },
+    providers: { store, notifications: localNotifications, payments: localPayments },
     services: {
       ...config.services,
       providerOperations: { [setup.operations.operation]: localOperation },
@@ -15,8 +15,8 @@ export function starterRuntimeConfig(port: number) {
   };
 }
 
-export async function startStarterSdk(port: number) {
-  const config = starterRuntimeConfig(port);
+export async function startStarterSdk(port: number, store: Store) {
+  const config = starterRuntimeConfig(port, store);
   const sdk = createSapling(config);
   const context = {
     tenantId: tenant.id,

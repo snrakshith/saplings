@@ -2,22 +2,12 @@ import { useEffect, useMemo, useState } from 'react';
 import { Button, Card } from '@saplings/murphi-ui';
 import { createConfigReader } from '@saplings/remote-config/browser';
 import { createMinerClient } from '@saplings/miner/browser';
-import { request } from './api.js';
+import { post, request } from './api.js';
+import { SessionFields, type Session } from './SessionFields.js';
 
 const miner = createMinerClient();
-type Session = { signedIn: boolean; consent: boolean };
-
-function post<T>(path: string, payload: unknown) {
-  return request<T>(path, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload),
-  });
-}
-
 export function Services() {
-  const [session, setSession] = useState<Session>({ signedIn: false, consent: false });
-  const [token, setToken] = useState('');
+  const [session, setSession] = useState<Session>();
   const [welcome, setWelcome] = useState('Welcome to Saplings Starter');
   const [workspace, setWorkspace] = useState('Your workspace is ready');
   const [experiment, setExperiment] = useState('onboarding');
@@ -40,13 +30,14 @@ export function Services() {
       setError(error.message),
     );
   }, []);
+  const signedIn = session?.signedIn ?? false;
   useEffect(() => {
     let active = true;
-    if (!session.signedIn) privateConfig.reset();
+    if (!signedIn) privateConfig.reset();
     async function read() {
       const value = await publicConfig.read();
       if (active) setWelcome(value.message);
-      if (session.signedIn) {
+      if (signedIn) {
         const value = await privateConfig.read();
         if (active) setWorkspace(value.message);
       }
@@ -57,7 +48,7 @@ export function Services() {
       active = false;
       clearInterval(timer);
     };
-  }, [session.signedIn, privateConfig, publicConfig]);
+  }, [signedIn, privateConfig, publicConfig]);
 
   async function run(task: () => Promise<string>) {
     setBusy(true);
@@ -71,13 +62,15 @@ export function Services() {
       setBusy(false);
     }
   }
-  async function login() {
-    await post('/api/starter/session', { token });
-    setToken('');
+  if (!session) return error ? <p role="alert">{error}</p> : <p role="status">Loading services…</p>;
+
+  async function login(input: { login: string; password: string } | { token: string }) {
+    await post('/api/starter/session', input);
     privateConfig.reset();
-    setSession({ ...session, signedIn: true });
-    if (session.consent) await miner.identify();
-    return session.consent ? 'Signed in and linked anonymous events.' : 'Signed in.';
+    const next = await request<Session>('/api/starter/session');
+    setSession(next);
+    if (next.consent) await miner.identify();
+    return next.consent ? 'Signed in and linked anonymous events.' : 'Signed in.';
   }
   return (
     <>
@@ -120,7 +113,7 @@ export function Services() {
               void run(async () => {
                 await post('/api/starter/session', { logout: true });
                 privateConfig.reset();
-                setSession({ signedIn: false, consent: false });
+                setSession({ ...session, signedIn: false, consent: false, canOperate: false });
                 return 'Signed out.';
               })
             }
@@ -128,25 +121,11 @@ export function Services() {
             Sign out
           </Button>
         ) : (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              void run(login);
-            }}
-          >
-            <label className="catalog-search">
-              Starter member token
-              <input
-                type="password"
-                required
-                value={token}
-                onChange={(event) => setToken(event.target.value)}
-              />
-            </label>
-            <Button type="submit" disabled={busy}>
-              Sign in
-            </Button>
-          </form>
+          <SessionFields
+            durable={session.profile === 'durable'}
+            disabled={busy}
+            signIn={(input) => run(() => login(input))}
+          />
         )}
         <div className="starter-actions">
           <Button

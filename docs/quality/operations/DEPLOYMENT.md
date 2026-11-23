@@ -6,14 +6,11 @@ Use Node 22+, install dependencies, `pnpm run build`, run sample API (`pnpm run 
 
 ## Docker
 
-- `infra/docker/Dockerfile.api`: sample Express app.
-- `infra/docker/Dockerfile.web` and `nginx.conf`: sample Vite build served with security headers and SPA fallback.
-- `infra/docker/Dockerfile.runner`: Playwright-based test runner. **Does not bundle** all k6/Semgrep/Trivy/ZAP/Schemathesis binaries; supply these in derived images or separate engine Jobs.
-- `infra/docker/compose.yaml`: basic example apps, not an orchestrated full test platform.
+- `Dockerfile` builds the Starter API and worker.
+- `infra/docker/Dockerfile.web` builds the Starter web app and same-origin proxy.
+- `infra/docker/Dockerfile.runner` builds the separate quality runner.
 
-```bash
-docker compose -f infra/docker/compose.yaml up --build
-```
+Use the [Saplings Starter guide](../../../apps/README.md#run-the-durable-stack) to run the full stack. Keep the quality runner and its staged workloads separate from application deployment.
 
 For reproducible deployments: generate and commit `pnpm-lock.yaml` using a connected npm environment, replace example image tags with immutable digests, use `npm ci`, maintain SBOM and patch cadence. The ZIP does not contain an npm-generated lockfile because dependency installation was unavailable in its assembly environment.
 

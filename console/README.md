@@ -30,8 +30,8 @@ From the repository root, install dependencies and run `pnpm run build:all`. Sta
 
 | Process | Command | URL |
 | --- | --- | --- |
-| Starter API | `pnpm run dev:api` | `http://127.0.0.1:3000` |
-| Starter web | `pnpm run dev:web` | `http://localhost:5173` |
+| Starter API | `pnpm run dev:starter` | `http://127.0.0.1:3000` |
+| Starter web | `Started with the API | `http://localhost:5173` |
 | Developer console | `pnpm run start:console` | `http://127.0.0.1:4178` |
 
 Unlock the console and look for **Saplings Starter → Local workspace**. The starter appears in either startup order. The console imports the Kingsman and Harbor configuration and all eleven SDK drafts from the starter's [`sapling.config.ts`](../apps/api/src/sapling.config.ts).
@@ -40,7 +40,7 @@ The starter publishes a credential-free loopback manifest during development. Se
 
 ## Work with live application services
 
-The **Remote Config** and **Miner** tabs call the selected application's service API. The console access token opens the console and the application operator token authorizes service actions. Remote Config stores revisions and review history in the application. Miner stores consented events, reports, targeting rules, and experiments in the same application boundary. The [starter guide](../apps/README.md#try-remote-config-and-miner) walks through both workflows.
+The **Remote Config** and **Miner** tabs call the selected application's service API. The console access token opens the console and the application operator token authorizes service actions. Remote Config stores revisions and review history in the application. Miner stores consented events, reports, targeting rules, and experiments in the same application boundary. The [starter guide](../apps/README.md#try-remote-config-and-miner) walks through both workflows. Follow its [durable setup](../apps/README.md#run-the-durable-stack) to connect over HTTPS with Kingsman operator tokens.
 
 The local starter target is enabled by default. Use `SAPLINGS_SERVICE_TARGETS` to supply a JSON array of `{ "origin", "projectId", "tenantId" }` objects when connecting other applications. For one target, `SAPLINGS_SERVICE_ORIGIN`, `SAPLINGS_SERVICE_PROJECT`, and `SAPLINGS_SERVICE_TENANT` override the starter defaults. Targets must use HTTPS or loopback HTTP. The console matches the selected project and tenant to the configured target and forwards an operator token only to that origin. Each application verifies the operator's access and chooses its own runtime environment.
 

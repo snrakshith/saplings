@@ -34,3 +34,43 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with: { name: sapling-quality-pr, path: quality-results/, if-no-files-found: warn }
+
+  durable-starter:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: pnpm run starter:prepare
+      - name: Start the canonical Starter
+        run: docker compose --env-file .starter/compose.env --profile starter up --build --wait --wait-timeout 180
+      - name: Verify startup rejects incomplete secrets and privileged database roles
+        run: |
+          starter=(docker compose --env-file .starter/compose.env --profile starter)
+          if "${starter[@]}" run --rm --no-deps -e SAPLINGS_VISITOR_SECRET= api; then
+            exit 1
+          fi
+          owner_url=$(sed -n 's/^SAPLINGS_MIGRATION_DATABASE_URL=//p' .starter/compose.env)
+          if "${starter[@]}" run --rm --no-deps -e "DATABASE_URL=$owner_url" api; then
+            exit 1
+          fi
+      - name: Verify durable sign-in, config, events, jobs, and data after a restart
+        run: |
+          export NODE_EXTRA_CA_CERTS="$PWD/.starter/tls-cert.pem" SAPLINGS_TEST_COMPOSE=1
+          export SAPLINGS_TEST_RUNTIME_DATABASE_URL=$(sed -n 's|^DATABASE_URL=\(.*\)@postgres:|\1@127.0.0.1:|p' .starter/compose.env)
+          test -n "$SAPLINGS_TEST_RUNTIME_DATABASE_URL"
+          node apps/web/test/durable-starter.mjs
+      - name: Report stack state
+        if: failure()
+        run: docker compose --env-file .starter/compose.env --profile starter ps --all
+      - name: Shut down the disposable stack
+        if: always()
+        run: |
+          if test -f .starter/compose.env; then
+            docker compose --env-file .starter/compose.env --profile starter down --volumes
+          fi

@@ -12,6 +12,14 @@ export async function request<T>(path: string, options?: RequestInit): Promise<T
   return response.json();
 }
 
+export function post<T>(path: string, payload: unknown, headers: Record<string, string> = {}) {
+  return request<T>(path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...headers },
+    body: JSON.stringify(payload),
+  });
+}
+
 export function useStarterFetch<T>(path: string) {
   const [data, setData] = useState<T>();
   const [error, setError] = useState<string>();
