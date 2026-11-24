@@ -18,11 +18,13 @@ jobs:
       - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
       - run: pnpm run build
       - run: pnpm run build:starter
+      - run: node starter/backend/test/platform-config.mjs
+      - run: node starter/backend/test/cashfree.mjs
       - run: pnpm run build:console
       - name: Verify console onboarding in Chromium
         run: node console/test/browser.mjs
       - name: Verify starter workflows in Chromium
-        run: node apps/web/test/starter-browser.mjs
+        run: node starter/frontend/test/starter-browser.mjs
       - name: Start backend and frontend
         run: |
           pnpm run dev:api > /tmp/api.log 2>&1 &
@@ -34,3 +36,56 @@ jobs:
       - uses: actions/upload-artifact@v7
         if: always()
         with: { name: sapling-quality-pr, path: quality-results/, if-no-files-found: warn }
+
+  durable-starter:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .node-version
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run starter:prepare
+      - name: Start the canonical Starter
+        run: >-
+          docker compose --project-directory . --env-file starter/.starter/compose.env -f starter/deploy/compose.yaml
+          -f starter/deploy/compose.providers.yaml -f starter/deploy/compose.observability.yaml
+          --profile starter up --build --wait --wait-timeout 180
+      - name: Verify startup rejects incomplete secrets and privileged database roles
+        run: |
+          starter=(docker compose --project-directory . --env-file starter/.starter/compose.env -f starter/deploy/compose.yaml --profile starter)
+          if "${starter[@]}" run --rm --no-deps -e SAPLINGS_VISITOR_SECRET= api; then
+            exit 1
+          fi
+          owner_url=$(sed -n 's/^SAPLINGS_MIGRATION_DATABASE_URL=//p' starter/.starter/compose.env)
+          if "${starter[@]}" run --rm --no-deps -e "DATABASE_URL=$owner_url" api; then
+            exit 1
+          fi
+      - name: Verify durable sign-in, config, events, jobs, and data after a restart
+        run: |
+          if command -v google-chrome >/dev/null; then
+            PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH=$(command -v google-chrome)
+            export PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+          else
+            pnpm exec playwright install --with-deps chromium
+          fi
+          export NODE_EXTRA_CA_CERTS="$PWD/starter/.starter/tls-cert.pem" SAPLINGS_TEST_COMPOSE=1
+          SAPLINGS_TEST_RUNTIME_DATABASE_URL=$(sed -n 's|^DATABASE_URL=\(.*\)@postgres:|\1@127.0.0.1:|p' starter/.starter/compose.env)
+          test -n "$SAPLINGS_TEST_RUNTIME_DATABASE_URL"
+          export SAPLINGS_TEST_RUNTIME_DATABASE_URL
+          node starter/frontend/test/provider-stack.mjs
+          node starter/frontend/test/durable-starter.mjs
+      - name: Report stack state
+        if: failure()
+        run: |
+          starter=(docker compose --project-directory . --env-file starter/.starter/compose.env -f starter/deploy/compose.yaml -f starter/deploy/compose.providers.yaml -f starter/deploy/compose.observability.yaml --profile starter)
+          "${starter[@]}" ps --all
+          "${starter[@]}" logs --no-color --tail 60 provider-init bootstrap api worker web observability
+      - name: Shut down the disposable stack
+        if: always()
+        run: |
+          if test -f starter/.starter/compose.env; then
+            docker compose --project-directory . --env-file starter/.starter/compose.env -f starter/deploy/compose.yaml -f starter/deploy/compose.providers.yaml -f starter/deploy/compose.observability.yaml --profile starter down --volumes
+          fi

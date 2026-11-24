@@ -53,7 +53,7 @@ if (
   /\b(?:document|window|localStorage)\./.test(nativeSources)
 )
   throw Error('React Native imported web runtime');
-if (!fs.readFileSync('apps/web/src/main.tsx', 'utf8').includes('@saplings/murphi-ui'))
+if (!fs.readFileSync('starter/frontend/src/main.tsx', 'utf8').includes('@saplings/murphi-ui'))
   throw Error('Web reference app not integrated');
 const packageCount = fs
   .readdirSync('packages', { withFileTypes: true })

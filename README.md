@@ -4,7 +4,7 @@ Start with the [SDK quickstart](sites/quickstart.mdx), [SDK API signatures](pack
 
 The SDK's source is grouped by domain under `packages/sdk/src/`. Start at `index.ts` for SDK construction, then look in folders such as `billing/`, `data/`, `feature-flags/`, or `workflows/` for the implementation. Applications continue to import from `@saplings/sdk`.
 
-The [Saplings Starter](apps/README.md) provides a runnable React and Express foundation with the SDK wired in.
+The [Saplings Starter](starter/README.md) provides a runnable React and Express foundation with the SDK wired in.
 
 The [Saplings Developer Console](console/README.md) guides application and tenant onboarding, Kingsman identity setup, and Harbor route registration.
 
@@ -153,13 +153,12 @@ One TypeScript SDK for reusable SaaS and security capabilities, using a single t
 Use the Node.js 26 LTS version in `.node-version` and pnpm 10.11.0.
 
 ```sh
-pnpm install
-pnpm run verify:build
-pnpm test
-pnpm run build:adapters
-pnpm run check:catalog
-pnpm --filter @sapling/example-express run dev
+cd starter
+pnpm install --frozen-lockfile
+pnpm dev
 ```
+
+Open the [Starter guide](starter/README.md) for the Console, Kingsman sign-in, and the durable Compose stack.
 
 ```ts
 import { createSapling, defineSaplingConfig } from '@saplings/sdk';
@@ -189,8 +188,8 @@ lint fixes. Pull requests run `pnpm run format:check`, `pnpm run lint`, and
 - `packages/security`: scanner, defender, report evidence adapters.
 - `packages/catalog`: generated master inventory.
 - `packages/adapter-drizzle`: PostgreSQL store and migrations; `adapter-aws`: S3/SES/SNS; `adapter-app`: GraphQL/Sharp.
-- `packages/cli`: catalog, scanner, doctor; `examples/express-app`: demo and production config template.
-- `tests`: local suite and live PostgreSQL integration; `.github/workflows`: CI; `deploy`: Kubernetes template; `Dockerfile`: example app image.
+- `packages/cli`: catalog, scanner, doctor; `starter`: the full-stack Saplings Starter.
+- `tests`: local suite and live PostgreSQL integration; `.github/workflows`: CI; `deploy`: Kubernetes template; `starter/deploy/Dockerfile.api`: Starter API and worker image.
 - `docs`: design, operations, verification and explicit release gaps.
 
 [Master checklist](docs/MASTER_FEATURE_CHECKLIST.md) · [Getting started](docs/GETTING_STARTED.md) · [Provider matrix](docs/PROVIDER_MATRIX.md) · [Verification](docs/BUILD_VERIFICATION.md) · [Remaining production gates](docs/GAPS_AND_IMPROVEMENTS.md).

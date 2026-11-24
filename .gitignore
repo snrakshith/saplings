@@ -17,3 +17,5 @@ quality-baselines/
 .vitest/
 
 storybook-static/
+
+.starter/

@@ -14,7 +14,7 @@ const HELP = `Sapling Quality Platform — unified React + Node.js quality CLI
 
 Usage:
   sapling quality report --file quality-results/<run>/report.json
-  sapling quality legacy run --config examples/express-app/sapling.config.ts
+  sapling quality legacy run --config examples/configs/legacy-backend-quality.ts
   sapling quality list
   sapling quality doctor
   sapling quality run --config sapling.config.ts --profile pr

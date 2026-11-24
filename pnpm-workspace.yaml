@@ -1,7 +1,9 @@
 packages:
   - 'packages/*'
   - 'examples/*'
-  - 'apps/*'
+  - 'starter'
+  - 'starter/backend'
+  - 'starter/frontend'
   - 'console'
   - 'sites/storybook'
 

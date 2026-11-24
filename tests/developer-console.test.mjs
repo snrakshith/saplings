@@ -6,9 +6,9 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { afterEach, beforeEach, test } from 'vitest';
 
-import { capabilities } from '../apps/api/src/starter/checks.ts';
+import { capabilities } from '../starter/backend/src/starter/checks.ts';
 import { domains } from '../console/src/onboarding.ts';
-import { startStarterSdk } from '../apps/api/src/starter/runtime.ts';
+import { startStarterSdk } from '../starter/backend/src/starter/runtime.ts';
 import { createSapling } from '../packages/sdk/dist/index.js';
 import { createConsoleApp } from '../console/src/server/app.ts';
 import { ConsoleStore } from '../console/src/server/store.ts';

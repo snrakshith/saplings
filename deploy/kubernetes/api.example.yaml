@@ -1,5 +1,5 @@
-# Deployment template: build/publish image, create sapling-config secret with config.ts,
-# and sapling-env secret with runtime credentials first. Adapt NetworkPolicy and ingress.
+# Deploy the canonical Starter API image after running the migrations and account bootstrap.
+# See starter/README.md for runtime settings. Supply a private network and HTTPS ingress.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -16,12 +16,12 @@ spec:
         { runAsNonRoot: true, runAsUser: 1000, seccompProfile: { type: RuntimeDefault } }
       containers:
         - name: api
-          image: example.invalid/sapling-api:0.10.0
+          image: example.invalid/saplings-starter-api:replace-me
           ports: [{ containerPort: 3000 }]
           env:
-            - { name: SAPLING_CONFIG_PATH, value: /app/config-mounted/config.ts }
-          envFrom: [{ secretRef: { name: sapling-env } }]
-          volumeMounts: [{ name: config, mountPath: /app/config-mounted, readOnly: true }]
+            - { name: SAPLINGS_SIGNING_KEY_FILE, value: /run/starter/signing-key.pem }
+          envFrom: [{ secretRef: { name: saplings-starter-env } }]
+          volumeMounts: [{ name: signing, mountPath: /run/starter, readOnly: true }]
           securityContext: { allowPrivilegeEscalation: false, capabilities: { drop: [ALL] } }
           resources:
             requests: { cpu: 100m, memory: 128Mi }
@@ -29,7 +29,7 @@ spec:
           readinessProbe: { httpGet: { path: /ready, port: 3000 }, periodSeconds: 10 }
           livenessProbe: { httpGet: { path: /health, port: 3000 }, periodSeconds: 20 }
       volumes:
-        - { name: config, secret: { secretName: sapling-config } }
+        - { name: signing, secret: { secretName: saplings-starter-signing } }
 ---
 apiVersion: v1
 kind: Service

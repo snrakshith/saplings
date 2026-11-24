@@ -1,5 +1,5 @@
 image: ''
-configPath: examples/express-app/sapling.config.ts
+configPath: examples/configs/legacy-backend-quality.ts
 selection: performance
 schedule: ''
 namespace: sapling-quality

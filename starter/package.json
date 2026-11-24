@@ -1,0 +1,19 @@
+{
+  "name": "@saplings/starter",
+  "version": "0.17.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^26.13.1",
+    "pnpm": ">=10 <11"
+  },
+  "scripts": {
+    "dev": "pnpm run -w dev:starter",
+    "build": "pnpm run -w build:starter:dependencies && pnpm run -w build:starter",
+    "verify": "pnpm run -w verify:starter",
+    "console": "pnpm run -w build:starter:dependencies && pnpm run -w build:console && pnpm run -w start:console",
+    "stack:prepare": "node scripts/prepare-starter.mjs",
+    "stack:up": "node scripts/compose.mjs up",
+    "stack:down": "node scripts/compose.mjs down"
+  }
+}

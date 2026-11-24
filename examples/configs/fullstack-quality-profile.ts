@@ -74,7 +74,7 @@ export default defineQualityConfig({
       { name: 'desktop', width: 1440, height: 900 },
     ],
     visual: { baselineDir: 'quality-baselines', thresholdRatio: 0.01 },
-    bundle: { directory: 'apps/web/dist', maxTotalGzipKb: 350 },
+    bundle: { directory: 'starter/frontend/dist', maxTotalGzipKb: 350 },
     perf: { maxNavigationMs: 4000, maxLcpMs: 2500, maxLongTaskMs: 200 },
     accessibility: { wcagTags: ['wcag2a', 'wcag2aa', 'wcag21aa'], criticalViolationsMax: 0 },
     memory: { iterations: 5, maxHeapGrowthMb: 15 },

@@ -1,3 +1,4 @@
+# Stage the canonical Starter after running its migrations and account bootstrap. See starter/README.md.
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -10,11 +11,17 @@ spec:
     metadata: { labels: { app: sapling-example-api } }
     spec:
       terminationGracePeriodSeconds: 25
-      securityContext: { runAsNonRoot: true }
+      securityContext: { runAsNonRoot: true, runAsUser: 1000 }
+      volumes:
+        - { name: signing, secret: { secretName: saplings-starter-signing } }
       containers:
         - name: api
-          image: ghcr.io/YOUR_ORG/sapling-example-api:CHANGE_ME
+          image: ghcr.io/YOUR_ORG/saplings-starter-api:CHANGE_ME
           ports: [{ containerPort: 3000 }]
+          env:
+            - { name: SAPLINGS_SIGNING_KEY_FILE, value: /run/starter/signing-key.pem }
+          envFrom: [{ secretRef: { name: saplings-starter-env } }]
+          volumeMounts: [{ name: signing, mountPath: /run/starter, readOnly: true }]
           resources:
             requests: { cpu: 100m, memory: 128Mi }
             limits: { cpu: '1', memory: 512Mi }
@@ -80,22 +87,30 @@ spec:
   template:
     metadata: { labels: { app: sapling-example-web } }
     spec:
+      volumes:
+        - name: tls
+          secret:
+            secretName: saplings-starter-tls
+            items:
+              - { key: tls.crt, path: tls-cert.pem }
+              - { key: tls.key, path: tls-key.pem }
       containers:
         - name: web
-          image: ghcr.io/YOUR_ORG/sapling-example-web:CHANGE_ME
-          ports: [{ containerPort: 8080 }]
+          image: ghcr.io/YOUR_ORG/saplings-starter-web:CHANGE_ME
+          ports: [{ containerPort: 8443 }]
+          volumeMounts: [{ name: tls, mountPath: /run/starter, readOnly: true }]
           resources:
             requests: { cpu: 100m, memory: 64Mi }
             limits: { cpu: 500m, memory: 256Mi }
           startupProbe:
-            httpGet: { path: /health, port: 8080 }
+            httpGet: { path: /health, port: 8443, scheme: HTTPS }
             failureThreshold: 10
             periodSeconds: 5
           readinessProbe:
-            httpGet: { path: /health, port: 8080 }
+            httpGet: { path: /health, port: 8443, scheme: HTTPS }
             periodSeconds: 5
           livenessProbe:
-            httpGet: { path: /health, port: 8080 }
+            httpGet: { path: /health, port: 8443, scheme: HTTPS }
             periodSeconds: 10
 ---
 apiVersion: v1
@@ -103,4 +118,4 @@ kind: Service
 metadata: { name: sapling-example-web, namespace: sapling-quality }
 spec:
   selector: { app: sapling-example-web }
-  ports: [{ name: http, port: 8080, targetPort: 8080 }]
+  ports: [{ name: http, port: 8443, targetPort: 8443 }]

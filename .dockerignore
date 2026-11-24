@@ -6,3 +6,8 @@
 
 .vitest/
 coverage/
+
+.starter/
+.env.*
+
+starter/.starter/
