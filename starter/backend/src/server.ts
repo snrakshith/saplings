@@ -2,9 +2,11 @@ import express from 'express';
 import { createIdentityHttpHandler } from '@saplings/kingsman';
 import { InMemoryStore } from '@saplings/sdk';
 
+import { activityRoutes } from './features/activity.js';
 import { workspaceProfileRoutes } from './features/workspace-profile.js';
 import { requestPolicy } from './http/request-policy.js';
-import { openCatalogGateway, internalCatalogPath, sdkCatalogPath } from './platform/harbor.js';
+import { openCatalogGateway } from './platform/harbor.js';
+import { internalCatalogPath, sdkCatalogPath } from './config/harbor.js';
 import { jobRoutes } from './deployment/job-routes.js';
 import { cashfreeRoutes, providerRoutes } from './deployment/providers/routes.js';
 import { startTelemetry, type StarterTelemetry } from './deployment/telemetry.js';
@@ -44,6 +46,7 @@ async function main(telemetry: StarterTelemetry) {
   let catalogGateway: ReturnType<typeof openCatalogGateway> | undefined;
   let credentials:
     { store: InMemoryStore; values: ReturnType<typeof localServices>['credentials'] } | undefined;
+  const sdk = async () => runtime?.sdk ?? (await starter).sdk;
   if (runtime && settings) {
     const routes = serviceRoutes({
       store: runtime.store,
@@ -71,7 +74,8 @@ async function main(telemetry: StarterTelemetry) {
       routes.router,
       jobRoutes(runtime, routes.auth, telemetry),
       providerRoutes(runtime, routes.auth),
-      workspaceProfileRoutes(runtime.store, routes.auth),
+      workspaceProfileRoutes(runtime.store, sdk, routes.auth),
+      activityRoutes(sdk, routes.auth),
     );
     app.get(internalCatalogPath, (req, res) => {
       if (req.socket.remoteAddress !== '127.0.0.1') return res.sendStatus(404);
@@ -90,9 +94,10 @@ async function main(telemetry: StarterTelemetry) {
     app.use(express.json({ limit: '1mb' }));
     app.use(
       services.router,
+      workspaceProfileRoutes(store, sdk, services.auth),
+      activityRoutes(sdk, services.auth),
       starterRoutes(() => starter),
       qualityRoutes(() => starter),
-      workspaceProfileRoutes(store, services.auth),
     );
   }
   app.get('/health', (_req, res) => res.json({ status: 'ok', uptime: process.uptime() }));
@@ -100,8 +105,7 @@ async function main(telemetry: StarterTelemetry) {
     if (closing) return res.status(503).json({ status: 'not-ready' });
     if (runtime && !(await catalogGateway?.catch(() => undefined)))
       return res.status(503).json({ status: 'not-ready' });
-    const sdk = runtime?.sdk ?? (await starter).sdk;
-    const result = await sdk.readiness();
+    const result = await (await sdk()).readiness();
     res.status(result.status === 'ready' ? 200 : 503).json(result);
   });
   app.get('/metrics', (_req, res) => {

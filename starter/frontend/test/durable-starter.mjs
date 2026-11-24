@@ -73,7 +73,16 @@ try {
   await status(await api('/internal/api/starter/catalog'), 404);
   await status(await api('/api/starter/profile'), 401);
 
+  const home = await browser.newPage({ ignoreHTTPSErrors: true });
+  const homeRequests = [];
+  home.on('request', (request) => homeRequests.push(new URL(request.url()).pathname));
+  await home.goto(origin);
+  await home.getByRole('link', { name: 'Sign in to your workspace' }).waitFor();
+  assert.equal(homeRequests.includes('/api/items'), false);
+  await home.close();
+  await status(await api('/api/starter/activity'), 401);
   const member = await login(browser, 'member');
+  assert.equal((await member.request.get(origin + '/api/starter/activity')).status(), 403);
   const sessionCookie = (await member.context().cookies()).find(
     (cookie) => cookie.name === '__Host-saplings-starter-session',
   );
@@ -153,6 +162,11 @@ try {
     interests: ['observability'],
   });
 
+  await reviewer.page.goto(origin + '/activity');
+  await reviewer.page.getByText('profile.updated', { exact: true }).first().waitFor();
+  await member.goto(origin + '/settings');
+  assert.equal(await member.getByLabel('Display name').inputValue(), 'Starter ' + suffix);
+  await member.goto(origin + '/dashboard');
   await member.getByRole('button', { name: 'Queue report' }).click();
   await member.getByRole('status').filter({ hasText: 'Report status completed' }).waitFor();
   const idempotency = { 'idempotency-key': randomUUID() };

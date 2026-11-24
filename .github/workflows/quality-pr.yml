@@ -18,6 +18,7 @@ jobs:
       - run: pnpm install ${{ hashFiles('pnpm-lock.yaml') != '' && '--frozen-lockfile' || '--no-frozen-lockfile' }}
       - run: pnpm run build
       - run: pnpm run build:starter
+      - run: node starter/backend/test/platform-config.mjs
       - run: node starter/backend/test/cashfree.mjs
       - run: pnpm run build:console
       - name: Verify console onboarding in Chromium

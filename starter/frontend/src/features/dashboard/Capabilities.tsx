@@ -1,6 +1,6 @@
 import { useStarterFetch, type Capability } from '../../lib/api.js';
 import { CapabilityCard } from './CapabilityCard.js';
-import { WorkspaceProfile } from './WorkspaceProfile.js';
+import { WorkspaceProfile } from '../settings/WorkspaceProfile.js';
 import { ReportJobs } from './ReportJobs.js';
 import type { Session } from '../auth/SessionFields.js';
 

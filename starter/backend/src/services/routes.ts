@@ -31,6 +31,7 @@ const servicePaths = [
   '/api/starter/jobs',
   '/api/starter/providers',
   '/api/starter/profile',
+  '/api/starter/activity',
 ];
 
 export function serviceRoutes(options: {
@@ -84,6 +85,7 @@ export function serviceRoutes(options: {
     res.json({
       profile: origin ? 'durable' : 'local',
       signedIn: Boolean(who),
+      canReadActivity: Boolean(who?.permissions.includes('audit:read')),
       canOperate: Boolean(origin && who?.permissions.includes('config:read')),
       consent: Boolean(auth.visitor(req)),
     });

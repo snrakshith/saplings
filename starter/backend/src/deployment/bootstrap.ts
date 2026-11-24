@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises';
 import { IdentityPlatform, type RealmUser } from '@saplings/kingsman';
 import { openDurableRuntime } from './runtime.js';
-import { starterRoles } from './login.js';
+import { starterRoles } from '../config/kingsman.js';
 import { durableSettings, required } from './settings.js';
 
 type Account = {

@@ -90,7 +90,7 @@
     "dev:starter": "pnpm run build:starter:dependencies && pnpm --parallel --filter @saplings/starter-api --filter @saplings/starter-web run dev",
     "starter:prepare": "node starter/scripts/prepare-starter.mjs",
     "build:starter:dependencies": "pnpm run build && pnpm run build:adapters && pnpm run build:hooks && pnpm run build:murphi-ui",
-    "verify:starter": "pnpm run build:starter:dependencies && pnpm run build:starter && pnpm run build:console && node starter/backend/test/cashfree.mjs && node starter/frontend/test/starter-browser.mjs"
+    "verify:starter": "pnpm run build:starter:dependencies && pnpm run build:starter && pnpm run build:console && node starter/backend/test/platform-config.mjs && node starter/backend/test/cashfree.mjs && node starter/frontend/test/starter-browser.mjs"
   },
   "devDependencies": {
     "typescript": "^5.9.3",

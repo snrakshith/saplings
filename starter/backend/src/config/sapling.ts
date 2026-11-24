@@ -1,7 +1,10 @@
 import { defineSaplingConfig } from '@saplings/sdk';
 
-export const project = { id: 'saplings-starter', name: 'Saplings Starter' };
-export const tenant = { id: 'local', name: 'Local workspace' };
+import { gatewayConfig } from './harbor.ts';
+import { realmConfig } from './kingsman.ts';
+import { project, tenant } from './project.ts';
+
+export { project, tenant };
 
 export const setup = {
   workspace: { workspace: tenant.name, project: project.name },
@@ -32,8 +35,6 @@ export const setup = {
   operations: { operation: 'starter.prepare', target: 'local-workspace', key: 'starter-check' },
 };
 
-const realm = project.id + '-' + tenant.id;
-
 export function starterConfig(apiPort: number) {
   return defineSaplingConfig({
     app: { ...project, environment: 'development' },
@@ -52,58 +53,8 @@ export function starterConfig(apiPort: number) {
       retentionPolicies: { [setup.governance.collection]: { days: setup.governance.days } },
     },
     platforms: {
-      kingsman: {
-        config: {
-          apiVersion: 'identity.sapling.dev/v1alpha1',
-          kind: 'RealmConfig',
-          metadata: { name: realm, displayName: tenant.name, environment: 'development' },
-          spec: {
-            state: 'active',
-            frontend: { issuer: 'https://localhost/realms/' + realm },
-            keys: {
-              providers: [
-                { name: 'local', type: 'rsa-generated', algorithm: 'RS256', active: true },
-              ],
-            },
-            tokens: {
-              defaultSignatureAlgorithm: 'RS256',
-              accessToken: { ttl: '5m' },
-              refreshToken: { ttl: '30d', rotate: true, reuseDetection: 'revoke-family' },
-            },
-            sessions: { sso: { idle: '30m', max: '10h' } },
-            security: { passwordPolicy: { hashAlgorithm: 'argon2id', minLength: 12 } },
-            clients: [
-              {
-                clientId: 'starter-web',
-                accessType: 'public',
-                protocol: 'openid-connect',
-                pkce: 'S256',
-                grants: { authorizationCode: true, refreshToken: true },
-                redirectUris: ['http://localhost:5173/callback'],
-              },
-            ],
-          },
-        },
-      },
-      harbor: {
-        dependencies: { allowedUpstreamHosts: ['127.0.0.1:' + apiPort] },
-        config: {
-          apiVersion: 'gateway.sapling.dev/v1alpha1',
-          kind: 'GatewayConfig',
-          metadata: { name: realm, workspace: project.id, environment: 'development' },
-          spec: {
-            upstreams: [{ name: 'starter-api', targets: [{ target: '127.0.0.1:' + apiPort }] }],
-            services: [
-              {
-                name: 'starter-api',
-                upstream: 'starter-api',
-                protocol: 'http',
-                routes: [{ name: 'starter-api', paths: ['/api'], pathMatch: 'prefix' }],
-              },
-            ],
-          },
-        },
-      },
+      kingsman: { config: realmConfig() },
+      harbor: gatewayConfig(apiPort, 'local'),
     },
   });
 }

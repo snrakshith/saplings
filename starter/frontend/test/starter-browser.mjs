@@ -96,6 +96,19 @@ try {
   await page.getByRole('searchbox').fill('SAAS-001');
   await page.getByText('1 of 182 features', { exact: true }).waitFor();
 
+  await page.getByRole('link', { name: 'Settings', exact: true }).click();
+  await page.getByRole('link', { name: 'Sign in to edit your workspace profile' }).waitFor();
+  await page.getByLabel('Color theme').selectOption('dark');
+  await page.reload();
+  assert.equal(await page.getByLabel('Color theme').inputValue(), 'dark');
+  await page.getByLabel('Color theme').selectOption('light');
+  assert.equal(
+    await page.getByRole('navigation').locator('[aria-current="page"]').innerText(),
+    'Settings',
+  );
+  await page.goto(webUrl + '/missing-page');
+  await page.getByRole('heading', { name: 'Page not found' }).waitFor();
+
   const token = 'starter-browser-test-console-token';
   const webRoot = fileURLToPath(new URL('../../../console/dist/web', import.meta.url));
   consoleServer = createConsoleApp({
@@ -122,6 +135,28 @@ try {
     3,
     'Starter issued three distinct development credentials',
   );
+  const activityPath = '/api/starter/activity';
+  assert.equal((await fetch(apiUrl + activityPath)).status, 401);
+  const member = await browser.newPage();
+  await member.goto(webUrl + '/login');
+  await member.getByLabel('Starter member token').fill(credentials.member);
+  await member.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await member.getByRole('button', { name: 'Sign out' }).waitFor();
+  await member.getByRole('link', { name: 'Settings', exact: true }).click();
+  await member.getByLabel('Display name').fill('Starter member');
+  await member.getByRole('button', { name: 'Save profile' }).click();
+  await member.getByText('Workspace profile saved.').waitFor();
+  await member.reload();
+  assert.equal(await member.getByLabel('Display name').inputValue(), 'Starter member');
+  assert.equal((await member.request.get(webUrl + activityPath)).status(), 403);
+  await member.getByRole('link', { name: 'Identity', exact: true }).click();
+  await member.getByRole('button', { name: 'Sign out' }).click();
+  await member.getByLabel('Starter member token').fill(credentials.reviewer);
+  await member.getByRole('button', { name: 'Sign in', exact: true }).click();
+  await member.getByRole('button', { name: 'Sign out' }).waitFor();
+  await member.getByRole('link', { name: 'Activity', exact: true }).click();
+  await member.getByText('profile.updated', { exact: true }).waitFor();
+  await member.close();
   await verifyProductServices({ browser, page, webUrl, apiUrl, credentials });
   assert.deepEqual(errors, []);
   console.log(

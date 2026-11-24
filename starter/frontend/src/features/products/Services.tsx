@@ -113,7 +113,13 @@ export function Services() {
               void run(async () => {
                 await post('/api/starter/session', { logout: true });
                 privateConfig.reset();
-                setSession({ ...session, signedIn: false, consent: false, canOperate: false });
+                setSession({
+                  ...session,
+                  signedIn: false,
+                  consent: false,
+                  canOperate: false,
+                  canReadActivity: false,
+                });
                 return 'Signed out.';
               })
             }

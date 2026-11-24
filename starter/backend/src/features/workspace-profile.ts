@@ -1,5 +1,5 @@
 import { requireAuth, validate, type Request as SaplingsRequest } from '@saplings/middleware';
-import type { Store } from '@saplings/sdk';
+import type { Store, SaplingSDK } from '@saplings/sdk';
 import { unique } from '@saplings/utils';
 import { z } from '@saplings/validations';
 import { Router } from 'express';
@@ -14,7 +14,8 @@ const profileInput = z.strictObject({
 type Profile = z.infer<typeof profileInput>;
 
 export function workspaceProfileRoutes(
-  store: Store,
+  store: Store & Required<Pick<Store, 'transaction'>>,
+  sdk: () => Promise<SaplingSDK>,
   auth: ReturnType<typeof createServiceAuth>,
 ): Router {
   const router = Router();
@@ -45,7 +46,18 @@ export function workspaceProfileRoutes(
       const { userId, tenantId } = sapling!;
       const input = validated!.body as Profile;
       const profile = { displayName: input.displayName, interests: unique(input.interests) };
-      await store.put(tenantId!, collection, { id: userId!, ...profile });
+      const { audit } = await sdk();
+      await store.transaction(tenantId!, async (tx) => {
+        await tx.put(tenantId!, collection, { id: userId!, ...profile });
+        await audit.record(
+          { tenantId: tenantId!, actorId: userId! },
+          'profile.updated',
+          'profile',
+          userId,
+          undefined,
+          tx,
+        );
+      });
       res.json(profile);
     },
   );

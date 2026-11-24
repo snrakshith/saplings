@@ -54,10 +54,11 @@ export async function runStarterCheck(id: string, runtime: StarterRuntime) {
       clients: identity.config.spec.clients.map((client) => client.clientId),
     };
   }
-  const config = starterRuntimeConfig(runtime.apiPort);
   if (id === 'harbor') {
-    const { config: gatewayConfig, dependencies } = config.platforms.harbor;
-    const gateway = new Gateway(gatewayConfig, dependencies);
+    const configured = runtime.sdk.harbor;
+    if (!configured) throw new Error('The starter gateway is unavailable.');
+    // Each concurrent walkthrough owns its ephemeral listener.
+    const gateway = new Gateway(configured.config, configured.deps);
     const port = await gateway.listen(0, '127.0.0.1');
     try {
       const reply = await fetch('http://127.0.0.1:' + port + '/api/items', {
@@ -72,6 +73,10 @@ export async function runStarterCheck(id: string, runtime: StarterRuntime) {
   }
   if (!Object.hasOwn(checks, id)) return;
   const check = checks[id as keyof typeof checks];
-  const sdk = createSapling({ ...config, platforms: undefined });
-  return check.run(sdk, checkContext);
+  const sdk = createSapling({ ...starterRuntimeConfig(runtime.apiPort), platforms: undefined });
+  try {
+    return await check.run(sdk, checkContext);
+  } finally {
+    await sdk.lifecycle.close();
+  }
 }

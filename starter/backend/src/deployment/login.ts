@@ -2,22 +2,26 @@ import { createHash, randomBytes } from 'node:crypto';
 import { IdentityError, type IdentityPlatform } from '@saplings/kingsman';
 import { tenant } from '../config/sapling.js';
 import { RequestError, type ServiceLogin } from '../services/auth.js';
-export const operatorClient = 'starter-console';
-export const operatorRedirect = (origin: URL) => new URL('/login', origin).href;
-export const starterRoles = ['member', 'author', 'reviewer'] as const;
-
 const rolePermissions: Readonly<Record<string, readonly string[]>> = {
   member: ['starter:jobs'],
   author: [
     'starter:jobs',
     'config:read',
     'config:edit',
+    'audit:read',
     'config:public',
     'miner:read',
     'miner:admin',
     'miner:privacy',
   ],
-  reviewer: ['starter:jobs', 'config:read', 'config:review', 'config:public', 'miner:read'],
+  reviewer: [
+    'starter:jobs',
+    'audit:read',
+    'config:read',
+    'config:review',
+    'config:public',
+    'miner:read',
+  ],
 };
 
 function principal(userId: string, roles: string[]) {
@@ -38,7 +42,11 @@ async function verified<T>(read: () => Promise<T>) {
   }
 }
 
-export function durableLogin(identity: IdentityPlatform, origin: URL): ServiceLogin {
+export function durableLogin(
+  identity: IdentityPlatform,
+  operatorClient: string,
+  redirectUri: string,
+): ServiceLogin {
   return {
     async session(token) {
       const session = await verified(() => identity.sessionUser(token));
@@ -78,7 +86,6 @@ export function durableLogin(identity: IdentityPlatform, origin: URL): ServiceLo
       if (!session.user.roles.some((role) => role === 'author' || role === 'reviewer'))
         throw new RequestError('Operator permission required.', 403);
       const codeVerifier = randomBytes(32).toString('base64url');
-      const redirectUri = operatorRedirect(origin);
       const { code } = await identity.authorizeCode({
         clientId: operatorClient,
         sessionId,

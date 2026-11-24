@@ -7,13 +7,13 @@ import { SessionFields, type Session } from './SessionFields.js';
 export function Identity() {
   const { data, error: loadingError } = useStarterFetch<Session>('/api/starter/session');
   const [session, setSession] = useState<Session>();
-  const [operator, setOperator] = useState('');
+  const [operator, setOperator] = useState<{ token: string; expiresIn: number }>();
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
   useEffect(() => setSession(data), [data]);
   useEffect(() => {
     if (!operator) return;
-    const timer = setTimeout(() => setOperator(''), 5 * 60_000);
+    const timer = setTimeout(() => setOperator(undefined), operator.expiresIn * 1000);
     return () => clearTimeout(timer);
   }, [operator]);
 
@@ -31,24 +31,19 @@ export function Identity() {
 
   if (loadingError) return <p role="alert">{loadingError}</p>;
   if (!session) return <p role="status">Loading identity…</p>;
-  if (session.profile === 'local')
-    return (
-      <>
-        <h1>Identity setup</h1>
-        <p>Configure your issuer and OIDC client in the developer console.</p>
-        <a className="starter-link" href="/dashboard#kingsman">
-          Open the Kingsman check
-        </a>
-      </>
-    );
-
   return (
     <>
-      <h1>Kingsman sign-in</h1>
+      <h1>{session.profile === 'durable' ? 'Kingsman sign-in' : 'Identity setup'}</h1>
+      {session.profile === 'local' && (
+        <p>
+          Use a token from the API terminal to sign in.{' '}
+          <a href="/dashboard#kingsman">Open the Kingsman check</a>.
+        </p>
+      )}
       {error && <p role="alert">{error}</p>}
       {!session.signedIn ? (
         <SessionFields
-          durable
+          durable={session.profile === 'durable'}
           disabled={busy}
           signIn={(input) =>
             run(async () => {
@@ -68,8 +63,14 @@ export function Identity() {
             onClick={() =>
               void run(async () => {
                 await post('/api/starter/session', { logout: true });
-                setOperator('');
-                setSession({ ...session, signedIn: false, canOperate: false, consent: false });
+                setOperator(undefined);
+                setSession({
+                  ...session,
+                  signedIn: false,
+                  canReadActivity: false,
+                  canOperate: false,
+                  consent: false,
+                });
               })
             }
           >
@@ -82,11 +83,11 @@ export function Identity() {
                 disabled={busy}
                 onClick={() =>
                   void run(async () => {
-                    const credentials = await post<{ token: string }>(
+                    const credentials = await post<{ token: string; expiresIn: number }>(
                       '/api/starter/operator-token',
                       {},
                     );
-                    setOperator(credentials.token);
+                    setOperator(credentials);
                   })
                 }
               >
@@ -95,7 +96,7 @@ export function Identity() {
               {operator && (
                 <label className="catalog-search">
                   Console operator token
-                  <textarea readOnly value={operator} rows={4} />
+                  <textarea readOnly value={operator.token} rows={4} />
                 </label>
               )}
             </section>

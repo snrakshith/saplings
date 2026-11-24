@@ -110,6 +110,7 @@ export function createLocalLogin(tenantId: string) {
       permissions: [
         'config:read',
         'config:edit',
+        'audit:read',
         'config:review',
         'config:public',
         'miner:read',
@@ -119,7 +120,7 @@ export function createLocalLogin(tenantId: string) {
     },
     {
       label: 'reviewer',
-      permissions: ['config:read', 'config:review', 'config:public', 'miner:read'],
+      permissions: ['audit:read', 'config:read', 'config:review', 'config:public', 'miner:read'],
     },
     { label: 'member', permissions: [] },
   ].map((actor) => ({ ...actor, token: randomBytes(32).toString('base64url') }));

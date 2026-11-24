@@ -5,6 +5,7 @@ export type Session = {
   profile: 'local' | 'durable';
   signedIn: boolean;
   consent: boolean;
+  canReadActivity: boolean;
   canOperate: boolean;
 };
 

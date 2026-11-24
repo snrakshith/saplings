@@ -19,15 +19,36 @@ pnpm dev
 | Path inside `starter/` | What belongs there |
 | --- | --- |
 | `package.json` | Commands for development, builds, browser verification, the Console, and Docker Compose |
-| `backend/src/config/` | Project identity, tenant, Kingsman realm, and local Harbor configuration |
+| `backend/src/config/` | Project identity, tenant, Kingsman realm, and Harbor routing policy for both profiles |
 | `backend/src/http/`, `backend/src/features/` | Request policy and application routes such as the workspace profile |
 | `backend/src/platform/`, `backend/src/services/` | Harbor and the HTTP adapters for Miner and Remote Config |
 | `backend/src/deployment/` | PostgreSQL, provider adapters, worker, migrations, and telemetry |
-| `frontend/src/features/`, `frontend/src/lib/` | React feature screens and shared client APIs |
+| `frontend/src/app/`, `frontend/src/app/layouts/` | Page registry, app entry component, header, sidebar, content area, and footer |
+| `frontend/src/features/`, `frontend/src/lib/` | React feature screens, Settings and Activity pages, and shared client APIs |
 | `deploy/` | Dockerfiles, reverse proxy, and Compose settings |
 | `scripts/`, `.env.example` | Local setup commands and the durable environment contract |
 
-Set your project and tenant names in [the Saplings configuration](backend/src/config/sapling.ts). Local mode uses in-memory data and issues temporary author, reviewer, and member tokens in the API terminal. Durable mode runs the same app using PostgreSQL and Kingsman.
+Set your project and tenant names in [the Saplings configuration](backend/src/config/project.ts). Local mode uses in-memory data and issues temporary author, reviewer, and member tokens in the API terminal. Durable mode runs the same app using PostgreSQL and Kingsman.
+
+## Configure Kingsman and Harbor
+
+The local SDK, Console discovery manifest, and durable app share typed platform definitions in `backend/src/config/kingsman.ts` and `backend/src/config/harbor.ts`. The durable profile uses production security checks in both staging and production. Kingsman derives the issuer and login redirect from `APP_ORIGIN`. Harbor derives its upstream and allowlist from the API's bound loopback port.
+
+| Setting | Use |
+| --- | --- |
+| `SAPLINGS_REALM_NAME` | Overrides the default realm name derived from the project and tenant. Choose it before provisioning accounts because Kingsman stores users and sessions under the realm. |
+| `SAPLINGS_OIDC_CLIENT_ID` | Sets the application client in the default policy and selects the operator client when supplying a realm file. Defaults to `starter-web` locally and `starter-console` in the durable profile. |
+| `SAPLINGS_KINGSMAN_CONFIG_FILE` | Replaces the durable realm definition with a Kingsman RealmConfig JSON file. Its issuer must match `APP_ORIGIN/realms/<metadata.name>`. Keep production policy, disabled registration, brute-force protection, and an enabled public S256 client with the `APP_ORIGIN/login` redirect. |
+| `SAPLINGS_HARBOR_CONFIG_FILE` | Replaces the durable gateway definition with a Harbor GatewayConfig JSON or YAML file. Target `127.0.0.1:<API port>` and route `GET /api/starter/catalog` to `/internal/api/starter/catalog`. Startup reads the catalog through the gateway before reporting readiness. |
+
+To start custom files from the working defaults, run `pnpm build` in `starter/`, then print the deployment policies. Set the origin, port, realm, and client values for your deployment first.
+
+```sh
+node --input-type=module -e 'import { realmConfig } from "./backend/dist/config/kingsman.js"; console.log(JSON.stringify(realmConfig(new URL(process.env.APP_ORIGIN)), null, 2))'
+node --input-type=module -e 'import { gatewayConfig } from "./backend/dist/config/harbor.js"; console.log(JSON.stringify(gatewayConfig(Number(process.env.PORT ?? 3000), "durable").config, null, 2))'
+```
+
+In Compose, mount the realm file read-only into bootstrap, the API, and the worker. Mount the gateway file into the API. Use paths inside the containers for the settings. Keep the signing key in its existing secret mount. The API route and access inventory is in the [backend guide](backend/README.md).
 
 ## Follow the Saplings packages through the app
 
@@ -40,7 +61,7 @@ Set your project and tenant names in [the Saplings configuration](backend/src/co
 | [Harbor](../packages/harbor/README.md) | The durable SDK Catalog routes through an allowlisted loopback gateway and sends `X-Saplings-Gateway: harbor`. The local dashboard runs a separate Harbor route check. |
 | [Hooks](../packages/hooks/README.md) | React uses `useAsync` to load data and save the profile and `useDebounce` to search the SDK Catalog. |
 
-Sign in and save a **Workspace profile** from the dashboard to exercise the request pipeline. The local profile resets with the API process and the durable profile persists in PostgreSQL. For protected routes, the application retains ownership of the Kingsman session and Console bearer token.
+Sign in on **Identity** and save a **Workspace profile** from **Settings** or the dashboard to exercise the request pipeline. Each save records a `profile.updated` audit event in the same transaction. Authors and reviewers can read recent events on **Activity**. The appearance setting stays in the browser across sessions. The local profile resets with the API process and the durable profile persists in PostgreSQL. For protected routes, the application retains ownership of the Kingsman session and Console bearer token.
 
 ## Onboarding and runtime coverage
 
@@ -92,7 +113,7 @@ export NODE_EXTRA_CA_CERTS="$PWD/.starter/tls-cert.pem"
 SAPLINGS_SERVICE_ORIGIN=https://localhost:8443 pnpm console
 ```
 
-Use the project and tenant keys from `backend/src/config/sapling.ts` when adding or importing their workspace in the Console. Local discovery is only available in the local profile. Sign in to the durable Starter as **author**, choose **Create operator token** on the Identity page, and connect the console with that token. Repeat with **reviewer** for approval. Tokens expire after five minutes and are revoked with the sign-in session. If you need author and reviewer sessions concurrently, use separate browser profiles.
+Use the project and tenant keys from `backend/src/config/project.ts` when adding or importing their workspace in the Console. Local discovery is only available in the local profile. Sign in to the durable Starter as **author**, choose **Create operator token** on the Identity page, and connect the console with that token. Repeat with **reviewer** for approval. By default, tokens expire after five minutes. They are revoked with the sign-in session. If you need author and reviewer sessions concurrently, use separate browser profiles.
 
 To stop the local stack and preserve its data, run `pnpm stack:down`.
 

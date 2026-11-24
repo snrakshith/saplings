@@ -1,5 +1,6 @@
 import { Router, type RequestHandler } from 'express';
 
+import { sdkCatalogPath } from '../config/harbor.js';
 import { capabilities, runStarterCheck } from './checks.js';
 import type { StarterRuntime } from './runtime.js';
 
@@ -25,7 +26,7 @@ export function starterRoutes(runtime: () => Promise<StarterRuntime>): Router {
   router.get('/api/starter', localOnly, (_req, res) => {
     res.json({ capabilities });
   });
-  router.get('/api/starter/catalog', localOnly, async (_req, res) => {
+  router.get(sdkCatalogPath, localOnly, async (_req, res) => {
     res.json((await runtime()).sdk.featureManifest());
   });
   router.post<{ id: string }>('/api/starter/:id', localOnly, async (req, res) => {
